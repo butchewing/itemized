@@ -108,7 +108,7 @@ export const PAGE = `<!doctype html>
   .btn-primary:hover:not(:disabled) { background: #000; }
   .btn-primary:disabled { background: transparent; color: var(--slate); border-color: var(--rule); opacity: 1; }
   .submit-row { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center; margin-top: 1rem; }
-  .fine { font-size: .9rem; color: var(--slate); margin: 0; }
+  .fine { font-size: .95rem; color: var(--slate); margin: 0; }
 
   .samples { margin-top: 2.5rem; }
   .samples h2 { font: 500 .8rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 .35rem; }
