@@ -9,6 +9,7 @@ import {
   type Provider,
 } from './audit';
 import { PAGE } from './page';
+import { spike } from './spike';
 
 type AuditRow = {
   id: string;
@@ -62,6 +63,9 @@ const hex = (buf: ArrayBuffer) =>
   [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
 
 const app = new Hono<{ Bindings: Env }>();
+
+app.use('/dev/*', async (c, next) => (c.env.DEV_ROUTES === '1' ? next() : c.notFound()));
+app.route('/dev', spike);
 
 app.get('/', (c) => {
   c.header('X-Robots-Tag', 'noindex, nofollow');

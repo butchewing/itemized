@@ -13,8 +13,8 @@ A Meta model reads the price list into structured data. A deterministic rules en
 ## Models
 
 - **Muse Spark** through the Meta Model API reads photos and PDFs into structured data.
-- **Muse Spark Open** on Baseten (`meta-models/muse-spark-open-1026`) is a second extraction backend, planned. It lets us compare accuracy against the hosted API, and run evaluations on real price lists without sending them to a hosted API.
-- **SAM 3.1** segments price tables and disclosure blocks on phone photos, planned.
+- **Muse Spark Open** on Baseten (`meta-models/muse-spark-open`) is a second extraction backend. It lets us compare accuracy against the hosted API, and run evaluations on real price lists without sending them to a hosted API. It takes images, not PDFs.
+- **SAM 3.1** for segmenting phone photos is under evaluation.
 
 ## Status
 
