@@ -29,7 +29,9 @@ export const PAGE = `<!doctype html>
   #report .cite { margin: .1rem 0; font-size: .85rem; opacity: .8; }
   #report p { margin: .25rem 0; }
   #report blockquote { margin: .4rem 0; padding-left: .75rem; border-left: 3px solid currentColor; font-size: .9rem; white-space: pre-wrap; }
-  #report .reason { font-size: .85rem; opacity: .8; }
+  .disclaimer { margin-top: 2rem; padding: .75rem 1rem; border: 1px solid currentColor; border-radius: .5rem; font-size: .9rem; }
+  .disclaimer h2 { font-size: 1rem; margin: 0 0 .5rem; }
+  .disclaimer p { margin: .4rem 0; }
 </style>
 </head>
 <body>
@@ -47,7 +49,13 @@ export const PAGE = `<!doctype html>
     <h2 id="report-heading" tabindex="-1">Findings</h2>
     <div id="report-body"></div>
   </section>
-  <small>Itemized is a compliance-review aid, not legal advice.</small>
+  <section class="disclaimer" aria-labelledby="about-heading">
+    <h2 id="about-heading">About these results</h2>
+    <p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). It does not check state law, such as Texas Funeral Service Commission rules. It does not check the Casket Price List, the Outer Burial Container Price List or the Statement of Funeral Goods and Services Selected.</p>
+    <p>The AI can misread documents, especially photos. These results are not legal advice and are not a finding that anyone broke the law.</p>
+    <p><strong>Funeral homes:</strong> confirm any result with your attorney or your state funeral regulator before acting on it.</p>
+    <p><strong>Families:</strong> if something here concerns you, ask the funeral home about it. You can also contact the Federal Trade Commission or your state's funeral licensing board.</p>
+  </section>
 </main>
 <script>
 const form = document.getElementById('form');
@@ -62,7 +70,7 @@ const LABELS = {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const BASIS = ${basisJson};
 const GROUPS = [
-  ['fail', 'Fail'],
+  ['fail', 'Did not pass'],
   ['review', 'Needs review'],
   ['pass', 'Pass'],
 ];
@@ -85,7 +93,8 @@ function findingItem(f) {
     if (f.evidence.page) q.setAttribute('aria-label', 'Text from page ' + f.evidence.page);
     li.append(q);
   }
-  li.append(el('p', f.reason, 'reason'));
+  // The engine's reason strings are diagnostic and unreviewed, so the page shows only ruleset text plus this.
+  if (f.verdict === 'review') li.append(el('p', 'Itemized could not read or match this part of the list clearly enough to decide. A person should check it.'));
   return li;
 }
 
@@ -94,7 +103,7 @@ function renderReport(report) {
   const body = document.getElementById('report-body');
   body.replaceChildren();
   const c = report.counts;
-  body.append(el('p', c.fail + ' fail, ' + c.review + ' need review, ' + c.pass + ' pass. Ruleset ' + report.rulesetId + '@' + report.rulesetVersion + '.'));
+  body.append(el('p', c.fail + ' did not pass, ' + c.review + ' need review, ' + c.pass + ' pass. Ruleset ' + report.rulesetId + '@' + report.rulesetVersion + '.'));
   for (const [verdict, label] of GROUPS) {
     const items = report.findings.filter((f) => f.verdict === verdict);
     if (!items.length) continue;
@@ -108,7 +117,7 @@ function renderReport(report) {
     const details = el('details');
     details.append(el('summary', 'Not applicable (' + na.length + ')'));
     const ul = el('ul');
-    for (const f of na) ul.append(el('li', f.title + ' (' + f.checkId + '): ' + f.reason));
+    for (const f of na) ul.append(el('li', f.title + ' (' + f.checkId + ')'));
     details.append(ul);
     body.append(details);
   }

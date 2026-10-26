@@ -2,7 +2,9 @@
 
 Itemized checks funeral home price lists against the FTC Funeral Rule and flags missing required disclosures and prices, with citations.
 
-Built for the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai. It is a compliance-review aid, not legal advice.
+Built for the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai.
+
+Itemized is an automated, AI-assisted check against the federal FTC Funeral Rule only. It does not check state law or the other price lists and statements the Rule requires, and the AI can misread documents. Results are not legal advice. Funeral homes should confirm results with their attorney or state funeral regulator.
 
 ## What it does
 
