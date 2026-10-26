@@ -1,0 +1,24 @@
+{
+  "name": "itemized",
+  "account_id": "59ca9600755f3d160a17444d639f329c",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "workers_dev": false,
+  "routes": [{ "pattern": "itemized.mortuary.ai", "custom_domain": true }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "itemized",
+      "database_id": "aa30e28a-d992-48e6-907e-b48166ab5c3e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [{ "binding": "DOCS", "bucket_name": "itemized-docs" }],
+  "queues": {
+    "producers": [{ "binding": "AUDITS", "queue": "itemized-audits" }],
+    "consumers": [{ "queue": "itemized-audits", "max_batch_size": 1, "max_retries": 3 }]
+  },
+  "vars": { "MODEL_PROVIDER": "meta-api" }
+}
