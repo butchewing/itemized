@@ -7,7 +7,7 @@ import {
   type AuditStatus,
 } from './audit';
 import { runAudit } from './pipeline';
-import { auditSpend, getAudit, getExtraction, type AuditRow } from './store';
+import { auditSpend, getAudit, getExtraction, getReport, type AuditRow } from './store';
 import { PAGE } from './page';
 import { spike } from './spike';
 
@@ -78,11 +78,12 @@ app.post('/api/audits', async (c) => {
 app.get('/api/audits/:id', async (c) => {
   const row = await getAudit(c.env.DB, c.req.param('id'));
   if (!row) return c.json({ error: 'Not found.' }, 404);
-  const [extraction, spend] = await Promise.all([
+  const [extraction, report, spend] = await Promise.all([
     getExtraction(c.env.DB, row.doc_sha256, row.provider),
+    getReport(c.env.DB, row.id),
     auditSpend(c.env.DB, row.id),
   ]);
-  return c.json({ ...toJson(row), extraction, ...spend });
+  return c.json({ ...toJson(row), extraction, report, ...spend });
 });
 
 // Mirrors max_retries in wrangler.jsonc.

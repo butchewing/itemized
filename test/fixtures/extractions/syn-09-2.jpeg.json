@@ -1,0 +1,121 @@
+{
+ "caption": null,
+ "providerName": null,
+ "address": null,
+ "phone": null,
+ "effectiveDate": null,
+ "disclosures": [
+  {
+   "id": "D-alt-container",
+   "text": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are a fiberboard container or an unfinished wood box.",
+   "page": 1
+  }
+ ],
+ "items": [
+  {
+   "category": "receiving",
+   "label": "Receiving Remains from Another Funeral Home",
+   "price": 2195,
+   "priceRange": null,
+   "priceText": "$2,195",
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
+   "page": 1
+  },
+  {
+   "category": "direct_cremation",
+   "label": "Direct Cremation",
+   "price": null,
+   "priceRange": [
+    1595,
+    1945
+   ],
+   "priceText": "$1,595 to $1,945",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "direct_cremation",
+   "label": "A. Direct cremation with container provided by the purchaser",
+   "price": 1595,
+   "priceRange": null,
+   "priceText": "$1,595",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "direct_cremation",
+   "label": "B. Direct cremation with a fiberboard container",
+   "price": 1695,
+   "priceRange": null,
+   "priceText": "$1,695",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "direct_cremation",
+   "label": "C. Direct cremation with an unfinished wood box",
+   "price": 1945,
+   "priceRange": null,
+   "priceText": "$1,945",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "immediate_burial",
+   "label": "Immediate Burial",
+   "price": null,
+   "priceRange": [
+    2295,
+    3395
+   ],
+   "priceText": "$2,295 to $3,395",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "immediate_burial",
+   "label": "A. Immediate burial with casket provided by the purchaser",
+   "price": 2295,
+   "priceRange": null,
+   "priceText": "$2,295",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "immediate_burial",
+   "label": "B. Immediate burial with a cloth-covered wood casket",
+   "price": 3395,
+   "priceRange": null,
+   "priceText": "$3,395",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other",
+   "label": "Memorial register book",
+   "price": 45,
+   "priceRange": null,
+   "priceText": "$45",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other",
+   "label": "Memorial folders (per 100)",
+   "price": 95,
+   "priceRange": null,
+   "priceText": "$95",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other",
+   "label": "Temporary cremation urn",
+   "price": 35,
+   "priceRange": null,
+   "priceText": "$35",
+   "includesText": null,
+   "page": 1
+  }
+ ]
+}

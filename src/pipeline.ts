@@ -1,3 +1,4 @@
+import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import type { AuditStatus } from './audit';
 import { EXTRACTION_SCHEMA, ExtractionError, parseExtraction, SYSTEM_PROMPT, type GplExtraction } from './extraction';
 import {
@@ -10,10 +11,12 @@ import {
   type ReasoningEffort,
   type Usage,
 } from './models';
+import { runChecks } from './rules/engine';
 import {
   getAudit,
   getExtraction,
   putExtraction,
+  putReport,
   recordModelCall,
   spendTodayUtc,
   transition,
@@ -72,10 +75,11 @@ async function callExtractor(env: Env, audit: AuditRow, doc: ContentPart): Promi
   }
 }
 
-async function extract(env: Env, audit: AuditRow): Promise<void> {
+async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
   const isPdf = audit.content_type === 'application/pdf';
   if (isPdf && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
-  if (await getExtraction(env.DB, audit.doc_sha256, audit.provider)) return;
+  const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
+  if (cached) return cached;
 
   const object = await env.DOCS.get(audit.doc_key);
   if (!object) throw new AuditFailure('document not found in storage');
@@ -83,7 +87,9 @@ async function extract(env: Env, audit: AuditRow): Promise<void> {
   const doc: ContentPart = isPdf
     ? { type: 'file', file: { filename: audit.filename ?? 'document.pdf', file_data: url } }
     : { type: 'image_url', image_url: { url } };
-  await putExtraction(env.DB, audit.doc_sha256, audit.provider, await callExtractor(env, audit, doc));
+  const extraction = await callExtractor(env, audit, doc);
+  await putExtraction(env.DB, audit.doc_sha256, audit.provider, extraction);
+  return extraction;
 }
 
 function failureMessage(e: unknown): string {
@@ -94,22 +100,35 @@ function failureMessage(e: unknown): string {
   return 'internal error';
 }
 
-// Resumable: a retried message finds the audit already in `extracting` and continues.
+// Resumable: a retried message finds the audit in `extracting` or `checking` and continues;
+// the extraction cache makes the second pass free.
 export async function runAudit(env: Env, auditId: string, canRetry: boolean): Promise<'ack' | 'retry'> {
   const audit = await getAudit(env.DB, auditId);
   if (!audit) return 'ack';
-  const resumable: AuditStatus[] = ['queued', 'extracting'];
+  const resumable: AuditStatus[] = ['queued', 'extracting', 'checking'];
   if (!resumable.includes(audit.status)) return 'ack';
-  if (audit.status === 'queued' && !(await transition(env.DB, audit.id, 'queued', 'extracting'))) return 'ack';
+  let status = audit.status;
+  if (status === 'queued') {
+    if (!(await transition(env.DB, audit.id, 'queued', 'extracting'))) return 'ack';
+    status = 'extracting';
+  }
 
+  let extraction: GplExtraction;
   try {
-    await extract(env, audit);
+    extraction = await extract(env, audit);
   } catch (e) {
     if (canRetry && isRetryable(e)) return 'retry';
-    await transition(env.DB, audit.id, 'extracting', 'failed', failureMessage(e));
+    await transition(env.DB, audit.id, status, 'failed', failureMessage(e));
     return 'ack';
   }
-  await transition(env.DB, audit.id, 'extracting', 'checking');
-  await transition(env.DB, audit.id, 'checking', 'failed', 'checks not implemented yet');
+  if (status === 'extracting') await transition(env.DB, audit.id, 'extracting', 'checking');
+
+  try {
+    await putReport(env.DB, audit.id, runChecks(extraction, ruleset, { auditDate: new Date() }));
+  } catch (e) {
+    await transition(env.DB, audit.id, 'checking', 'failed', failureMessage(e));
+    return 'ack';
+  }
+  await transition(env.DB, audit.id, 'checking', 'done');
   return 'ack';
 }

@@ -1,0 +1,242 @@
+{
+ "caption": "GENERAL PRICE LIST",
+ "providerName": "ABC FUNERAL HOME",
+ "address": "100 Main Street, Yourtown, USA 12345",
+ "phone": "(123) 456-7890",
+ "effectiveDate": {
+  "raw": "These prices are effective as of [date].",
+  "iso": null
+ },
+ "disclosures": [
+  {
+   "id": "D-selection",
+   "text": "The goods and services shown below are those we can provide to our customers. You may choose only the items you desire. However, any funeral arrangements you select will include a charge for our basic services and overhead. If legal or other requirements mean you must buy any items you did not specifically ask for, we will explain the reason in writing on the statement we provide describing the funeral goods and services you selected.",
+   "page": 1
+  },
+  {
+   "id": "D-basic-nondeclinable",
+   "text": "This fee for our basic services and overhead will be added to the total cost of the funeral arrangements you select. (This fee is already included in our charges for direct cremations, immediate burials, and forwarding or receiving remains.)",
+   "page": 1
+  },
+  {
+   "id": "D-embalming",
+   "text": "[Except in certain special cases]* [E]mbalming is not required by law. Embalming may be necessary, however, if you select certain funeral arrangements, such as a funeral with viewing. If you do not want embalming, you usually have the right to choose an arrangement that does not require you to pay for it, such as direct cremation or immediate burial.",
+   "page": 1
+  },
+  {
+   "id": "D-casket-list",
+   "text": "A complete price list will be provided at the funeral home.",
+   "page": 2
+  },
+  {
+   "id": "D-obc-list",
+   "text": "A complete price list will be provided at the funeral home.",
+   "page": 2
+  },
+  {
+   "id": "D-alt-container",
+   "text": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are a fiberboard container or an unfinished wood box.",
+   "page": 2
+  }
+ ],
+ "items": [
+  {
+   "category": "basic_services",
+   "label": "Basic Services of Funeral Director and Staff and Overhead",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": "Our services include: conducting the arrangements conference; planning the funeral; consulting with family and clergy; shelter of remains; preparing and filing of necessary notices; obtaining necessary authorizations and permits; coordinating with the cemetery, crematory, or other third parties. In addition, this fee includes a proportionate share of our basic overhead costs.",
+   "page": 1
+  },
+  {
+   "category": "embalming",
+   "label": "Embalming.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Other Preparation of the Body.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "transfer",
+   "label": "Transfer of Remains to the Funeral Home (within __ mile radius)",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "viewing",
+   "label": "Use of Facilities and Staff For Viewing at the Funeral Home.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "funeral_ceremony",
+   "label": "Use of Facilities and Staff For Funeral Ceremony at the Funeral Home",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "memorial_service",
+   "label": "Use of Facilities and Staff For Memorial Service at the Funeral Home.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "graveside",
+   "label": "Use of Equipment and Staff For Graveside Service.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "hearse",
+   "label": "Hearse",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "limousine",
+   "label": "Limousine",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "caskets",
+   "label": "Caskets",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "outer_burial_containers",
+   "label": "Outer Burial Containers",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "forwarding",
+   "label": "Forwarding of Remains to Another Funeral Home.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; preparation of remains [including embalming]†, and local transportation.",
+   "page": 2
+  },
+  {
+   "category": "receiving",
+   "label": "Receiving Remains from Another Funeral Home",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
+   "page": 2
+  },
+  {
+   "category": "direct_cremation",
+   "label": "Direct Cremation",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": "Our charge for a direct cremation (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; transportation to crematory; necessary authorizations [and cremation] °.",
+   "page": 2
+  },
+  {
+   "category": "direct_cremation",
+   "label": "A. Direct cremation with container provided by the purchaser",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "direct_cremation",
+   "label": "B. Direct cremation with a fiberboard container.",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "direct_cremation",
+   "label": "C. Direct cremation with an unfinished wood box",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "Immediate Burial",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": "Our charge for an immediate burial (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; and local transportation to cemetery.",
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "A. Immediate burial with casket provided by the purchaser",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "B. Immediate burial with alternative container [if offered]",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "C. Immediate burial with cloth covered wood casket",
+   "price": null,
+   "priceRange": null,
+   "priceText": null,
+   "includesText": null,
+   "page": 2
+  }
+ ]
+}

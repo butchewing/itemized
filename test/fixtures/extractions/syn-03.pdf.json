@@ -1,0 +1,276 @@
+{
+ "caption": "GENERAL PRICE LIST",
+ "providerName": "Bellwether Memorial Chapel",
+ "address": "9 Tamsin Court, Ravel, TX 78998",
+ "phone": "(830) 555-0163",
+ "effectiveDate": {
+  "raw": "These prices are effective as of September 1, 2026.",
+  "iso": "2026-09-01"
+ },
+ "disclosures": [
+  {
+   "id": "D-selection",
+   "text": "The goods and services shown below are those we can provide to our customers. You may choose only the items you desire. However, any funeral arrangements you select will include a charge for our basic services and overhead. If legal or other requirements mean you must buy any items you did not specifically ask for, we will explain the reason in writing on the statement we provide describing the funeral goods and services you selected.",
+   "page": 1
+  },
+  {
+   "id": "D-basic-nondeclinable",
+   "text": "This fee for our basic services and overhead will be added to the total cost of the funeral arrangements you select. (This fee is already included in our charges for direct cremations, immediate burials, and forwarding or receiving remains.)",
+   "page": 1
+  },
+  {
+   "id": "D-casket-list",
+   "text": "A complete price list will be provided at the funeral home.",
+   "page": 1
+  },
+  {
+   "id": "D-obc-list",
+   "text": "A complete price list will be provided at the funeral home.",
+   "page": 1
+  },
+  {
+   "id": "D-alt-container",
+   "text": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are (specify containers).",
+   "page": 2
+  }
+ ],
+ "items": [
+  {
+   "category": "basic_services",
+   "label": "Basic Services of Funeral Director and Staff and Overhead",
+   "price": 2195,
+   "priceRange": null,
+   "priceText": "$2,195",
+   "includesText": "Our services include: conducting the arrangements conference; planning the funeral; consulting with family and clergy; shelter of remains; preparing and filing of necessary notices; obtaining necessary authorizations and permits; coordinating with the cemetery, crematory, or other third parties. In addition, this fee includes a proportionate share of our basic overhead costs.",
+   "page": 1
+  },
+  {
+   "category": "embalming",
+   "label": "Embalming",
+   "price": 795,
+   "priceRange": null,
+   "priceText": "$795",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Dressing and casketing",
+   "price": 225,
+   "priceRange": null,
+   "priceText": "$225",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Cosmetology and hairdressing",
+   "price": 175,
+   "priceRange": null,
+   "priceText": "$175",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Washing and disinfecting of unembalmed remains",
+   "price": 150,
+   "priceRange": null,
+   "priceText": "$150",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "transfer",
+   "label": "Transfer of Remains to the Funeral Home",
+   "price": 495,
+   "priceRange": null,
+   "priceText": "$495",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "viewing",
+   "label": "Use of Facilities and Staff for Viewing at the Funeral Home",
+   "price": 495,
+   "priceRange": null,
+   "priceText": "$495",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "funeral_ceremony",
+   "label": "Use of Facilities and Staff for Funeral Ceremony at the Funeral Home",
+   "price": 695,
+   "priceRange": null,
+   "priceText": "$695",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "memorial_service",
+   "label": "Use of Facilities and Staff for Memorial Service at the Funeral Home",
+   "price": 595,
+   "priceRange": null,
+   "priceText": "$595",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "graveside",
+   "label": "Use of Equipment and Staff for Graveside Service",
+   "price": 450,
+   "priceRange": null,
+   "priceText": "$450",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "hearse",
+   "label": "Hearse",
+   "price": 395,
+   "priceRange": null,
+   "priceText": "$395",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "limousine",
+   "label": "Limousine",
+   "price": 275,
+   "priceRange": null,
+   "priceText": "$275",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "caskets",
+   "label": "Caskets",
+   "price": null,
+   "priceRange": [
+    995,
+    11950
+   ],
+   "priceText": "$995 to $11,950",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "outer_burial_containers",
+   "label": "Outer Burial Containers",
+   "price": null,
+   "priceRange": [
+    1095,
+    6800
+   ],
+   "priceText": "$1,095 to $6,800",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "forwarding",
+   "label": "Forwarding of Remains to Another Funeral Home",
+   "price": 2495,
+   "priceRange": null,
+   "priceText": "$2,495",
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; preparation of remains; and local transportation.",
+   "page": 1
+  },
+  {
+   "category": "receiving",
+   "label": "Receiving Remains from Another Funeral Home",
+   "price": 2195,
+   "priceRange": null,
+   "priceText": "$2,195",
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
+   "page": 1
+  },
+  {
+   "category": "direct_cremation",
+   "label": "Direct Cremation",
+   "price": null,
+   "priceRange": [
+    1595,
+    2395
+   ],
+   "priceText": "$1,595 to $2,395",
+   "includesText": "Our charge for a direct cremation (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; transportation to crematory; necessary authorizations and cremation.",
+   "page": 2
+  },
+  {
+   "category": "direct_cremation",
+   "label": "A. Direct cremation with container provided by the purchaser",
+   "price": 1595,
+   "priceRange": null,
+   "priceText": "$1,595",
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "direct_cremation",
+   "label": "B. Direct cremation with a cloth-covered cremation casket",
+   "price": 2395,
+   "priceRange": null,
+   "priceText": "$2,395",
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "Immediate Burial",
+   "price": null,
+   "priceRange": [
+    2295,
+    3395
+   ],
+   "priceText": "$2,295 to $3,395",
+   "includesText": "Our charge for an immediate burial (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; and local transportation to cemetery.",
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "A. Immediate burial with casket provided by the purchaser",
+   "price": 2295,
+   "priceRange": null,
+   "priceText": "$2,295",
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "immediate_burial",
+   "label": "B. Immediate burial with a cloth-covered wood casket",
+   "price": 3395,
+   "priceRange": null,
+   "priceText": "$3,395",
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "other",
+   "label": "Memorial register book",
+   "price": 45,
+   "priceRange": null,
+   "priceText": "$45",
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "other",
+   "label": "Memorial folders (per 100)",
+   "price": 95,
+   "priceRange": null,
+   "priceText": "$95",
+   "includesText": null,
+   "page": 2
+  },
+  {
+   "category": "other",
+   "label": "Temporary cremation urn",
+   "price": 35,
+   "priceRange": null,
+   "priceText": "$35",
+   "includesText": null,
+   "page": 2
+  }
+ ]
+}

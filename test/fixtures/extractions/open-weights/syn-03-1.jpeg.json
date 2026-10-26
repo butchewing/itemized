@@ -1,0 +1,184 @@
+{
+ "caption": "GENERAL PRICE LIST",
+ "providerName": "Bellwether Memorial Chapel",
+ "address": "9 Tamsin Court, Ravel, TX 78998",
+ "phone": "(830) 355-0163",
+ "effectiveDate": {
+  "raw": "September 1, 2025",
+  "iso": "2025-09-01"
+ },
+ "disclosures": [
+  {
+   "id": "D-selection",
+   "text": "The goods and services shown below are those we can provide to our customers. You may choose only the items you desire. However, any funeral arrangements you select will include a charge for our basic services and overhead. If legal or other requirements mean you must buy any items you did not specifically ask for, we will explain the reason in writing on the statement we provide describing the funeral goods and services you selected.",
+   "page": 1
+  },
+  {
+   "id": "D-basic-nondeclinable",
+   "text": "This fee for our basic services and overhead will be added to the total cost of the funeral arrangements you select. (This fee is already included in our charges for direct cremations, immediate burials, and forwarding or receiving remains.)",
+   "page": 1
+  },
+  {
+   "id": "D-casket-list",
+   "text": "A complete price list will be provided at the funeral home.",
+   "page": 1
+  },
+  {
+   "id": "D-obc-list",
+   "text": "A complete price list will be provided at the funeral home.",
+   "page": 1
+  }
+ ],
+ "items": [
+  {
+   "category": "basic_services",
+   "label": "Basic Services of Funeral Director and Staff and Overhead",
+   "price": 2195,
+   "priceRange": null,
+   "priceText": "$2,195",
+   "includesText": "Our services include: conducting the arrangements conference; planning the funeral; consulting with family and clergy; shelter of remains; preparing and filing of necessary notices; obtaining necessary authorizations and permits; coordinating with the cemetery, crematory, or other third parties. In addition, this fee includes a proportionate share of our basic overhead costs.",
+   "page": 1
+  },
+  {
+   "category": "embalming",
+   "label": "Embalming",
+   "price": 795,
+   "priceRange": null,
+   "priceText": "$795",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Dressing and casketing",
+   "price": 285,
+   "priceRange": null,
+   "priceText": "$285",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Cosmetology and hairdressing",
+   "price": 175,
+   "priceRange": null,
+   "priceText": "$175",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "other_prep",
+   "label": "Washing and disinfecting of unembalmed remains",
+   "price": 350,
+   "priceRange": null,
+   "priceText": "$350",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "transfer",
+   "label": "Transfer of Remains to the Funeral Home",
+   "price": 495,
+   "priceRange": null,
+   "priceText": "$495",
+   "includesText": "within a 25 mile radius; beyond this radius we charge $3.50 per mile",
+   "page": 1
+  },
+  {
+   "category": "viewing",
+   "label": "Use of Facilities and Staff for Viewing at the Funeral Home",
+   "price": 495,
+   "priceRange": null,
+   "priceText": "$495",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "funeral_ceremony",
+   "label": "Use of Facilities and Staff for Funeral Ceremony at the Funeral Home",
+   "price": 645,
+   "priceRange": null,
+   "priceText": "$645",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "memorial_service",
+   "label": "Use of Facilities and Staff for Memorial Service at the Funeral Home",
+   "price": 395,
+   "priceRange": null,
+   "priceText": "$395",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "graveside",
+   "label": "Use of Equipment and Staff for Graveside Service",
+   "price": 430,
+   "priceRange": null,
+   "priceText": "$430",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "hearse",
+   "label": "Hearse",
+   "price": 395,
+   "priceRange": null,
+   "priceText": "$395",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "limousine",
+   "label": "Limousine",
+   "price": 275,
+   "priceRange": null,
+   "priceText": "$275",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "caskets",
+   "label": "Caskets",
+   "price": null,
+   "priceRange": [
+    945,
+    14950
+   ],
+   "priceText": "$945 to $14,950",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "outer_burial_containers",
+   "label": "Outer Burial Containers",
+   "price": null,
+   "priceRange": [
+    1095,
+    6800
+   ],
+   "priceText": "$1,095 to $6,800",
+   "includesText": null,
+   "page": 1
+  },
+  {
+   "category": "forwarding",
+   "label": "Forwarding of Remains to Another Funeral Home",
+   "price": 2495,
+   "priceRange": null,
+   "priceText": "$2,495",
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; preparation of remains; and local transportation.",
+   "page": 1
+  },
+  {
+   "category": "receiving",
+   "label": "Receiving Remains from Another Funeral Home",
+   "price": 2195,
+   "priceRange": null,
+   "priceText": "$2,195",
+   "includesText": null,
+   "page": 1
+  }
+ ]
+}

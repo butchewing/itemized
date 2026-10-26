@@ -1,6 +1,7 @@
 import { canTransition, type AuditStatus, type Provider } from './audit';
 import { PROMPT_VERSION, type GplExtraction } from './extraction';
 import { PROVIDER_CONFIG, type Usage } from './models';
+import type { Report } from './rules/types';
 
 export type AuditRow = {
   id: string;
@@ -97,4 +98,16 @@ export async function spendTodayUtc(db: D1Database) {
     .prepare(`SELECT COALESCE(SUM(cost_usd), 0) AS cost FROM model_calls WHERE substr(created_at, 1, 10) = date('now')`)
     .first<{ cost: number }>();
   return row?.cost ?? 0;
+}
+
+export async function putReport(db: D1Database, auditId: string, report: Report) {
+  await db
+    .prepare('INSERT OR REPLACE INTO reports (audit_id, ruleset_version, json) VALUES (?, ?, ?)')
+    .bind(auditId, `${report.rulesetId}@${report.rulesetVersion}`, JSON.stringify(report))
+    .run();
+}
+
+export async function getReport(db: D1Database, auditId: string) {
+  const row = await db.prepare('SELECT json FROM reports WHERE audit_id = ?').bind(auditId).first<{ json: string }>();
+  return row ? (JSON.parse(row.json) as Report) : null;
 }

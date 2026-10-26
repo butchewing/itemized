@@ -1,7 +1,10 @@
+import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from './audit';
 
 const accept = Object.keys(ACCEPTED_TYPES).join(',');
 const maxMb = MAX_UPLOAD_BYTES / (1024 * 1024);
+// Inlined into a <script>; escaping "<" keeps ruleset text from closing the tag.
+const basisJson = JSON.stringify(ruleset.basis_values).replace(/</g, '\\u003c');
 
 export const PAGE = `<!doctype html>
 <html lang="en">
@@ -19,6 +22,14 @@ export const PAGE = `<!doctype html>
   #status { margin-top: 1.5rem; font-weight: 600; }
   .note { margin: 0 0 1rem; font-size: .9rem; opacity: .85; }
   small { display: block; margin-top: 2rem; opacity: .75; }
+  #report h3 { margin-top: 2rem; }
+  #report ul { padding-left: 1.25rem; }
+  #report li { margin-bottom: 1.25rem; }
+  #report h4 { margin: 0; font-size: 1rem; }
+  #report .cite { margin: .1rem 0; font-size: .85rem; opacity: .8; }
+  #report p { margin: .25rem 0; }
+  #report blockquote { margin: .4rem 0; padding-left: .75rem; border-left: 3px solid currentColor; font-size: .9rem; white-space: pre-wrap; }
+  #report .reason { font-size: .85rem; opacity: .8; }
 </style>
 </head>
 <body>
@@ -32,6 +43,10 @@ export const PAGE = `<!doctype html>
     <button type="submit">Check this list</button>
   </form>
   <p id="status" role="status" aria-live="polite"></p>
+  <section id="report" aria-labelledby="report-heading" hidden>
+    <h2 id="report-heading" tabindex="-1">Findings</h2>
+    <div id="report-body"></div>
+  </section>
   <small>Itemized is a compliance-review aid, not legal advice.</small>
 </main>
 <script>
@@ -45,11 +60,68 @@ const LABELS = {
   failed: 'The check failed.',
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const BASIS = ${basisJson};
+const GROUPS = [
+  ['fail', 'Fail'],
+  ['review', 'Needs review'],
+  ['pass', 'Pass'],
+];
+
+function el(tag, text, cls) {
+  const node = document.createElement(tag);
+  if (text != null) node.textContent = text;
+  if (cls) node.className = cls;
+  return node;
+}
+
+function findingItem(f) {
+  const li = el('li');
+  li.append(el('h4', f.title + ' (' + f.checkId + ')'));
+  li.append(el('p', f.cite || BASIS[f.basis] || '', 'cite'));
+  // Some ruleset plain texts describe the problem, so they read wrong under a pass.
+  if (f.verdict !== 'pass') li.append(el('p', f.plain));
+  if (f.evidence && f.evidence.quote) {
+    const q = el('blockquote', f.evidence.quote);
+    if (f.evidence.page) q.setAttribute('aria-label', 'Text from page ' + f.evidence.page);
+    li.append(q);
+  }
+  li.append(el('p', f.reason, 'reason'));
+  return li;
+}
+
+function renderReport(report) {
+  const section = document.getElementById('report');
+  const body = document.getElementById('report-body');
+  body.replaceChildren();
+  const c = report.counts;
+  body.append(el('p', c.fail + ' fail, ' + c.review + ' need review, ' + c.pass + ' pass. Ruleset ' + report.rulesetId + '@' + report.rulesetVersion + '.'));
+  for (const [verdict, label] of GROUPS) {
+    const items = report.findings.filter((f) => f.verdict === verdict);
+    if (!items.length) continue;
+    body.append(el('h3', label + ' (' + items.length + ')'));
+    const ul = el('ul');
+    for (const f of items) ul.append(findingItem(f));
+    body.append(ul);
+  }
+  const na = report.findings.filter((f) => f.verdict === 'not_applicable');
+  if (na.length) {
+    const details = el('details');
+    details.append(el('summary', 'Not applicable (' + na.length + ')'));
+    const ul = el('ul');
+    for (const f of na) ul.append(el('li', f.title + ' (' + f.checkId + '): ' + f.reason));
+    details.append(ul);
+    body.append(details);
+  }
+  if (report.notRun.length) body.append(el('p', report.notRun.length + ' checks that need model judgment are not run yet.'));
+  section.hidden = false;
+  document.getElementById('report-heading').focus();
+}
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const button = form.querySelector('button');
   button.disabled = true;
+  document.getElementById('report').hidden = true;
   statusEl.textContent = 'Uploading...';
   try {
     const res = await fetch('/api/audits', { method: 'POST', body: new FormData(form) });
@@ -58,6 +130,7 @@ form.addEventListener('submit', async (e) => {
     for (;;) {
       const audit = await (await fetch('/api/audits/' + body.id)).json();
       statusEl.textContent = LABELS[audit.status] + (audit.error ? ' ' + audit.error : '');
+      if (audit.status === 'done' && audit.report) renderReport(audit.report);
       if (audit.status === 'done' || audit.status === 'failed') break;
       await sleep(1500);
     }
