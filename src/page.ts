@@ -29,6 +29,8 @@ export const PAGE = `<!doctype html>
   #report .cite { margin: .1rem 0; font-size: .85rem; opacity: .8; }
   #report p { margin: .25rem 0; }
   #report blockquote { margin: .4rem 0; padding-left: .75rem; border-left: 3px solid currentColor; font-size: .9rem; white-space: pre-wrap; }
+  .explainer { margin-top: 2.5rem; }
+  .explainer h2 { font-size: 1.1rem; margin: 1.5rem 0 .5rem; }
   .disclaimer { margin-top: 2rem; padding: .75rem 1rem; border: 1px solid currentColor; border-radius: .5rem; font-size: .9rem; }
   .disclaimer h2 { font-size: 1rem; margin: 0 0 .5rem; }
   .disclaimer p { margin: .4rem 0; }
@@ -48,6 +50,14 @@ export const PAGE = `<!doctype html>
   <section id="report" aria-labelledby="report-heading" hidden>
     <h2 id="report-heading" tabindex="-1">Findings</h2>
     <div id="report-body"></div>
+  </section>
+  <section class="explainer" aria-labelledby="rule-heading">
+    <h2 id="rule-heading">What is the Funeral Rule?</h2>
+    <p>The Funeral Rule is a federal regulation enforced by the Federal Trade Commission. It lets families choose only the funeral goods and services they want, pay only for those, and compare prices between funeral homes. A funeral home must give a General Price List, which the family can keep, showing each item and service it offers and what it costs. The FTC checks compliance with undercover inspections every year.</p>
+    <p>Read more from the FTC: <a href="https://consumer.ftc.gov/articles/ftc-funeral-rule">the Funeral Rule for families</a> and <a href="https://www.ftc.gov/news-events/topics/truth-advertising/funeral-rule">the Funeral Rule for funeral providers</a>.</p>
+    <h2>How Itemized helps</h2>
+    <p>Itemized reads a General Price List from a PDF or a phone photo and checks it against the Rule's requirements for that list: the required statements, itemized prices, and required options such as direct cremation with an alternative container. Each result cites the section of the Rule it comes from and quotes the part of the list it is based on.</p>
+    <p>Funeral homes can use it to check a list before an inspection. Families can use it to understand what a price list should include.</p>
   </section>
   <section class="disclaimer" aria-labelledby="about-heading">
     <h2 id="about-heading">About these results</h2>
