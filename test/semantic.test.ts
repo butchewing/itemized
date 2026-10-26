@@ -174,7 +174,7 @@ describe('semantic fixtures (muse-spark-1.3, low effort) against labels.json', (
 
   it('runs all 13 checks, so notRun is empty and the letter drops its not-run line', () => {
     for (const r of Object.values(reports)) expect(r.notRun).toEqual([]);
-    const html = renderLetterHtml({ extraction: loadX('syn-10'), report: reports['syn-10']!, modelName: 'Muse Spark 1.3', date: AUDIT_DATE });
+    const html = renderLetterHtml({ extraction: loadX('syn-10'), report: reports['syn-10']!, modelName: 'Muse Spark 1.3', date: AUDIT_DATE, uploadedAt: AUDIT_DATE, docSha256: '0'.repeat(64) });
     expect(html).not.toMatch(/not part of this review yet/);
   });
 

@@ -11,6 +11,7 @@
 !/package-lock.json
 !/tsconfig.json
 !/wrangler.jsonc
+!/wrangler.production.jsonc
 !/worker-configuration.d.ts
 !/src/
 !/migrations/
@@ -41,6 +42,8 @@
 **/.remember/
 **/.env*
 **/.dev.vars*
+# The secret-free template the Deploy to Cloudflare button reads; real .dev.vars stays ignored above.
+!/.dev.vars.example
 **/node_modules/
 **/.wrangler/
 **/.DS_Store

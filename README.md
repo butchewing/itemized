@@ -4,6 +4,10 @@ Itemized checks funeral home price lists against the FTC Funeral Rule and flags 
 
 Built for the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai.
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/butchewing/itemized)
+
+**Deploy your own.** The button deploys Itemized to your own Cloudflare account and creates its database, storage bucket and queue there. You need a Meta Model API key; a Baseten key is optional. Cloudflare's free-tier limits apply, and model calls are billed to your Meta account.
+
 Itemized is an automated, AI-assisted check against the federal FTC Funeral Rule only. It does not check state law or the other price lists and statements the Rule requires, and the AI can misread documents. Results are not legal advice. Funeral homes should confirm results with their attorney or state funeral regulator.
 
 ## The Funeral Rule
@@ -28,14 +32,24 @@ In progress. Uploads are accepted, stored and queued. The extraction and checkin
 
 ## Local development
 
+There are two Wrangler configurations. `wrangler.jsonc` is portable: it names no account, domain or resource IDs, and it is what the Deploy to Cloudflare button uses. `wrangler.production.jsonc` holds the settings for itemized.mortuary.ai.
+
 ```
+cp .dev.vars.example .dev.vars   # then fill in META_API_KEY
+npx wrangler d1 migrations apply DB --local
 npm run dev
-npx wrangler d1 migrations apply itemized --local
 ```
 
-Run `npm run types` after changing `wrangler.jsonc`, and `npm run typecheck` to check the code.
+To work against the production configuration locally, use `npx wrangler d1 migrations apply DB --local -c wrangler.production.jsonc` and `npm run dev:production`.
 
-Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KEY`, and later `BASETEN_API_KEY`.
+Run `npm run types` after changing either configuration (types come from `wrangler.production.jsonc`), and `npm run typecheck` and `npm test` to check the code.
+
+Deploying:
+
+- `npm run deploy` applies D1 migrations and deploys with the portable configuration. The button runs this in your account.
+- `npm run deploy:production` applies D1 migrations and deploys itemized.mortuary.ai with `wrangler.production.jsonc`.
+
+Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KEY`, and `BASETEN_API_KEY` if you use the open-weights provider.
 
 ## Provenance
 

@@ -7,8 +7,19 @@ import {
   type AuditMessage,
   type AuditStatus,
 } from './audit';
+import { runCleanup } from './cleanup';
 import { runAudit } from './pipeline';
-import { auditSpend, getAudit, getExtraction, getReport, loadReview, type AuditRow } from './store';
+import {
+  auditSpend,
+  createAudit,
+  findReusable,
+  getAudit,
+  getExtraction,
+  getReport,
+  loadReview,
+  touchAudit,
+  type AuditRow,
+} from './store';
 import { renderLetterHtml } from './letter';
 import { PAGE } from './page';
 import { notFoundPage, PDF_FAILED, pdfFilename, reviewPage } from './review';
@@ -18,10 +29,7 @@ const toJson = (r: AuditRow) => ({
   id: r.id,
   status: r.status,
   provider: r.provider,
-  docKey: r.doc_key,
-  docSha256: r.doc_sha256,
   contentType: r.content_type,
-  filename: r.filename,
   error: r.error,
   createdAt: r.created_at,
   updatedAt: r.updated_at,
@@ -62,17 +70,18 @@ app.post('/api/audits', async (c) => {
   const bytes = await file.arrayBuffer();
   const sha256 = hex(await crypto.subtle.digest('SHA-256', bytes));
   const docKey = `docs/${sha256}`;
-  if (!(await c.env.DOCS.head(docKey))) {
-    await c.env.DOCS.put(docKey, bytes, { httpMetadata: { contentType: file.type } });
+  // Always re-put: a fresh write resets the object's age for the bucket's 30-day lifecycle rule.
+  await c.env.DOCS.put(docKey, bytes, { httpMetadata: { contentType: file.type } });
+
+  const now = new Date();
+  const reusable = await findReusable(c.env.DB, sha256, provider, now);
+  if (reusable) {
+    await touchAudit(c.env.DB, reusable.id, now);
+    return c.json({ id: reusable.id, status: reusable.status }, 202);
   }
 
   const id = crypto.randomUUID();
-  await c.env.DB.prepare(
-    `INSERT INTO audits (id, status, provider, doc_key, doc_sha256, content_type, filename)
-     VALUES (?, 'queued', ?, ?, ?, ?, ?)`,
-  )
-    .bind(id, provider, docKey, sha256, file.type, file.name || null)
-    .run();
+  await createAudit(c.env.DB, { id, provider, docKey, sha256, contentType: file.type, filename: file.name || null }, now);
   await c.env.AUDITS.send({ auditId: id } satisfies AuditMessage);
 
   return c.json({ id, status: 'queued' satisfies AuditStatus }, 202);
@@ -165,8 +174,12 @@ async function queue(batch: MessageBatch<AuditMessage>, env: Env): Promise<void>
   }
 }
 
+async function scheduled(_controller: ScheduledController, env: Env): Promise<void> {
+  console.log('cleanup', JSON.stringify(await runCleanup(env, new Date())));
+}
+
 app.notFound((c) =>
   c.req.path.startsWith('/api/') ? c.json({ error: 'Not found.' }, 404) : c.html(notFoundPage('page'), 404),
 );
 
-export default { fetch: app.fetch, queue } satisfies ExportedHandler<Env, AuditMessage>;
+export default { fetch: app.fetch, queue, scheduled } satisfies ExportedHandler<Env, AuditMessage>;

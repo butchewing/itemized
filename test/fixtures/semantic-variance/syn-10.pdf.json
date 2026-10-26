@@ -1,0 +1,399 @@
+{
+ "list": "syn-10",
+ "promptVersion": "semantic-5",
+ "fixtureVerdicts": {
+  "C-011": "pass",
+  "C-021": "pass",
+  "C-025": "review",
+  "C-031": "pass",
+  "C-032": "review",
+  "C-045": "pass",
+  "C-046": "pass",
+  "C-047": "pass",
+  "C-075": "pass",
+  "C-080": "pass",
+  "C-081": "review",
+  "C-082": "review",
+  "C-083": "review"
+ },
+ "samples": [
+  {
+   "raw": {
+    "checks": [
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-selection is on page 1 and itemized prices start on page 1, so the disclosure is on the same page as the prices it accompanies.",
+      "id": "C-011",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The includesText lists arrangements conference, planning, shelter of remains, notices, authorizations and permits, and coordination with cemetery, crematory or other third parties.",
+      "id": "C-021",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list prices a separate fee that applies when a casket is obtained elsewhere, in addition to the basic services fee.",
+      "id": "C-025",
+      "page": 1,
+      "quote": "Casket Handling Fee (applies when a casket is purchased elsewhere)"
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-embalming is on page 1 and the embalming price is on page 1, so they are on the same page.",
+      "id": "C-031",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list states that embalming is required before any cremation by the firm, which includes direct cremation.",
+      "id": "C-032",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-alt-container is on page 2 and the direct cremation range is on page 2, so they are on the same page.",
+      "id": "C-045",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation is offered with a purchaser-provided container, fiberboard container, or wood box options, with no text saying a casket is required.",
+      "id": "C-046",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The direct cremation description mentions cremation in its includesText, and no crematory cash-advance charge is listed alongside it.",
+      "id": "C-047",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Forwarding, receiving, direct cremation and immediate burial each have their own priced lines, and package components also appear as separate lines.",
+      "id": "C-075",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The Traditional Funeral Package lists components that each have an itemized price above, and states each item is also available separately.",
+      "id": "C-080",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list states that state law requires a purchase, specifically embalming before cremation.",
+      "id": "C-081",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list says sealed burial vaults protect from water and elements for generations.",
+      "id": "C-082",
+      "page": 2,
+      "quote": "Our sealed burial vaults protect your loved one from water and the elements for generations to come."
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The statement that embalming is required before any cremation runs counter to the embalming disclosure that embalming is usually not required and direct cremation is an option without it.",
+      "id": "C-083",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     }
+    ]
+   },
+   "verdicts": {
+    "C-011": "pass",
+    "C-021": "pass",
+    "C-025": "review",
+    "C-031": "pass",
+    "C-032": "review",
+    "C-045": "pass",
+    "C-046": "pass",
+    "C-047": "pass",
+    "C-075": "pass",
+    "C-080": "pass",
+    "C-081": "review",
+    "C-082": "review",
+    "C-083": "review"
+   },
+   "costUsd": 0.0136613
+  },
+  {
+   "raw": {
+    "checks": [
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-selection is on page 1 and itemized prices begin on page 1, so the disclosure is on the same page as the prices.",
+      "id": "C-011",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The includesText lists arrangements conference, planning, consulting with family and clergy, shelter of remains, notices, permits and authorizations, and coordination with cemetery, crematory or other third parties.",
+      "id": "C-021",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list shows an additional fee labeled as a casket handling fee that applies when a casket is purchased elsewhere.",
+      "id": "C-025",
+      "page": 1,
+      "quote": "Casket Handling Fee (applies when a casket is purchased elsewhere)"
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-embalming is on page 1 and the embalming price is on page 1, so they are on the same page.",
+      "id": "C-031",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list states that embalming is required before any cremation by the firm, which includes direct cremation.",
+      "id": "C-032",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-alt-container is on page 2 and the direct cremation range is on page 2, so they are on the same page.",
+      "id": "C-045",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text states that a casket is required for direct cremation; the list offers purchaser-provided container, fiberboard container, and wood box options.",
+      "id": "C-046",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The direct cremation description mentions cremation, but no cash-advance listing for a crematory fee is shown to create ambiguity.",
+      "id": "C-047",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Forwarding, receiving, direct cremation and immediate burial all have their own priced lines, and package components are described as available separately at the prices above.",
+      "id": "C-075",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The Traditional Funeral Package lists basic services, embalming, viewing, funeral ceremony, hearse, and a steel casket, each of which has an itemized price or range above.",
+      "id": "C-080",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list asserts that state law requires a purchase, specifically embalming before any cremation by the firm.",
+      "id": "C-081",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list states that sealed burial vaults protect from water and the elements for generations.",
+      "id": "C-082",
+      "page": 2,
+      "quote": "Our sealed burial vaults protect your loved one from water and the elements for generations to come."
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The statement that state law requires embalming before any cremation undercuts the required disclosure that embalming is not required by law except in certain special cases.",
+      "id": "C-083",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     }
+    ]
+   },
+   "verdicts": {
+    "C-011": "pass",
+    "C-021": "pass",
+    "C-025": "review",
+    "C-031": "pass",
+    "C-032": "review",
+    "C-045": "pass",
+    "C-046": "pass",
+    "C-047": "pass",
+    "C-075": "pass",
+    "C-080": "pass",
+    "C-081": "review",
+    "C-082": "review",
+    "C-083": "review"
+   },
+   "costUsd": 0.01766275
+  },
+  {
+   "raw": {
+    "checks": [
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-selection and the itemized prices both appear on page 1, so the disclosure is on the same page as the prices it accompanies.",
+      "id": "C-011",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The includesText lists the arrangements conference, shelter of remains, notices, permits/authorizations, and coordination with cemetery, crematory or other third parties.",
+      "id": "C-021",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list shows an additional mandatory charge for handling a casket purchased elsewhere.",
+      "id": "C-025",
+      "page": 1,
+      "quote": "Casket Handling Fee (applies when a casket is purchased elsewhere)"
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-embalming and the Embalming $795 price both appear on page 1, so they are on the same page.",
+      "id": "C-031",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list states that embalming is required before any cremation by the firm, which includes direct cremation.",
+      "id": "C-032",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-alt-container and the direct cremation $1,595 to $1,945 range both appear on page 2, so they are on the same page.",
+      "id": "C-045",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation is offered with purchaser-provided container, fiberboard container, and wood box options, and no text says a casket is required.",
+      "id": "C-046",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The direct cremation description mentions cremation in its includesText, and no separate crematory cash-advance charge is shown.",
+      "id": "C-047",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Forwarding, receiving, direct cremation and immediate burial each have their own lines, and package components also appear as itemized lines.",
+      "id": "C-075",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The Traditional Funeral Package states each item is also available separately, and its components have itemized prices above.",
+      "id": "C-080",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list asserts state law requires embalming before any cremation performed by the firm.",
+      "id": "C-081",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The list states sealed burial vaults protect from water and the elements for generations.",
+      "id": "C-082",
+      "page": 2,
+      "quote": "Our sealed burial vaults protect your loved one from water and the elements for generations to come."
+     },
+     {
+      "applies": true,
+      "concern": true,
+      "explanation": "The statement that state law requires embalming before any cremation sits alongside the required disclosure that embalming is not required by law except in special cases.",
+      "id": "C-083",
+      "page": 2,
+      "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+     }
+    ]
+   },
+   "verdicts": {
+    "C-011": "pass",
+    "C-021": "pass",
+    "C-025": "review",
+    "C-031": "pass",
+    "C-032": "review",
+    "C-045": "pass",
+    "C-046": "pass",
+    "C-047": "pass",
+    "C-075": "pass",
+    "C-080": "pass",
+    "C-081": "review",
+    "C-082": "review",
+    "C-083": "review"
+   },
+   "costUsd": 0.01913325
+  }
+ ]
+}

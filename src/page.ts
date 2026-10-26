@@ -50,7 +50,7 @@ ${HEAD_LINKS}
     </div>
     <div class="submit-row">
       <button class="btn btn-primary" id="submit" type="submit" disabled>Review this list</button>
-      <p class="fine">Documents are processed by Meta AI models, and Meta may use them to improve its products. Uploaded files are deleted after 30 days. Upload only price lists you are allowed to share.</p>
+      <p class="fine">Documents are processed by Meta AI models, and Meta may use them to improve its products. Uploaded files and their reviews are deleted 30 days after the file was last uploaded. Upload only price lists you are allowed to share.</p>
     </div>
   </form>
 

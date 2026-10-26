@@ -5,6 +5,9 @@ import { pdfFilename } from '../src/review';
 import type { Finding, Report, Verdict } from '../src/rules/types';
 
 const DATE = new Date('2026-10-26T18:00:00Z');
+const UPLOADED = new Date('2026-10-24T23:30:00Z');
+const SHA = 'A3F09C21B7E4D5C6F8091A2B3C4D5E6F708192A3B4C5D6E7F8091A2B3C4D5E6F';
+const PROVENANCE = { uploadedAt: UPLOADED, docSha256: SHA };
 
 const finding = (checkId: string, verdict: Verdict, over: Partial<Finding> = {}): Finding => ({
   checkId,
@@ -36,7 +39,7 @@ const FINDINGS = [
 ];
 
 describe('renderLetterHtml', () => {
-  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE });
+  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE });
 
   it('names the Meta model that read the list', () => {
     expect(html).toContain('Read by Meta’s Muse Spark 1.3.');
@@ -72,6 +75,7 @@ describe('renderLetterHtml', () => {
       extraction: null,
       modelName: 'Muse Spark 1.3', report: report([...FINDINGS, finding('e', 'review')]),
       date: DATE,
+      ...PROVENANCE,
     });
     expect(two).toContain('<strong>2</strong> need a person’s review');
     expect(two).toContain('Re: your General Price List');
@@ -83,7 +87,7 @@ describe('renderLetterHtml', () => {
     expect(at.every((i) => i > 0)).toBe(true);
     expect([...at].sort((x, y) => x - y)).toEqual(at);
     expect(html).toContain('<details class="group"><summary>Passed (1)');
-    const print = renderLetterHtml({ extraction: null, modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE }, 'print');
+    const print = renderLetterHtml({ extraction: null, modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE }, 'print');
     expect(print).toContain('<details class="group" open><summary>Passed (1)');
     expect(print).toContain('<details class="group" open><summary>Not applicable to this list (1)');
   });
@@ -91,6 +95,47 @@ describe('renderLetterHtml', () => {
   it('dates the letter from the review, not the clock', () => {
     expect(html).toContain('October 26, 2026');
     expect(html).toContain('ruleset ftc-453@2026.1, on October 26, 2026.');
+  });
+});
+
+describe('review notes', () => {
+  const DETERMINISTIC_NOTE = 'Itemized could not read or match this part of the list clearly enough to decide. A person should check it.';
+  const JUDGMENT_NOTE = 'This item calls for judgment about wording or placement. A person should read the quoted text and decide.';
+  const html = renderLetterHtml({
+    extraction: null,
+    modelName: 'Muse Spark 1.3',
+    report: report([finding('C-081', 'review', { title: 'Semantic one' }), finding('C-010', 'review', { title: 'Deterministic one' })]),
+    date: DATE,
+    ...PROVENANCE,
+  });
+  const itemOf = (title: string) => html.slice(html.indexOf(title), html.indexOf('</li>', html.indexOf(title)));
+
+  it('gives a semantic check’s review the judgment note', () => {
+    expect(itemOf('Semantic one')).toContain(JUDGMENT_NOTE);
+    expect(itemOf('Semantic one')).not.toContain(DETERMINISTIC_NOTE);
+  });
+
+  it('keeps the read-or-match note on a deterministic check’s review', () => {
+    expect(itemOf('Deterministic one')).toContain(DETERMINISTIC_NOTE);
+    expect(itemOf('Deterministic one')).not.toContain(JUDGMENT_NOTE);
+  });
+});
+
+describe('provenance', () => {
+  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE });
+
+  it('states the first upload date and a 12-hex lowercase fingerprint after the model line', () => {
+    expect(html).toContain(
+      'This review covers the document first uploaded to Itemized on October 24, 2026 (file fingerprint a3f09c21b7e4). Itemized does not verify who published the document.',
+    );
+    expect(html).toMatch(/\(file fingerprint [0-9a-f]{12}\)\./);
+    expect(html.indexOf('This review covers')).toBeGreaterThan(html.indexOf('Read by Meta’s'));
+    expect(html.indexOf('This review covers')).toBeLessThan(html.indexOf('About these results'));
+  });
+
+  it('carries the same sentence into the print version that becomes the PDF', () => {
+    const print = renderLetterHtml({ extraction: null, modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE }, 'print');
+    expect(print).toContain('(file fingerprint a3f09c21b7e4)');
   });
 });
 

@@ -8,6 +8,9 @@ export type LetterInput = {
   modelName: string;
   // When the review finished; the letter, its closing line and the PDF filename all use it.
   date: Date;
+  // When this file was first uploaded; a repeat upload reuses the audit, so this stays fixed.
+  uploadedAt: Date;
+  docSha256: string;
 };
 
 export type LetterMode = 'screen' | 'print';
@@ -21,7 +24,14 @@ export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check
       <p><strong>Funeral homes:</strong> confirm any result with your attorney or your state funeral regulator before acting on it.</p>
       <p><strong>Families:</strong> if something here concerns you, ask the funeral home about it. You can also contact the Federal Trade Commission or the state agency that licenses funeral homes.</p>`;
 
-const REVIEW_NOTE = 'Itemized could not read or match this part of the list clearly enough to decide. A person should check it.';
+const REVIEW_NOTES = {
+  deterministic: 'Itemized could not read or match this part of the list clearly enough to decide. A person should check it.',
+  semantic: 'This item calls for judgment about wording or placement. A person should read the quoted text and decide.',
+} as const;
+
+// Keyed on the ruleset's engine, not the stored finding, so reports saved before this note existed get it too.
+const ENGINE_OF = new Map(ruleset.checks.map((c) => [c.id, c.engine]));
+const reviewNote = (f: Finding) => REVIEW_NOTES[ENGINE_OF.get(f.checkId) === 'semantic' ? 'semantic' : 'deterministic'];
 
 const BASIS: Record<string, string> = ruleset.basis_values;
 
@@ -45,14 +55,14 @@ function findingItem(f: Finding): string {
         f.evidence.page ? `From your list, page ${escapeHtml(f.evidence.page)}` : 'From your list'
       }</span></blockquote>`
     : '';
-  const note = f.verdict === 'review' ? `<p class="review-note">${REVIEW_NOTE}</p>` : '';
+  const note = f.verdict === 'review' ? `<p class="review-note">${reviewNote(f)}</p>` : '';
   return `<li class="finding"><h4>${escapeHtml(f.title)}</h4><p class="plain">${escapeHtml(f.plain)}</p>${quote}${note}<div class="margin">${escapeHtml(citeOf(f))}</div></li>`;
 }
 
 const simpleItem = (f: Finding) =>
   `<li><span>${escapeHtml(f.title)}</span><span class="cite">${escapeHtml(citeOf(f))}</span></li>`;
 
-export function renderLetterHtml({ extraction, report, modelName, date }: LetterInput, mode: LetterMode = 'screen'): string {
+export function renderLetterHtml({ extraction, report, modelName, date, uploadedAt, docSha256 }: LetterInput, mode: LetterMode = 'screen'): string {
   const provider = extraction?.providerName;
   const when = letterDate(date);
   const c = report.counts;
@@ -83,6 +93,7 @@ export function renderLetterHtml({ extraction, report, modelName, date }: Letter
     <div class="closing">
       <p class="signature">Itemized</p>
       <p>Read by Meta’s ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}, on ${escapeHtml(when)}.</p>
+      <p>This review covers the document first uploaded to Itemized on ${escapeHtml(letterDate(uploadedAt))} (file fingerprint ${escapeHtml(docSha256.slice(0, 12).toLowerCase())}). Itemized does not verify who published the document.</p>
       ${notRun}
     </div>
     <section class="limits" aria-labelledby="letter-limits">

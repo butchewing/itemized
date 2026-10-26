@@ -14,6 +14,8 @@ The Meta Global AI Developer Hackathon rules require that judges can tell what w
 | `specimens/ftc-sample1-gpl-template.pdf` | 2026-10-20 | FTC Sample 1 GPL, extracted from the FTC's *Complying with the Funeral Rule* (public US government work) |
 | `specimens/labels.json` | 2026-10-20 | Hand-labeled expected findings for the FTC template |
 
+Edited during the event: clarifying sentences added to the `test` text of C-075, C-080 and C-083 in the ruleset (see git history).
+
 A private build plan (2026-10-20) and the generator script for the synthetic lists also predate the event. Neither is in this repo.
 
 ## Built during the event

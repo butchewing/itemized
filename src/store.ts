@@ -3,6 +3,7 @@ import { canTransition, type AuditStatus, type Provider } from './audit';
 import { PROMPT_VERSION, type GplExtraction } from './extraction';
 import { PROVIDER_CONFIG, type Usage } from './models';
 import { parseSemantic, SEMANTIC_PROMPT_VERSION } from './rules/semantic';
+import type { LetterInput } from './letter';
 import type { Report } from './rules/types';
 
 export type AuditRow = {
@@ -16,7 +17,48 @@ export type AuditRow = {
   error: string | null;
   created_at: string;
   updated_at: string;
+  last_used_at: string | null;
+  versions: string | null;
 };
+
+// Every version a finished audit's report depends on. An audit is reused only when this matches.
+export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}`;
+
+export const REUSE_DAYS = 30;
+// toISOString matches the schema's strftime('%Y-%m-%dT%H:%M:%fZ'), so the strings compare in time order.
+export const daysBefore = (now: Date, days: number) => new Date(now.getTime() - days * 86_400_000).toISOString();
+
+// An unfinished audit is reused only while it is still moving: one whose queue message was lost
+// would otherwise be handed back, never finishing, for as long as people keep uploading the file.
+const STALLED_AFTER_MS = 15 * 60_000;
+
+export async function findReusable(db: D1Database, sha256: string, provider: Provider, now: Date) {
+  return db
+    .prepare(
+      `SELECT id, status FROM audits
+       WHERE doc_sha256 = ? AND provider = ? AND versions = ? AND last_used_at >= ?
+         AND (status = 'done' OR (status != 'failed' AND updated_at >= ?))
+       ORDER BY created_at DESC LIMIT 1`,
+    )
+    .bind(sha256, provider, PIPELINE_VERSIONS, daysBefore(now, REUSE_DAYS), new Date(now.getTime() - STALLED_AFTER_MS).toISOString())
+    .first<{ id: string; status: AuditStatus }>();
+}
+
+export const touchAudit = (db: D1Database, id: string, now: Date) =>
+  db.prepare('UPDATE audits SET last_used_at = ? WHERE id = ?').bind(now.toISOString(), id).run();
+
+export type NewAudit = { id: string; provider: Provider; docKey: string; sha256: string; contentType: string; filename: string | null };
+
+export async function createAudit(db: D1Database, a: NewAudit, now: Date) {
+  const at = now.toISOString();
+  await db
+    .prepare(
+      `INSERT INTO audits (id, status, provider, doc_key, doc_sha256, content_type, filename, created_at, updated_at, last_used_at, versions)
+       VALUES (?, 'queued', ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .bind(a.id, a.provider, a.docKey, a.sha256, a.contentType, a.filename, at, at, at, PIPELINE_VERSIONS)
+    .run();
+}
 
 export const getAudit = (db: D1Database, id: string) =>
   db.prepare('SELECT * FROM audits WHERE id = ?').bind(id).first<AuditRow>();
@@ -141,7 +183,7 @@ export async function getReport(db: D1Database, auditId: string) {
   return row ? (JSON.parse(row.json) as Report) : null;
 }
 
-export type ReviewView = { id: string; date: Date; modelName: string; extraction: GplExtraction | null; report: Report };
+export type ReviewView = LetterInput & { id: string };
 
 export async function loadReview(db: D1Database, id: string): Promise<ReviewView | 'not_found' | 'not_ready'> {
   const row = await getAudit(db, id);
@@ -149,5 +191,13 @@ export async function loadReview(db: D1Database, id: string): Promise<ReviewView
   if (row.status !== 'done') return 'not_ready';
   const [extraction, report] = await Promise.all([getExtraction(db, row.doc_sha256, row.provider), getReport(db, row.id)]);
   if (!report) return 'not_ready';
-  return { id: row.id, date: new Date(row.updated_at), modelName: PROVIDER_CONFIG[row.provider].displayName, extraction, report };
+  return {
+    id: row.id,
+    date: new Date(row.updated_at),
+    uploadedAt: new Date(row.created_at),
+    docSha256: row.doc_sha256,
+    modelName: PROVIDER_CONFIG[row.provider].displayName,
+    extraction,
+    report,
+  };
 }

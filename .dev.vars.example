@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local development. Never commit real values.
+# Required. Meta Model API key, used to read price lists and run the judgment checks.
+META_API_KEY=
+# Optional. Baseten API key, only needed when MODEL_PROVIDER is "open-weights".
+BASETEN_API_KEY=

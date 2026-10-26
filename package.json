@@ -4,8 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "types": "wrangler types",
+    "dev:production": "wrangler dev -c wrangler.production.jsonc",
+    "db:migrate": "wrangler d1 migrations apply DB --remote",
+    "deploy": "npm run db:migrate && wrangler deploy",
+    "deploy:production": "wrangler d1 migrations apply DB --remote -c wrangler.production.jsonc && wrangler deploy -c wrangler.production.jsonc",
+    "types": "wrangler types -c wrangler.production.jsonc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
@@ -17,5 +20,30 @@
     "typescript": "7.0.2",
     "vitest": "5.0.5",
     "wrangler": "4.152.0"
+  },
+  "cloudflare": {
+    "bindings": {
+      "META_API_KEY": {
+        "description": "Your Meta Model API key, from [dev.meta.ai](https://dev.meta.ai). Itemized uses it to read each price list and to run the checks that need judgment."
+      },
+      "BASETEN_API_KEY": {
+        "description": "Optional. A Baseten API key, only used when `MODEL_PROVIDER` is `open-weights`. Leave it blank to use the Meta Model API."
+      },
+      "MODEL_PROVIDER": {
+        "description": "`meta-api` (default) or `open-weights`."
+      },
+      "DAILY_BUDGET_USD": {
+        "description": "Daily limit on model spend in US dollars. Itemized stops calling models for the rest of the UTC day once it is reached."
+      },
+      "DB": {
+        "description": "D1 database for reviews and cached model results. Created in your account."
+      },
+      "DOCS": {
+        "description": "R2 bucket for uploaded files and review PDFs. Created in your account."
+      },
+      "AUDITS": {
+        "description": "Queue that runs each review in the background. Created in your account."
+      }
+    }
   }
 }

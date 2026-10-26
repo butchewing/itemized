@@ -1,0 +1,36 @@
+// Production settings for itemized.mortuary.ai on the Mortuary.Services account.
+// Deploy with `npm run deploy:production`. wrangler.jsonc is the portable copy the Deploy to Cloudflare button uses.
+{
+  "name": "itemized",
+  "account_id": "59ca9600755f3d160a17444d639f329c",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "workers_dev": false,
+  // Fictional sample lists served as static files at /samples/*
+  "assets": { "directory": "./public" },
+  "routes": [{ "pattern": "itemized.mortuary.ai", "custom_domain": true }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "itemized",
+      "database_id": "aa30e28a-d992-48e6-907e-b48166ab5c3e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [{ "binding": "DOCS", "bucket_name": "itemized-docs" }],
+  "queues": {
+    "producers": [{ "binding": "AUDITS", "queue": "itemized-audits" }],
+    "consumers": [{ "queue": "itemized-audits", "max_batch_size": 1, "max_retries": 3 }]
+  },
+  // remote: wrangler dev renders on Cloudflare's Browser Run instead of downloading a local Chromium.
+  "browser": { "binding": "BROWSER", "remote": true },
+  // namespace_id is account-wide; 4530 is unused elsewhere on Mortuary.Services
+  "ratelimits": [{ "name": "UPLOAD_LIMITER", "namespace_id": "4530", "simple": { "limit": 5, "period": 60 } }],
+  // Daily cleanup of audits, cached results and stored files unused for 30 days.
+  "triggers": { "crons": ["17 7 * * *"] },
+  "vars": { "MODEL_PROVIDER": "meta-api", "DAILY_BUDGET_USD": "5" },
+  // Names only, set with `wrangler secret put`. Typed from here instead of inferred from .dev.vars.
+  "secrets": { "required": ["META_API_KEY", "BASETEN_API_KEY"] }
+}

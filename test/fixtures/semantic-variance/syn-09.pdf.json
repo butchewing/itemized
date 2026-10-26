@@ -1,0 +1,399 @@
+{
+ "list": "syn-09",
+ "promptVersion": "semantic-5",
+ "fixtureVerdicts": {
+  "C-011": "pass",
+  "C-021": "pass",
+  "C-025": "pass",
+  "C-031": "pass",
+  "C-032": "pass",
+  "C-045": "pass",
+  "C-046": "pass",
+  "C-047": "pass",
+  "C-075": "pass",
+  "C-080": "not_applicable",
+  "C-081": "pass",
+  "C-082": "pass",
+  "C-083": "pass"
+ },
+ "samples": [
+  {
+   "raw": {
+    "checks": [
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-selection is on page 1 and itemized prices start on page 1, so the disclosure is on the same page as the prices.",
+      "id": "C-011",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The basic services includesText lists arrangements conference, shelter, notices, permits/authorizations, and coordinating with cemetery, crematory or third parties.",
+      "id": "C-021",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No second mandatory facilities, handling, or staff fee appears; only Basic Services of Funeral Director and Staff and Overhead is described as added to arrangements.",
+      "id": "C-025",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-embalming is on page 1 and the Embalming $795 price is on page 1, so they are on the same page.",
+      "id": "C-031",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text says embalming is required for direct cremation, immediate burial, or closed-casket funeral; only the required not-required-by-law disclosure appears.",
+      "id": "C-032",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-alt-container is on page 2 and the direct cremation $1,595 to $1,945 range is on page 2, so they are on the same page.",
+      "id": "C-045",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation is offered with purchaser-provided container, fiberboard, and wood box options, with no statement that a casket is required.",
+      "id": "C-046",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation descriptions do not show the cremation itself included alongside a separate crematory cash-advance charge, and no cash advances are listed.",
+      "id": "C-047",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Forwarding, receiving, direct cremation and immediate burial each have their own priced lines, and no other offered good or service lacks its own line.",
+      "id": "C-075",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": false,
+      "concern": false,
+      "explanation": "No optional package at a single price is offered; forwarding, receiving, direct cremation and immediate burial are not packages.",
+      "id": "C-080",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No statement outside the required disclosures asserts that law, a cemetery, or a crematory requires a purchase.",
+      "id": "C-081",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text claims goods or services delay decomposition long-term or protect the body from gravesite substances.",
+      "id": "C-082",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No other wording undercuts a required disclosure, and no disclosure is shown printed in a way that is hard to notice.",
+      "id": "C-083",
+      "page": null,
+      "quote": null
+     }
+    ]
+   },
+   "verdicts": {
+    "C-011": "pass",
+    "C-021": "pass",
+    "C-025": "pass",
+    "C-031": "pass",
+    "C-032": "pass",
+    "C-045": "pass",
+    "C-046": "pass",
+    "C-047": "pass",
+    "C-075": "pass",
+    "C-080": "not_applicable",
+    "C-081": "pass",
+    "C-082": "pass",
+    "C-083": "pass"
+   },
+   "costUsd": 0.0144555
+  },
+  {
+   "raw": {
+    "checks": [
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-selection is on page 1 and itemized prices begin on page 1, so it is on the same page as the prices it accompanies.",
+      "id": "C-011",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The basic services includesText names arrangements conference, shelter of remains, notices, permits/authorizations, and coordination with cemetery, crematory or third parties.",
+      "id": "C-021",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No second mandatory fee for services, facilities or overhead such as a facilities fee or casket handling fee appears on the list.",
+      "id": "C-025",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-embalming is on page 1 and the embalming price is on page 1, so it is on the same page.",
+      "id": "C-031",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text states embalming is required for direct cremation, immediate burial, or closed-casket service without viewing.",
+      "id": "C-032",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-alt-container is on page 2 and the direct cremation range is on page 2, so it is on the same page.",
+      "id": "C-045",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation is offered with purchaser-provided container, fiberboard container, and wood box options, with no statement that a casket is required.",
+      "id": "C-046",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The direct cremation entries have no description about whether the crematory fee is included and no cash-advance entry addresses it.",
+      "id": "C-047",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Forwarding, receiving, direct cremation and immediate burial each have itemized prices, and no goods or services appear only inside a package or description.",
+      "id": "C-075",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": false,
+      "concern": false,
+      "explanation": "The list contains no optional combination package sold at one price; forwarding, receiving, direct cremation and immediate burial are not packages.",
+      "id": "C-080",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text asserts a purchase is required by law, cemetery or crematory; the only law-related statements are the prescribed not-required disclosures.",
+      "id": "C-081",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text claims goods or services delay decomposition long-term or protect the body from gravesite substances.",
+      "id": "C-082",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No other wording undercuts a required disclosure, and the required disclosures present use the prescribed wording.",
+      "id": "C-083",
+      "page": null,
+      "quote": null
+     }
+    ]
+   },
+   "verdicts": {
+    "C-011": "pass",
+    "C-021": "pass",
+    "C-025": "pass",
+    "C-031": "pass",
+    "C-032": "pass",
+    "C-045": "pass",
+    "C-046": "pass",
+    "C-047": "pass",
+    "C-075": "pass",
+    "C-080": "not_applicable",
+    "C-081": "pass",
+    "C-082": "pass",
+    "C-083": "pass"
+   },
+   "costUsd": 0.0122625
+  },
+  {
+   "raw": {
+    "checks": [
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-selection is on page 1 and itemized prices begin on page 1, so the disclosure is on the same page as the prices.",
+      "id": "C-011",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The basic services includesText lists arrangements conference, planning, shelter of remains, notices, authorizations and permits, and coordination with cemetery, crematory or other third parties.",
+      "id": "C-021",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "The list shows Basic Services of Funeral Director and Staff and Overhead as the service fee, with no additional mandatory facilities, handling, or staff fee text.",
+      "id": "C-025",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-embalming is on page 1 and the Embalming $795 price is on page 1, so they are on the same page.",
+      "id": "C-031",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text states embalming is required for direct cremation, immediate burial, or closed-casket service; the embalming text is the standard optional wording.",
+      "id": "C-032",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "D-alt-container is on page 2 and the Direct Cremation $1,595 to $1,945 range is on page 2, so they are on the same page.",
+      "id": "C-045",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation is offered with purchaser-provided container, fiberboard container, and unfinished wood box options, with no statement that a casket is required.",
+      "id": "C-046",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Direct cremation prices are listed without description of the crematory fee and no cash-advance list is transcribed, so no overlap or ambiguity appears on the face of the list.",
+      "id": "C-047",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "Forwarding, receiving, direct cremation, and immediate burial each have their own priced lines, and no goods or services appear only inside a package, description, or policy.",
+      "id": "C-075",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": false,
+      "concern": false,
+      "explanation": "The list contains only itemized charges and the four required single-price items, with no optional combination package sold at one price.",
+      "id": "C-080",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text asserts a purchase is required by law, cemetery, or crematory beyond the standard required disclosure wording about embalming and legal requirements.",
+      "id": "C-081",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No text claims that goods or services delay decomposition or protect the body from gravesite substances.",
+      "id": "C-082",
+      "page": null,
+      "quote": null
+     },
+     {
+      "applies": true,
+      "concern": false,
+      "explanation": "No other wording undercuts a required disclosure, and the transcribed disclosures appear in standard wording.",
+      "id": "C-083",
+      "page": null,
+      "quote": null
+     }
+    ]
+   },
+   "verdicts": {
+    "C-011": "pass",
+    "C-021": "pass",
+    "C-025": "pass",
+    "C-031": "pass",
+    "C-032": "pass",
+    "C-045": "pass",
+    "C-046": "pass",
+    "C-047": "pass",
+    "C-075": "pass",
+    "C-080": "not_applicable",
+    "C-081": "pass",
+    "C-082": "pass",
+    "C-083": "pass"
+   },
+   "costUsd": 0.0088832
+  }
+ ]
+}

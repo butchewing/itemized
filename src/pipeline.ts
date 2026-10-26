@@ -103,7 +103,7 @@ async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
 }
 
 // Judgment needs some reasoning, unlike transcription.
-const SEMANTIC_EFFORT: ReasoningEffort = 'low';
+export const SEMANTIC_EFFORT: ReasoningEffort = 'low';
 
 // Runs on the audit's own provider so open-weights audits never send list text to the Meta API.
 // Any failure (budget, model, parse) returns null: the report then lists these checks as not run.

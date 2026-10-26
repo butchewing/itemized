@@ -6,7 +6,7 @@ import { normalize } from './text';
 import type { Evidence, Outcome } from './types';
 
 // Bump on any change to the prompt or schema: it is part of the semantic cache key.
-export const SEMANTIC_PROMPT_VERSION = 'semantic-4';
+export const SEMANTIC_PROMPT_VERSION = 'semantic-5';
 
 export const SEMANTIC_CHECK_IDS = [
   'C-011', 'C-021', 'C-025', 'C-031', 'C-032', 'C-045', 'C-046', 'C-047', 'C-075', 'C-080', 'C-081', 'C-082', 'C-083',
@@ -93,7 +93,7 @@ const DISCLOSURE_DEFS = Object.entries(ruleset.disclosures)
 export const SEMANTIC_SYSTEM_PROMPT = `You review a funeral home's General Price List (GPL) for a compliance tool. Another model transcribed the list into JSON; you get that JSON and ${SEMANTIC_CHECK_IDS.length} checks. Answer every check exactly once.
 
 For each check:
-- "applies": whether the check's applies_when condition holds for this list. "always" means true. "packages present" means the list offers a package: an optional combination of goods and services sold at one price. Forwarding, receiving, direct cremation and immediate burial are required items whose single price covers several services; they are not packages.
+- "applies": whether the check's applies_when condition holds for this list. "always" means true. "packages present" means the list offers a package (see C-080's test).
 - "concern": true only when text printed on the list affirmatively shows what the check's test describes. If the list is silent on it, concern is false. Do not raise a concern about something the list leaves out unless the test itself is about something missing. Wording that differs from a model disclosure is not by itself a concern.
 - "quote": when concern is true, the shortest passage that shows it, copied character for character from ONE string value in the JSON (a label, priceText, includesText, or disclosure text). Do not join text from two values, paraphrase, or add ellipses. null when concern is false.
 - "page": the page of the quoted text, or null.
@@ -102,8 +102,6 @@ For each check:
 About the input:
 - "items" and "disclosures" are separate arrays, each in document order, but their order relative to each other within a page is not recorded. For placement checks (C-011, C-031, C-045), a disclosure on the same page as the prices it accompanies counts as placed correctly; raise a concern only when it is on a different page.
 - A disclosure with id "unknown" is other notice text printed on the list.
-- C-075 looks for goods or services mentioned only inside a package, a description or a policy, and for the four items its test names. A line item with its own line on the list, priced or not, is not a C-075 concern; other checks cover unpriced lines. Under the Rule's option C(2) the basic services fee may be built into casket prices instead of priced on its own line; that is not a C-075 concern.
-- C-083 looks for other text on the list that undercuts a required disclosure, or a disclosure printed so it is hard to notice. A required disclosure that is missing, reworded or left with an unfilled template blank is reported by other checks; that alone is not a C-083 concern.
 - The Funeral Rule prescribes the disclosures below. Their own wording, or a close variant of it, is never a concern for any check: for example "embalming is not required by law" and "state or local law does not require that you buy a container" are required statements, not claims that a purchase is required.
 ${DISCLOSURE_DEFS}
 
