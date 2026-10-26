@@ -3,6 +3,8 @@ import type { Provider } from './audit';
 type ProviderConfig = {
   baseUrl: string;
   model: string;
+  // How the model is named to readers of a review.
+  displayName: string;
   keyName: 'META_API_KEY' | 'BASETEN_API_KEY';
   authHeader: (key: string) => Record<string, string>;
   // Baseten documents Muse Spark Open as not supporting structured outputs.
@@ -15,6 +17,7 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
   'meta-api': {
     baseUrl: 'https://api.meta.ai/v1',
     model: 'muse-spark-1.3',
+    displayName: 'Muse Spark 1.3',
     keyName: 'META_API_KEY',
     authHeader: bearer,
     jsonSchema: true,
@@ -22,6 +25,7 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
   'open-weights': {
     baseUrl: 'https://inference.baseten.co/v1',
     model: 'meta-models/muse-spark-open',
+    displayName: 'Muse Spark Open',
     keyName: 'BASETEN_API_KEY',
     authHeader: bearer,
     jsonSchema: false,

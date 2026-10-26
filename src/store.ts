@@ -111,3 +111,14 @@ export async function getReport(db: D1Database, auditId: string) {
   const row = await db.prepare('SELECT json FROM reports WHERE audit_id = ?').bind(auditId).first<{ json: string }>();
   return row ? (JSON.parse(row.json) as Report) : null;
 }
+
+export type ReviewView = { id: string; date: Date; modelName: string; extraction: GplExtraction | null; report: Report };
+
+export async function loadReview(db: D1Database, id: string): Promise<ReviewView | 'not_found' | 'not_ready'> {
+  const row = await getAudit(db, id);
+  if (!row) return 'not_found';
+  if (row.status !== 'done') return 'not_ready';
+  const [extraction, report] = await Promise.all([getExtraction(db, row.doc_sha256, row.provider), getReport(db, row.id)]);
+  if (!report) return 'not_ready';
+  return { id: row.id, date: new Date(row.updated_at), modelName: PROVIDER_CONFIG[row.provider].displayName, extraction, report };
+}

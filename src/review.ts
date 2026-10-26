@@ -1,0 +1,118 @@
+import { escapeHtml } from './letter';
+import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
+
+// The house mark that heads every review sheet. The standalone page makes it its h1.
+export const compactLetterhead = (tag: 'h1' | 'p') => `<header class="letterhead letterhead-compact">
+    ${MONOGRAM}
+    <${tag} class="house">Itemized</${tag}>
+    <hr class="double-rule">
+  </header>`;
+
+export const PDF_FAILED = 'The PDF could not be made right now. You can print this review from its own page instead.';
+
+// Progressive enhancement for a[data-pdf]: without it the link still downloads the PDF,
+// but a 429 or 503 would replace the page with JSON.
+export const PDF_SCRIPT = `
+for (const link of document.querySelectorAll('a[data-pdf]')) {
+  link.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const out = document.getElementById(link.dataset.pdf);
+    const say = (text, isError) => { out.replaceChildren(text); out.classList.toggle('error', !!isError); };
+    if (link.getAttribute('aria-disabled') === 'true') return;
+    link.setAttribute('aria-disabled', 'true');
+    say('Preparing the PDF. This can take a few seconds.');
+    try {
+      const res = await fetch(link.href);
+      if (res.status === 429) return say('Too many PDFs in a short time. Please wait a minute and try again.', true);
+      if (!res.ok) {
+        say('The PDF could not be made right now. You can print this review from ', true);
+        const page = document.createElement('a');
+        page.href = link.href.replace(/\\/pdf$/, '');
+        page.textContent = 'its own page';
+        out.append(page, ' instead.');
+        return;
+      }
+      const name = /filename="([^"]+)"/.exec(res.headers.get('content-disposition') || '');
+      const url = URL.createObjectURL(await res.blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name ? name[1] : 'itemized-review.pdf';
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+      say('The PDF has downloaded.');
+    } catch {
+      say('The PDF could not be downloaded. Check your connection and try again.', true);
+    } finally {
+      link.removeAttribute('aria-disabled');
+    }
+  });
+}`;
+
+export const actionsRow = (id: string, second: string) => `<div class="actions">
+    <a class="btn btn-primary" href="/r/${escapeHtml(id)}/pdf" download data-pdf="pdf-status">Download PDF</a>
+    ${second}
+    <p class="actions-status" id="pdf-status" role="status" aria-live="polite"></p>
+  </div>`;
+
+const shell = (title: string, body: string, path = '/') => `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>${escapeHtml(title)}</title>
+${socialMeta('Itemized: a Funeral Rule review of General Price Lists', path)}
+${HEAD_LINKS}
+</head>
+<body>
+${body}
+</body>
+</html>`;
+
+export function reviewPage(id: string, letterHtml: string, provider: string | null): string {
+  return shell(
+    provider ? `Itemized: the General Price List of ${provider}` : 'Itemized: a review of your General Price List',
+    `<main class="sheet review-sheet">
+  ${compactLetterhead('h1')}
+  <article class="letter" aria-labelledby="letter-re">${letterHtml}</article>
+  ${actionsRow(id, '<a href="/">Review another list</a>')}
+</main>
+<script>
+${PDF_SCRIPT}
+addEventListener('beforeprint', () => { for (const d of document.querySelectorAll('details')) d.open = true; });
+</script>`,
+    `/r/${id}`,
+  );
+}
+
+const NOT_FOUND = {
+  review: ['Itemized: review not found', 'This review could not be found.', 'It may still be in progress, or the link may be incomplete.'],
+  page: ['Itemized: page not found', 'This page could not be found.', 'The link may be incomplete or out of date.'],
+} as const;
+
+export const notFoundPage = (kind: keyof typeof NOT_FOUND = 'review') =>
+  shell(
+    NOT_FOUND[kind][0],
+    `<main class="sheet review-sheet">
+  ${compactLetterhead('h1')}
+  <div class="letter">
+    <h2 class="letter-re">${NOT_FOUND[kind][1]}</h2>
+    <p class="summary">${NOT_FOUND[kind][2]}</p>
+    <p><a href="/">Review a General Price List</a></p>
+  </div>
+</main>`,
+  );
+
+export function pdfFilename(provider: string | null, date: Date): string {
+  const slug = (provider ?? '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+    .replace(/-+$/, '');
+  return `itemized-review-${slug || 'price-list'}-${date.toISOString().slice(0, 10)}.pdf`;
+}

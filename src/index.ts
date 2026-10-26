@@ -1,3 +1,4 @@
+import puppeteer from '@cloudflare/puppeteer';
 import { Hono } from 'hono';
 import {
   isAcceptedType,
@@ -7,8 +8,10 @@ import {
   type AuditStatus,
 } from './audit';
 import { runAudit } from './pipeline';
-import { auditSpend, getAudit, getExtraction, getReport, type AuditRow } from './store';
+import { auditSpend, getAudit, getExtraction, getReport, loadReview, type AuditRow } from './store';
+import { renderLetterHtml } from './letter';
 import { PAGE } from './page';
+import { notFoundPage, PDF_FAILED, pdfFilename, reviewPage } from './review';
 import { spike } from './spike';
 
 const toJson = (r: AuditRow) => ({
@@ -86,6 +89,71 @@ app.get('/api/audits/:id', async (c) => {
   return c.json({ ...toJson(row), extraction, report, ...spend });
 });
 
+app.get('/api/audits/:id/letter', async (c) => {
+  const view = await loadReview(c.env.DB, c.req.param('id'));
+  if (view === 'not_found') return c.json({ error: 'Not found.' }, 404);
+  if (view === 'not_ready') return c.json({ error: 'The review is not finished yet.' }, 409);
+  return c.json({ html: renderLetterHtml(view) });
+});
+
+app.get('/r/:id', async (c) => {
+  c.header('X-Robots-Tag', 'noindex, nofollow');
+  const view = await loadReview(c.env.DB, c.req.param('id'));
+  if (typeof view === 'string') return c.html(notFoundPage(), 404);
+  return c.html(reviewPage(view.id, renderLetterHtml(view), view.extraction?.providerName ?? null));
+});
+
+async function renderPdf(browserBinding: Env['BROWSER'], html: string): Promise<Uint8Array> {
+  const browser = await puppeteer.launch(browserBinding);
+  try {
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+    await page.evaluateHandle('document.fonts.ready');
+    const pdf = await page.pdf({
+      format: 'letter',
+      printBackground: true,
+      margin: { top: '0.6in', right: '0.6in', bottom: '0.6in', left: '0.6in' },
+    });
+    return new Uint8Array(pdf);
+  } finally {
+    await browser.close();
+  }
+}
+
+app.get('/r/:id/pdf', async (c) => {
+  const view = await loadReview(c.env.DB, c.req.param('id'));
+  if (view === 'not_found') return c.json({ error: 'Not found.' }, 404);
+  if (view === 'not_ready') return c.json({ error: 'The review is not finished yet.' }, 409);
+
+  // docs/ inherits the bucket's 30-day deletion rule.
+  const key = `docs/reports/${view.id}.pdf`;
+  let body: ReadableStream | Uint8Array;
+  const cached = await c.env.DOCS.get(key);
+  if (cached) {
+    body = cached.body;
+  } else {
+    const ip = c.req.header('cf-connecting-ip') ?? 'unknown';
+    if (!(await c.env.UPLOAD_LIMITER.limit({ key: `pdf:${ip}` })).success) {
+      return c.json({ error: 'Too many PDFs. Try again in a minute.' }, 429);
+    }
+    const provider = view.extraction?.providerName ?? null;
+    try {
+      body = await renderPdf(c.env.BROWSER, reviewPage(view.id, renderLetterHtml(view, 'print'), provider));
+    } catch (err) {
+      console.error('pdf render failed', err);
+      return c.json({ error: PDF_FAILED }, 503);
+    }
+    await c.env.DOCS.put(key, body, { httpMetadata: { contentType: 'application/pdf' } });
+  }
+  return new Response(body, {
+    headers: {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="${pdfFilename(view.extraction?.providerName ?? null, view.date)}"`,
+      'X-Robots-Tag': 'noindex',
+    },
+  });
+});
+
 // Mirrors max_retries in wrangler.jsonc.
 const MAX_RETRIES = 3;
 
@@ -96,5 +164,9 @@ async function queue(batch: MessageBatch<AuditMessage>, env: Env): Promise<void>
     else msg.ack();
   }
 }
+
+app.notFound((c) =>
+  c.req.path.startsWith('/api/') ? c.json({ error: 'Not found.' }, 404) : c.html(notFoundPage('page'), 404),
+);
 
 export default { fetch: app.fetch, queue } satisfies ExportedHandler<Env, AuditMessage>;
