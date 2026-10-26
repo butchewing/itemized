@@ -38,6 +38,7 @@ export const PAGE = `<!doctype html>
     --ink: #20262e;
     --slate: #556375;
     --rule: #d5dae0;
+    --frame: #86909c;
     --gilt: #a8864a;
     --gilt-soft: #e7dcc6;
     --oxblood: #8a2b22;
@@ -88,7 +89,7 @@ export const PAGE = `<!doctype html>
   .entry-label { display: block; font: 500 .8rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; margin-bottom: .6rem; }
   .field {
     display: grid; grid-template-columns: 1fr auto; gap: .75rem 1rem; align-items: center;
-    padding: 1.1rem 1.25rem; border: 1px solid var(--rule); outline: 1px solid transparent; outline-offset: 4px;
+    padding: 1.1rem 1.25rem; border: 1px solid var(--frame); outline: 1px solid transparent; outline-offset: 4px;
     transition: border-color .2s ease-out, outline-color .2s ease-out, background-color .2s ease-out;
   }
   .field.dragging { border-color: var(--gilt); outline-color: var(--gilt-soft); background: #fbfaf7; }
