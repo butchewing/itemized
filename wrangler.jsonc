@@ -6,6 +6,8 @@
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
   "workers_dev": false,
+  // Fictional sample lists served as static files at /samples/*
+  "assets": { "directory": "./public" },
   "routes": [{ "pattern": "itemized.mortuary.ai", "custom_domain": true }],
   "d1_databases": [
     {
