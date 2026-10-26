@@ -1,8 +1,24 @@
 # Itemized
 
-Itemized checks a funeral home's General Price List against the FTC Funeral Rule (16 CFR 453). You upload a PDF or a phone photo, and it reports which required disclosures and itemized prices are present, missing or worth a human look. It was built for the Meta Global AI Developer Hackathon. It is a compliance-review aid, not legal advice.
+Itemized checks funeral home price lists against the FTC Funeral Rule and flags missing required disclosures and prices, with citations.
 
-Status: in progress. Uploads are accepted and queued. The extraction and checking pipeline is not built yet.
+Built for the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai. It is a compliance-review aid, not legal advice.
+
+## What it does
+
+You upload a phone photo or PDF of a funeral home's General Price List. Itemized checks it against the FTC Funeral Rule (16 CFR 453) and reports each requirement as pass, fail or needs review, with the rule it comes from.
+
+A Meta model reads the price list into structured data. A deterministic rules engine then checks that data. Only the rules engine can mark a requirement as failed. Anything that depends on the model's judgment is marked for human review, so the tool never accuses a funeral home on a model's say-so.
+
+## Models
+
+- **Muse Spark** through the Meta Model API reads photos and PDFs into structured data.
+- **Muse Spark Open** on Baseten (`meta-models/muse-spark-open-1026`) is a second extraction backend, planned. It lets us compare accuracy against the hosted API, and run evaluations on real price lists without sending them to a hosted API.
+- **SAM 3.1** segments price tables and disclosure blocks on phone photos, planned.
+
+## Status
+
+In progress. Uploads are accepted, stored and queued. The extraction and checking pipeline is being built.
 
 ## Local development
 
