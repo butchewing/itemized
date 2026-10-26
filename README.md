@@ -54,3 +54,7 @@ Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KE
 ## Provenance
 
 See [PROVENANCE.md](PROVENANCE.md) for what existed before the hackathon and what was built during it.
+
+## License
+
+Copyright 2026 Butch Ewing. Licensed under the [Apache License, Version 2.0](LICENSE).
