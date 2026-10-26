@@ -72,6 +72,11 @@ app.post('/api/audits', async (c) => {
   if (!isProvider(c.env.MODEL_PROVIDER)) return c.json({ error: 'Server misconfigured.' }, 500);
   const provider = c.env.MODEL_PROVIDER;
 
+  const ip = c.req.header('cf-connecting-ip') ?? 'unknown';
+  if (!(await c.env.UPLOAD_LIMITER.limit({ key: `upload:${ip}` })).success) {
+    return c.json({ error: 'Too many uploads. Try again in a minute.' }, 429);
+  }
+
   const form = await c.req.formData().catch(() => null);
   const file = form?.get('file');
   if (!(file instanceof File)) return c.json({ error: 'Expected a multipart "file" field.' }, 400);

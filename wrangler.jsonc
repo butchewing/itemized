@@ -20,5 +20,7 @@
     "producers": [{ "binding": "AUDITS", "queue": "itemized-audits" }],
     "consumers": [{ "queue": "itemized-audits", "max_batch_size": 1, "max_retries": 3 }]
   },
+  // namespace_id is account-wide; 4530 is unused elsewhere on Mortuary.Services
+  "ratelimits": [{ "name": "UPLOAD_LIMITER", "namespace_id": "4530", "simple": { "limit": 5, "period": 60 } }],
   "vars": { "MODEL_PROVIDER": "meta-api" }
 }
