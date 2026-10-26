@@ -1,0 +1,76 @@
+{
+  "ruleset": "ftc-453@2026.1",
+  "note": "Hand-written. Any check not listed is expected to pass.",
+  "documents": [
+    {
+      "id": "ftc-sample1-template",
+      "pdf": "ftc-sample1-gpl-template.pdf",
+      "notes": "FTC's blank template: [date] and $____ placeholders. Disclosures are verbatim except bracket typography ([E]mbalming, [and cremation]).",
+      "checks": {
+        "C-005": {
+          "expected": "fail"
+        },
+        "C-006": {
+          "expected": "not_applicable"
+        },
+        "C-007": {
+          "expected": "not_applicable"
+        },
+        "C-070": {
+          "expected": "fail"
+        },
+        "C-040": {
+          "expected": "fail"
+        },
+        "C-041": {
+          "expected": "fail"
+        },
+        "C-050": {
+          "expected": "fail"
+        },
+        "C-043": {
+          "expected": "review"
+        },
+        "C-051": {
+          "expected": "review"
+        },
+        "C-053": {
+          "expected": "review"
+        },
+        "C-030": {
+          "expected": "pass",
+          "also_ok": [
+            "review"
+          ]
+        },
+        "C-047": {
+          "expected": "review",
+          "also_ok": [
+            "pass"
+          ]
+        },
+        "C-072": {
+          "expected": "pass",
+          "also_ok": [
+            "fail"
+          ]
+        },
+        "C-073": {
+          "expected": "pass",
+          "also_ok": [
+            "fail"
+          ]
+        },
+        "C-024": {
+          "expected": "not_applicable"
+        },
+        "C-074": {
+          "expected": "not_applicable"
+        },
+        "C-080": {
+          "expected": "not_applicable"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "about": "Phone photos of printed synthetic GPLs (prep/synthetic/pdf). Taken by Butch 2026-10-21 on an iPhone, 1536x2048 JPEG. GPS, camera EXIF and embedded gain-map images stripped without re-encoding (scratchpad stripjpeg.py); pixels unchanged.",
+  "scoring": "Audit both pages of a list together. Expected verdicts are the list's entry in ../labels.json. Policy low_confidence_downgrade applies: on a page marked hard, a fail may come back as review, but never as pass, and a pass must not become fail.",
+  "photos": [
+    {"file": "syn-01-1.jpeg", "list": "syn-01", "page": 1, "conditions": ["flat", "even light", "slight keystone"], "difficulty": "easy"},
+    {"file": "syn-01-2.jpeg", "list": "syn-01", "page": 2, "conditions": ["angled", "leaders drift across rows"], "difficulty": "medium"},
+    {"file": "syn-03-1.jpeg", "list": "syn-03", "page": 1, "conditions": ["out of focus", "small in frame", "keyboard in frame"], "difficulty": "hard"},
+    {"file": "syn-03-2.jpeg", "list": "syn-03", "page": 2, "conditions": ["rotated ~25 degrees", "strong perspective", "keyboard in frame"], "difficulty": "hard"},
+    {"file": "syn-09-1.jpeg", "list": "syn-09", "page": 1, "conditions": ["slight rotation", "prices visually offset from their rows"], "difficulty": "medium"},
+    {"file": "syn-09-2.jpeg", "list": "syn-09", "page": 2, "conditions": ["rotated ~35 degrees", "keyboard in frame"], "difficulty": "hard"},
+    {"file": "syn-10-1.jpeg", "list": "syn-10", "page": 1, "conditions": ["rotated", "perspective", "prices visually offset from their rows"], "difficulty": "medium"},
+    {"file": "syn-10-2.jpeg", "list": "syn-10", "page": 2, "conditions": ["low angle", "perspective"], "difficulty": "medium"}
+  ]
+}

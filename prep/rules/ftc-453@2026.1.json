@@ -1,0 +1,281 @@
+{
+  "id": "ftc-453",
+  "version": "2026.1",
+  "title": "FTC Funeral Rule, General Price List checks",
+  "scope": "General Price List only. Casket Price List, Outer Burial Container Price List and the Statement of Funeral Goods and Services Selected are out of scope for this version.",
+  "status": "draft, not legal advice; see README.md risk summary",
+  "source": {
+    "rule": "16 CFR Part 453",
+    "ecfr_point_in_time": "2026-10-16",
+    "ecfr_note": "eCFR versions API lists no substantive amendment to Part 453 after its 2016-12-22 baseline (2023-04-10 entries are non-substantive).",
+    "ftc_guide": "Complying with the Funeral Rule, FTC publication 565A, 2025 edition",
+    "retrieved": "2026-10-20"
+  },
+
+  "verdicts": {
+    "pass": "Requirement met, or met by a lawful variant.",
+    "fail": "Deterministic check against Rule text found the requirement unmet. Only checks with basis \"rule\" and engine \"deterministic\" may emit fail.",
+    "review": "A person should look. Used for placement, adequacy, intent, state-dependent variants and anything inferred by a model. Never phrased as a violation.",
+    "not_applicable": "The condition that triggers the requirement is absent (for example, no direct cremation offered)."
+  },
+
+  "basis_values": {
+    "rule": "Requirement stated in 16 CFR 453 text; the check cites the paragraph.",
+    "guide": "Interpretation from the FTC compliance guide, not Rule text.",
+    "heuristic": "Itemized's own judgment call; no legal requirement behind it."
+  },
+
+  "policy": {
+    "downgrade": "Any fail whose evidence comes from an extraction field marked low-confidence, or from a page the extractor could not read, is emitted as review with reason \"extraction_uncertain\".",
+    "redacted_elements": "When an input's manifest lists an element as redacted (name, address, phone, ...), presence checks for that element return pass with note \"redacted_in_corpus\".",
+    "offered_inference": "An item counts as offered only when the GPL itself names it (priced or not), or a package on the GPL includes it. Absence of an item is never a fail."
+  },
+
+  "text_matching": {
+    "normalize": ["unicode NFKC", "straighten quotes and apostrophes", "lowercase", "replace punctuation with space except $", "collapse whitespace"],
+    "segment_kinds": {
+      "fixed": "Must appear, in order.",
+      "optional": "May be present or absent; either is a match. Presence or absence is reported as variant_used.",
+      "conditional": "Must appear when its `when` condition holds; must be absent otherwise only if `forbidden_otherwise` is true.",
+      "slot": "Provider-specific text (dollar amount, container list). Matches any span up to max_chars; an unfilled template marker like \"(specify containers)\" counts as empty."
+    },
+    "thresholds": {
+      "match": 0.92,
+      "altered": 0.75,
+      "note": "Token-level similarity scored per fixed segment, never over the fixed segments joined: a present conditional sentence sits between them and drags a joined score down (FTC Sample 1 scored 0.70 joined while matching exactly per segment). A disclosure's score is its lowest segment score. >= match: present. Between altered and match: altered (review; could be OCR noise or paraphrase). Below altered or not found: absent. Provisional; tune on Day 3 against the synthetic set."
+    }
+  },
+
+  "conditions": {
+    "direct_cremation_offered": "GPL names direct cremation.",
+    "immediate_burial_offered": "GPL names immediate burial.",
+    "forwarding_offered": "GPL names forwarding of remains.",
+    "receiving_offered": "GPL names receiving of remains.",
+    "embalming_offered": "GPL names embalming (priced or not).",
+    "basic_services_priced": "GPL shows a separate price for basic services of funeral director and staff.",
+    "basic_services_declared_nondeclinable": "The right-of-selection disclosure contains its conditional sentence, or the basic-services disclosure D-basic-nondeclinable is present. Either is the provider's own statement that the fee cannot be declined.",
+    "caskets_as_range": "GPL shows a casket price range rather than individual casket prices.",
+    "caskets_itemized": "GPL shows individual casket prices.",
+    "obc_as_range": "GPL shows an outer burial container price range.",
+    "obc_itemized": "GPL shows individual outer burial container prices."
+  },
+
+  "disclosures": {
+    "D-selection": {
+      "title": "Right to select only the items you want",
+      "cite": "16 CFR 453.4(b)(2)(i)(A)",
+      "basis": "rule",
+      "applies_when": "always",
+      "placement": { "relation": "immediately_above", "anchor": "itemized prices required by 453.2(b)(4)(ii)-(iii)" },
+      "segments": [
+        { "kind": "fixed", "t": "The goods and services shown below are those we can provide to our customers. You may choose only the items you desire." },
+        { "kind": "conditional", "when": "basic_services_declared_nondeclinable", "t": "However, any funeral arrangements you select will include a charge for our basic services" },
+        { "kind": "optional", "within": "previous", "t": "and overhead" },
+        { "kind": "fixed", "t": "If legal or other requirements mean you must buy any items you did not specifically ask for, we will explain the reason in writing on the statement we provide describing the funeral goods and services you selected." }
+      ]
+    },
+    "D-basic-nondeclinable": {
+      "title": "Basic services fee will be added",
+      "cite": "16 CFR 453.2(b)(4)(iii)(C)(1)",
+      "basis": "rule",
+      "applies_when": "basic_services_priced AND basic_services_declared_nondeclinable",
+      "placement": { "relation": "immediate_conjunction", "anchor": "item:basic_services" },
+      "segments": [
+        { "kind": "fixed", "t": "This fee for our basic services" },
+        { "kind": "optional", "t": "and overhead" },
+        { "kind": "fixed", "t": "will be added to the total cost of the funeral arrangements you select. (This fee is already included in our charges for direct cremations, immediate burials, and forwarding or receiving remains.)" }
+      ]
+    },
+    "D-basic-in-casket": {
+      "title": "Basic services fee included in casket prices",
+      "cite": "16 CFR 453.2(b)(4)(iii)(C)(2)",
+      "basis": "rule",
+      "applies_when": "NOT basic_services_priced AND (caskets_as_range OR caskets_itemized)",
+      "placement": { "relation": "together_with", "anchor": "casket prices or casket price range" },
+      "segments": [
+        { "kind": "fixed", "t": "Please note that a fee of" },
+        { "kind": "slot", "name": "amount", "max_chars": 20 },
+        { "kind": "fixed", "t": "for the use of our basic services" },
+        { "kind": "optional", "t": "and overhead" },
+        { "kind": "fixed", "t": "is included in the price of our caskets. This same fee shall be added to the total cost of your funeral arrangements if you provide the casket. Our services include" },
+        { "kind": "slot", "name": "services", "max_chars": 600 }
+      ]
+    },
+    "D-embalming": {
+      "title": "Embalming is usually not required by law",
+      "cite": "16 CFR 453.3(a)(2)(ii)",
+      "basis": "rule",
+      "applies_when": "embalming_offered",
+      "placement": { "relation": "immediate_conjunction", "anchor": "item:embalming" },
+      "segments": [
+        { "kind": "optional", "t": "Except in certain special cases,", "omission_note": "Lawful only where state or local law never requires embalming; see check C-033." },
+        { "kind": "fixed", "t": "embalming is not required by law. Embalming may be necessary, however, if you select certain funeral arrangements, such as a funeral with viewing. If you do not want embalming, you usually have the right to choose an arrangement that does not require you to pay for it, such as direct cremation or immediate burial." }
+      ]
+    },
+    "D-alt-container": {
+      "title": "Alternative containers for direct cremation",
+      "cite": "16 CFR 453.3(b)(2)",
+      "basis": "rule",
+      "applies_when": "direct_cremation_offered",
+      "placement": { "relation": "immediate_conjunction", "anchor": "direct cremation price range" },
+      "segments": [
+        { "kind": "fixed", "t": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are" },
+        { "kind": "slot", "name": "containers", "max_chars": 200 }
+      ]
+    },
+    "D-casket-list": {
+      "title": "Complete casket price list available",
+      "cite": "16 CFR 453.2(b)(4)(iii)(A)(1)",
+      "basis": "rule",
+      "applies_when": "caskets_as_range",
+      "placement": { "relation": "together_with", "anchor": "casket price range" },
+      "segments": [ { "kind": "fixed", "t": "A complete price list will be provided at the funeral home." } ]
+    },
+    "D-obc-list": {
+      "title": "Complete outer burial container price list available",
+      "cite": "16 CFR 453.2(b)(4)(iii)(B)(1)",
+      "basis": "rule",
+      "applies_when": "obc_as_range",
+      "placement": { "relation": "together_with", "anchor": "outer burial container price range" },
+      "segments": [ { "kind": "fixed", "t": "A complete price list will be provided at the funeral home." } ],
+      "note": "Same sentence as D-casket-list. When both ranges are shown, the matcher needs two occurrences, one near each range."
+    },
+    "D-obc-legal": {
+      "title": "Outer burial containers are usually not required by law",
+      "cite": "16 CFR 453.3(c)(2)",
+      "basis": "rule",
+      "applies_when": "obc_itemized",
+      "placement": { "relation": "immediate_conjunction", "anchor": "outer burial container prices" },
+      "segments": [
+        { "kind": "optional", "t": "In most areas of the country,", "omission_note": "Lawful only where state or local law never requires a container around the casket; see check C-074." },
+        { "kind": "fixed", "t": "state or local law does not require that you buy a container to surround the casket in the grave. However, many cemeteries require that you have such a container so that the grave will not sink in. Either a grave liner or a burial vault will satisfy these requirements." }
+      ],
+      "note": "When OBC prices are shown only as a range with D-obc-list, this disclosure belongs on the separate OBC price list instead (453.3(c)(2)) and is out of scope here."
+    }
+  },
+
+  "items": [
+    { "id": "forwarding", "label": "Forwarding of remains to another funeral home", "cite": "16 CFR 453.2(b)(4)(ii)(A)", "requires": ["services_list"] },
+    { "id": "receiving", "label": "Receiving remains from another funeral home", "cite": "16 CFR 453.2(b)(4)(ii)(B)", "requires": ["services_list"] },
+    { "id": "direct_cremation", "label": "Direct cremation", "cite": "16 CFR 453.2(b)(4)(ii)(C)", "requires": ["price_range", "option_purchaser_container", "option_alt_container", "description"] },
+    { "id": "immediate_burial", "label": "Immediate burial", "cite": "16 CFR 453.2(b)(4)(ii)(D)", "requires": ["price_range", "option_purchaser_casket", "option_with_container", "description"] },
+    { "id": "transfer", "label": "Transfer of remains to funeral home", "cite": "16 CFR 453.2(b)(4)(ii)(E)" },
+    { "id": "embalming", "label": "Embalming", "cite": "16 CFR 453.2(b)(4)(ii)(F)" },
+    { "id": "other_prep", "label": "Other preparation of the body", "cite": "16 CFR 453.2(b)(4)(ii)(G)" },
+    { "id": "viewing", "label": "Use of facilities and staff for viewing", "cite": "16 CFR 453.2(b)(4)(ii)(H)" },
+    { "id": "funeral_ceremony", "label": "Use of facilities and staff for funeral ceremony", "cite": "16 CFR 453.2(b)(4)(ii)(I)" },
+    { "id": "memorial_service", "label": "Use of facilities and staff for memorial service", "cite": "16 CFR 453.2(b)(4)(ii)(J)" },
+    { "id": "graveside", "label": "Use of equipment and staff for graveside service", "cite": "16 CFR 453.2(b)(4)(ii)(K)" },
+    { "id": "hearse", "label": "Hearse", "cite": "16 CFR 453.2(b)(4)(ii)(L)" },
+    { "id": "limousine", "label": "Limousine", "cite": "16 CFR 453.2(b)(4)(ii)(M)" },
+    { "id": "caskets", "label": "Caskets (range with statement, or individual prices)", "cite": "16 CFR 453.2(b)(4)(iii)(A)" },
+    { "id": "outer_burial_containers", "label": "Outer burial containers (range with statement, or individual prices)", "cite": "16 CFR 453.2(b)(4)(iii)(B)" },
+    { "id": "basic_services", "label": "Basic services of funeral director and staff", "cite": "16 CFR 453.2(b)(4)(iii)(C)", "requires": ["services_list"] }
+  ],
+
+  "checks": [
+    { "id": "C-001", "title": "Caption \"General Price List\"", "cite": "16 CFR 453.2(b)(4)(i)(C)(2)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "always",
+      "test": "caption normalizes to contain \"general price list\"",
+      "plain": "The list must be labeled \"General Price List\" so families know which document it is." },
+    { "id": "C-002", "title": "Provider name", "cite": "16 CFR 453.2(b)(4)(i)(C)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "always",
+      "test": "providerName present", "plain": "The list must name the funeral home." },
+    { "id": "C-003", "title": "Provider address", "cite": "16 CFR 453.2(b)(4)(i)(C)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "always",
+      "test": "address present", "plain": "The list must give the funeral home's address." },
+    { "id": "C-004", "title": "Provider telephone", "cite": "16 CFR 453.2(b)(4)(i)(C)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "always",
+      "test": "phone present", "plain": "The list must give the funeral home's phone number." },
+    { "id": "C-005", "title": "Effective date present", "cite": "16 CFR 453.2(b)(4)(i)(C)(3)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "always",
+      "test": "effectiveDate raw text present; an unfilled template marker such as \"[date]\" counts as absent",
+      "plain": "The list must say when its prices took effect." },
+    { "id": "C-006", "title": "Effective date readable", "cite": "16 CFR 453.2(b)(4)(i)(C)(3)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "effective date present",
+      "test": "effectiveDate parses to a calendar date", "plain": "A date is printed but we couldn't read it as a date." },
+    { "id": "C-007", "title": "Effective date may be stale", "cite": null, "basis": "heuristic", "engine": "deterministic", "on_violation": "review", "applies_when": "effective date parsed",
+      "test": "effectiveDate older than 12 months before the audit date",
+      "plain": "The prices are more than a year old. The Rule doesn't set an expiry, but the Rule does require accurate prices, so ask whether these are still current." },
+
+    { "id": "C-010", "title": "Right-of-selection disclosure present", "cite": "16 CFR 453.4(b)(2)(i)(A)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "always",
+      "test": "D-selection matches (altered => review)", "plain": "The list must tell you that you can choose only the items you want." },
+    { "id": "C-011", "title": "Right-of-selection disclosure placed above prices", "cite": "16 CFR 453.4(b)(2)(i)(A)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "D-selection present",
+      "test": "disclosure appears immediately above the itemized prices", "plain": "The choice statement should come right before the prices." },
+
+    { "id": "C-020", "title": "Basic services fee lists the services it covers", "cite": "16 CFR 453.2(b)(4)(iii)(C)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "basic_services_priced",
+      "test": "basic_services item has non-empty includesText", "plain": "A basic services fee must come with a list of what it pays for." },
+    { "id": "C-021", "title": "Basic services fee list is adequate", "cite": "16 CFR 453.2(b)(4)(iii)(C)(1)", "basis": "guide", "engine": "semantic", "on_violation": "review", "applies_when": "basic_services_priced AND includesText present",
+      "test": "includesText names principal services (arrangements conference, permits, notices, shelter of remains, coordination with third parties)",
+      "plain": "The list of what the basic fee covers looks thin." },
+    { "id": "C-022", "title": "Non-declinable basic services disclosure present", "cite": "16 CFR 453.2(b)(4)(iii)(C)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "basic_services_priced AND basic_services_declared_nondeclinable",
+      "test": "D-basic-nondeclinable matches",
+      "plain": "This list says its basic fee can't be declined, so it must also say the fee is added to every arrangement and already included in the minimal services." },
+    { "id": "C-023", "title": "Selection disclosure sentence matches fee status", "cite": "16 CFR 453.4(b)(2)(i)(A)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "basic_services_priced",
+      "test": "review if D-basic-nondeclinable is present but the D-selection conditional sentence is absent, or if neither is present (the reverse case is C-022)",
+      "plain": "We can't tell whether the basic services fee can be declined; the two statements that answer that disagree or are both missing." },
+    { "id": "C-024", "title": "Basic services fee folded into casket prices", "cite": "16 CFR 453.2(b)(4)(iii)(C)(2)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "NOT basic_services_priced AND (caskets_as_range OR caskets_itemized)",
+      "test": "D-basic-in-casket matches", "plain": "No separate basic services fee is shown. If it's built into casket prices, the list must say how much." },
+    { "id": "C-025", "title": "Second non-declinable fee", "cite": "16 CFR 453.2(b)(4)(iv)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "always",
+      "test": "model finds another mandatory fee for services, facilities or overhead (e.g., \"basic facilities fee\", \"casket handling fee\", \"additional services of staff\")",
+      "plain": "The basic services fee is the only fee a funeral home may make mandatory. This list seems to have another." },
+
+    { "id": "C-030", "title": "Embalming disclosure present", "cite": "16 CFR 453.3(a)(2)(ii)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "embalming_offered",
+      "test": "D-embalming matches (altered => review)", "plain": "Next to the embalming price, the list must say that embalming usually isn't required by law." },
+    { "id": "C-031", "title": "Embalming disclosure next to embalming price", "cite": "16 CFR 453.3(a)(2)(ii)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "D-embalming present",
+      "test": "disclosure in immediate conjunction with the embalming price (same page, adjacent block)", "plain": "The embalming statement should sit right next to the embalming price." },
+    { "id": "C-032", "title": "Embalming represented as required", "cite": "16 CFR 453.3(a)(2)(i)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "always",
+      "test": "model finds text saying embalming is required for direct cremation, immediate burial, or a closed-casket funeral without viewing",
+      "plain": "The list seems to say embalming is required where the Rule says a provider may not claim that." },
+    { "id": "C-033", "title": "Embalming disclosure omits \"Except in certain special cases\"", "cite": "16 CFR 453.3(a)(2)(ii)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "D-embalming present",
+      "test": "review when the optional phrase is absent", "plain": "Leaving out \"except in certain special cases\" is allowed only where state law never requires embalming. Worth checking for this state." },
+
+    { "id": "C-040", "title": "Direct cremation: price with purchaser's container", "cite": "16 CFR 453.2(b)(4)(ii)(C)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "direct_cremation_offered",
+      "test": "a priced direct cremation option where the purchaser provides the container", "plain": "The list must price a direct cremation where you bring your own container." },
+    { "id": "C-041", "title": "Direct cremation: priced option with alternative container", "cite": "16 CFR 453.2(b)(4)(ii)(C)(2); 453.4(a)(2)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "direct_cremation_offered",
+      "test": "at least one priced direct cremation option including an alternative container, or a direct cremation price plus a separately priced container the family can add (decision 2026-10-20; see README)", "plain": "The list must offer and price a direct cremation with a simple alternative container, not only with a casket." },
+    { "id": "C-042", "title": "Direct cremation: description of services", "cite": "16 CFR 453.2(b)(4)(ii)(C)(3)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "direct_cremation_offered",
+      "test": "direct_cremation item has non-empty includesText", "plain": "The list must say what the direct cremation price includes." },
+    { "id": "C-043", "title": "Direct cremation: price range shown", "cite": "16 CFR 453.2(b)(4)(ii)(C)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "direct_cremation_offered",
+      "test": "explicit range present and equal to [min, max] of the options", "plain": "The list should show the low-to-high range for direct cremation, matching its options." },
+    { "id": "C-044", "title": "Alternative-container disclosure present", "cite": "16 CFR 453.3(b)(2)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "direct_cremation_offered",
+      "test": "D-alt-container matches with a filled containers slot (altered => review)", "plain": "The list must tell you that you can use an alternative container for direct cremation, and say which ones the funeral home provides." },
+    { "id": "C-045", "title": "Alternative-container disclosure next to direct cremation", "cite": "16 CFR 453.3(b)(2)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "D-alt-container present",
+      "test": "disclosure in immediate conjunction with the direct cremation range", "plain": "The alternative-container statement should sit right next to the direct cremation prices." },
+    { "id": "C-046", "title": "Casket represented as required for cremation", "cite": "16 CFR 453.3(b)(1); 453.4(a)(1)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "direct_cremation_offered",
+      "test": "model finds text saying a casket is required for direct cremation", "plain": "The list seems to say a casket is needed for cremation. A provider may not require or claim that." },
+    { "id": "C-047", "title": "\"And cremation\" wording versus crematory cash advance", "cite": null, "basis": "guide", "engine": "semantic", "on_violation": "review", "applies_when": "direct_cremation_offered",
+      "test": "if the description includes the cremation itself, the crematory fee is not also billed as a cash advance, and vice versa", "plain": "It's unclear whether the crematory's own charge is inside the direct cremation price or added later." },
+
+    { "id": "C-050", "title": "Immediate burial: price with purchaser's casket", "cite": "16 CFR 453.2(b)(4)(ii)(D)(1)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "immediate_burial_offered",
+      "test": "a priced immediate burial option where the purchaser provides the casket", "plain": "The list must price an immediate burial where you bring your own casket." },
+    { "id": "C-051", "title": "Immediate burial: priced option with casket or alternative container", "cite": "16 CFR 453.2(b)(4)(ii)(D)(2)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "immediate_burial_offered",
+      "test": "at least one priced immediate burial option including a casket or alternative container, or a reference to the casket price list", "plain": "The list doesn't show an immediate burial price that includes a container." },
+    { "id": "C-052", "title": "Immediate burial: description of services", "cite": "16 CFR 453.2(b)(4)(ii)(D)(3)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "immediate_burial_offered",
+      "test": "immediate_burial item has non-empty includesText", "plain": "The list must say what the immediate burial price includes." },
+    { "id": "C-053", "title": "Immediate burial: price range shown", "cite": "16 CFR 453.2(b)(4)(ii)(D)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "immediate_burial_offered",
+      "test": "explicit range present and equal to [min, max] of the options", "plain": "The list should show the low-to-high range for immediate burial, matching its options." },
+
+    { "id": "C-060", "title": "Forwarding: list of services", "cite": "16 CFR 453.2(b)(4)(ii)(A)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "forwarding_offered",
+      "test": "forwarding item has non-empty includesText", "plain": "The forwarding price must come with a list of what it includes." },
+    { "id": "C-061", "title": "Receiving: list of services", "cite": "16 CFR 453.2(b)(4)(ii)(B)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "receiving_offered",
+      "test": "receiving item has non-empty includesText", "plain": "The receiving price must come with a list of what it includes." },
+
+    { "id": "C-070", "title": "Every offered required item has a price", "cite": "16 CFR 453.2(b)(4)(ii)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "per offered item in items[]",
+      "test": "price or unit price present (for caskets, outer burial containers, direct cremation and immediate burial, a price range with numbers at both ends also counts); \"call for pricing\", blank or template marker counts as missing", "plain": "Each listed service must show what it costs." },
+    { "id": "C-071", "title": "Vague price on a required item", "cite": "16 CFR 453.2(a)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "per offered item in items[]",
+      "test": "price text contains \"starting at\", \"from\", \"as low as\" or similar, outside the casket, OBC, direct cremation and immediate burial ranges the Rule permits", "plain": "This price is shown as a starting point, so the actual cost isn't clear." },
+    { "id": "C-072", "title": "Casket prices disclosed", "cite": "16 CFR 453.2(b)(4)(iii)(A)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "caskets named on the GPL",
+      "test": "caskets_itemized, or caskets_as_range with D-casket-list matched", "plain": "If caskets are offered, the list must show their prices, or a price range plus a note that a full casket price list is available." },
+    { "id": "C-073", "title": "Outer burial container prices disclosed", "cite": "16 CFR 453.2(b)(4)(iii)(B)", "basis": "rule", "engine": "deterministic", "on_violation": "fail", "applies_when": "outer burial containers named on the GPL",
+      "test": "obc_itemized with D-obc-legal matched, or obc_as_range with D-obc-list matched", "plain": "If vaults or grave liners are offered, the list must show prices or a range, plus the statements that go with them." },
+    { "id": "C-074", "title": "OBC disclosure omits \"In most areas of the country\"", "cite": "16 CFR 453.3(c)(2)", "basis": "rule", "engine": "deterministic", "on_violation": "review", "applies_when": "D-obc-legal present",
+      "test": "review when the optional phrase is absent", "plain": "Leaving out \"in most areas of the country\" is allowed only where state law never requires a grave container. Worth checking for this state." },
+    { "id": "C-075", "title": "Required items possibly offered but not listed", "cite": "16 CFR 453.2(b)(4)(ii)", "basis": "guide", "engine": "semantic", "on_violation": "review", "applies_when": "always",
+      "test": "model finds evidence an item is offered (in a package, a description or a policy) without its own itemized price; also flag missing forwarding, receiving, direct cremation or immediate burial, which the FTC guide's tip sheet treats as expected",
+      "plain": "Something seems to be offered without its own price on the list." },
+
+    { "id": "C-080", "title": "Packages without itemized equivalents", "cite": null, "basis": "guide", "engine": "semantic", "on_violation": "review", "applies_when": "packages present",
+      "test": "each package component also appears as an itemized price", "plain": "Packages are allowed only in addition to itemized prices, not in place of them." },
+    { "id": "C-081", "title": "Claims that law, a cemetery or a crematory requires a purchase", "cite": "16 CFR 453.3(d)(1); 453.3(c)(1)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "always",
+      "test": "model finds text asserting a purchase is required by law, a cemetery or a crematory", "plain": "The list says something is required. That claim has to be true, and it's worth checking." },
+    { "id": "C-082", "title": "Preservation or protection claims", "cite": "16 CFR 453.3(e)", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "always",
+      "test": "model finds claims that goods or services delay decomposition long-term or protect the body from gravesite substances", "plain": "The list seems to claim a product preserves or protects the body. The Rule restricts those claims." },
+    { "id": "C-083", "title": "Text that alters or contradicts a required disclosure", "cite": "16 CFR 453.7", "basis": "rule", "engine": "semantic", "on_violation": "review", "applies_when": "always",
+      "test": "model finds statements that alter or contradict a required disclosure, or required disclosures that are not clear and conspicuous", "plain": "Other wording on the list may undercut one of the required statements." }
+  ]
+}

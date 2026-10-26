@@ -1,0 +1,46 @@
+# Allowlist. Everything is ignored unless listed below, so planning notes, real GPLs,
+# EditFast specimens, secrets and AI-assistant files can't reach the public repo by accident.
+# Only what judges need ships: code, config, the ruleset, synthetic fixtures, README and PROVENANCE.
+/*
+
+!/.gitignore
+!/README.md
+!/PROVENANCE.md
+!/LICENSE
+!/package.json
+!/package-lock.json
+!/tsconfig.json
+!/wrangler.jsonc
+!/worker-configuration.d.ts
+!/src/
+!/migrations/
+!/public/
+!/test/
+
+# Pre-event data (see PROVENANCE.md): the ruleset, synthetic lists, photos and their labels
+!/prep/
+/prep/*
+!/prep/rules/
+!/prep/synthetic/
+/prep/synthetic/*
+!/prep/synthetic/pdf/
+!/prep/synthetic/photos/
+!/prep/synthetic/labels.json
+
+# FTC Sample 1 (public US government work) and its labels; EditFast stays in specimens/private/
+!/specimens/
+/specimens/*
+!/specimens/ftc-sample1-gpl-template.pdf
+!/specimens/labels.json
+
+# Never anywhere in the tree, even inside allowed folders
+**/CLAUDE.md
+**/CLAUDE.local.md
+**/AGENTS.md
+**/.claude/
+**/.remember/
+**/.env*
+**/.dev.vars*
+**/node_modules/
+**/.wrangler/
+**/.DS_Store
