@@ -1,15 +1,16 @@
 import type { Provider } from './audit';
-import { daysBefore, REUSE_DAYS } from './store';
+import { auditDocument, daysBefore, documentKeys, REUSE_DAYS, type AuditRow } from './store';
 
-export type CleanupAuditRow = { id: string; doc_sha256: string; provider: Provider; last_used_at: string };
+// docKeys: every stored object the audit reads, the PDF or each page image.
+export type CleanupAuditRow = { id: string; doc_sha256: string; provider: Provider; last_used_at: string; docKeys: string[] };
 
 export type CleanupPlan = {
   cutoff: string;
   auditIds: string[];
   // Extraction and semantic cache rows are keyed per document and provider.
   cachePairs: { sha256: string; provider: Provider }[];
-  // R2 holds one object per document, whatever the provider.
-  docShas: string[];
+  // R2 holds one object per PDF or page image, whatever the provider, and lists can share pages.
+  docKeys: string[];
 };
 
 export function planCleanup(audits: readonly CleanupAuditRow[], now: Date): CleanupPlan {
@@ -17,7 +18,7 @@ export function planCleanup(audits: readonly CleanupAuditRow[], now: Date): Clea
   const expired = audits.filter((a) => a.last_used_at < cutoff);
   const kept = audits.filter((a) => a.last_used_at >= cutoff);
   const keptPairs = new Set(kept.map((a) => `${a.doc_sha256}|${a.provider}`));
-  const keptShas = new Set(kept.map((a) => a.doc_sha256));
+  const keptKeys = new Set(kept.flatMap((a) => a.docKeys));
 
   const cachePairs = new Map<string, { sha256: string; provider: Provider }>();
   for (const a of expired) {
@@ -28,7 +29,7 @@ export function planCleanup(audits: readonly CleanupAuditRow[], now: Date): Clea
     cutoff,
     auditIds: expired.map((a) => a.id),
     cachePairs: [...cachePairs.values()],
-    docShas: [...new Set(expired.map((a) => a.doc_sha256).filter((s) => !keptShas.has(s)))],
+    docKeys: [...new Set(expired.flatMap((a) => a.docKeys).filter((k) => !keptKeys.has(k)))],
   };
 }
 
@@ -43,17 +44,20 @@ export type CleanupCounts = { audits: number; reports: number; extractions: numb
 // the same file deletes nothing that is still in use.
 export async function runCleanup(env: Pick<Env, 'DB' | 'DOCS'>, now: Date): Promise<CleanupCounts> {
   const { results } = await env.DB.prepare(
-    'SELECT id, doc_sha256, provider, COALESCE(last_used_at, created_at) AS last_used_at FROM audits',
-  ).all<CleanupAuditRow>();
-  const plan = planCleanup(results, now);
+    'SELECT id, doc_sha256, provider, COALESCE(last_used_at, created_at) AS last_used_at, doc_key, content_type, pages FROM audits',
+  ).all<Omit<CleanupAuditRow, 'docKeys'> & Pick<AuditRow, 'doc_key' | 'content_type' | 'pages'>>();
+  const plan = planCleanup(
+    results.map((r) => ({ id: r.id, doc_sha256: r.doc_sha256, provider: r.provider, last_used_at: r.last_used_at, docKeys: documentKeys(auditDocument(r)) })),
+    now,
+  );
   const counts: CleanupCounts = { audits: 0, reports: 0, extractions: 0, semantic: 0, modelCalls: 0, docs: 0, pdfs: 0 };
 
-  for (const sha of plan.docShas) {
+  for (const key of plan.docKeys) {
     // An upload re-puts the object just before it reuses or inserts an audit, so an object written
     // in the last minute may belong to an upload that is still under way.
-    const head = await env.DOCS.head(`docs/${sha}`);
+    const head = await env.DOCS.head(key);
     if (head && now.getTime() - head.uploaded.getTime() > 60_000) {
-      await env.DOCS.delete(`docs/${sha}`);
+      await env.DOCS.delete(key);
       counts.docs++;
     }
   }

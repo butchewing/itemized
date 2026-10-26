@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 // Posts the synthetic PDFs and photos to a local Worker and scores each stored extraction
 // against ground truth parsed from prep/synthetic/html.
-//   node test/eval-extraction.mjs [--base URL] [--set pdf|photos|all] [--gap ms] [--only file] [--out file.json]
+//   node test/eval-extraction.mjs [--base URL] [--set pdf|photos|pairs|all] [--gap ms] [--only file] [--out file.json]
+//     [--images-dir dir]  read the photos' bytes from dir (same filenames as the manifest), e.g. cropped copies
+// --set pairs uploads each list's photos together as one multi-page document, scores it against the
+// whole list, runs its PDF too, and reports any fail on the photos that the PDF does not have.
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,6 +18,7 @@ const BASE = args.base ?? 'http://localhost:8787';
 const SET = args.set ?? 'all';
 const GAP_MS = Number(args.gap ?? 13000);
 const POLL_TIMEOUT_MS = 240000;
+const PHOTOS_DIR = args['images-dir'] ?? join(SYN, 'photos');
 
 const ruleset = JSON.parse(readFileSync(join(ROOT, 'prep/rules/ftc-453@2026.1.json'), 'utf8'));
 const DISCLOSURE_IDS = Object.keys(ruleset.disclosures);
@@ -192,10 +196,11 @@ function score(listId, truth, got) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function upload(path, name, mime) {
+async function upload(paths, mime) {
+  const name = paths.map((p) => p.split('/').at(-1)).join('+');
   for (;;) {
     const form = new FormData();
-    form.set('file', new Blob([readFileSync(path)], { type: mime }), name);
+    for (const p of paths) form.append('file', new Blob([readFileSync(p)], { type: mime }), p.split('/').at(-1));
     const res = await fetch(`${BASE}/api/audits`, { method: 'POST', body: form });
     if (res.status === 429) {
       await sleep(15000);
@@ -220,12 +225,20 @@ function documents() {
   const docs = [];
   if (SET === 'pdf' || SET === 'all') {
     for (const f of readdirSync(join(SYN, 'pdf')).filter((f) => f.endsWith('.pdf')).sort()) {
-      docs.push({ file: f, path: join(SYN, 'pdf', f), mime: 'application/pdf', list: f.replace('.pdf', ''), page: null });
+      docs.push({ file: f, paths: [join(SYN, 'pdf', f)], mime: 'application/pdf', list: f.replace('.pdf', ''), page: null });
     }
   }
   if (SET === 'photos' || SET === 'all') {
     const manifest = JSON.parse(readFileSync(join(SYN, 'photos/manifest.json'), 'utf8'));
-    for (const p of manifest.photos) docs.push({ file: p.file, path: join(SYN, 'photos', p.file), mime: 'image/jpeg', list: p.list, page: p.page });
+    for (const p of manifest.photos) docs.push({ file: p.file, paths: [join(PHOTOS_DIR, p.file)], mime: 'image/jpeg', list: p.list, page: p.page });
+  }
+  if (SET === 'pairs') {
+    const manifest = JSON.parse(readFileSync(join(SYN, 'photos/manifest.json'), 'utf8'));
+    for (const list of [...new Set(manifest.photos.map((p) => p.list))]) {
+      const pages = manifest.photos.filter((p) => p.list === list).sort((a, b) => a.page - b.page);
+      docs.push({ file: `${list}.pdf`, paths: [join(SYN, 'pdf', `${list}.pdf`)], mime: 'application/pdf', list, page: null });
+      docs.push({ file: `${list} photos`, paths: pages.map((p) => join(PHOTOS_DIR, p.file)), mime: 'image/jpeg', list, page: null, pair: true });
+    }
   }
   return args.only ? docs.filter((d) => d.file === args.only) : docs;
 }
@@ -238,9 +251,13 @@ async function main() {
   const docs = documents();
   for (const [i, d] of docs.entries()) {
     if (i > 0) await sleep(GAP_MS);
-    const id = await upload(d.path, d.file, d.mime);
+    const id = await upload(d.paths, d.mime);
     const audit = await poll(id);
-    const row = { file: d.file, provider: audit.provider, status: audit.status, error: audit.error, costUsd: audit.costUsd, ms: audit.modelMs };
+    const row = { file: d.file, list: d.list, pair: Boolean(d.pair), id, provider: audit.provider, status: audit.status, error: audit.error, costUsd: audit.costUsd, ms: audit.modelMs };
+    if (audit.report) {
+      row.verdicts = Object.fromEntries(audit.report.findings.map((f) => [f.checkId, f.verdict]));
+      row.pages = Object.fromEntries(audit.report.findings.filter((f) => f.evidence?.page).map((f) => [f.checkId, f.evidence.page]));
+    }
     if (audit.extraction) Object.assign(row, score(d.list, groundTruth(d.list, d.page), audit.extraction));
     rows.push(row);
     console.log(`${d.file.padEnd(16)} ${audit.provider} ${audit.status}${audit.error ? ` (${audit.error})` : ''} ${usd(audit.costUsd)}`);
@@ -274,6 +291,21 @@ async function main() {
 
   console.log('\nMisses');
   for (const r of rows) for (const m of r.misses ?? []) if (m) console.log(`  ${r.file}: ${m}`);
+  if (SET === 'pairs') {
+    console.log('\nPhoto-only fails (fail on the photos, not fail on the PDF)');
+    for (const r of rows.filter((x) => x.pair)) {
+      const pdf = rows.find((x) => !x.pair && x.list === r.list);
+      const fails = Object.entries(r.verdicts ?? {}).filter(([, v]) => v === 'fail').map(([id]) => id);
+      if (!pdf?.verdicts) {
+        console.log(`  ${r.list}: fails [${fails.join(' ')}]  (no PDF report on this provider to compare)`);
+        continue;
+      }
+      const photoOnly = fails.filter((id) => pdf.verdicts[id] !== 'fail');
+      const changed = Object.keys(r.verdicts ?? {}).filter((id) => r.verdicts[id] !== pdf.verdicts[id]).map((id) => `${id} ${pdf.verdicts[id]}->${r.verdicts[id]}`);
+      const cited = [...new Set(Object.values(r.pages ?? {}))].sort();
+      console.log(`  ${r.list}: fails [${fails.join(' ')}]  photo-only [${photoOnly.join(' ')}]  verdict changes vs PDF [${changed.join(', ')}]  pages cited [${cited.join(',')}]`);
+    }
+  }
   if (args.out) writeFileSync(args.out, JSON.stringify(rows, null, 1));
 }
 

@@ -71,6 +71,18 @@ export const STYLES = `
   .file-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .file-name { font-style: italic; color: var(--slate); min-width: 0; overflow-wrap: anywhere; }
   .file-name.chosen { font-style: normal; color: var(--ink); }
+  .field > .btn { grid-column: 2; grid-row: 1; }
+  .field.has-pages { align-items: start; }
+  .pages { grid-column: 1; grid-row: 1; min-width: 0; list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .pages li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .2rem 0; border-bottom: 1px solid var(--rule); }
+  .pages li span { min-width: 0; overflow-wrap: anywhere; font-variant-numeric: lining-nums; }
+  .text-btn {
+    font: 500 .75rem/1 var(--engraved); letter-spacing: .16em; text-transform: uppercase;
+    color: var(--slate); background: none; border: 0; padding: .65rem 0; cursor: pointer;
+    text-decoration: underline; text-decoration-color: var(--gilt); text-underline-offset: .35em;
+  }
+  .text-btn:hover { color: var(--ink); text-decoration-thickness: 2px; }
+  .add-page { grid-column: 1; justify-self: start; color: var(--ink); }
   .btn {
     display: inline-block; text-decoration: none;
     font: 500 .8rem/1 var(--engraved); letter-spacing: .16em; text-transform: uppercase;
@@ -151,6 +163,7 @@ export const STYLES = `
   @media (max-width: 34rem) {
     .field { grid-template-columns: 1fr; }
     .field .btn { justify-self: start; }
+    .field > .btn, .pages { grid-column: 1; grid-row: auto; }
     .finding { grid-template-columns: 1fr; }
     .margin { grid-column: 1; grid-row: auto; padding: .5rem 0 0; }
   }

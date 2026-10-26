@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import { canTransition, type AuditStatus, type Provider } from './audit';
+import { canTransition, type AuditDocument, type AuditStatus, type ImageType, type Provider, type StoredPage } from './audit';
 import { PROMPT_VERSION, type GplExtraction } from './extraction';
 import { PROVIDER_CONFIG, type Usage } from './models';
 import { parseSemantic, SEMANTIC_PROMPT_VERSION } from './rules/semantic';
@@ -19,7 +19,17 @@ export type AuditRow = {
   updated_at: string;
   last_used_at: string | null;
   versions: string | null;
+  pages: string | null;
 };
+
+// Rows from before migration 0006 hold a single image with pages NULL.
+export function auditDocument(row: Pick<AuditRow, 'doc_key' | 'content_type' | 'pages'>): AuditDocument {
+  if (row.pages !== null) return { kind: 'pages', pages: JSON.parse(row.pages) as StoredPage[] };
+  if (row.content_type === 'application/pdf') return { kind: 'pdf', key: row.doc_key };
+  return { kind: 'pages', pages: [{ key: row.doc_key, contentType: row.content_type as ImageType }] };
+}
+
+export const documentKeys = (d: AuditDocument) => (d.kind === 'pdf' ? [d.key] : d.pages.map((p) => p.key));
 
 // Every version a finished audit's report depends on. An audit is reused only when this matches.
 export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}`;
@@ -47,16 +57,20 @@ export async function findReusable(db: D1Database, sha256: string, provider: Pro
 export const touchAudit = (db: D1Database, id: string, now: Date) =>
   db.prepare('UPDATE audits SET last_used_at = ? WHERE id = ?').bind(now.toISOString(), id).run();
 
-export type NewAudit = { id: string; provider: Provider; docKey: string; sha256: string; contentType: string; filename: string | null };
+export type NewAudit = { id: string; provider: Provider; document: AuditDocument; sha256: string; filename: string | null };
 
 export async function createAudit(db: D1Database, a: NewAudit, now: Date) {
   const at = now.toISOString();
+  const d = a.document;
+  // For page images, doc_key and content_type describe page 1 and pages lists every page.
+  const [docKey, contentType, pages] =
+    d.kind === 'pdf' ? [d.key, 'application/pdf', null] : [d.pages[0]!.key, d.pages[0]!.contentType, JSON.stringify(d.pages)];
   await db
     .prepare(
-      `INSERT INTO audits (id, status, provider, doc_key, doc_sha256, content_type, filename, created_at, updated_at, last_used_at, versions)
-       VALUES (?, 'queued', ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO audits (id, status, provider, doc_key, doc_sha256, content_type, filename, created_at, updated_at, last_used_at, versions, pages)
+       VALUES (?, 'queued', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
-    .bind(a.id, a.provider, a.docKey, a.sha256, a.contentType, a.filename, at, at, at, PIPELINE_VERSIONS)
+    .bind(a.id, a.provider, docKey, a.sha256, contentType, a.filename, at, at, at, PIPELINE_VERSIONS, pages)
     .run();
 }
 

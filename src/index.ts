@@ -1,11 +1,16 @@
 import puppeteer from '@cloudflare/puppeteer';
 import { Hono } from 'hono';
 import {
-  isAcceptedType,
+  combinedSha256,
+  docKey,
   isProvider,
-  MAX_UPLOAD_BYTES,
+  MAX_PAGES,
+  parseUpload,
+  sha256Hex,
+  type AuditDocument,
   type AuditMessage,
   type AuditStatus,
+  type ImageType,
 } from './audit';
 import { runCleanup } from './cleanup';
 import { runAudit } from './pipeline';
@@ -21,6 +26,7 @@ import {
   type AuditRow,
 } from './store';
 import { renderLetterHtml } from './letter';
+import { PROVIDER_CONFIG } from './models';
 import { PAGE } from './page';
 import { notFoundPage, PDF_FAILED, pdfFilename, reviewPage } from './review';
 import { spike } from './spike';
@@ -34,9 +40,6 @@ const toJson = (r: AuditRow) => ({
   createdAt: r.created_at,
   updatedAt: r.updated_at,
 });
-
-const hex = (buf: ArrayBuffer) =>
-  [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -58,20 +61,28 @@ app.post('/api/audits', async (c) => {
   }
 
   const form = await c.req.formData().catch(() => null);
-  const file = form?.get('file');
-  if (!(file instanceof File)) return c.json({ error: 'Expected a multipart "file" field.' }, 400);
-  if (!isAcceptedType(file.type)) {
-    return c.json({ error: 'Unsupported file type. Upload a PDF, JPEG, PNG or WebP.' }, 415);
-  }
-  if (file.size === 0 || file.size > MAX_UPLOAD_BYTES) {
-    return c.json({ error: 'File must be between 1 byte and 20 MB.' }, 413);
-  }
+  const upload = parseUpload(form?.getAll('file') ?? [], Math.min(MAX_PAGES, PROVIDER_CONFIG[provider].maxImages));
+  if ('error' in upload) return c.json({ error: upload.error }, upload.status);
 
-  const bytes = await file.arrayBuffer();
-  const sha256 = hex(await crypto.subtle.digest('SHA-256', bytes));
-  const docKey = `docs/${sha256}`;
   // Always re-put: a fresh write resets the object's age for the bucket's 30-day lifecycle rule.
-  await c.env.DOCS.put(docKey, bytes, { httpMetadata: { contentType: file.type } });
+  const store = async (file: File) => {
+    const bytes = await file.arrayBuffer();
+    const sha = await sha256Hex(bytes);
+    await c.env.DOCS.put(docKey(sha), bytes, { httpMetadata: { contentType: file.type } });
+    return sha;
+  };
+  let sha256: string;
+  let document: AuditDocument;
+  if (upload.kind === 'pdf') {
+    sha256 = await store(upload.file);
+    document = { kind: 'pdf', key: docKey(sha256) };
+  } else {
+    const shas: string[] = [];
+    for (const file of upload.files) shas.push(await store(file));
+    sha256 = await combinedSha256(shas);
+    document = { kind: 'pages', pages: shas.map((sha, i) => ({ key: docKey(sha), contentType: upload.files[i]!.type as ImageType })) };
+  }
+  const filename = (upload.kind === 'pdf' ? upload.file : upload.files[0]!).name || null;
 
   const now = new Date();
   const reusable = await findReusable(c.env.DB, sha256, provider, now);
@@ -81,7 +92,7 @@ app.post('/api/audits', async (c) => {
   }
 
   const id = crypto.randomUUID();
-  await createAudit(c.env.DB, { id, provider, docKey, sha256, contentType: file.type, filename: file.name || null }, now);
+  await createAudit(c.env.DB, { id, provider, document, sha256, filename }, now);
   await c.env.AUDITS.send({ auditId: id } satisfies AuditMessage);
 
   return c.json({ id, status: 'queued' satisfies AuditStatus }, 202);

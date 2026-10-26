@@ -52,7 +52,12 @@ spike.post('/spike', async (c) => {
 
   try {
     if (mode === 'sam') {
-      const out = await sam(c.env, bytes, file.type, String(form?.get('phrase') ?? 'price table'));
+      const phrase = String(form?.get('phrase') ?? 'price table');
+      const out = await sam(c.env, bytes, file.type, phrase);
+      const usage: Usage = { inputTokens: 0, outputTokens: 0, reasoningTokens: 0, cachedTokens: 0 };
+      await recordModelCall(c.env.DB, {
+        auditId: null, provider: 'meta-api', model: 'sam-3.1', purpose: `sam/${phrase}`, usage, costUsd: SAM_PER_IMAGE_USD, ms: out.ms, error: null,
+      });
       return c.json({ ...out, costUsd: SAM_PER_IMAGE_USD });
     }
     const url = toDataUrl(bytes, file.type);

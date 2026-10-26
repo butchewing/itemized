@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import type { AuditStatus } from './audit';
+import type { AuditDocument, AuditStatus } from './audit';
 import { EXTRACTION_SCHEMA, ExtractionError, parseExtraction, SYSTEM_PROMPT, type GplExtraction } from './extraction';
 import {
   chatJson,
@@ -21,6 +21,7 @@ import {
   type SemanticResults,
 } from './rules/semantic';
 import {
+  auditDocument,
   getAudit,
   getExtraction,
   getSemantic,
@@ -50,7 +51,7 @@ const rejectsEffort = (e: unknown) => e instanceof ModelError && e.status === 40
 
 const ZERO_USAGE: Usage = { inputTokens: 0, outputTokens: 0, reasoningTokens: 0, cachedTokens: 0 };
 
-async function callExtractor(env: Env, audit: AuditRow, doc: ContentPart): Promise<GplExtraction> {
+async function callExtractor(env: Env, audit: AuditRow, parts: ContentPart[]): Promise<GplExtraction> {
   const { provider } = audit;
   const model = PROVIDER_CONFIG[provider].model;
   for (;;) {
@@ -65,7 +66,7 @@ async function callExtractor(env: Env, audit: AuditRow, doc: ContentPart): Promi
     try {
       const out = await chatJson(env, provider, {
         system: SYSTEM_PROMPT,
-        parts: [{ type: 'text', text: 'Transcribe this General Price List.' }, doc],
+        parts,
         schema: EXTRACTION_SCHEMA,
         reasoningEffort: used,
       });
@@ -85,19 +86,39 @@ async function callExtractor(env: Env, audit: AuditRow, doc: ContentPart): Promi
   }
 }
 
+const TRANSCRIBE = 'Transcribe this General Price List.';
+
+// One page keeps the instruction it had before multi-page uploads, so its wording matches the eval baseline.
+export function pagesInstruction(n: number): string {
+  if (n === 1) return TRANSCRIBE;
+  const order = Array.from({ length: n }, (_, i) => `image ${i + 1} is page ${i + 1}`).join(', ');
+  return `${TRANSCRIBE} It has ${n} pages, sent as ${n} images in page order: ${order}.`;
+}
+
+async function load(env: Env, key: string) {
+  const object = await env.DOCS.get(key);
+  if (!object) throw new AuditFailure('document not found in storage');
+  return object.arrayBuffer();
+}
+
+async function documentParts(env: Env, audit: AuditRow, doc: AuditDocument): Promise<ContentPart[]> {
+  if (doc.kind === 'pdf') {
+    const url = toDataUrl(await load(env, doc.key), 'application/pdf');
+    return [{ type: 'text', text: TRANSCRIBE }, { type: 'file', file: { filename: audit.filename ?? 'document.pdf', file_data: url } }];
+  }
+  const parts: ContentPart[] = [{ type: 'text', text: pagesInstruction(doc.pages.length) }];
+  for (const page of doc.pages) {
+    parts.push({ type: 'image_url', image_url: { url: toDataUrl(await load(env, page.key), page.contentType) } });
+  }
+  return parts;
+}
+
 async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
-  const isPdf = audit.content_type === 'application/pdf';
-  if (isPdf && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
+  const doc = auditDocument(audit);
+  if (doc.kind === 'pdf' && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
   const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
   if (cached) return cached;
-
-  const object = await env.DOCS.get(audit.doc_key);
-  if (!object) throw new AuditFailure('document not found in storage');
-  const url = toDataUrl(await object.arrayBuffer(), audit.content_type);
-  const doc: ContentPart = isPdf
-    ? { type: 'file', file: { filename: audit.filename ?? 'document.pdf', file_data: url } }
-    : { type: 'image_url', image_url: { url } };
-  const extraction = await callExtractor(env, audit, doc);
+  const extraction = await callExtractor(env, audit, await documentParts(env, audit, doc));
   await putExtraction(env.DB, audit.doc_sha256, audit.provider, extraction);
   return extraction;
 }

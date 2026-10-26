@@ -9,6 +9,8 @@ type ProviderConfig = {
   authHeader: (key: string) => Record<string, string>;
   // Baseten documents Muse Spark Open as not supporting structured outputs.
   jsonSchema: boolean;
+  // Images one request may carry.
+  maxImages: number;
 };
 
 const bearer = (key: string) => ({ Authorization: `Bearer ${key}` });
@@ -21,14 +23,18 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
     keyName: 'META_API_KEY',
     authHeader: bearer,
     jsonSchema: true,
+    // prep/meta-api-facts.md
+    maxImages: 50,
   },
   'open-weights': {
     baseUrl: 'https://inference.baseten.co/v1',
-    model: 'meta-models/muse-spark-open',
+    model: 'meta-models/muse-spark-open-1026',
     displayName: 'Muse Spark Open',
     keyName: 'BASETEN_API_KEY',
     authHeader: bearer,
     jsonSchema: false,
+    // docs.baseten.co/inference/model-apis/vision, Muse Spark Open column (read 2026-10-26)
+    maxImages: 8,
   },
 };
 

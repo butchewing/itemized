@@ -1,4 +1,4 @@
-import { ACCEPTED_TYPES, MAX_UPLOAD_BYTES } from './audit';
+import { ACCEPTED_TYPES, MAX_PAGES, MAX_UPLOAD_BYTES } from './audit';
 import { LIMITS_PARAGRAPHS } from './letter';
 import { actionsRow, compactLetterhead, PDF_SCRIPT } from './review';
 import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
@@ -6,14 +6,21 @@ import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
 const accept = Object.keys(ACCEPTED_TYPES).join(',');
 const maxMb = MAX_UPLOAD_BYTES / (1024 * 1024);
 
+// Files are sent in page order. The photo pairs passed the Day 5 bar: no fail their PDF does not have.
 const SAMPLES = [
-  { file: 'syn-01.pdf', name: 'Juniper Hollow Funeral Home', note: 'A complete list. Expect every check to pass.' },
-  { file: 'syn-03.pdf', name: 'Bellwether Memorial Chapel', note: 'Missing required statements and options.' },
-  { file: 'syn-10.pdf', name: 'Marrowfield Funeral Home', note: 'Vague pricing and claims a person should review.' },
+  { files: ['syn-01.pdf'], name: 'Juniper Hollow Funeral Home', note: 'A complete list. Expect every check to pass.' },
+  { files: ['syn-01-1.jpeg', 'syn-01-2.jpeg'], name: 'Juniper Hollow Funeral Home', note: 'A complete list, photographed (2 pages).' },
+  { files: ['syn-03.pdf'], name: 'Bellwether Memorial Chapel', note: 'Missing required statements and options.' },
+  { files: ['syn-10.pdf'], name: 'Marrowfield Funeral Home', note: 'Vague pricing and claims a person should review.' },
+  {
+    files: ['syn-10-1.jpeg', 'syn-10-2.jpeg'],
+    name: 'Marrowfield Funeral Home',
+    note: 'Vague pricing and claims a person should review, photographed (2 pages).',
+  },
 ];
 
 const sampleItems = SAMPLES.map(
-  (s) => `<li><button type="button" class="sample" data-file="${s.file}">
+  (s) => `<li><button type="button" class="sample" data-files="${s.files.join(' ')}">
         <span class="sample-name">${s.name}</span>
         <span class="sample-note">${s.note}</span>
         <span class="sample-action">Review</span>
@@ -44,9 +51,11 @@ ${HEAD_LINKS}
   <form id="form" class="entry">
     <label class="entry-label" for="file">Your General Price List</label>
     <div class="field" id="field">
-      <span class="file-name" id="file-name">Upload the whole list. A PDF is best; a phone photo works for a one-page list. Up to ${maxMb} MB. Drop it here or choose a file.</span>
-      <label class="btn" for="file">Choose a price list</label>
-      <input class="file-input" id="file" name="file" type="file" accept="${accept}" required>
+      <span class="file-name" id="file-name">Upload the whole list: a PDF, or a photo of each page. Up to ${maxMb} MB each. Drop it here or choose a file.</span>
+      <label class="btn" id="choose" for="file">Choose a price list</label>
+      <input class="file-input" id="file" type="file" accept="${accept}" multiple>
+      <ol class="pages" id="pages" aria-label="Pages" aria-live="polite" aria-relevant="additions" hidden></ol>
+      <button class="text-btn add-page" id="add-page" type="button" hidden>Add another page</button>
     </div>
     <div class="submit-row">
       <button class="btn btn-primary" id="submit" type="submit" disabled>Review this list</button>
@@ -92,6 +101,8 @@ ${HEAD_LINKS}
 const form = document.getElementById('form');
 const fileInput = document.getElementById('file');
 const fileName = document.getElementById('file-name');
+const pagesList = document.getElementById('pages');
+const addPage = document.getElementById('add-page');
 const field = document.getElementById('field');
 const submit = document.getElementById('submit');
 const statusEl = document.getElementById('status');
@@ -114,8 +125,16 @@ const FAILURES = {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
+// The list to send, in page order: one PDF, or page images.
+let chosen = [];
+let appending = false;
+let pageIds = 0;
+const MAX_PAGES = ${MAX_PAGES};
+const isPdf = (f) => f.type === 'application/pdf';
+const hasPages = () => chosen.length > 0 && !isPdf(chosen[0]);
+
 function setBusy(busy, message) {
-  submit.disabled = busy || !fileInput.files.length;
+  submit.disabled = busy || !chosen.length;
   for (const s of samples) s.disabled = busy;
   progress.classList.toggle('working', busy);
   statusEl.classList.remove('error');
@@ -128,10 +147,59 @@ function showError(message) {
   statusEl.textContent = message;
 }
 
-function showFile(file) {
-  fileName.textContent = file ? file.name : fileName.dataset.empty;
-  fileName.classList.toggle('chosen', !!file);
-  submit.disabled = !file;
+function pageItem() {
+  const li = document.createElement('li');
+  const label = document.createElement('span');
+  label.id = 'page-' + ++pageIds;
+  const remove = document.createElement('button');
+  remove.type = 'button';
+  remove.className = 'text-btn';
+  remove.textContent = 'Remove';
+  remove.setAttribute('aria-describedby', label.id);
+  remove.addEventListener('click', () => removePage(li));
+  li.append(label, remove);
+  return li;
+}
+
+function renumber() {
+  [...pagesList.children].forEach((li, i) => { li.firstChild.textContent = 'Page ' + (i + 1) + ': ' + chosen[i].name; });
+}
+
+function showChosen() {
+  const pages = hasPages();
+  fileName.hidden = pages;
+  fileName.textContent = chosen.length && !pages ? chosen[0].name : fileName.dataset.empty;
+  fileName.classList.toggle('chosen', chosen.length > 0);
+  field.classList.toggle('has-pages', pages);
+  pagesList.hidden = !pages;
+  addPage.hidden = !pages || chosen.length >= MAX_PAGES;
+  submit.disabled = !chosen.length;
+}
+
+// A PDF replaces the list. Images extend it when adding, and start a new one otherwise.
+function choose(files, append) {
+  files = [...files];
+  if (!files.length) return;
+  const pdf = files.find(isPdf);
+  const extend = append && hasPages() && !pdf;
+  chosen = pdf ? [pdf] : extend ? chosen.concat(files) : files;
+  if (!extend) pagesList.replaceChildren();
+  if (hasPages()) {
+    while (pagesList.children.length < chosen.length) pagesList.append(pageItem());
+    renumber();
+  }
+  showChosen();
+}
+
+function removePage(li) {
+  const items = [...pagesList.children];
+  const i = items.indexOf(li);
+  chosen.splice(i, 1);
+  li.remove();
+  renumber();
+  showChosen();
+  const next = pagesList.children[Math.min(i, pagesList.children.length - 1)];
+  (next ? next.querySelector('button') : addPage.hidden ? fileInput : addPage).focus();
 }
 fileName.dataset.empty = fileName.textContent;
 
@@ -183,31 +251,41 @@ async function review(formData) {
   }
 }
 
-fileInput.addEventListener('change', () => showFile(fileInput.files[0]));
+document.getElementById('choose').addEventListener('click', () => { appending = false; });
+addPage.addEventListener('click', () => { appending = true; fileInput.click(); });
+fileInput.addEventListener('cancel', () => { appending = false; });
+fileInput.addEventListener('change', () => {
+  choose(fileInput.files, appending);
+  appending = false;
+  fileInput.value = '';
+});
 for (const type of ['dragenter', 'dragover']) field.addEventListener(type, (e) => { e.preventDefault(); field.classList.add('dragging'); });
 for (const type of ['dragleave', 'drop']) field.addEventListener(type, () => field.classList.remove('dragging'));
 field.addEventListener('drop', (e) => {
   e.preventDefault();
-  if (!e.dataTransfer.files.length) return;
-  fileInput.files = e.dataTransfer.files;
-  showFile(fileInput.files[0]);
+  choose(e.dataTransfer.files, true);
 });
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (fileInput.files.length) review(new FormData(form));
+  if (!chosen.length) return;
+  const data = new FormData();
+  for (const f of chosen) data.append('file', f, f.name);
+  review(data);
 });
 
 for (const button of samples) {
   button.addEventListener('click', async () => {
-    const file = button.dataset.file;
     hideReview();
     setBusy(true, 'Opening the sample list.');
     try {
-      const res = await fetch('/samples/' + file);
-      if (!res.ok) throw new Error('The sample list could not be opened.');
       const data = new FormData();
-      data.append('file', new File([await res.blob()], file, { type: 'application/pdf' }));
+      for (const file of button.dataset.files.split(' ')) {
+        const res = await fetch('/samples/' + file);
+        if (!res.ok) throw new Error('The sample list could not be opened.');
+        const type = file.endsWith('.pdf') ? 'application/pdf' : 'image/jpeg';
+        data.append('file', new File([await res.blob()], file, { type }));
+      }
       review(data);
     } catch (err) {
       setBusy(false);
