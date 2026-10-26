@@ -1,10 +1,12 @@
 import { DISCLOSURE_IDS, type GplExtraction } from '../extraction';
 import { CHECKS, type CheckContext, type DeterministicCheckId } from './checks';
 import { evaluateConditions, type Matches } from './conditions';
+import { semanticOutcome, type SemanticCheckId, type SemanticResults } from './semantic';
 import { buildCorpus, matchCompleteList, matchDisclosure } from './text';
 import { VERDICTS, type Finding, type Outcome, type Report, type Ruleset, type RulesetCheck, type Verdict } from './types';
 
-export type RunOptions = { auditDate: Date };
+// `semantic` is null or absent when the model step was skipped or failed; those checks go to notRun.
+export type RunOptions = { auditDate: Date; semantic?: SemanticResults | null };
 
 // Only a deterministic check that cites Rule text and is declared fail-capable may fail.
 const canFail = (c: RulesetCheck) => c.basis === 'rule' && c.engine === 'deterministic' && c.on_violation === 'fail';
@@ -37,13 +39,19 @@ export function runChecks(x: GplExtraction, ruleset: Ruleset, opts: RunOptions):
   const findings: Finding[] = [];
   const notRun: string[] = [];
   for (const check of ruleset.checks) {
-    if (check.engine !== 'deterministic') {
-      notRun.push(check.id);
-      continue;
+    let raw: Outcome | Outcome[];
+    if (check.engine === 'deterministic') {
+      const fn = CHECKS[check.id as DeterministicCheckId];
+      if (!fn) throw new Error(`no implementation for deterministic check ${check.id}`);
+      raw = fn(ctx);
+    } else {
+      const judgment = opts.semantic?.[check.id as SemanticCheckId];
+      if (!judgment) {
+        notRun.push(check.id);
+        continue;
+      }
+      raw = semanticOutcome(ctx, judgment);
     }
-    const fn = CHECKS[check.id as DeterministicCheckId];
-    if (!fn) throw new Error(`no implementation for deterministic check ${check.id}`);
-    const raw = fn(ctx);
     for (const o of Array.isArray(raw) ? raw : [raw]) {
       findings.push({
         checkId: check.id,

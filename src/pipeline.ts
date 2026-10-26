@@ -13,10 +13,20 @@ import {
 } from './models';
 import { runChecks } from './rules/engine';
 import {
+  parseSemantic,
+  SEMANTIC_PROMPT_VERSION,
+  SEMANTIC_SCHEMA,
+  SEMANTIC_SYSTEM_PROMPT,
+  semanticUserText,
+  type SemanticResults,
+} from './rules/semantic';
+import {
   getAudit,
   getExtraction,
+  getSemantic,
   putExtraction,
   putReport,
+  putSemantic,
   recordModelCall,
   spendTodayUtc,
   transition,
@@ -92,6 +102,51 @@ async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
   return extraction;
 }
 
+// Judgment needs some reasoning, unlike transcription.
+const SEMANTIC_EFFORT: ReasoningEffort = 'low';
+
+// Runs on the audit's own provider so open-weights audits never send list text to the Meta API.
+// Any failure (budget, model, parse) returns null: the report then lists these checks as not run.
+async function judge(env: Env, audit: AuditRow, extraction: GplExtraction): Promise<SemanticResults | null> {
+  const { provider } = audit;
+  const skipped = (e: unknown) => {
+    console.error(`semantic checks skipped (${SEMANTIC_PROMPT_VERSION}):`, e instanceof Error ? e.message.slice(0, 200) : typeof e);
+    return null;
+  };
+  try {
+    const cached = await getSemantic(env.DB, audit.doc_sha256, provider);
+    if (cached) return cached;
+    await assertUnderBudget(env);
+  } catch (e) {
+    return skipped(e);
+  }
+
+  const model = PROVIDER_CONFIG[provider].model;
+  let usage = ZERO_USAGE;
+  const t0 = Date.now();
+  const record = (error: string | null, ms: number) =>
+    recordModelCall(env.DB, {
+      auditId: audit.id, provider, model, purpose: `semantic/${SEMANTIC_EFFORT}`, usage, costUsd: costUsd(provider, usage), ms, error,
+    });
+  try {
+    const out = await chatJson(env, provider, {
+      system: SEMANTIC_SYSTEM_PROMPT,
+      parts: [{ type: 'text', text: semanticUserText(extraction) }],
+      schema: SEMANTIC_SCHEMA,
+      reasoningEffort: SEMANTIC_EFFORT,
+    });
+    usage = out.usage;
+    const results = parseSemantic(out.json);
+    await putSemantic(env.DB, audit.doc_sha256, provider, out.json);
+    await record(null, out.ms);
+    return results;
+  } catch (e) {
+    if (e instanceof ModelError && e.usage) usage = e.usage;
+    await record(e instanceof Error ? e.message.slice(0, 800) : 'unknown error', Date.now() - t0).catch(() => {});
+    return skipped(e);
+  }
+}
+
 function failureMessage(e: unknown): string {
   if (e instanceof AuditFailure) return e.message;
   if (e instanceof ExtractionError) return 'model returned an invalid extraction';
@@ -101,7 +156,7 @@ function failureMessage(e: unknown): string {
 }
 
 // Resumable: a retried message finds the audit in `extracting` or `checking` and continues;
-// the extraction cache makes the second pass free.
+// the extraction and semantic caches make the second pass free.
 export async function runAudit(env: Env, auditId: string, canRetry: boolean): Promise<'ack' | 'retry'> {
   const audit = await getAudit(env.DB, auditId);
   if (!audit) return 'ack';
@@ -123,8 +178,9 @@ export async function runAudit(env: Env, auditId: string, canRetry: boolean): Pr
   }
   if (status === 'extracting') await transition(env.DB, audit.id, 'extracting', 'checking');
 
+  const semantic = await judge(env, audit, extraction);
   try {
-    await putReport(env.DB, audit.id, runChecks(extraction, ruleset, { auditDate: new Date() }));
+    await putReport(env.DB, audit.id, runChecks(extraction, ruleset, { auditDate: new Date(), semantic }));
   } catch (e) {
     await transition(env.DB, audit.id, 'checking', 'failed', failureMessage(e));
     return 'ack';

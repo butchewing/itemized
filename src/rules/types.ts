@@ -30,7 +30,7 @@ export type Report = {
   rulesetVersion: string;
   findings: Finding[];
   counts: Record<Verdict, number>;
-  // Checks the engine does not run yet (semantic, model-judged).
+  // Semantic checks left out because the model step was skipped or failed.
   notRun: string[];
 };
 

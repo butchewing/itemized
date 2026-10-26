@@ -1,6 +1,8 @@
+import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { canTransition, type AuditStatus, type Provider } from './audit';
 import { PROMPT_VERSION, type GplExtraction } from './extraction';
 import { PROVIDER_CONFIG, type Usage } from './models';
+import { parseSemantic, SEMANTIC_PROMPT_VERSION } from './rules/semantic';
 import type { Report } from './rules/types';
 
 export type AuditRow = {
@@ -56,6 +58,33 @@ export async function putExtraction(db: D1Database, sha256: string, provider: Pr
        VALUES (?, ?, ?, ?, ?)`,
     )
     .bind(sha256, provider, PROVIDER_CONFIG[provider].model, PROMPT_VERSION, JSON.stringify(e))
+    .run();
+}
+
+// Keyed on everything its input depends on: the document, who extracted it and how, and the checks asked.
+const semanticKey = (sha256: string, provider: Provider) =>
+  [sha256, provider, PROVIDER_CONFIG[provider].model, SEMANTIC_PROMPT_VERSION, PROMPT_VERSION, `${ruleset.id}@${ruleset.version}`] as const;
+
+export async function getSemantic(db: D1Database, sha256: string, provider: Provider) {
+  const row = await db
+    .prepare(
+      `SELECT json FROM semantic_results
+       WHERE doc_sha256 = ? AND provider = ? AND model = ? AND prompt_version = ? AND extraction_prompt_version = ? AND ruleset_version = ?`,
+    )
+    .bind(...semanticKey(sha256, provider))
+    .first<{ json: string }>();
+  return row ? parseSemantic(JSON.parse(row.json)) : null;
+}
+
+// Stores the model's output as returned, so fixtures and cache share one parser.
+export async function putSemantic(db: D1Database, sha256: string, provider: Provider, modelJson: unknown) {
+  await db
+    .prepare(
+      `INSERT OR IGNORE INTO semantic_results
+         (doc_sha256, provider, model, prompt_version, extraction_prompt_version, ruleset_version, json)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .bind(...semanticKey(sha256, provider), JSON.stringify(modelJson))
     .run();
 }
 
