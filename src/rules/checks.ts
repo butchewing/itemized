@@ -40,6 +40,7 @@ export type CheckFn = (ctx: CheckContext) => Outcome | Outcome[];
 const NONE: Evidence = { quote: null, page: null };
 const met = (reason: string, evidence: Evidence = NONE): Outcome => ({ result: 'met', reason, evidence });
 const violation = (reason: string, evidence: Evidence = NONE): Outcome => ({ result: 'violation', reason, evidence });
+const seenViolation = (reason: string, evidence: Evidence = NONE): Outcome => ({ result: 'violation', reason, evidence, seen: true });
 const uncertain = (reason: string, evidence: Evidence = NONE): Outcome => ({ result: 'uncertain', reason, evidence });
 const na = (reason: string): Outcome => ({ result: 'not_applicable', reason, evidence: NONE });
 
@@ -135,7 +136,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
     if (normalize(x.caption).includes('general price list')) return met('caption found', ev);
     return similarity('general price list', x.caption) >= ruleset.text_matching.thresholds.altered
       ? uncertain('the caption looks close to "General Price List" but does not match it', ev)
-      : violation('the caption does not say "General Price List"', ev);
+      : seenViolation('the caption does not say "General Price List"', ev);
   },
   'C-002': ({ x }) => headerField(x.providerName, 'funeral home name'),
   'C-003': ({ x }) => headerField(x.address, 'address'),
@@ -144,7 +145,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
     const raw = x.effectiveDate?.raw.trim();
     if (!raw) return violation('no effective date found');
     const ev = { quote: raw, page: null };
-    if (/\[[^\]\d]*\]|_{3,}/.test(raw)) return violation('the effective date is an unfilled template blank', ev);
+    if (/\[[^\]\d]*\]|_{3,}/.test(raw)) return seenViolation('the effective date is an unfilled template blank', ev);
     if (!/\d/.test(raw)) return uncertain('effective date text was found but contains no date', ev);
     return met('effective date found', ev);
   },
@@ -215,7 +216,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
     if (m.status !== 'present') return fromDisclosure(m);
     const slot = m.slots.containers ?? { text: '', state: 'empty' };
     if (slot.state === 'filled') return met(`${m.reason}; containers named: ${slot.text}`, m.evidence);
-    if (slot.state === 'marker') return violation(`the statement is present but the containers are left as a template blank ("${slot.text}")`, m.evidence);
+    if (slot.state === 'marker') return seenViolation(`the statement is present but the containers are left as a template blank ("${slot.text}")`, m.evidence);
     return uncertain('the statement is present but no containers were found after it', m.evidence);
   },
 
@@ -260,7 +261,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
   'C-071': ({ x }) => {
     const out = x.items
       .filter((i) => i.category !== 'other' && !RANGE_CATEGORIES.includes(i.category) && VAGUE.test(i.priceText ?? ''))
-      .map((i) => violation(`price shown as "${i.priceText}"`, itemEvidence(i)));
+      .map((i) => seenViolation(`price shown as "${i.priceText}"`, itemEvidence(i)));
     return out.length ? out : [met('no starting-at or open-ended prices on required items')];
   },
   'C-072': (ctx) => {

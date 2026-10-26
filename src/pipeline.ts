@@ -201,7 +201,8 @@ export async function runAudit(env: Env, auditId: string, canRetry: boolean): Pr
 
   const semantic = await judge(env, audit, extraction);
   try {
-    await putReport(env.DB, audit.id, runChecks(extraction, ruleset, { auditDate: new Date(), semantic }));
+    const input = auditDocument(audit).kind === 'pdf' ? 'pdf' : 'images';
+    await putReport(env.DB, audit.id, runChecks(extraction, ruleset, { auditDate: new Date(), semantic, input }));
   } catch (e) {
     await transition(env.DB, audit.id, 'checking', 'failed', failureMessage(e));
     return 'ack';

@@ -40,6 +40,9 @@ export type Outcome = {
   result: 'met' | 'violation' | 'uncertain' | 'not_applicable';
   reason: string;
   evidence: Evidence;
+  // A violation read directly off text that is on the page (an unfilled blank, "Call for pricing").
+  // Only these may still fail on photo uploads; anything a misread could cause becomes review there.
+  seen?: true;
 };
 
 export type SegmentStatus = 'present' | 'altered' | 'absent';

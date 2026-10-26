@@ -115,7 +115,7 @@ const permalink = document.getElementById('permalink');
 const samples = [...document.querySelectorAll('.sample')];
 const LABELS = {
   queued: 'Your list is in line to be read.',
-  extracting: 'Reading your list, line by line. This takes about fifteen seconds.',
+  extracting: 'Reading your list, line by line. This takes up to about thirty seconds.',
   checking: 'Checking each line against the Funeral Rule.',
 };
 const FAILURES = {

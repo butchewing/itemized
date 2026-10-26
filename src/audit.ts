@@ -34,7 +34,8 @@ export function isAcceptedType(value: string): value is AcceptedType {
 
 export const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
 export const MAX_PAGES = 10;
-export const MAX_TOTAL_BYTES = 40 * 1024 * 1024;
+// Every page is base64-encoded into one model request, so the total stays well inside Worker memory.
+export const MAX_TOTAL_BYTES = 24 * 1024 * 1024;
 
 export type ImageType = Exclude<AcceptedType, 'application/pdf'>;
 
@@ -66,7 +67,7 @@ export function parseUpload(entries: readonly unknown[], maxPages: number): Uplo
     return { kind: 'pdf', file: pdfs[0]! };
   }
   if (files.length > maxPages) return { status: 400, error: `Upload at most ${maxPages} pages.` };
-  if (files.reduce((n, f) => n + f.size, 0) > MAX_TOTAL_BYTES) return { status: 413, error: 'Files must total 40 MB or less.' };
+  if (files.reduce((n, f) => n + f.size, 0) > MAX_TOTAL_BYTES) return { status: 413, error: 'Files must total 24 MB or less.' };
   return { kind: 'pages', files };
 }
 

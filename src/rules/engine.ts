@@ -6,12 +6,16 @@ import { buildCorpus, matchCompleteList, matchDisclosure } from './text';
 import { VERDICTS, type Finding, type Outcome, type Report, type Ruleset, type RulesetCheck, type Verdict } from './types';
 
 // `semantic` is null or absent when the model step was skipped or failed; those checks go to notRun.
-export type RunOptions = { auditDate: Date; semantic?: SemanticResults | null };
+// Bump on any change to how checks map to verdicts: it is part of the reuse key, so stale reviews are not handed back.
+export const ENGINE_VERSION = 'engine-2';
+
+// `input: 'images'` means the list was read from photos, where a statement or price can be missed or misread.
+export type RunOptions = { auditDate: Date; semantic?: SemanticResults | null; input?: 'pdf' | 'images' };
 
 // Only a deterministic check that cites Rule text and is declared fail-capable may fail.
 const canFail = (c: RulesetCheck) => c.basis === 'rule' && c.engine === 'deterministic' && c.on_violation === 'fail';
 
-function verdictOf(c: RulesetCheck, o: Outcome): { verdict: Verdict; reason: string } {
+function verdictOf(c: RulesetCheck, o: Outcome, input: 'pdf' | 'images'): { verdict: Verdict; reason: string } {
   switch (o.result) {
     case 'met':
       return { verdict: 'pass', reason: o.reason };
@@ -20,6 +24,7 @@ function verdictOf(c: RulesetCheck, o: Outcome): { verdict: Verdict; reason: str
     case 'uncertain':
       return { verdict: 'review', reason: `extraction_uncertain: ${o.reason}` };
     case 'violation':
+      if (input === 'images' && !o.seen) return { verdict: 'review', reason: `photo_uncertain: ${o.reason}` };
       return { verdict: canFail(c) ? 'fail' : 'review', reason: o.reason };
   }
 }
@@ -55,7 +60,7 @@ export function runChecks(x: GplExtraction, ruleset: Ruleset, opts: RunOptions):
     for (const o of Array.isArray(raw) ? raw : [raw]) {
       findings.push({
         checkId: check.id,
-        ...verdictOf(check, o),
+        ...verdictOf(check, o, opts.input ?? 'pdf'),
         title: check.title,
         cite: check.cite,
         basis: check.basis,

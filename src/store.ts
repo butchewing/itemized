@@ -1,3 +1,4 @@
+import { ENGINE_VERSION } from './rules/engine';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { canTransition, type AuditDocument, type AuditStatus, type ImageType, type Provider, type StoredPage } from './audit';
 import { PROMPT_VERSION, type GplExtraction } from './extraction';
@@ -32,7 +33,7 @@ export function auditDocument(row: Pick<AuditRow, 'doc_key' | 'content_type' | '
 export const documentKeys = (d: AuditDocument) => (d.kind === 'pdf' ? [d.key] : d.pages.map((p) => p.key));
 
 // Every version a finished audit's report depends on. An audit is reused only when this matches.
-export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}`;
+export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}|${ENGINE_VERSION}`;
 
 export const REUSE_DAYS = 30;
 // toISOString matches the schema's strftime('%Y-%m-%dT%H:%M:%fZ'), so the strings compare in time order.

@@ -148,3 +148,26 @@ describe('option classification', () => {
     expect(byCheck(run(relabeled))['C-040']).toBe('review');
   });
 });
+
+describe('photo uploads never fail on what a misread could cause', () => {
+  const asPhotos = (x: GplExtraction) => runChecks(x, ruleset, { auditDate: AUDIT_DATE, input: 'images' });
+
+  it.each(SYN_LISTS)('%s: read as photos, no new fails and no fail turns into a pass', (list) => {
+    const x = load(`${list}.pdf.json`);
+    const pdf = byCheck(run(x));
+    const photo = byCheck(asPhotos(x));
+    for (const [id, v] of Object.entries(photo)) {
+      if (v === 'fail') expect(pdf[id], `${list} ${id}`).toBe('fail');
+      if (pdf[id] === 'fail') expect(['fail', 'review'], `${list} ${id}`).toContain(v);
+    }
+  });
+
+  it('keeps fails read directly off the page and turns not-found fails into review', () => {
+    const syn03 = byCheck(asPhotos(load('syn-03.pdf.json')));
+    expect(syn03['C-030']).toBe('review'); // embalming statement not found
+    expect(syn03['C-044']).toBe('fail'); // containers left as "(specify containers)"
+    expect(byCheck(asPhotos(load('syn-09.pdf.json')))['C-001']).toBe('fail'); // captioned "Price Guide"
+    const reasons = asPhotos(load('syn-03.pdf.json')).findings.filter((f) => f.checkId === 'C-030').map((f) => f.reason);
+    expect(reasons.every((r) => r.startsWith('photo_uncertain:'))).toBe(true);
+  });
+});

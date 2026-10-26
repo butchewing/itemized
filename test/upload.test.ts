@@ -66,9 +66,9 @@ describe('parseUpload', () => {
   });
 
   it('enforces the total size across pages', () => {
-    const twenty = (n: number) => jpeg(n, 20 * MB);
-    expect(parseUpload([twenty(1), twenty(2)], 10)).toMatchObject({ kind: 'pages' });
-    expect(parseUpload([twenty(1), twenty(2), jpeg(3)], 10)).toMatchObject({ status: 413 });
+    const twelve = (n: number) => jpeg(n, 12 * MB);
+    expect(parseUpload([twelve(1), twelve(2)], 10)).toMatchObject({ kind: 'pages' });
+    expect(parseUpload([twelve(1), twelve(2), jpeg(3)], 10)).toMatchObject({ status: 413 });
   });
 
   it('rejects no files and unsupported types', () => {
