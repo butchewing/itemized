@@ -1,13 +1,6 @@
 import { Hono } from 'hono';
 import { isProvider } from './audit';
-import { chatJson, ModelError, sam, toDataUrl, type ContentPart, type Usage } from './models';
-
-// $ per 1M tokens. Meta Standard per prep/meta-api-facts.md; Baseten Model API per baseten.co/library/muse-spark-open.
-const PRICES = {
-  'meta-api': { input: 1.25, cached: 0.15, output: 4.25 },
-  'open-weights': { input: 1.25, cached: 0.15, output: 4.25 },
-} as const;
-const SAM_PER_IMAGE = 2.5 / 1000;
+import { chatJson, costUsd, ModelError, SAM_PER_IMAGE_USD, sam, toDataUrl, type ContentPart } from './models';
 
 const SCHEMA = {
   type: 'object',
@@ -34,11 +27,6 @@ const SCHEMA = {
 const SYSTEM =
   'You read funeral home General Price Lists. Extract the document caption, provider name, effective date (as written), phone, and up to 20 priced line items (label, price in dollars, null if none). Copy text exactly. Use null when absent.';
 
-const cost = (provider: keyof typeof PRICES, u: Usage) => {
-  const p = PRICES[provider];
-  return ((u.inputTokens - u.cachedTokens) * p.input + u.cachedTokens * p.cached + u.outputTokens * p.output) / 1e6;
-};
-
 export const spike = new Hono<{ Bindings: Env }>();
 
 spike.post('/spike', async (c) => {
@@ -52,7 +40,7 @@ spike.post('/spike', async (c) => {
   try {
     if (mode === 'sam') {
       const out = await sam(c.env, bytes, file.type, String(form?.get('phrase') ?? 'price table'));
-      return c.json({ ...out, costUsd: SAM_PER_IMAGE });
+      return c.json({ ...out, costUsd: SAM_PER_IMAGE_USD });
     }
     const url = toDataUrl(bytes, file.type);
     const doc: ContentPart =
@@ -69,7 +57,7 @@ spike.post('/spike', async (c) => {
       ...(structured === 'json_schema' || structured === 'prompt' ? { structured } : {}),
       ...(typeof model === 'string' && model ? { model } : {}),
     });
-    return c.json({ ...out, costUsd: cost(provider, out.usage) });
+    return c.json({ ...out, costUsd: costUsd(provider, out.usage) });
   } catch (e) {
     if (e instanceof ModelError) return c.json({ error: e.body, status: e.status, provider: e.provider }, 502);
     throw e;

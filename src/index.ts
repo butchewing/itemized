@@ -1,28 +1,15 @@
 import { Hono } from 'hono';
 import {
-  canTransition,
   isAcceptedType,
   isProvider,
   MAX_UPLOAD_BYTES,
   type AuditMessage,
   type AuditStatus,
-  type Provider,
 } from './audit';
+import { runAudit } from './pipeline';
+import { auditSpend, getAudit, getExtraction, type AuditRow } from './store';
 import { PAGE } from './page';
 import { spike } from './spike';
-
-type AuditRow = {
-  id: string;
-  status: AuditStatus;
-  provider: Provider;
-  doc_key: string;
-  doc_sha256: string;
-  content_type: string;
-  filename: string | null;
-  error: string | null;
-  created_at: string;
-  updated_at: string;
-};
 
 const toJson = (r: AuditRow) => ({
   id: r.id,
@@ -36,28 +23,6 @@ const toJson = (r: AuditRow) => ({
   createdAt: r.created_at,
   updatedAt: r.updated_at,
 });
-
-const getAudit = (db: D1Database, id: string) =>
-  db.prepare('SELECT * FROM audits WHERE id = ?').bind(id).first<AuditRow>();
-
-// Guarded on the current status so a redelivered message cannot repeat a transition.
-async function transition(
-  db: D1Database,
-  id: string,
-  from: AuditStatus,
-  to: AuditStatus,
-  error?: string,
-): Promise<boolean> {
-  if (!canTransition(from, to)) throw new Error(`illegal transition ${from} -> ${to}`);
-  const res = await db
-    .prepare(
-      `UPDATE audits SET status = ?, error = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
-       WHERE id = ? AND status = ?`,
-    )
-    .bind(to, error ?? null, id, from)
-    .run();
-  return res.meta.changes > 0;
-}
 
 const hex = (buf: ArrayBuffer) =>
   [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -112,16 +77,22 @@ app.post('/api/audits', async (c) => {
 
 app.get('/api/audits/:id', async (c) => {
   const row = await getAudit(c.env.DB, c.req.param('id'));
-  return row ? c.json(toJson(row)) : c.json({ error: 'Not found.' }, 404);
+  if (!row) return c.json({ error: 'Not found.' }, 404);
+  const [extraction, spend] = await Promise.all([
+    getExtraction(c.env.DB, row.doc_sha256, row.provider),
+    auditSpend(c.env.DB, row.id),
+  ]);
+  return c.json({ ...toJson(row), extraction, ...spend });
 });
+
+// Mirrors max_retries in wrangler.jsonc.
+const MAX_RETRIES = 3;
 
 async function queue(batch: MessageBatch<AuditMessage>, env: Env): Promise<void> {
   for (const msg of batch.messages) {
-    const audit = await getAudit(env.DB, msg.body.auditId);
-    if (audit?.status === 'queued' && (await transition(env.DB, audit.id, 'queued', 'extracting'))) {
-      await transition(env.DB, audit.id, 'extracting', 'failed', 'pipeline not implemented yet');
-    }
-    msg.ack();
+    const outcome = await runAudit(env, msg.body.auditId, msg.attempts <= MAX_RETRIES);
+    if (outcome === 'retry') msg.retry({ delaySeconds: 10 * msg.attempts });
+    else msg.ack();
   }
 }
 

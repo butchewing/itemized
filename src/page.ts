@@ -17,6 +17,7 @@ export const PAGE = `<!doctype html>
   input[type=file] { display: block; margin-bottom: 1rem; max-width: 100%; }
   button { font: inherit; padding: .5rem 1rem; }
   #status { margin-top: 1.5rem; font-weight: 600; }
+  .note { margin: 0 0 1rem; font-size: .9rem; opacity: .85; }
   small { display: block; margin-top: 2rem; opacity: .75; }
 </style>
 </head>
@@ -27,6 +28,7 @@ export const PAGE = `<!doctype html>
   <form id="form">
     <label for="file">General Price List (PDF or photo, up to ${maxMb} MB)</label>
     <input id="file" name="file" type="file" accept="${accept}" required>
+    <p class="note">Documents are processed by Meta AI models. Upload only price lists you are allowed to share.</p>
     <button type="submit">Check this list</button>
   </form>
   <p id="status" role="status" aria-live="polite"></p>

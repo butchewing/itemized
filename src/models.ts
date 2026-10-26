@@ -47,6 +47,8 @@ export class ModelError extends Error {
     readonly provider: Provider,
     readonly status: number,
     readonly body: string,
+    // Set when the call was billed but its output was unusable.
+    readonly usage?: Usage,
   ) {
     super(`${provider} responded ${status}: ${body}`);
   }
@@ -59,6 +61,19 @@ export function toDataUrl(bytes: ArrayBuffer, mime: string): string {
   const u8 = new Uint8Array(bytes);
   for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode(...u8.subarray(i, i + 0x8000));
   return `data:${mime};base64,${btoa(bin)}`;
+}
+
+// $ per 1M tokens. Meta Standard per prep/meta-api-facts.md; Baseten Model API per baseten.co/library/muse-spark-open.
+const TOKEN_PRICES: Record<Provider, { input: number; cached: number; output: number }> = {
+  'meta-api': { input: 1.25, cached: 0.15, output: 4.25 },
+  'open-weights': { input: 1.25, cached: 0.15, output: 4.25 },
+};
+export const SAM_PER_IMAGE_USD = 2.5 / 1000;
+
+// Reasoning tokens are already inside outputTokens.
+export function costUsd(provider: Provider, u: Usage): number {
+  const p = TOKEN_PRICES[provider];
+  return ((u.inputTokens - u.cachedTokens) * p.input + u.cachedTokens * p.cached + u.outputTokens * p.output) / 1e6;
 }
 
 export type ChatJsonOptions = {
@@ -114,13 +129,6 @@ export async function chatJson(env: Env, provider: Provider, opts: ChatJsonOptio
       completion_tokens_details?: { reasoning_tokens?: number };
     };
   };
-  const content = data.choices[0]?.message.content ?? '';
-  let json: unknown;
-  try {
-    json = JSON.parse(content.replace(/^```(?:json)?\s*|\s*```$/g, ''));
-  } catch {
-    throw new ModelError(provider, res.status, `unparseable JSON content: ${truncate(content)}`);
-  }
   const u = data.usage ?? {};
   const usage: Usage = {
     inputTokens: u.prompt_tokens ?? 0,
@@ -128,6 +136,13 @@ export async function chatJson(env: Env, provider: Provider, opts: ChatJsonOptio
     reasoningTokens: u.completion_tokens_details?.reasoning_tokens ?? 0,
     cachedTokens: u.prompt_tokens_details?.cached_tokens ?? 0,
   };
+  const content = data.choices[0]?.message.content ?? '';
+  let json: unknown;
+  try {
+    json = JSON.parse(content.replace(/^```(?:json)?\s*|\s*```$/g, ''));
+  } catch {
+    throw new ModelError(provider, res.status, `unparseable JSON content: ${truncate(content)}`, usage);
+  }
   return { json, usage, ms, model: data.model ?? model };
 }
 
