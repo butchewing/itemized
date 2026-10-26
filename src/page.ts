@@ -416,6 +416,7 @@ form.addEventListener('submit', (e) => {
 for (const button of samples) {
   button.addEventListener('click', async () => {
     const file = button.dataset.file;
+    letter.hidden = true;
     setBusy(true, 'Opening the sample list.');
     try {
       const res = await fetch('/samples/' + file);
