@@ -149,12 +149,33 @@ export async function extractFresh(env: Env, call: ExtractCall, input: ExtractIn
   return mergeExtractions(extracted);
 }
 
+// A complete list carries at least four required notices, and on the eval's lists a good read found
+// four or more blocks. A read with fewer is either a list missing most of its notices or a read that
+// dropped them, which happens now and then and turns present notices into false fails. One more read
+// tells the two apart for about a cent.
+export const MIN_NOTICE_BLOCKS = 3;
+
+export const needsReread = (x: GplExtraction) => x.disclosures.length < MIN_NOTICE_BLOCKS;
+
+// Keeps the read that found more notice text; a tie keeps the first.
+export const betterRead = (a: GplExtraction, b: GplExtraction) => (b.disclosures.length > a.disclosures.length ? b : a);
+
 async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
   const doc = auditDocument(audit);
   if (doc.kind === 'pdf' && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
   const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
   if (cached) return cached;
-  const extraction = await extractFresh(env, { provider: audit.provider, auditId: audit.id, purpose: 'extract' }, await loadInput(env, audit, doc));
+  const input = await loadInput(env, audit, doc);
+  const call = { provider: audit.provider, auditId: audit.id };
+  let extraction = await extractFresh(env, { ...call, purpose: 'extract' }, input);
+  if (needsReread(extraction)) {
+    // A failed re-read (budget, model) keeps the first read rather than failing the audit.
+    const second = await extractFresh(env, { ...call, purpose: 'reread' }, input).catch((e: unknown) => {
+      console.error('re-read skipped:', e instanceof Error ? e.message.slice(0, 200) : typeof e);
+      return null;
+    });
+    if (second) extraction = betterRead(extraction, second);
+  }
   await putExtraction(env.DB, audit.doc_sha256, audit.provider, extraction);
   return extraction;
 }

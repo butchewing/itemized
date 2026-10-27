@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { combinedSha256, MAX_UPLOAD_BYTES, parseUpload, sha256Hex } from '../src/audit';
 import type { GplExtraction } from '../src/extraction';
 import { renderLetterHtml } from '../src/letter';
-import { pagesInstruction } from '../src/pipeline';
+import { betterRead, MIN_NOTICE_BLOCKS, needsReread, pagesInstruction } from '../src/pipeline';
 import { auditDocument, documentKeys, loadReview, type AuditRow } from '../src/store';
 import type { Report } from '../src/rules/types';
 
@@ -97,6 +97,26 @@ describe('pagesInstruction', () => {
     expect(pagesInstruction(2)).toBe(
       'Transcribe this General Price List. It has 2 pages, sent as 2 images in page order: image 1 is page 1, image 2 is page 2.',
     );
+  });
+});
+
+describe('the re-read guard', () => {
+  const read = (blocks: number) =>
+    ({ disclosures: Array.from({ length: blocks }, (_, i) => ({ id: 'unknown', text: `notice ${i}`, page: 1 })) }) as unknown as GplExtraction;
+
+  it('re-reads only when a read finds fewer notice blocks than a complete list carries', () => {
+    expect(needsReread(read(0))).toBe(true);
+    expect(needsReread(read(MIN_NOTICE_BLOCKS - 1))).toBe(true);
+    expect(needsReread(read(MIN_NOTICE_BLOCKS))).toBe(false);
+  });
+
+  it('keeps the read with more notice text, and the first on a tie', () => {
+    const first = read(1);
+    const more = read(6);
+    expect(betterRead(first, more)).toBe(more);
+    expect(betterRead(more, first)).toBe(more);
+    const tie = read(1);
+    expect(betterRead(first, tie)).toBe(first);
   });
 });
 

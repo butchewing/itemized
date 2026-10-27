@@ -1,7 +1,8 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 
-// Bump on any change to the prompt or schema: it is part of the extraction cache key.
-export const PROMPT_VERSION = 'extract-2';
+// Bump on any change to the prompt, the schema or how a read is chosen: it is part of the extraction cache key.
+// extract-3: the same prompt as extract-2, plus the re-read guard in pipeline.ts.
+export const PROMPT_VERSION = 'extract-3';
 
 export const REQUIRED_ITEM_IDS = [
   'forwarding',
