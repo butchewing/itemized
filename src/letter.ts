@@ -102,6 +102,12 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
   return `<p class="letter-date">${escapeHtml(when)}</p>
     <h2 class="letter-re" id="letter-re" tabindex="-1">Re: ${provider ? `the General Price List of ${escapeHtml(provider)}` : 'your General Price List'}</h2>
     <p class="summary">${summarySentence(c.fail, c.review, c.pass)}</p>
+    <dl class="key" aria-label="How to read this review">
+      <div><dt>Did not pass</dt><dd>A requirement Itemized could check directly against the Rule’s text was not met on this list.</dd></div>
+      <div><dt>Needs a person’s review</dt><dd>Itemized could not decide on its own, or the item calls for judgment.</dd></div>
+      <div><dt>Passed</dt><dd>The requirement was met.</dd></div>
+      <div><dt>Not applicable</dt><dd>The requirement does not apply to this list, for example because the funeral home does not list that service.</dd></div>
+    </dl>
     ${detailed}${listed}
     <div class="closing">
       <p class="signature">Itemized</p>

@@ -45,7 +45,11 @@ ${HEAD_LINKS}
     <h1 id="house-name">Itemized</h1>
     <hr class="double-rule">
     <p class="tagline">A Funeral Rule review of General Price Lists</p>
-    <p class="lede">Upload the General Price List you hand to families. Itemized checks it against the Federal Trade Commission’s Funeral Rule and writes back with what it found, citing the Rule and quoting your list.</p>
+    <ol class="steps" aria-label="How it works">
+      <li>Every funeral home must give a General Price List to anyone who asks in person about funeral arrangements. A federal rule, the Federal Trade Commission’s Funeral Rule, says what that list has to include.</li>
+      <li>Upload your list, or try one of the samples below. Itemized reads it and checks each requirement it can.</li>
+      <li>You get a letter back showing what did not pass, what a person should look at, and what passed, each tied to the part of the Rule it comes from.</li>
+    </ol>
   </header>
 
   <form id="form" class="entry">
@@ -87,6 +91,9 @@ ${HEAD_LINKS}
   <h2 id="rule-heading">What is the Funeral Rule?</h2>
   <p>The Funeral Rule is a federal regulation enforced by the Federal Trade Commission. It lets families choose only the funeral goods and services they want, pay only for those, and compare prices between funeral homes. A funeral home must give a General Price List, which the family can keep, showing each item and service it offers and what it costs. The FTC checks compliance with undercover inspections every year.</p>
   <p>Read more from the FTC: <a href="https://consumer.ftc.gov/articles/ftc-funeral-rule">the Funeral Rule for families</a>, <a href="https://www.ftc.gov/news-events/topics/truth-advertising/funeral-rule">the Funeral Rule for funeral providers</a>, and, for funeral homes, the FTC's guide, <a href="https://www.ftc.gov/business-guidance/resources/complying-funeral-rule">Complying with the Funeral Rule</a>.</p>
+  <h2>Why it matters</h2>
+  <p>The FTC enforces the Funeral Rule with undercover calls and visits. After calling more than 250 funeral homes, it sent warning letters to 39 of them in January 2024 and said violations can bring penalties of up to $51,744 each. In earlier undercover visits to 90 funeral homes in five states, 17 did not give itemized prices when they should have.</p>
+  <p>Sources: the FTC’s <a href="https://www.ftc.gov/news-events/news/press-releases/2024/01/ftc-sends-warning-letters-funeral-homes-after-first-undercover-phone-sweep">January 2024 announcement</a> and its <a href="https://www.ftc.gov/news-events/news/press-releases/2020/06/ftc-releases-funeral-home-compliance-results-offers-new-business-guidance-funeral-rule-requirements">2020 inspection results</a>.</p>
   <h2>How Itemized helps</h2>
   <p>Itemized reads a General Price List from a PDF or a phone photo and checks it against the Rule's requirements for that list: the required statements, itemized prices, and required options such as direct cremation with an alternative container. Each result cites the section of the Rule it comes from and quotes the part of the list it is based on.</p>
   <p>Itemized reads your list with Meta’s Muse Spark model, then checks it against the Rule with fixed rules written from the Rule’s text. Only those fixed rules can mark a requirement as not passed.</p>
