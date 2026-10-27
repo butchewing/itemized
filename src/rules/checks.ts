@@ -11,7 +11,7 @@ import {
   type Matches,
   type OptionClass,
 } from './conditions';
-import { normalize, similarity } from './text';
+import { isDescription, normalize, similarity } from './text';
 import type { CompleteListMatch, DisclosureMatch, Evidence, Outcome, Ruleset } from './types';
 
 export const DETERMINISTIC_CHECK_IDS = [
@@ -44,6 +44,10 @@ const seenViolation = (reason: string, evidence: Evidence = NONE): Outcome => ({
 const uncertain = (reason: string, evidence: Evidence = NONE): Outcome => ({ result: 'uncertain', reason, evidence });
 const na = (reason: string): Outcome => ({ result: 'not_applicable', reason, evidence: NONE });
 
+// A printed amount the extractor left unparsed ("Starting at $395", price null) is still a price;
+// C-071 judges whether its wording is vague.
+const showsOneAmount = (i: ExtractedItem) => (i.priceText?.match(/\$\s*\d/g) ?? []).length === 1;
+
 const itemEvidence = (i: ExtractedItem): Evidence => ({
   quote: i.priceText ? `${i.label}: ${i.priceText}` : i.label,
   page: i.page,
@@ -65,7 +69,7 @@ function headerField(value: string | null, what: string): Outcome {
 const INCLUDES_BLOCK = /^(our (services|charge|charges|price|fee)\b.{0,80}\binclude|includes?\b)/;
 function includesCheck(ctx: CheckContext, category: RequiredItemId): Outcome {
   const items = itemsOf(ctx.x, category);
-  const withText = items.find((i) => i.includesText?.trim());
+  const withText = items.find((i) => isDescription(i.includesText, ctx.ruleset));
   if (withText) return met('a description of what the price includes was found', { quote: withText.includesText, page: withText.page, itemCategory: category });
   const target = items.find((i) => isOptionHeader(i)) ?? items[0]!;
   const ev = itemEvidence(target);
@@ -246,7 +250,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
       const items = itemsOf(x, category);
       if (!items.length) continue;
       const rangeOk = RANGE_CATEGORIES.includes(category);
-      if (items.some((i) => i.price !== null || (rangeOk && i.priceRange !== null))) continue;
+      if (items.some((i) => i.price !== null || (rangeOk && i.priceRange !== null) || showsOneAmount(i))) continue;
       const ev = { ...itemEvidence(items[0]!), itemCategory: category };
       if (items.some((i) => i.priceRange !== null)) {
         out.push(uncertain(`${labels[category]} shows a price range where the Rule expects a single price`, ev));

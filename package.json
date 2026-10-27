@@ -11,7 +11,8 @@
     "deploy:production": "wrangler d1 migrations apply DB --remote -c wrangler.production.jsonc && wrangler deploy -c wrangler.production.jsonc",
     "types": "wrangler types -c wrangler.production.jsonc",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "eval": "node test/eval/run.mjs --config wrangler.production.jsonc"
   },
   "dependencies": {
     "@cloudflare/puppeteer": "1.4.0",

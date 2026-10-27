@@ -171,3 +171,25 @@ describe('photo uploads never fail on what a misread could cause', () => {
     expect(reasons.every((r) => r.startsWith('photo_uncertain:'))).toBe(true);
   });
 });
+
+describe('Day 7 eval fixes', () => {
+  const runWith = (x: GplExtraction) => runChecks(x, ruleset, { auditDate: AUDIT_DATE, semantic: null });
+
+  it('a basic services fee statement filed as "includes" text is not a description (open weights, syn-04)', () => {
+    const x = load('syn-04.pdf.json');
+    const statement =
+      'This fee for our basic services and overhead will be added to the total cost of the funeral arrangements you select. (This fee is already included in our charges for direct cremations, immediate burials, and forwarding or receiving remains.)';
+    const moved = { ...x, items: x.items.map((i) => (i.category === 'basic_services' ? { ...i, includesText: statement } : i)) };
+    expect(byCheck(runWith(moved))['C-020']).toBe('fail');
+    const described = { ...x, items: x.items.map((i) => (i.category === 'basic_services' ? { ...i, includesText: `${statement} Our services include planning the funeral and filing notices.` } : i)) };
+    expect(byCheck(runWith(described))['C-020']).toBe('pass');
+  });
+
+  it('a printed amount the extractor left unparsed still counts as a price (open weights, syn-10)', () => {
+    const x = load('syn-10.pdf.json');
+    const unparsed = { ...x, items: x.items.map((i) => (i.category === 'hearse' ? { ...i, price: null, priceText: 'Starting at $395' } : i)) };
+    const got = byCheck(runWith(unparsed));
+    expect(got['C-070']).toBe('pass');
+    expect(got['C-071']).toBe('review');
+  });
+});

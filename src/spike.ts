@@ -13,7 +13,7 @@ import {
   semanticUserText,
   type SemanticResults,
 } from './rules/semantic';
-import { getExtraction, recordModelCall, spendTodayUtc } from './store';
+import { auditDocument, getAudit, getExtraction, getSemantic, recordModelCall, spendTodayUtc } from './store';
 
 const SCHEMA = {
   type: 'object',
@@ -122,4 +122,47 @@ spike.post('/semantic-variance', async (c) => {
     }
   }
   return c.json({ promptVersion: SEMANTIC_PROMPT_VERSION, fixtureVerdicts: verdicts(parseSemantic(fixture)), samples });
+});
+
+// test/eval/run.mjs refuses to upload a set unless this matches the set's declared provider.
+spike.get('/provider', (c) => c.json({ provider: c.env.MODEL_PROVIDER }));
+
+// Engine verdicts for a finished audit in both input modes, on a fixed audit date so the stale-date
+// check does not drift between eval runs, plus what the cached model results cost when first made.
+const EVAL_AUDIT_DATE = new Date('2026-10-26T00:00:00Z');
+
+spike.get('/eval/:id', async (c) => {
+  const audit = await getAudit(c.env.DB, c.req.param('id'));
+  if (!audit || audit.status !== 'done') return c.json({ error: 'no finished audit' }, 404);
+  const x = await getExtraction(c.env.DB, audit.doc_sha256, audit.provider);
+  if (!x) return c.json({ error: 'no cached extraction' }, 404);
+  const semantic = await getSemantic(c.env.DB, audit.doc_sha256, audit.provider);
+  const report = (input: 'pdf' | 'images') => runChecks(x, ruleset, { auditDate: EVAL_AUDIT_DATE, semantic, input });
+
+  // The newest successful call of each kind for this document and provider made the cached result.
+  const firstRun = (purpose: string) =>
+    c.env.DB.prepare(
+      `SELECT m.cost_usd AS usd, m.ms FROM model_calls m JOIN audits a ON a.id = m.audit_id
+       WHERE a.doc_sha256 = ? AND a.provider = ? AND m.ok = 1 AND m.purpose LIKE ? ORDER BY m.id DESC LIMIT 1`,
+    )
+      .bind(audit.doc_sha256, audit.provider, `${purpose}/%`)
+      .first<{ usd: number; ms: number }>();
+  const [extract, judge] = await Promise.all([firstRun('extract'), firstRun('semantic')]);
+  return c.json({
+    provider: audit.provider,
+    input: auditDocument(audit).kind === 'pdf' ? 'pdf' : 'images',
+    extraction: x,
+    reports: { pdf: report('pdf'), images: report('images') },
+    cost: { extract, semantic: judge },
+  });
+});
+
+spike.get('/spend', async (c) => {
+  const since = c.req.query('since') ?? '';
+  const { results } = await c.env.DB.prepare(
+    'SELECT provider, COALESCE(SUM(cost_usd), 0) AS usd, COUNT(*) AS calls FROM model_calls WHERE created_at >= ? GROUP BY provider',
+  )
+    .bind(since)
+    .all<{ provider: string; usd: number; calls: number }>();
+  return c.json(Object.fromEntries(results.map((r) => [r.provider, { usd: r.usd, calls: r.calls }])));
 });

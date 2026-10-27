@@ -207,6 +207,27 @@ export function matchDisclosure(c: Corpus, ruleset: Ruleset, id: DisclosureId): 
   };
 }
 
+// Models sometimes file a required disclosure, such as the basic services fee statement, as an
+// item's "includes" text. That text describes no services, so it only counts as a description when
+// something substantial is left after the Rule's wording is cut out.
+const MIN_DESCRIPTION_WORDS = 3;
+export function isDescription(includesText: string | null, ruleset: Ruleset): boolean {
+  let s = normalize(includesText ?? '');
+  if (!s) return false;
+  const t = ruleset.text_matching.thresholds;
+  let cut = false;
+  for (const d of Object.values(ruleset.disclosures)) {
+    for (const seg of d.segments as readonly Segment[]) {
+      if (seg.kind === 'slot') continue;
+      const w = align(segText(seg), s);
+      if (w.score < t.match) continue;
+      s = `${s.slice(0, w.start)} ${s.slice(w.end)}`.replace(/\s+/g, ' ').trim();
+      cut = true;
+    }
+  }
+  return !cut || s.split(' ').filter(Boolean).length >= MIN_DESCRIPTION_WORDS;
+}
+
 const COMPLETE_LIST_IDS: readonly string[] = ['D-casket-list', 'D-obc-list'];
 
 // D-casket-list and D-obc-list are the same sentence, so occurrences are counted, not matched by id.

@@ -7,7 +7,7 @@ import { VERDICTS, type Finding, type Outcome, type Report, type Ruleset, type R
 
 // `semantic` is null or absent when the model step was skipped or failed; those checks go to notRun.
 // Bump on any change to how checks map to verdicts: it is part of the reuse key, so stale reviews are not handed back.
-export const ENGINE_VERSION = 'engine-2';
+export const ENGINE_VERSION = 'engine-3';
 
 // `input: 'images'` means the list was read from photos, where a statement or price can be missed or misread.
 export type RunOptions = { auditDate: Date; semantic?: SemanticResults | null; input?: 'pdf' | 'images' };
