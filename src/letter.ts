@@ -158,7 +158,7 @@ function fixPromptSection(report: Report, filename: string): string {
     </section>`;
 }
 
-function findingItem(f: Finding): string {
+export function findingItem(f: Finding): string {
   const quote = f.evidence.quote
     ? `<blockquote>${escapeHtml(f.evidence.quote)}<span class="from">${
         f.evidence.page ? `From your list, page ${escapeHtml(f.evidence.page)}` : 'From your list'

@@ -1,7 +1,9 @@
+import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { ACCEPTED_TYPES, MAX_PAGES, MAX_UPLOAD_BYTES } from './audit';
-import { LIMITS_PARAGRAPHS } from './letter';
+import { findingItem, LIMITS_PARAGRAPHS, summarySentence } from './letter';
 import { actionsRow, compactLetterhead, FIX_PROMPT_SCRIPT, PDF_SCRIPT } from './review';
-import { jsonLdScript, mdToHtml, REFERENCE_MD, SAMPLES } from './site';
+import type { Finding } from './rules/types';
+import { AUDIENCE, HEADLINE, HERO_LEDE, jsonLdScript, mdToHtml, REFERENCE_MD, SAMPLES } from './site';
 import { HEAD_LINKS, MONOGRAM, SITE_FOOTER, socialMeta } from './styles';
 
 const accept = Object.keys(ACCEPTED_TYPES).join(',');
@@ -9,12 +11,36 @@ const maxMb = MAX_UPLOAD_BYTES / (1024 * 1024);
 
 // Files are sent in page order. The photo pairs passed the Day 5 bar: no fail their PDF does not have.
 const sampleItems = SAMPLES.map(
-  (s) => `<li><button type="button" class="sample" data-files="${s.files.join(' ')}">
-        <span class="sample-name">${s.name}</span>
-        <span class="sample-note">${s.note}</span>
-        <span class="sample-action">Review</span>
-      </button></li>`,
+  (s) => `<li class="sample-row">
+        <p class="sample-text"><span class="sample-name">${s.name}</span><span class="sample-note">${s.note}</span></p>
+        <p class="sample-actions">${s.versions
+          .map((v) => `<button type="button" class="sample" data-files="${v.files.join(' ')}" aria-label="Review the ${v.label === 'PDF' ? 'PDF' : 'photos'} of ${s.name}">${v.label}</button>`)
+          .join('')}</p>
+      </li>`,
 ).join('\n      ');
+
+// Two of Bellwether's three findings as the live review prints them (sample syn-03, engine-5); test/site.test.ts
+// checks the engine still reaches these verdicts on that list. The letter's own markup draws them.
+const check = (id: string) => ruleset.checks.find((c) => c.id === id)!;
+const specimenFinding = (id: string, quote: string | null, page: number | null): Finding =>
+  ({ checkId: id, verdict: 'fail', title: check(id).title, plain: check(id).plain, cite: check(id).cite, basis: check(id).basis, evidence: { quote, page }, reason: '' }) as Finding;
+export const SPECIMEN_FINDINGS = [
+  specimenFinding('C-041', 'A. Direct cremation with container provided by the purchaser; B. Direct cremation with a cloth-covered cremation casket', 2),
+  specimenFinding('C-030', null, null),
+];
+
+const specimen = `<aside class="sheet specimen" aria-labelledby="specimen-caption">
+  <div class="specimen-page">
+    <p class="specimen-house" aria-hidden="true">${MONOGRAM}<span>Itemized</span></p>
+    <div class="letter">
+      <p class="letter-re">Re: the General Price List of Bellwether Memorial Chapel</p>
+      <p class="summary">${summarySentence(3, 0, 34)}</p>
+      <section class="group fail"><p class="group-head">Did not pass<span class="count">3</span></p><ul class="findings">${SPECIMEN_FINDINGS.map(findingItem).join('')}</ul></section>
+    </div>
+  </div>
+  <p class="specimen-caption" id="specimen-caption">A page from a real review of a fictional sample list. Every finding cites the Rule and quotes the list.
+    <button type="button" class="text-btn sample" data-files="syn-03.pdf">Run this review</button></p>
+</aside>`;
 
 export const PAGE = `<!doctype html>
 <html lang="en">
@@ -27,26 +53,33 @@ ${HEAD_LINKS}
 ${jsonLdScript()}
 </head>
 <body>
-<main>
+<main class="desk">
 <section class="sheet intake" aria-labelledby="house-name">
   <header class="letterhead">
     ${MONOGRAM}
     <h1 id="house-name">Itemized</h1>
     <hr class="gilt-hairline">
     <p class="tagline">A Funeral Rule review of General Price Lists</p>
-    <ol class="steps" aria-label="How it works">
-      <li>Every funeral home must give a General Price List to anyone who asks in person about funeral arrangements. A federal rule, the Federal Trade Commission’s Funeral Rule, says what that list has to include.</li>
-      <li>Upload your list, or try one of the samples below. Itemized reads it and checks each requirement it can.</li>
-      <li>You get a letter back showing what did not pass, what a person should look at, and what passed, each tied to the part of the Rule it comes from.</li>
-    </ol>
   </header>
 
-  <form id="form" class="entry">
-    <label class="entry-label" for="file">Your General Price List</label>
+  <div class="hero">
+    <h2 class="headline">${HEADLINE}</h2>
+    <p class="hero-lede">${HERO_LEDE}</p>
+    <dl class="audience">
+      ${AUDIENCE.map(([who, what]) => `<div><dt>${who}</dt><dd>${what}</dd></div>`).join('\n      ')}
+    </dl>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Choose a list to review">
+    <button type="button" role="tab" id="tab-upload" aria-controls="panel-upload" aria-selected="true">Your price list</button>
+    <button type="button" role="tab" id="tab-samples" aria-controls="panel-samples" aria-selected="false" tabindex="-1">A sample list</button>
+  </div>
+
+  <form id="panel-upload" class="entry" role="tabpanel" aria-labelledby="tab-upload">
     <div class="field" id="field">
       <span class="file-name" id="file-name">Upload the whole list: a PDF, or a photo of each page. Up to ${maxMb} MB each. Drop it here or choose a file.</span>
       <label class="btn" id="choose" for="file">Choose a price list</label>
-      <input class="file-input" id="file" type="file" accept="${accept}" multiple>
+      <input class="file-input" id="file" type="file" accept="${accept}" multiple aria-label="Your General Price List">
       <ol class="pages" id="pages" aria-label="Pages" aria-live="polite" aria-relevant="additions" hidden></ol>
       <button class="text-btn add-page" id="add-page" type="button" hidden>Add another page</button>
     </div>
@@ -56,9 +89,8 @@ ${jsonLdScript()}
     </div>
   </form>
 
-  <section class="samples" aria-labelledby="samples-heading">
-    <h2 id="samples-heading">Or review a sample list</h2>
-    <p class="fine">Fictional funeral homes, written to show what Itemized finds.</p>
+  <section class="samples" id="panel-samples" role="tabpanel" aria-labelledby="tab-samples" hidden>
+    <p class="fine">Three fictional funeral homes, written to show what Itemized finds. Each runs through the same review as an upload.</p>
     <ul>
       ${sampleItems}
     </ul>
@@ -69,6 +101,8 @@ ${jsonLdScript()}
     <span class="engraving" aria-hidden="true"></span>
   </div>
 </section>
+
+${specimen}
 
 <section class="sheet review-sheet" id="review" aria-labelledby="letter-re" hidden>
   ${compactLetterhead('p')}
@@ -86,7 +120,7 @@ ${jsonLdScript()}
 </main>
 ${SITE_FOOTER}
 <script>
-const form = document.getElementById('form');
+const form = document.getElementById('panel-upload');
 const fileInput = document.getElementById('file');
 const fileName = document.getElementById('file-name');
 const pagesList = document.getElementById('pages');
@@ -283,6 +317,27 @@ for (const button of samples) {
       setBusy(false);
       showError(err);
     }
+  });
+}
+// Tabs: the arrow keys, Home and End move between them (ARIA tabs pattern, automatic activation).
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+function selectTab(tab, focus) {
+  for (const t of tabs) {
+    const on = t === tab;
+    t.setAttribute('aria-selected', String(on));
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+  }
+  if (focus) tab.focus();
+}
+for (const tab of tabs) {
+  tab.addEventListener('click', () => selectTab(tab, false));
+  tab.addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(tab);
+    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    selectTab(tabs[(next + tabs.length) % tabs.length], true);
   });
 }
 addEventListener('beforeprint', () => { for (const d of letter.querySelectorAll('details')) d.open = true; });

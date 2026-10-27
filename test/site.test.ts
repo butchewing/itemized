@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import worker from '../src/index';
-import { PAGE } from '../src/page';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import ruleset from '../prep/rules/ftc-453@2026.1.json';
+import { parseExtraction } from '../src/extraction';
+import { PAGE, SPECIMEN_FINDINGS } from '../src/page';
+import { runChecks } from '../src/rules/engine';
 import { JSON_LD, LIMITS_MD, mdToHtml, prefersMarkdown, SITE_PAGES } from '../src/site';
 
 const get = (path: string, accept?: string) =>
@@ -82,6 +87,15 @@ describe('the home page', () => {
     expect(res.headers.get('strict-transport-security')).toBe('max-age=31536000');
     expect(res.headers.get('x-content-type-options')).toBe('nosniff');
     expect(res.headers.get('content-security-policy')).toContain("frame-ancestors 'none'");
+  });
+});
+
+describe('the specimen review on the home page', () => {
+  it('shows findings the engine really reaches on the Bellwether sample', () => {
+    const x = parseExtraction(JSON.parse(readFileSync(join(__dirname, 'fixtures/extractions/syn-03.pdf.json'), 'utf8')));
+    const report = runChecks(x, ruleset as never, { auditDate: new Date('2026-10-26T00:00:00Z') });
+    for (const f of SPECIMEN_FINDINGS) expect(report.findings.find((r) => r.checkId === f.checkId)?.verdict).toBe('fail');
+    expect(report.counts.fail).toBe(3);
   });
 });
 

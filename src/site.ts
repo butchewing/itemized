@@ -58,35 +58,53 @@ The FTC enforces the Funeral Rule with undercover calls and visits. After callin
 
 Sources: the FTC’s [January 2024 announcement](https://www.ftc.gov/news-events/news/press-releases/2024/01/ftc-sends-warning-letters-funeral-homes-after-first-undercover-phone-sweep) and its [2020 inspection results](https://www.ftc.gov/news-events/news/press-releases/2020/06/ftc-releases-funeral-home-compliance-results-offers-new-business-guidance-funeral-rule-requirements).
 
-## How Itemized helps
+## What Itemized checks
 
-Itemized reads a General Price List from a PDF or a phone photo and checks it against the Rule's requirements for that list: the required statements, itemized prices, and required options such as direct cremation with an alternative container. Each result cites the section of the Rule it comes from and quotes the part of the list it is based on.
+- **Required statements.** The notices the Rule requires on a General Price List, such as the statement that embalming is usually not required by law, compared with the Rule's own wording.
+- **Itemized prices.** A price for each required item and service. A vague price, such as one shown as "starting at", goes to a person to review.
+- **Required options.** Choices the Rule says a family must be offered, such as direct cremation with an alternative container.
 
-Itemized reads your list with Meta’s Muse Spark model, then checks it against the Rule with fixed rules written from the Rule’s text. Only those fixed rules can mark a requirement as not passed.
+## How it decides
 
-Funeral homes can use it to check a list before an inspection. Families can use it to understand what a price list should include.
+- **Meta's Muse Spark reads the list.** It writes down every item, price and statement, and the page each one came from.
+- **Fixed rules decide what passes.** The rules are written from the Rule's text, and only they can mark a requirement as not passed. Each result cites the section of the Rule and quotes the list.
+- **Anything uncertain goes to a person.** When a photo is hard to read or wording calls for judgment, the result is "needs a person's review", never "did not pass".
+
+## Who it is for
+
+- **Funeral homes** checking a list before an inspection, or before printing a new one.
+- **Families** who want to know what a General Price List should include.
 `;
 
-const STEPS_MD = `
-- Every funeral home must give a General Price List to anyone who asks in person about funeral arrangements. A federal rule, the Federal Trade Commission’s Funeral Rule, says what that list has to include.
-- Upload your list, or try one of the samples below. Itemized reads it and checks each requirement it can.
-- You get a letter back showing what did not pass, what a person should look at, and what passed, each tied to the part of the Rule it comes from.
-`;
+export const HEADLINE = 'Does this price list meet the Funeral Rule?';
+export const HERO_LEDE =
+  'Itemized checks a funeral home’s General Price List against the Federal Trade Commission’s Funeral Rule. Upload a PDF or photos of the pages, and a letter comes back, usually in under a minute: what did not pass, what a person should look at, and what passed, each tied to the part of the Rule it comes from.';
+export const AUDIENCE = [
+  ['For funeral homes', 'Check your list before an inspection, or before you print a new one.'],
+  ['For families', 'See what a funeral home’s price list has to include.'],
+] as const;
 
-export const SAMPLES = [
-  { files: ['syn-01.pdf'], name: 'Juniper Hollow Funeral Home', note: 'A complete list. Expect every check to pass.' },
-  { files: ['syn-01-1.jpeg', 'syn-01-2.jpeg'], name: 'Juniper Hollow Funeral Home', note: 'A complete list, photographed (2 pages).' },
-  { files: ['syn-03.pdf'], name: 'Bellwether Memorial Chapel', note: 'Missing required statements and options.' },
-  { files: ['syn-10.pdf'], name: 'Marrowfield Funeral Home', note: 'Vague pricing and claims a person should review.' },
+export type SampleList = { name: string; note: string; versions: { label: string; files: string[] }[] };
+export const SAMPLES: SampleList[] = [
   {
-    files: ['syn-10-1.jpeg', 'syn-10-2.jpeg'],
+    name: 'Juniper Hollow Funeral Home',
+    note: 'A complete list. Every check passes.',
+    versions: [{ label: 'PDF', files: ['syn-01.pdf'] }, { label: 'Photos', files: ['syn-01-1.jpeg', 'syn-01-2.jpeg'] }],
+  },
+  {
+    name: 'Bellwether Memorial Chapel',
+    note: 'Missing required statements and options.',
+    versions: [{ label: 'PDF', files: ['syn-03.pdf'] }],
+  },
+  {
     name: 'Marrowfield Funeral Home',
-    note: 'Vague pricing and claims a person should review, photographed (2 pages).',
+    note: 'Vague prices and claims a person should review.',
+    versions: [{ label: 'PDF', files: ['syn-10.pdf'] }, { label: 'Photos', files: ['syn-10-1.jpeg', 'syn-10-2.jpeg'] }],
   },
 ];
 
 const SAMPLES_MD = SAMPLES.map(
-  (s) => `- ${s.name}: ${s.note} ${s.files.map((f) => `[${f}](${SITE}/samples/${f})`).join(', ')}`,
+  (s) => `- ${s.name}: ${s.note} ${s.versions.map((v) => `${v.label}: ${v.files.map((f) => `[${f}](${SITE}/samples/${f})`).join(', ')}`).join('; ')}`,
 ).join('\n');
 
 const UPLOAD_NOTICE =
@@ -126,9 +144,11 @@ export const HOME_MD = `# Itemized
 
 > ${DESCRIPTION}
 
-## How it works
+## ${HEADLINE}
 
-${STEPS_MD.trim()}
+${HERO_LEDE}
+
+${AUDIENCE.map(([who, what]) => `- **${who}.** ${what}`).join('\n')}
 
 Review a list at ${SITE}. ${UPLOAD_NOTICE}
 
