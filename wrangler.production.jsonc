@@ -30,7 +30,7 @@
   "ratelimits": [{ "name": "UPLOAD_LIMITER", "namespace_id": "4530", "simple": { "limit": 5, "period": 60 } }],
   // Daily cleanup of audits, cached results and stored files unused for 30 days.
   "triggers": { "crons": ["17 7 * * *"] },
-  "vars": { "MODEL_PROVIDER": "meta-api", "DAILY_BUDGET_USD": "5" },
+  "vars": { "MODEL_PROVIDER": "meta-api", "DAILY_BUDGET_USD": "15" },
   // Names only, set with `wrangler secret put`. Typed from here instead of inferred from .dev.vars.
   "secrets": { "required": ["META_API_KEY", "BASETEN_API_KEY"] }
 }
