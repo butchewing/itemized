@@ -72,7 +72,14 @@ function includesCheck(ctx: CheckContext, category: RequiredItemId): Outcome {
   const items = itemsOf(ctx.x, category);
   for (const i of items) {
     const description = descriptionOf(i, ctx.ruleset);
-    if (description) return met('a description of what the price includes was found', { quote: description, page: i.page, itemCategory: category });
+    if (!description) continue;
+    const ev = { quote: description, page: i.page, itemCategory: category };
+    // The extractor sometimes copies one item's paragraph onto a neighbor as well; a description it
+    // attached to another item too may not be this item's, so it cannot pass the check.
+    const norm = normalize(description);
+    const shared = ctx.x.items.find((o) => !items.includes(o) && o.includesText && normalize(o.includesText) === norm);
+    if (shared) return uncertain(`the same description is attached to ${shared.label} too, so it may belong to that item instead`, ev);
+    return met('a description of what the price includes was found', ev);
   }
   const target = items.find((i) => isOptionHeader(i)) ?? items[0]!;
   const ev = itemEvidence(target);

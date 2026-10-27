@@ -52,7 +52,9 @@ async function startWorker(provider) {
   const log = createWriteStream(join(PRIVATE_DIR, 'logs', `wrangler-${provider}.log`));
   const child = spawn(
     'npx',
-    ['wrangler', 'dev', '-c', CONFIG, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1'],
+    ['wrangler', 'dev', '-c', CONFIG, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1',
+      // The run's own caps (CAPS) bound spend; the Worker's daily budget would count earlier runs today too.
+      '--var', 'DAILY_BUDGET_USD:1000'],
     { cwd: ROOT, detached: true, stdio: ['ignore', 'pipe', 'pipe'] },
   );
   child.stdout.pipe(log);

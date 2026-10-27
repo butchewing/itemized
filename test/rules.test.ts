@@ -59,6 +59,19 @@ const KNOWN_DEVIATIONS: { list: string; check: string; got: Verdict; reason: str
   },
 ];
 
+describe('a description attached to two items', () => {
+  it('cannot pass either item, because it may belong to the other', () => {
+    const x = load('syn-07.pdf.json');
+    const paragraph = 'Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.';
+    const both = { ...x, items: x.items.map((i) => (i.category === 'forwarding' || i.category === 'receiving' ? { ...i, includesText: paragraph } : i)) };
+    const got = byCheck(run(both));
+    expect(got['C-060']).toBe('review');
+    expect(got['C-061']).toBe('review');
+    const one = { ...x, items: x.items.map((i) => (i.category === 'receiving' ? { ...i, includesText: paragraph } : i)) };
+    expect(byCheck(run(one))['C-061']).toBe('pass');
+  });
+});
+
 describe('registry', () => {
   it('implements every deterministic ruleset check and nothing else', () => {
     expect([...DETERMINISTIC_CHECK_IDS].sort()).toEqual([...DETERMINISTIC].sort());
