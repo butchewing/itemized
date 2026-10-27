@@ -1,5 +1,5 @@
 import puppeteer from '@cloudflare/puppeteer';
-import { Hono } from 'hono';
+import { Hono, type Context } from 'hono';
 import {
   combinedSha256,
   docKey,
@@ -26,7 +26,8 @@ import {
 } from './store';
 import { renderLetterHtml } from './letter';
 import { PAGE } from './page';
-import { notFoundPage, PDF_FAILED, pdfFilename, reviewPage } from './review';
+import { notFoundPage, PDF_FAILED, pdfFilename, reviewPage, sitePage } from './review';
+import { HOME_MD, LLMS_TXT, notFoundMd, pageMd, prefersMarkdown, ROBOTS_TXT, SITE_LAST_UPDATED, SITE_PAGES, sitemapXml } from './site';
 import { spike } from './spike';
 
 const toJson = (r: AuditRow) => ({
@@ -41,13 +42,39 @@ const toJson = (r: AuditRow) => ({
 
 const app = new Hono<{ Bindings: Env }>();
 
+// Static assets get the same headers from public/_headers.
+const SECURITY_HEADERS = {
+  'Strict-Transport-Security': 'max-age=31536000',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+  'Content-Security-Policy': "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self'",
+};
+app.use('*', async (c, next) => {
+  await next();
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) c.res.headers.set(k, v);
+});
+
 app.use('/dev/*', async (c, next) => (c.env.DEV_ROUTES === '1' ? next() : c.notFound()));
 app.route('/dev', spike);
 
-app.get('/', (c) => {
-  c.header('X-Robots-Tag', 'noindex, nofollow');
-  return c.html(PAGE);
-});
+const markdown = (body: string, status: 200 | 404 = 200) =>
+  new Response(body, { status, headers: { 'Content-Type': 'text/markdown; charset=utf-8', Vary: 'Accept' } });
+
+// Pages that also come as Markdown answer Accept: text/markdown, and say so with Vary so caches keep both.
+const negotiated = (md: string, html: string) => (c: Context<{ Bindings: Env }>) => {
+  if (prefersMarkdown(c.req.header('accept'))) return markdown(md);
+  c.header('Vary', 'Accept');
+  return c.html(html);
+};
+
+app.get('/', negotiated(HOME_MD, PAGE));
+for (const p of SITE_PAGES) app.get(p.path, negotiated(pageMd(p), sitePage(p)));
+
+const text = (body: string, type: string) => new Response(body, { headers: { 'Content-Type': `${type}; charset=utf-8`, 'Cache-Control': 'public, max-age=3600' } });
+app.get('/robots.txt', () => text(ROBOTS_TXT, 'text/plain'));
+app.get('/llms.txt', () => text(LLMS_TXT, 'text/plain'));
+app.get('/sitemap.xml', () => text(sitemapXml(SITE_LAST_UPDATED), 'application/xml'));
 
 app.post('/api/audits', async (c) => {
   if (!isProvider(c.env.MODEL_PROVIDER)) return c.json({ error: 'Server misconfigured.' }, 500);
@@ -187,8 +214,11 @@ async function scheduled(_controller: ScheduledController, env: Env): Promise<vo
   console.log('cleanup', JSON.stringify(await runCleanup(env, new Date())));
 }
 
-app.notFound((c) =>
-  c.req.path.startsWith('/api/') ? c.json({ error: 'Not found.' }, 404) : c.html(notFoundPage('page'), 404),
-);
+app.notFound((c) => {
+  if (c.req.path.startsWith('/api/')) return c.json({ error: 'Not found.' }, 404);
+  if (prefersMarkdown(c.req.header('accept'))) return markdown(notFoundMd(c.req.path), 404);
+  c.header('Vary', 'Accept');
+  return c.html(notFoundPage('page'), 404);
+});
 
 export default { fetch: app.fetch, queue, scheduled } satisfies ExportedHandler<Env, AuditMessage>;

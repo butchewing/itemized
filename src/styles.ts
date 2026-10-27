@@ -1,3 +1,5 @@
+import { DESCRIPTION, SITE } from './site';
+
 // One stationery stylesheet for the main page, the standalone review and its PDF.
 export const STYLES = `
   :root {
@@ -201,7 +203,16 @@ export const STYLES = `
     .group > h3, details.group > summary, .limits h3 { break-after: avoid; }
   }
   .has-review .reference .limits { display: none; }
+  .site-page h1 { margin: 1.5rem 0 1.25rem; font: 600 1.35rem/1.3 var(--text); }
+  .site-page ul { margin: .5rem 0; padding-left: 1.2rem; max-width: 65ch; }
+  .site-page li + li { margin-top: .35rem; }
+  .site-footer { max-width: 44rem; margin: 1.5rem auto 2rem; padding: 0 1rem; text-align: center; font-size: .85rem; color: var(--slate); }
+  .site-footer a { color: inherit; }
+  .site-footer a + a::before { content: "·"; display: inline-block; margin: 0 .6em; color: var(--gilt); text-decoration: none; }
+  @media print { .site-footer { display: none; } }
 `;
+
+export const SITE_FOOTER = `<footer class="site-footer"><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a><a href="https://github.com/butchewing/itemized">Source</a></footer>`;
 
 export const HEAD_LINKS = `<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='16' rx='14' ry='15' fill='%23ffffff' stroke='%23a8864a' stroke-width='1.5'/%3E%3Cpath d='M12 9h8M12 23h8M16 9v14' stroke='%2320262e' stroke-width='2.2' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -215,11 +226,10 @@ export const MONOGRAM = `<svg class="monogram" viewBox="0 0 56 56" aria-hidden="
       <path d="M22 16.5h12M22 39.5h12M26 16.5v23M30 16.5v23M27 17v22M28 17v22M29 17v22" stroke-width="1"/>
     </svg>`;
 
-const SITE = 'https://itemized.mortuary.ai';
-const DESCRIPTION = 'Itemized checks funeral home price lists against the FTC Funeral Rule and flags missing required disclosures and prices, with citations.';
 
 // Review links share a generic card so a preview never names the funeral home.
 export const socialMeta = (title: string, path = '/') => `<meta name="description" content="${DESCRIPTION}">
+<link rel="canonical" href="${SITE}${path}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Itemized">
 <meta property="og:title" content="${title}">

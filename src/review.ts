@@ -1,5 +1,6 @@
 import { escapeHtml, fileStem } from './letter';
-import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
+import { mdToHtml, type SitePage } from './site';
+import { HEAD_LINKS, MONOGRAM, SITE_FOOTER, socialMeta } from './styles';
 
 // The house mark that heads every review sheet. The standalone page makes it its h1.
 export const compactLetterhead = (tag: 'h1' | 'p') => `<header class="letterhead letterhead-compact">
@@ -89,14 +90,14 @@ export const actionsRow = (id: string, second: string) => `<div class="actions">
     <p class="actions-status" id="pdf-status" role="status" aria-live="polite"></p>
   </div>`;
 
-const shell = (title: string, body: string, path = '/') => `<!doctype html>
+// Reviews and error pages stay out of search; the about, privacy and contact pages are indexed.
+const shell = (title: string, body: string, path = '/', index = false) => `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>${escapeHtml(title)}</title>
-${socialMeta('Itemized: a Funeral Rule review of General Price Lists', path)}
+${index ? '' : '<meta name="robots" content="noindex, nofollow">\n'}<title>${escapeHtml(title)}</title>
+${socialMeta(index ? title : 'Itemized: a Funeral Rule review of General Price Lists', path)}
 ${HEAD_LINKS}
 </head>
 <body>
@@ -137,6 +138,19 @@ export const notFoundPage = (kind: keyof typeof NOT_FOUND = 'review') =>
     <p><a href="/">Review a General Price List</a></p>
   </div>
 </main>`,
+  );
+
+export const sitePage = (p: SitePage) =>
+  shell(
+    p.title,
+    `<main class="sheet postscript site-page" aria-labelledby="page-heading">
+  ${compactLetterhead('p')}
+  <h1 id="page-heading">${escapeHtml(p.heading)}</h1>
+  ${mdToHtml(p.md)}
+</main>
+${SITE_FOOTER}`,
+    p.path,
+    true,
   );
 
 export const pdfFilename = (provider: string | null, date: Date) => `itemized-review-${fileStem(provider, date)}.pdf`;

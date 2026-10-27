@@ -1,24 +1,13 @@
 import { ACCEPTED_TYPES, MAX_PAGES, MAX_UPLOAD_BYTES } from './audit';
 import { LIMITS_PARAGRAPHS } from './letter';
 import { actionsRow, compactLetterhead, FIX_PROMPT_SCRIPT, PDF_SCRIPT } from './review';
-import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
+import { jsonLdScript, mdToHtml, REFERENCE_MD, SAMPLES } from './site';
+import { HEAD_LINKS, MONOGRAM, SITE_FOOTER, socialMeta } from './styles';
 
 const accept = Object.keys(ACCEPTED_TYPES).join(',');
 const maxMb = MAX_UPLOAD_BYTES / (1024 * 1024);
 
 // Files are sent in page order. The photo pairs passed the Day 5 bar: no fail their PDF does not have.
-const SAMPLES = [
-  { files: ['syn-01.pdf'], name: 'Juniper Hollow Funeral Home', note: 'A complete list. Expect every check to pass.' },
-  { files: ['syn-01-1.jpeg', 'syn-01-2.jpeg'], name: 'Juniper Hollow Funeral Home', note: 'A complete list, photographed (2 pages).' },
-  { files: ['syn-03.pdf'], name: 'Bellwether Memorial Chapel', note: 'Missing required statements and options.' },
-  { files: ['syn-10.pdf'], name: 'Marrowfield Funeral Home', note: 'Vague pricing and claims a person should review.' },
-  {
-    files: ['syn-10-1.jpeg', 'syn-10-2.jpeg'],
-    name: 'Marrowfield Funeral Home',
-    note: 'Vague pricing and claims a person should review, photographed (2 pages).',
-  },
-];
-
 const sampleItems = SAMPLES.map(
   (s) => `<li><button type="button" class="sample" data-files="${s.files.join(' ')}">
         <span class="sample-name">${s.name}</span>
@@ -32,10 +21,10 @@ export const PAGE = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
 <title>Itemized: a Funeral Rule review of General Price Lists</title>
 ${socialMeta('Itemized: a Funeral Rule review of General Price Lists')}
 ${HEAD_LINKS}
+${jsonLdScript()}
 </head>
 <body>
 <main>
@@ -88,22 +77,14 @@ ${HEAD_LINKS}
 </section>
 
 <section class="sheet postscript reference" aria-labelledby="rule-heading">
-  <h2 id="rule-heading">What is the Funeral Rule?</h2>
-  <p>The Funeral Rule is a federal regulation enforced by the Federal Trade Commission. It lets families choose only the funeral goods and services they want, pay only for those, and compare prices between funeral homes. A funeral home must give a General Price List, which the family can keep, showing each item and service it offers and what it costs. The FTC checks compliance with undercover inspections every year.</p>
-  <p>Read more from the FTC: <a href="https://consumer.ftc.gov/articles/ftc-funeral-rule">the Funeral Rule for families</a>, <a href="https://www.ftc.gov/news-events/topics/truth-advertising/funeral-rule">the Funeral Rule for funeral providers</a>, and, for funeral homes, the FTC's guide, <a href="https://www.ftc.gov/business-guidance/resources/complying-funeral-rule">Complying with the Funeral Rule</a>.</p>
-  <h2>Why it matters</h2>
-  <p>The FTC enforces the Funeral Rule with undercover calls and visits. After calling more than 250 funeral homes, it sent warning letters to 39 of them in January 2024 and said violations can bring penalties of up to $51,744 each. In earlier undercover visits to 90 funeral homes in five states, 17 did not give itemized prices when they should have.</p>
-  <p>Sources: the FTC’s <a href="https://www.ftc.gov/news-events/news/press-releases/2024/01/ftc-sends-warning-letters-funeral-homes-after-first-undercover-phone-sweep">January 2024 announcement</a> and its <a href="https://www.ftc.gov/news-events/news/press-releases/2020/06/ftc-releases-funeral-home-compliance-results-offers-new-business-guidance-funeral-rule-requirements">2020 inspection results</a>.</p>
-  <h2>How Itemized helps</h2>
-  <p>Itemized reads a General Price List from a PDF or a phone photo and checks it against the Rule's requirements for that list: the required statements, itemized prices, and required options such as direct cremation with an alternative container. Each result cites the section of the Rule it comes from and quotes the part of the list it is based on.</p>
-  <p>Itemized reads your list with Meta’s Muse Spark model, then checks it against the Rule with fixed rules written from the Rule’s text. Only those fixed rules can mark a requirement as not passed.</p>
-  <p>Funeral homes can use it to check a list before an inspection. Families can use it to understand what a price list should include.</p>
+  ${mdToHtml(REFERENCE_MD)}
   <section class="limits" aria-labelledby="about-heading">
     <h2 id="about-heading">About these results</h2>
     ${LIMITS_PARAGRAPHS}
   </section>
 </section>
 </main>
+${SITE_FOOTER}
 <script>
 const form = document.getElementById('form');
 const fileInput = document.getElementById('file');
