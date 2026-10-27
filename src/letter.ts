@@ -62,11 +62,24 @@ function findingItem(f: Finding): string {
 const simpleItem = (f: Finding) =>
   `<li><span>${escapeHtml(f.title)}</span><span class="cite">${escapeHtml(citeOf(f))}</span></li>`;
 
+// Zero counts are left out: "0 did not pass, 0 need review, and 40 passed" read as a contradiction.
+export function summarySentence(fail: number, review: number, pass: number): string {
+  const ran = fail + review + pass;
+  if (ran === 0) return 'Itemized could not run any checks on this list.';
+  if (fail === 0 && review === 0) return `All <strong>${pass}</strong> checks Itemized could run on this list passed.`;
+  const parts = [
+    fail ? `<strong>${fail}</strong> did not pass` : '',
+    review ? `<strong>${review}</strong> ${review === 1 ? 'needs' : 'need'} a person’s review` : '',
+    pass ? `<strong>${pass}</strong> passed` : '',
+  ].filter(Boolean);
+  const joined = parts.length === 1 ? parts[0] : parts.length === 2 ? `${parts[0]} and ${parts[1]}` : `${parts[0]}, ${parts[1]}, and ${parts[2]}`;
+  return `Of the ${ran} checks Itemized could run on this list, ${joined}.`;
+}
+
 export function renderLetterHtml({ extraction, report, modelName, date, uploadedAt, docSha256 }: LetterInput, mode: LetterMode = 'screen'): string {
   const provider = extraction?.providerName;
   const when = letterDate(date);
   const c = report.counts;
-  const ran = c.fail + c.review + c.pass;
   const byVerdict = (v: Verdict) => report.findings.filter((f) => f.verdict === v);
 
   const detailed = DETAILED.map(([verdict, label]) => {
@@ -88,7 +101,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
 
   return `<p class="letter-date">${escapeHtml(when)}</p>
     <h2 class="letter-re" id="letter-re" tabindex="-1">Re: ${provider ? `the General Price List of ${escapeHtml(provider)}` : 'your General Price List'}</h2>
-    <p class="summary">Of the ${ran} checks Itemized could run on this list, <strong>${c.fail}</strong> did not pass, <strong>${c.review}</strong>${c.review === 1 ? ' needs' : ' need'} a person’s review, and <strong>${c.pass}</strong> passed.</p>
+    <p class="summary">${summarySentence(c.fail, c.review, c.pass)}</p>
     ${detailed}${listed}
     <div class="closing">
       <p class="signature">Itemized</p>

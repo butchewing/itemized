@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { GplExtraction } from '../src/extraction';
-import { citeOf, renderLetterHtml } from '../src/letter';
+import { citeOf, renderLetterHtml, summarySentence } from '../src/letter';
 import { pdfFilename } from '../src/review';
 import type { Finding, Report, Verdict } from '../src/rules/types';
 
@@ -79,6 +79,15 @@ describe('renderLetterHtml', () => {
     });
     expect(two).toContain('<strong>2</strong> need a person’s review');
     expect(two).toContain('Re: your General Price List');
+  });
+
+  it('leaves zero counts out of the summary', () => {
+    expect(summarySentence(0, 0, 40)).toBe('All <strong>40</strong> checks Itemized could run on this list passed.');
+    expect(summarySentence(3, 0, 24)).toBe('Of the 27 checks Itemized could run on this list, <strong>3</strong> did not pass and <strong>24</strong> passed.');
+    expect(summarySentence(0, 6, 35)).toBe('Of the 41 checks Itemized could run on this list, <strong>6</strong> need a person’s review and <strong>35</strong> passed.');
+    expect(summarySentence(1, 1, 1)).toBe('Of the 3 checks Itemized could run on this list, <strong>1</strong> did not pass, <strong>1</strong> needs a person’s review, and <strong>1</strong> passed.');
+    expect(summarySentence(2, 0, 0)).toBe('Of the 2 checks Itemized could run on this list, <strong>2</strong> did not pass.');
+    expect(summarySentence(0, 0, 0)).toBe('Itemized could not run any checks on this list.');
   });
 
   it('keeps the order and collapses Passed and Not applicable on screen only', () => {
