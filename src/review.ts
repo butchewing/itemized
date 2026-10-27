@@ -4,8 +4,10 @@ import { HEAD_LINKS, MONOGRAM, SITE_FOOTER, socialMeta } from './styles';
 
 // The house mark that heads every review sheet. The standalone page makes it its h1.
 export const compactLetterhead = (tag: 'h1' | 'p') => `<header class="letterhead letterhead-compact">
+    <a class="home-link" href="/" aria-label="Itemized home">
     ${MONOGRAM}
     <${tag} class="house">Itemized</${tag}>
+    </a>
     <hr class="gilt-hairline">
   </header>`;
 

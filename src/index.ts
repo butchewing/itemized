@@ -48,7 +48,7 @@ const SECURITY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
-  'Content-Security-Policy': "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self'",
+  'Content-Security-Policy': "frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self'; font-src 'self'",
 };
 app.use('*', async (c, next) => {
   await next();
@@ -148,11 +148,12 @@ app.get('/r/:id', async (c) => {
   return c.html(reviewPage(view.id, renderLetterHtml(view), view.extraction?.providerName ?? null));
 });
 
-async function renderPdf(browserBinding: Env['BROWSER'], html: string): Promise<Uint8Array> {
+// setContent leaves the page at about:blank, so <base> points the self-hosted fonts back at this origin.
+async function renderPdf(browserBinding: Env['BROWSER'], html: string, origin: string): Promise<Uint8Array> {
   const browser = await puppeteer.launch(browserBinding);
   try {
     const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    await page.setContent(html.replace('<head>', `<head>\n<base href="${origin}/">`), { waitUntil: 'networkidle0' });
     await page.evaluateHandle('document.fonts.ready');
     const pdf = await page.pdf({
       format: 'letter',
@@ -183,7 +184,7 @@ app.get('/r/:id/pdf', async (c) => {
     }
     const provider = view.extraction?.providerName ?? null;
     try {
-      body = await renderPdf(c.env.BROWSER, reviewPage(view.id, renderLetterHtml(view, 'print'), provider));
+      body = await renderPdf(c.env.BROWSER, reviewPage(view.id, renderLetterHtml(view, 'print'), provider), new URL(c.req.url).origin);
     } catch (err) {
       console.error('pdf render failed', err);
       return c.json({ error: PDF_FAILED }, 503);

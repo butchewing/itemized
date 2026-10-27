@@ -2,6 +2,10 @@ import { DESCRIPTION, SITE } from './site';
 
 // One stationery stylesheet for the main page, the standalone review and its PDF.
 export const STYLES = `
+  /* Self-hosted Google Fonts files (Latin subset, variable), licensed under the OFL: see /fonts/OFL-*.txt. */
+  @font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/fonts/cinzel-latin.woff2) format('woff2'); }
+  @font-face { font-family: 'Source Serif 4'; font-style: normal; font-weight: 200 900; font-display: swap; src: url(/fonts/source-serif-4-latin.woff2) format('woff2'); }
+  @font-face { font-family: 'Source Serif 4'; font-style: italic; font-weight: 200 900; font-display: swap; src: url(/fonts/source-serif-4-italic-latin.woff2) format('woff2'); }
   :root {
     --ground: #e9ecef;
     --sheet: #ffffff;
@@ -203,6 +207,8 @@ export const STYLES = `
     .group > h3, details.group > summary, .limits h3 { break-after: avoid; }
   }
   .has-review .reference .limits { display: none; }
+  .home-link { display: inline-block; color: inherit; text-decoration: none; }
+  .home-link:focus-visible { outline: 1px solid var(--gilt); outline-offset: .4rem; }
   .site-page h1 { margin: 1.5rem 0 1.25rem; font: 600 1.35rem/1.3 var(--text); }
   .site-page ul { margin: .5rem 0; padding-left: 1.2rem; max-width: 65ch; }
   .site-page li + li { margin-top: .35rem; }
@@ -215,9 +221,8 @@ export const STYLES = `
 export const SITE_FOOTER = `<footer class="site-footer"><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a><a href="https://github.com/butchewing/itemized">Source</a></footer>`;
 
 export const HEAD_LINKS = `<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='16' rx='14' ry='15' fill='%23ffffff' stroke='%23a8864a' stroke-width='1.5'/%3E%3Cpath d='M12 9h8M12 23h8M16 9v14' stroke='%2320262e' stroke-width='2.2' fill='none'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="preload" href="/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>${STYLES}</style>`;
 
 export const MONOGRAM = `<svg class="monogram" viewBox="0 0 56 56" aria-hidden="true" focusable="false">

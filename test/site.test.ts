@@ -62,8 +62,23 @@ describe('the home page', () => {
     expect(md).not.toMatch(/\{#|<[a-z]/);
   });
 
+  it('loads its fonts from this site, never from Google', async () => {
+    for (const path of ['/', '/about', '/no-such-page']) {
+      const html = await (await get(path)).text();
+      expect(html).not.toMatch(/googleapis|gstatic/);
+      expect(html).toContain('/fonts/source-serif-4-latin.woff2');
+    }
+  });
+
+  it('links the letterhead home from every other page', async () => {
+    for (const path of ['/about', '/privacy', '/contact', '/no-such-page']) {
+      expect(await (await get(path)).text()).toContain('<a class="home-link" href="/" aria-label="Itemized home">');
+    }
+  });
+
   it('sends the security headers', async () => {
     const res = await get('/');
+    expect(res.headers.get('content-security-policy')).toContain("font-src 'self'");
     expect(res.headers.get('strict-transport-security')).toBe('max-age=31536000');
     expect(res.headers.get('x-content-type-options')).toBe('nosniff');
     expect(res.headers.get('content-security-policy')).toContain("frame-ancestors 'none'");

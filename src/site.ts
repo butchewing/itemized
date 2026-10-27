@@ -221,7 +221,6 @@ Uploaded files, transcriptions and reviews are deleted 30 days after the file wa
 ## Other data a visit creates
 
 - **Cloudflare** hosts Itemized. It processes each request, including your IP address, to deliver the site and protect it from abuse. Itemized uses your IP address to limit uploads to 5 a minute and does not store it with your upload.
-- **Google Fonts** serves the site's typefaces, so your browser requests them from Google.
 - **Usage records**: for each review, Itemized records which model read the list, how long it took and what it cost, to stay within its daily spending limit.
 
 ## Questions
