@@ -6,12 +6,12 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 
 | Set | Model | n | Fields | Disclosures | Verdict agreement | False fails | Missed fails | Fail to review | Review rate | Checks not run | Cost per review, mean / p90 | Model time per review, mean / p90 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 12 | 1087/1088 | 95/96 | 514/516 (99.6%) | 0 | 0 | 1 | 2.3% | 0 | $0.0326 / $0.0347 | 17.5 s / 20.0 s |
-| b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 345/356 | 30/32 | 166/172 (96.5%) | 0 | 0 | 5 | 7.0% | 0 | $0.0366 / $0.0418 | 13.1 s / 16.6 s |
-| c. Synthetic photos | Muse Spark Open (Baseten) | 4 | 338/356 | 32/32 | 166/172 (96.5%) | 0 | 0 | 5 | 7.0% | 0 | $0.0297 / $0.0312 | 22.1 s / 23.0 s |
-| d. Synthetic PDFs as page images | Muse Spark Open (Baseten) | 12 | 1082/1088 | 95/96 | 497/516 (96.3%) | 0 | 0 | 18 | 5.6% | 0 | $0.0268 / $0.0302 | 19.1 s / 20.7 s |
-| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Baseten) | 12 | 1082/1088 | 95/96 | 514/516 (99.6%) | 0 | 0 | 1 | 2.3% | 0 | $0.0268 / $0.0302 | 19.1 s / 20.7 s |
-| e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0305 / $0.0305 | 17.8 s / 17.8 s |
+| a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 12 | 1087/1088 | 95/96 | 514/516 (99.6%) | 0 | 0 | 1 | 2.3% | 0 | $0.0324 / $0.0374 | 20.1 s / 26.1 s |
+| b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 344/356 | 32/32 | 166/172 (96.5%) | 0 | 0 | 5 | 7.0% | 0 | $0.0357 / $0.0384 | 13.5 s / 14.8 s |
+| c. Synthetic photos | Muse Spark Open (Baseten) | 4 | 344/356 | 32/32 | 167/172 (97.1%) | 0 | 0 | 5 | 6.4% | 0 | $0.0299 / $0.0316 | 24.6 s / 28.1 s |
+| d. Synthetic PDFs as page images | Muse Spark Open (Baseten) | 12 | 1083/1088 | 95/96 | 497/516 (96.3%) | 0 | 1 | 17 | 5.4% | 0 | $0.0270 / $0.0313 | 19.2 s / 21.1 s |
+| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Baseten) | 12 | 1083/1088 | 95/96 | 514/516 (99.6%) | 0 | 1 | 0 | 2.1% | 0 | $0.0270 / $0.0313 | 19.2 s / 21.1 s |
+| e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0310 / $0.0310 | 20.5 s / 20.5 s |
 
 ## Real price lists (aggregates only)
 
@@ -20,17 +20,17 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 | Measure | Value |
 |---|---|
 | Lists run | 12 |
-| Verdicts (fail / review / pass / not applicable) | 0 / 106 / 353 / 57 |
+| Verdicts (fail / review / pass / not applicable) | 0 / 99 / 365 / 52 |
 | Fails per list, mean | 0.0 |
-| Review rate | 20.5% |
+| Review rate | 19.2% |
 | Checks not run | 0 |
 | Name, address or phone checks counted as pass because the element was redacted | 30 |
 | Hand-labeled list: verdict agreement | 39/43 |
 | Hand-labeled list: false fails / missed fails / fail to review | 0 / 0 / 4 |
-| Same extractions under the PDF rules (diagnostic): fails, and lists with at least one | 25, 8 of 12 |
-| Hand-labeled list under the PDF rules: agreement; false fails / missed fails | 40/43; 0 / 0 |
-| Cost per review, mean / p90 | $0.0719 / $0.1083 |
-| Model time per review, mean / p90 | 50.4 s / 81.2 s |
+| Same extractions under the PDF rules (diagnostic): fails, and lists with at least one | 19, 7 of 12 |
+| Hand-labeled list under the PDF rules: agreement; false fails / missed fails | 41/43; 0 / 0 |
+| Cost per review, mean / p90 | $0.0661 / $0.1054 |
+| Model time per review, mean / p90 | 47.8 s / 69.1 s |
 
 ## Run-to-run variance
 
@@ -53,6 +53,7 @@ No verdict moved on this list for either model. What varied was the transcriptio
 
 The variance runs are repeated with `node test/eval/extraction-variance.mjs --list syn-03 --provider <meta-api|open-weights> --base <local Worker URL>` against a local `wrangler dev` started with `--var DEV_ROUTES:1` and the matching `MODEL_PROVIDER`. The driver refuses real-list files unless the Worker runs open-weights.
 
+
 ## Off-label verdicts in the public sets
 
 a. Synthetic PDFs, meta-api:
@@ -73,9 +74,9 @@ c. Synthetic photos, open-weights:
 - syn-09 C-022 (fail to review: expected fail, got review)
 - syn-09 C-042 (fail to review: expected fail, got review)
 - syn-09 C-052 (fail to review: expected fail, got review)
-- syn-03 C-007 (other: expected pass, got review)
 
 d. Synthetic PDFs as page images, open-weights:
+- syn-07 C-060 (missed fail: expected fail, got pass)
 - syn-03 C-030 (fail to review: expected fail, got review)
 - syn-03 C-041 (fail to review: expected fail, got review)
 - syn-04 C-020 (fail to review: expected fail, got review)
@@ -87,7 +88,6 @@ d. Synthetic PDFs as page images, open-weights:
 - syn-06 C-073 (fail to review: expected fail, got review)
 - syn-07 C-003 (fail to review: expected fail, got review)
 - syn-07 C-005 (fail to review: expected fail, got review)
-- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-08 C-061 (fail to review: expected fail, got review)
 - syn-08 C-070 (fail to review: expected fail, got review)
 - syn-09 C-022 (fail to review: expected fail, got review)
@@ -97,7 +97,7 @@ d. Synthetic PDFs as page images, open-weights:
 - syn-07 C-061 (other: expected pass, got review)
 
 d. Same extraction, PDF rules (diagnostic), open-weights:
-- syn-07 C-060 (fail to review: expected fail, got review)
+- syn-07 C-060 (missed fail: expected fail, got pass)
 - syn-07 C-061 (other: expected pass, got review)
 
 e. FTC Sample 1 template, meta-api: none.
@@ -110,7 +110,7 @@ e. FTC Sample 1 template, meta-api: none.
 - Review rate is reviews divided by checks run. Checks not run are semantic checks whose model step was skipped.
 - Photo and page-image sets run with the photo rule (engine input `images`). Set d also shows the same extraction under the PDF rules, so the true fails the photo rule turns into reviews are visible.
 - Page images for sets d and the real lists are rendered at 150 DPI, 8-bit grayscale, with PDFKit (`test/eval/render-pages.swift`), outside the Worker.
-- Verdicts come from rules engine version `engine-4`.
+- Verdicts come from rules engine version `engine-5`.
 - Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.
 - Real price lists ran only on Muse Spark Open through Baseten. The harness refuses any real-list file unless the running Worker reports the open-weights provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.
 
@@ -131,4 +131,4 @@ node test/eval/run.mjs --sets a,b,c,d,e
 
 Spend is capped per run at $1 on the Meta Model API and $4 on Baseten (`--cap-meta-api`, `--cap-open-weights`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
 
-This run spent $0.0000 on the Meta Model API and $0.0000 on Baseten.
+This run spent $0.0000 on the Meta Model API and $0.4196 on Baseten.

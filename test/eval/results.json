@@ -52,13 +52,13 @@
    "notRun": 0,
    "cost": {
     "n": 12,
-    "mean": 0.03259910416666667,
-    "p90": 0.034685
+    "mean": 0.032406854166666665,
+    "p90": 0.03743825
    },
    "latencyMs": {
     "n": 12,
-    "mean": 17450.666666666668,
-    "p90": 20036
+    "mean": 20114.666666666668,
+    "p90": 26110
    }
   },
   {
@@ -72,91 +72,7 @@
    "failed": [],
    "labeledDocs": 4,
    "fields": {
-    "right": 345,
-    "total": 356
-   },
-   "disclosures": {
-    "right": 30,
-    "total": 32
-   },
-   "agreement": {
-    "agree": 166,
-    "compared": 172
-   },
-   "falseFails": [],
-   "missedFails": [],
-   "failsToReview": [
-    {
-     "list": "syn-03",
-     "check": "C-030",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-03",
-     "check": "C-041",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-09",
-     "check": "C-022",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-09",
-     "check": "C-042",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-09",
-     "check": "C-052",
-     "expected": "fail",
-     "got": "review"
-    }
-   ],
-   "otherMismatches": [
-    {
-     "list": "syn-03",
-     "check": "C-007",
-     "expected": "pass",
-     "got": "review"
-    }
-   ],
-   "verdicts": {
-    "fail": 2,
-    "review": 12,
-    "pass": 144,
-    "not_applicable": 14
-   },
-   "redactionAdjusted": 0,
-   "checksRun": 172,
-   "notRun": 0,
-   "cost": {
-    "n": 4,
-    "mean": 0.036569,
-    "p90": 0.04177845
-   },
-   "latencyMs": {
-    "n": 4,
-    "mean": 13113.25,
-    "p90": 16594
-   }
-  },
-  {
-   "set": "c",
-   "name": "Synthetic phone photos",
-   "provider": "open-weights",
-   "mode": "images",
-   "private": false,
-   "n": 4,
-   "skipped": [],
-   "failed": [],
-   "labeledDocs": 4,
-   "fields": {
-    "right": 338,
+    "right": 344,
     "total": 356
    },
    "disclosures": {
@@ -220,13 +136,90 @@
    "notRun": 0,
    "cost": {
     "n": 4,
-    "mean": 0.0297014375,
-    "p90": 0.0312399
+    "mean": 0.035690025,
+    "p90": 0.0384337
    },
    "latencyMs": {
     "n": 4,
-    "mean": 22113.25,
-    "p90": 23018
+    "mean": 13489.75,
+    "p90": 14759
+   }
+  },
+  {
+   "set": "c",
+   "name": "Synthetic phone photos",
+   "provider": "open-weights",
+   "mode": "images",
+   "private": false,
+   "n": 4,
+   "skipped": [],
+   "failed": [],
+   "labeledDocs": 4,
+   "fields": {
+    "right": 344,
+    "total": 356
+   },
+   "disclosures": {
+    "right": 32,
+    "total": 32
+   },
+   "agreement": {
+    "agree": 167,
+    "compared": 172
+   },
+   "falseFails": [],
+   "missedFails": [],
+   "failsToReview": [
+    {
+     "list": "syn-03",
+     "check": "C-030",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-03",
+     "check": "C-041",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-09",
+     "check": "C-022",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-09",
+     "check": "C-042",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-09",
+     "check": "C-052",
+     "expected": "fail",
+     "got": "review"
+    }
+   ],
+   "otherMismatches": [],
+   "verdicts": {
+    "fail": 2,
+    "review": 11,
+    "pass": 145,
+    "not_applicable": 14
+   },
+   "redactionAdjusted": 0,
+   "checksRun": 172,
+   "notRun": 0,
+   "cost": {
+    "n": 4,
+    "mean": 0.029909512500000002,
+    "p90": 0.0316154
+   },
+   "latencyMs": {
+    "n": 4,
+    "mean": 24634.25,
+    "p90": 28130
    }
   },
   {
@@ -240,7 +233,7 @@
    "failed": [],
    "labeledDocs": 12,
    "fields": {
-    "right": 1082,
+    "right": 1083,
     "total": 1088
    },
    "disclosures": {
@@ -252,7 +245,14 @@
     "compared": 516
    },
    "falseFails": [],
-   "missedFails": [],
+   "missedFails": [
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "pass"
+    }
+   ],
    "failsToReview": [
     {
      "list": "syn-03",
@@ -321,12 +321,6 @@
      "got": "review"
     },
     {
-     "list": "syn-07",
-     "check": "C-060",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
      "list": "syn-08",
      "check": "C-061",
      "expected": "fail",
@@ -373,8 +367,8 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 29,
-    "pass": 440,
+    "review": 28,
+    "pass": 441,
     "not_applicable": 45
    },
    "redactionAdjusted": 0,
@@ -382,13 +376,13 @@
    "notRun": 0,
    "cost": {
     "n": 12,
-    "mean": 0.026846845833333337,
-    "p90": 0.03022895
+    "mean": 0.026965074999999995,
+    "p90": 0.031312150000000004
    },
    "latencyMs": {
     "n": 12,
-    "mean": 19104.916666666668,
-    "p90": 20678
+    "mean": 19241.583333333332,
+    "p90": 21146
    }
   },
   {
@@ -402,7 +396,7 @@
    "failed": [],
    "labeledDocs": 12,
    "fields": {
-    "right": 1082,
+    "right": 1083,
     "total": 1088
    },
    "disclosures": {
@@ -414,15 +408,15 @@
     "compared": 516
    },
    "falseFails": [],
-   "missedFails": [],
-   "failsToReview": [
+   "missedFails": [
     {
      "list": "syn-07",
      "check": "C-060",
      "expected": "fail",
-     "got": "review"
+     "got": "pass"
     }
    ],
+   "failsToReview": [],
    "otherMismatches": [
     {
      "list": "syn-07",
@@ -433,8 +427,8 @@
    ],
    "verdicts": {
     "fail": 19,
-    "review": 12,
-    "pass": 440,
+    "review": 11,
+    "pass": 441,
     "not_applicable": 45
    },
    "redactionAdjusted": 0,
@@ -442,13 +436,13 @@
    "notRun": 0,
    "cost": {
     "n": 12,
-    "mean": 0.026846845833333337,
-    "p90": 0.03022895
+    "mean": 0.026965074999999995,
+    "p90": 0.031312150000000004
    },
    "latencyMs": {
     "n": 12,
-    "mean": 19104.916666666668,
-    "p90": 20678
+    "mean": 19241.583333333332,
+    "p90": 21146
    }
   },
   {
@@ -482,13 +476,13 @@
    "notRun": 0,
    "cost": {
     "n": 1,
-    "mean": 0.0304935,
-    "p90": 0.0304935
+    "mean": 0.030972,
+    "p90": 0.030972
    },
    "latencyMs": {
     "n": 1,
-    "mean": 17776,
-    "p90": 17776
+    "mean": 20528,
+    "p90": 20528
    }
   }
  ],
@@ -497,7 +491,7 @@
    "set": "a",
    "key": "syn-01",
    "list": "syn-01",
-   "auditId": "4c3ca5a5-aca5-486b-a33b-16d340352104",
+   "auditId": "fe797216-8e43-4e2c-b51f-cd241ec7d19b",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -569,8 +563,8 @@
     }
    },
    "cost": {
-    "usd": 0.034487000000000004,
-    "ms": 19352,
+    "usd": 0.0300695,
+    "ms": 14921,
     "complete": true
    },
    "extraction": {
@@ -589,7 +583,7 @@
    "set": "a",
    "key": "syn-02",
    "list": "syn-02",
-   "auditId": "9671b003-ba68-47c0-98bd-665208e0f45a",
+   "auditId": "5e7a1231-0d2f-431d-947b-c2e3f2624149",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -661,8 +655,8 @@
     }
    },
    "cost": {
-    "usd": 0.03686875,
-    "ms": 20036,
+    "usd": 0.03743825,
+    "ms": 23907,
     "complete": true
    },
    "extraction": {
@@ -681,7 +675,7 @@
    "set": "a",
    "key": "syn-03",
    "list": "syn-03",
-   "auditId": "f1379886-e504-4e20-908e-ccebf79abb80",
+   "auditId": "a69829c3-bbfc-417b-86b3-b92f5c0ec8f8",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -753,8 +747,8 @@
     }
    },
    "cost": {
-    "usd": 0.0316705,
-    "ms": 15716,
+    "usd": 0.0236865,
+    "ms": 16395,
     "complete": true
    },
    "extraction": {
@@ -773,7 +767,7 @@
    "set": "a",
    "key": "syn-04",
    "list": "syn-04",
-   "auditId": "8f89dac1-de22-4081-baa3-56aa2e6be6b6",
+   "auditId": "c1fda1d9-0156-4b71-a35e-5ea9fd150f2e",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -845,8 +839,8 @@
     }
    },
    "cost": {
-    "usd": 0.03027475,
-    "ms": 14498,
+    "usd": 0.03200025,
+    "ms": 26435,
     "complete": true
    },
    "extraction": {
@@ -865,7 +859,7 @@
    "set": "a",
    "key": "syn-05",
    "list": "syn-05",
-   "auditId": "6e5d705f-30e4-48ce-a01b-c539d5e159ef",
+   "auditId": "11419567-7859-4280-aed9-b0cfe9e42c1c",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -937,8 +931,8 @@
     }
    },
    "cost": {
-    "usd": 0.03221775,
-    "ms": 16528,
+    "usd": 0.0316295,
+    "ms": 19007,
     "complete": true
    },
    "extraction": {
@@ -957,7 +951,7 @@
    "set": "a",
    "key": "syn-06",
    "list": "syn-06",
-   "auditId": "e2396963-d72b-4dcb-9c4a-4dee679a0076",
+   "auditId": "4f828b49-48b4-4074-af93-0e8bdfbb0aff",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1029,8 +1023,8 @@
     }
    },
    "cost": {
-    "usd": 0.03151925,
-    "ms": 16955,
+    "usd": 0.033854999999999996,
+    "ms": 22178,
     "complete": true
    },
    "extraction": {
@@ -1049,7 +1043,7 @@
    "set": "a",
    "key": "syn-07",
    "list": "syn-07",
-   "auditId": "a75e65a2-9438-48ac-8693-5b90d632fc23",
+   "auditId": "452ae3dc-01d7-4de5-b21e-036d916e10fe",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1133,8 +1127,8 @@
     }
    },
    "cost": {
-    "usd": 0.03267475,
-    "ms": 21072,
+    "usd": 0.0307025,
+    "ms": 16974,
     "complete": true
    },
    "extraction": {
@@ -1147,7 +1141,7 @@
      "total": 8
     },
     "misses": [
-     "includesText Receiving Remains from Another Funeral Home: null"
+     "effectiveDate.raw: want null got \"\""
     ]
    }
   },
@@ -1155,7 +1149,7 @@
    "set": "a",
    "key": "syn-08",
    "list": "syn-08",
-   "auditId": "66c5e945-b0aa-4b23-b49a-4f21136bccac",
+   "auditId": "61c65433-079d-4bc1-a1cb-3ae66e8c0a20",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1227,8 +1221,8 @@
     }
    },
    "cost": {
-    "usd": 0.0307155,
-    "ms": 15328,
+    "usd": 0.033473750000000004,
+    "ms": 19457,
     "complete": true
    },
    "extraction": {
@@ -1247,7 +1241,7 @@
    "set": "a",
    "key": "syn-09",
    "list": "syn-09",
-   "auditId": "6cb88894-f7de-43a6-a288-11989f31688e",
+   "auditId": "57342784-b0e9-414d-a7fc-87057d469125",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1319,8 +1313,8 @@
     }
    },
    "cost": {
-    "usd": 0.03088275,
-    "ms": 14522,
+    "usd": 0.03219,
+    "ms": 16186,
     "complete": true
    },
    "extraction": {
@@ -1339,7 +1333,7 @@
    "set": "a",
    "key": "syn-10",
    "list": "syn-10",
-   "auditId": "d5588460-57bb-42f7-b8fd-0c273f9498a2",
+   "auditId": "43d66a53-925c-42e1-a9f6-5f1d67deacf5",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1411,8 +1405,8 @@
     }
    },
    "cost": {
-    "usd": 0.034685,
-    "ms": 19351,
+    "usd": 0.0407025,
+    "ms": 26110,
     "complete": true
    },
    "extraction": {
@@ -1431,7 +1425,7 @@
    "set": "a",
    "key": "syn-11",
    "list": "syn-11",
-   "auditId": "ece68329-6cff-4a38-8fe5-e35acfe6504f",
+   "auditId": "5f7c54fe-ab08-4ac7-a6c2-8b2a85181e77",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1503,8 +1497,8 @@
     }
    },
    "cost": {
-    "usd": 0.03384425,
-    "ms": 18883,
+    "usd": 0.03081225,
+    "ms": 19895,
     "complete": true
    },
    "extraction": {
@@ -1525,7 +1519,7 @@
    "set": "a",
    "key": "syn-12",
    "list": "syn-12",
-   "auditId": "15b7210b-5890-4a27-9190-8b50bdeae29f",
+   "auditId": "9d8530a6-e1cf-419c-bc3e-3cec7dcc45bc",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1597,8 +1591,8 @@
     }
    },
    "cost": {
-    "usd": 0.031349,
-    "ms": 17167,
+    "usd": 0.03232225,
+    "ms": 19911,
     "complete": true
    },
    "extraction": {
@@ -1617,7 +1611,7 @@
    "set": "b",
    "key": "syn-01 photos",
    "list": "syn-01",
-   "auditId": "56334029-ae9b-4bca-a6ed-d309d24418c4",
+   "auditId": "a8ecfc6b-9824-45d7-a98f-4f572a92f3c8",
    "status": "done",
    "error": null,
    "input": "images",
@@ -1689,8 +1683,8 @@
     }
    },
    "cost": {
-    "usd": 0.0383825,
-    "ms": 13336,
+    "usd": 0.03407615,
+    "ms": 14488,
     "complete": true
    },
    "extraction": {
@@ -1709,7 +1703,7 @@
    "set": "b",
    "key": "syn-03 photos",
    "list": "syn-03",
-   "auditId": "b5240fbe-2b11-4df1-9d40-190417313ba4",
+   "auditId": "b38fb2d5-3afe-4d98-bda2-2d8b4d7af221",
    "status": "done",
    "error": null,
    "input": "images",
@@ -1798,29 +1792,29 @@
     }
    },
    "cost": {
-    "usd": 0.03091905,
-    "ms": 10788,
+    "usd": 0.034489,
+    "ms": 11623,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 79,
+     "right": 77,
      "total": 86
     },
     "disclosures": {
-     "right": 6,
+     "right": 8,
      "total": 8
     },
     "misses": [
      "phone: want \"(830) 555-0163\" got \"(830) 355-0163\"",
      "effectiveDate.raw: want \"September 1, 2026\" got \"These prices are effective as of September 1, 2025.\"",
      "effectiveDate.iso: want 2026-09-01 got 2025-09-01",
+     "price Use of Facilities and Staff for Memorial Service at the Funeral Home: want $595 got price=395 range=null",
+     "priceText Use of Facilities and Staff for Memorial Service at the Funeral Home: want \"$595\" got \"$395\"",
      "price Use of Equipment and Staff for Graveside Service: want $450 got price=430 range=null",
      "priceText Use of Equipment and Staff for Graveside Service: want \"$450\" got \"$430\"",
-     "price Caskets: want $995 to $11,950 got price=null range=[925,11950]",
-     "priceText Caskets: want \"$995 to $11,950\" got \"$925 to $11,950\"",
-     "disclosure D-casket-list: want present",
-     "disclosure D-obc-list: want present"
+     "price Caskets: want $995 to $11,950 got price=null range=[945,11950]",
+     "priceText Caskets: want \"$995 to $11,950\" got \"$945 to $11,950\""
     ]
    }
   },
@@ -1828,7 +1822,7 @@
    "set": "b",
    "key": "syn-09 photos",
    "list": "syn-09",
-   "auditId": "6aac95a9-dd0f-479e-acd7-0df54ed48e83",
+   "auditId": "93813999-5e9c-4a36-a0a1-b7e5a41767b5",
    "status": "done",
    "error": null,
    "input": "images",
@@ -1916,8 +1910,8 @@
     }
    },
    "cost": {
-    "usd": 0.035196,
-    "ms": 11735,
+    "usd": 0.03576125,
+    "ms": 13089,
     "complete": true
    },
    "extraction": {
@@ -1939,7 +1933,7 @@
    "set": "b",
    "key": "syn-10 photos",
    "list": "syn-10",
-   "auditId": "90fb67e3-c8d5-4246-bc34-0c964e67bc09",
+   "auditId": "745e881e-31a5-4b1d-a160-4681ef3d7089",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2011,29 +2005,27 @@
     }
    },
    "cost": {
-    "usd": 0.04177845,
-    "ms": 16594,
+    "usd": 0.0384337,
+    "ms": 14759,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 93,
+     "right": 94,
      "total": 94
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": [
-     "price Hearse: want Starting at $395 got price=null range=null"
-    ]
+    "misses": []
    }
   },
   {
    "set": "c",
    "key": "syn-01 photos",
    "list": "syn-01",
-   "auditId": "279ae837-6b82-4245-8d6a-c4eb38b69995",
+   "auditId": "71bd1ef1-a12d-4f45-98ed-5df046e90ec9",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2105,8 +2097,8 @@
     }
    },
    "cost": {
-    "usd": 0.030327899999999998,
-    "ms": 22322,
+    "usd": 0.02967275,
+    "ms": 28130,
     "complete": true
    },
    "extraction": {
@@ -2125,7 +2117,7 @@
    "set": "c",
    "key": "syn-03 photos",
    "list": "syn-03",
-   "auditId": "05d1d922-a9d2-4928-85ab-e5a98bf71877",
+   "auditId": "aaea7808-d3d5-4fec-9f32-eb2ed15834cb",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2138,7 +2130,7 @@
       "C-004": "pass",
       "C-005": "pass",
       "C-006": "pass",
-      "C-007": "review",
+      "C-007": "pass",
       "C-010": "pass",
       "C-011": "pass",
       "C-020": "pass",
@@ -2179,15 +2171,15 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
-      "pass": 33,
+      "review": 2,
+      "pass": 34,
       "not_applicable": 6
      },
      "checksRun": 43,
      "notRun": [],
      "labels": {
       "compared": 43,
-      "agree": 40,
+      "agree": 41,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -2202,25 +2194,19 @@
         "got": "review"
        }
       ],
-      "other": [
-       {
-        "check": "C-007",
-        "expected": "pass",
-        "got": "review"
-       }
-      ],
+      "other": [],
       "notRun": []
      }
     }
    },
    "cost": {
-    "usd": 0.0298557,
-    "ms": 22377,
+    "usd": 0.03080295,
+    "ms": 26374,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 71,
+     "right": 77,
      "total": 86
     },
     "disclosures": {
@@ -2229,20 +2215,14 @@
     },
     "misses": [
      "phone: want \"(830) 555-0163\" got \"(830) 355-0163\"",
-     "effectiveDate.raw: want \"September 1, 2026\" got \"These prices are effective as of September 1, 2025\"",
-     "effectiveDate.iso: want 2026-09-01 got 2025-09-01",
      "price Dressing and casketing: want $225 got price=285 range=null",
      "priceText Dressing and casketing: want \"$225\" got \"$285\"",
      "price Use of Facilities and Staff for Funeral Ceremony at the Funeral Home: want $695 got price=645 range=null",
      "priceText Use of Facilities and Staff for Funeral Ceremony at the Funeral Home: want \"$695\" got \"$645\"",
      "price Use of Facilities and Staff for Memorial Service at the Funeral Home: want $595 got price=395 range=null",
      "priceText Use of Facilities and Staff for Memorial Service at the Funeral Home: want \"$595\" got \"$395\"",
-     "price Use of Equipment and Staff for Graveside Service: want $450 got price=430 range=null",
-     "priceText Use of Equipment and Staff for Graveside Service: want \"$450\" got \"$430\"",
-     "price Caskets: want $995 to $11,950 got price=null range=[945,11950]",
-     "priceText Caskets: want \"$995 to $11,950\" got \"$945 to $11,950\"",
-     "price Outer Burial Containers: want $1,095 to $6,800 got price=null range=[1095,8800]",
-     "priceText Outer Burial Containers: want \"$1,095 to $6,800\" got \"$1,095 to $8,800\""
+     "price Caskets: want $995 to $11,950 got price=null range=[945,14950]",
+     "priceText Caskets: want \"$995 to $11,950\" got \"$945 to $14,950\""
     ]
    }
   },
@@ -2250,7 +2230,7 @@
    "set": "c",
    "key": "syn-09 photos",
    "list": "syn-09",
-   "auditId": "288f1a84-31f8-4c81-99d9-f4a8de3abefe",
+   "auditId": "2d7092c0-f8cf-4107-b44d-a743bf96be6b",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2338,8 +2318,8 @@
     }
    },
    "cost": {
-    "usd": 0.02738225,
-    "ms": 20736,
+    "usd": 0.02754695,
+    "ms": 20753,
     "complete": true
    },
    "extraction": {
@@ -2358,7 +2338,7 @@
    "set": "c",
    "key": "syn-10 photos",
    "list": "syn-10",
-   "auditId": "ec8f685d-598d-497f-926f-79a1e20b9799",
+   "auditId": "cd2b0e30-9924-4855-85ae-31d3e0a633db",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2430,8 +2410,8 @@
     }
    },
    "cost": {
-    "usd": 0.0312399,
-    "ms": 23018,
+    "usd": 0.0316154,
+    "ms": 23280,
     "complete": true
    },
    "extraction": {
@@ -2453,7 +2433,7 @@
    "set": "d",
    "key": "syn-01",
    "list": "syn-01",
-   "auditId": "c37710bf-13a7-42c1-90fd-d808743c004b",
+   "auditId": "b6b9d491-6eeb-4297-9a1a-b06f1dc0af97",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2590,8 +2570,8 @@
     }
    },
    "cost": {
-    "usd": 0.025839300000000003,
-    "ms": 18538,
+    "usd": 0.0265002,
+    "ms": 19519,
     "complete": true
    },
    "extraction": {
@@ -2610,7 +2590,7 @@
    "set": "d",
    "key": "syn-02",
    "list": "syn-02",
-   "auditId": "909667fe-082e-49f3-a063-71fc7120d6a8",
+   "auditId": "21cd2e6f-04ec-4dc2-b34b-a44c291f490d",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2747,8 +2727,8 @@
     }
    },
    "cost": {
-    "usd": 0.030787750000000003,
-    "ms": 17289,
+    "usd": 0.0334167,
+    "ms": 22850,
     "complete": true
    },
    "extraction": {
@@ -2767,7 +2747,7 @@
    "set": "d",
    "key": "syn-03",
    "list": "syn-03",
-   "auditId": "c5965ad8-0e21-45d8-b50a-db72d328f45a",
+   "auditId": "14b64c9d-f1de-4005-8f8b-315648d8b022",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2915,8 +2895,8 @@
     }
    },
    "cost": {
-    "usd": 0.0244142,
-    "ms": 17219,
+    "usd": 0.02236765,
+    "ms": 19534,
     "complete": true
    },
    "extraction": {
@@ -2935,7 +2915,7 @@
    "set": "d",
    "key": "syn-04",
    "list": "syn-04",
-   "auditId": "043a3566-519e-4318-9c42-84a7947cc04d",
+   "auditId": "794c4942-29d9-45d0-8f29-5cf38241f3c4",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3083,27 +3063,30 @@
     }
    },
    "cost": {
-    "usd": 0.024585000000000003,
-    "ms": 20055,
+    "usd": 0.026261850000000003,
+    "ms": 19454,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 85,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "item missing: Limousine [$275]",
+     "extra priced item: Limosusine [$275]"
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-05",
    "list": "syn-05",
-   "auditId": "85e07430-9974-4b98-8a4c-3458a2458435",
+   "auditId": "95a404a8-2431-4409-8968-43a9efc71565",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3251,8 +3234,8 @@
     }
    },
    "cost": {
-    "usd": 0.026813299999999998,
-    "ms": 18888,
+    "usd": 0.0263942,
+    "ms": 18898,
     "complete": true
    },
    "extraction": {
@@ -3271,7 +3254,7 @@
    "set": "d",
    "key": "syn-06",
    "list": "syn-06",
-   "auditId": "3d531b58-51ef-4547-9a86-0d6476102d41",
+   "auditId": "1462f660-6c8c-477e-bbe4-5bc69ce1a723",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3424,8 +3407,8 @@
     }
    },
    "cost": {
-    "usd": 0.03022895,
-    "ms": 20623,
+    "usd": 0.0253938,
+    "ms": 17882,
     "complete": true
    },
    "extraction": {
@@ -3444,7 +3427,7 @@
    "set": "d",
    "key": "syn-07",
    "list": "syn-07",
-   "auditId": "a8b78787-5d6f-4915-b34a-f464ee2e87ea",
+   "auditId": "787852bc-2edc-4ca2-bef2-8d38f1b87235",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3482,7 +3465,7 @@
       "C-051": "pass",
       "C-052": "pass",
       "C-053": "pass",
-      "C-060": "review",
+      "C-060": "pass",
       "C-061": "review",
       "C-070": "pass",
       "C-071": "pass",
@@ -3498,8 +3481,8 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
-      "pass": 34,
+      "review": 3,
+      "pass": 35,
       "not_applicable": 5
      },
      "checksRun": 43,
@@ -3508,7 +3491,13 @@
       "compared": 43,
       "agree": 39,
       "falseFail": [],
-      "missedFail": [],
+      "missedFail": [
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "pass"
+       }
+      ],
       "failToReview": [
        {
         "check": "C-003",
@@ -3517,11 +3506,6 @@
        },
        {
         "check": "C-005",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-060",
         "expected": "fail",
         "got": "review"
        }
@@ -3569,7 +3553,7 @@
       "C-051": "pass",
       "C-052": "pass",
       "C-053": "pass",
-      "C-060": "review",
+      "C-060": "pass",
       "C-061": "review",
       "C-070": "pass",
       "C-071": "pass",
@@ -3585,8 +3569,8 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 2,
-      "pass": 34,
+      "review": 1,
+      "pass": 35,
       "not_applicable": 5
      },
      "checksRun": 43,
@@ -3595,14 +3579,14 @@
       "compared": 43,
       "agree": 41,
       "falseFail": [],
-      "missedFail": [],
-      "failToReview": [
+      "missedFail": [
        {
         "check": "C-060",
         "expected": "fail",
-        "got": "review"
+        "got": "pass"
        }
       ],
+      "failToReview": [],
       "other": [
        {
         "check": "C-061",
@@ -3615,8 +3599,8 @@
     }
    },
    "cost": {
-    "usd": 0.02803185,
-    "ms": 20002,
+    "usd": 0.02516935,
+    "ms": 18292,
     "complete": true
    },
    "extraction": {
@@ -3637,7 +3621,7 @@
    "set": "d",
    "key": "syn-08",
    "list": "syn-08",
-   "auditId": "f8325f76-51c2-4686-9fcd-c689ad3b5fe6",
+   "auditId": "2e76e92b-0dc8-4098-83e6-163703de6dd6",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3785,8 +3769,8 @@
     }
    },
    "cost": {
-    "usd": 0.02757545,
-    "ms": 20678,
+    "usd": 0.02524645,
+    "ms": 19131,
     "complete": true
    },
    "extraction": {
@@ -3807,7 +3791,7 @@
    "set": "d",
    "key": "syn-09",
    "list": "syn-09",
-   "auditId": "08255f7e-8960-499d-9e25-91bb69e4fcb0",
+   "auditId": "d6204079-49fd-415e-afba-29f7193cdb22",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3960,30 +3944,27 @@
     }
    },
    "cost": {
-    "usd": 0.0251482,
-    "ms": 19210,
+    "usd": 0.025092549999999998,
+    "ms": 18052,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 84,
+     "right": 87,
      "total": 87
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": [
-     "item missing: Limousine [$275]",
-     "extra priced item: Limosusine [$275]"
-    ]
+    "misses": []
    }
   },
   {
    "set": "d",
    "key": "syn-10",
    "list": "syn-10",
-   "auditId": "6cdd941b-380d-4ef9-9968-9a244fdf27f9",
+   "auditId": "f6700f40-0ae9-4c70-a54e-dd7dc1161a1d",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4120,29 +4101,27 @@
     }
    },
    "cost": {
-    "usd": 0.0283247,
-    "ms": 22147,
+    "usd": 0.031312150000000004,
+    "ms": 21146,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 93,
+     "right": 94,
      "total": 94
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": [
-     "price Hearse: want Starting at $395 got price=null range=null"
-    ]
+    "misses": []
    }
   },
   {
    "set": "d",
    "key": "syn-11",
    "list": "syn-11",
-   "auditId": "ca32e960-c3b1-4fdb-b2f3-1989e0f76f34",
+   "auditId": "e62fd41b-cce8-4ce6-bac0-1c8a55c1d6f9",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4285,8 +4264,8 @@
     }
    },
    "cost": {
-    "usd": 0.026212950000000002,
-    "ms": 18286,
+    "usd": 0.027933,
+    "ms": 15554,
     "complete": true
    },
    "extraction": {
@@ -4299,7 +4278,8 @@
      "total": 8
     },
     "misses": [
-     "disclosure D-selection: want absent (source is a paraphrase; not an extraction fault if labelled by meaning)"
+     "disclosure D-selection: want absent (source is a paraphrase; not an extraction fault if labelled by meaning)",
+     "disclosure text not verbatim (D-selection): You only pay for what you pick. Some items may be needed because of laws or cemetary rules"
     ]
    }
   },
@@ -4307,7 +4287,7 @@
    "set": "d",
    "key": "syn-12",
    "list": "syn-12",
-   "auditId": "a3086286-2b0c-4a62-b4a7-3b24207fe598",
+   "auditId": "21c1c09e-0bfa-42b0-91cd-07536910352c",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4444,8 +4424,8 @@
     }
    },
    "cost": {
-    "usd": 0.0242005,
-    "ms": 16324,
+    "usd": 0.028492999999999997,
+    "ms": 20587,
     "complete": true
    },
    "extraction": {
@@ -4464,7 +4444,7 @@
    "set": "e",
    "key": "ftc-template",
    "list": "ftc",
-   "auditId": "08b7071e-b0f0-4d38-b806-a22399a8cc0c",
+   "auditId": "d2855fab-e663-43fd-a9ee-41c5911683a9",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -4536,8 +4516,8 @@
     }
    },
    "cost": {
-    "usd": 0.0304935,
-    "ms": 17776,
+    "usd": 0.030972,
+    "ms": 20528,
     "complete": true
    }
   }
