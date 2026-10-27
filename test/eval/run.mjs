@@ -26,6 +26,8 @@ const BASE = `http://127.0.0.1:${PORT}`;
 const ONLY = args.sets ? new Set(args.sets.split(',')) : null;
 const CAPS = { 'meta-api': Number(args['cap-meta-api'] ?? 1), 'open-weights': Number(args['cap-open-weights'] ?? 4) };
 const PRIVATE_DIR = join(CORPUS, 'eval');
+// Measured by extraction-variance.mjs, not by this run, so it is carried into EVAL.md as written.
+const VARIANCE_SECTION = join(ROOT, 'test/eval/variance/EVAL-section.md');
 const PUBLIC_RESULTS = join(ROOT, 'test/eval/results.json');
 const ENGINE_VERSION_NOTE = readFileSync(join(ROOT, 'src/rules/engine.ts'), 'utf8').match(/ENGINE_VERSION = '([^']+)'/)[1];
 const MODELS = { 'meta-api': 'Muse Spark 1.3 (Meta Model API)', 'open-weights': 'Muse Spark Open (Baseten)' };
@@ -297,6 +299,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
   }
   lines.push(
     '',
+    ...(existsSync(VARIANCE_SECTION) ? [readFileSync(VARIANCE_SECTION, 'utf8'), ''] : []),
     '## Off-label verdicts in the public sets',
     '',
     ...pub.flatMap((s) => {

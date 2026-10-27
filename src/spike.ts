@@ -2,8 +2,10 @@ import { Hono } from 'hono';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { isProvider } from './audit';
 import { chatJson, costUsd, ModelError, PROVIDER_CONFIG, SAM_PER_IMAGE_USD, sam, toDataUrl, type ContentPart, type Usage } from './models';
-import { SEMANTIC_EFFORT } from './pipeline';
+import { DISCLOSURE_IDS } from './extraction';
+import { extractFresh, SEMANTIC_EFFORT, type ExtractInput } from './pipeline';
 import { runChecks } from './rules/engine';
+import { buildCorpus, matchDisclosure } from './rules/text';
 import {
   parseSemantic,
   SEMANTIC_CHECK_IDS,
@@ -39,6 +41,9 @@ const SCHEMA = {
 
 const SYSTEM =
   'You read funeral home General Price Lists. Extract the document caption, provider name, effective date (as written), phone, and up to 20 priced line items (label, price in dollars, null if none). Copy text exactly. Use null when absent.';
+
+// Fixed so the stale-date check does not drift between runs.
+const EVAL_AUDIT_DATE = new Date('2026-10-26T00:00:00Z');
 
 export const spike = new Hono<{ Bindings: Env }>();
 
@@ -124,12 +129,59 @@ spike.post('/semantic-variance', async (c) => {
   return c.json({ promptVersion: SEMANTIC_PROMPT_VERSION, fixtureVerdicts: verdicts(parseSemantic(fixture)), samples });
 });
 
+// One fresh extraction of the uploaded pages (images, batched as an audit would be) or PDF, for
+// test/eval/extraction-variance.mjs. Reads and writes no cache. The provider must be the one this
+// Worker runs, so the driver's corpus guard can trust /dev/provider. Deterministic checks only:
+// the semantic step is not run, so those checks are absent from the reports.
+spike.post('/variance-extract', async (c) => {
+  const form = await c.req.formData().catch(() => null);
+  const provider = String(form?.get('provider') ?? '');
+  const files = (form?.getAll('file') ?? []).filter((f): f is File => f instanceof File);
+  if (!isProvider(provider) || !files.length) return c.json({ error: 'provider and file required' }, 400);
+  if (provider !== (c.env.MODEL_PROVIDER as string)) return c.json({ error: `this Worker runs ${c.env.MODEL_PROVIDER}` }, 409);
+  const pdf = files[0]!.type === 'application/pdf';
+  if (pdf && files.length !== 1) return c.json({ error: 'one PDF at a time' }, 400);
+  if (pdf && provider === 'open-weights') return c.json({ error: 'PDF not supported on open-weights yet' }, 400);
+  if ((await spendTodayUtc(c.env.DB)) >= Number(c.env.DAILY_BUDGET_USD)) return c.json({ error: 'daily budget reached' }, 429);
+
+  const input: ExtractInput = pdf
+    ? { kind: 'pdf', filename: files[0]!.name || 'document.pdf', bytes: await files[0]!.arrayBuffer() }
+    : { kind: 'images', images: await Promise.all(files.map(async (f) => ({ bytes: await f.arrayBuffer(), contentType: f.type }))) };
+
+  const lastId =
+    (await c.env.DB.prepare('SELECT COALESCE(MAX(id), 0) AS id FROM model_calls').first<{ id: number }>())?.id ?? 0;
+  const calls = () =>
+    c.env.DB.prepare("SELECT COALESCE(SUM(cost_usd), 0) AS usd, COALESCE(SUM(ms), 0) AS ms FROM model_calls WHERE purpose LIKE 'variance-extract/%' AND id > ?")
+      .bind(lastId)
+      .first<{ usd: number; ms: number }>();
+  try {
+    const extraction = await extractFresh(c.env, { provider, auditId: null, purpose: 'variance-extract' }, input);
+    const corpus = buildCorpus(extraction);
+    const disclosures = Object.fromEntries(
+      DISCLOSURE_IDS.map((id) => {
+        const m = matchDisclosure(corpus, ruleset, id);
+        return [id, { status: m.status, score: m.score }];
+      }),
+    );
+    const report = (mode: 'pdf' | 'images') => runChecks(extraction, ruleset, { auditDate: EVAL_AUDIT_DATE, input: mode });
+    const verdicts = (mode: 'pdf' | 'images') => {
+      const out: Record<string, string> = {};
+      const rank = { fail: 3, review: 2, pass: 1, not_applicable: 0 };
+      for (const f of report(mode).findings) if (!out[f.checkId] || rank[f.verdict] > rank[out[f.checkId] as keyof typeof rank]) out[f.checkId] = f.verdict;
+      return out;
+    };
+    return c.json({ extraction, disclosures, verdicts: { images: verdicts('images'), pdf: verdicts('pdf') }, cost: await calls() });
+  } catch (e) {
+    if (e instanceof ModelError) return c.json({ error: e.body.slice(0, 300), status: e.status, cost: await calls() }, 502);
+    return c.json({ error: e instanceof Error ? e.message.slice(0, 300) : 'unknown', cost: await calls() }, 502);
+  }
+});
+
 // test/eval/run.mjs refuses to upload a set unless this matches the set's declared provider.
 spike.get('/provider', (c) => c.json({ provider: c.env.MODEL_PROVIDER }));
 
 // Engine verdicts for a finished audit in both input modes, on a fixed audit date so the stale-date
 // check does not drift between eval runs, plus what the cached model results cost when first made.
-const EVAL_AUDIT_DATE = new Date('2026-10-26T00:00:00Z');
 
 spike.get('/eval/:id', async (c) => {
   const audit = await getAudit(c.env.DB, c.req.param('id'));

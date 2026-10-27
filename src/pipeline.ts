@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import type { AuditDocument, AuditStatus } from './audit';
+import type { AuditDocument, AuditStatus, Provider } from './audit';
 import {
   EXTRACTION_SCHEMA,
   ExtractionError,
@@ -59,8 +59,10 @@ const rejectsEffort = (e: unknown) => e instanceof ModelError && e.status === 40
 
 const ZERO_USAGE: Usage = { inputTokens: 0, outputTokens: 0, reasoningTokens: 0, cachedTokens: 0 };
 
-async function callExtractor(env: Env, audit: AuditRow, parts: ContentPart[]): Promise<GplExtraction> {
-  const { provider } = audit;
+// `purpose` names the model_calls rows; the variance route passes its own so those calls stay apart from audits.
+type ExtractCall = { provider: Provider; auditId: string | null; purpose: string };
+
+async function callExtractor(env: Env, { provider, auditId, purpose }: ExtractCall, parts: ContentPart[]): Promise<GplExtraction> {
   const model = PROVIDER_CONFIG[provider].model;
   for (;;) {
     await assertUnderBudget(env);
@@ -69,7 +71,7 @@ async function callExtractor(env: Env, audit: AuditRow, parts: ContentPart[]): P
     const t0 = Date.now();
     const record = (error: string | null, ms: number) =>
       recordModelCall(env.DB, {
-        auditId: audit.id, provider, model, purpose: `extract/${used}`, usage, costUsd: costUsd(provider, usage), ms, error,
+        auditId, provider, model, purpose: `${purpose}/${used}`, usage, costUsd: costUsd(provider, usage), ms, error,
       });
     try {
       const out = await chatJson(env, provider, {
@@ -109,19 +111,30 @@ async function load(env: Env, key: string) {
   return object.arrayBuffer();
 }
 
+export type ExtractInput =
+  | { kind: 'pdf'; filename: string; bytes: ArrayBuffer }
+  | { kind: 'images'; images: { bytes: ArrayBuffer; contentType: string }[] };
+
+async function loadInput(env: Env, audit: AuditRow, doc: AuditDocument): Promise<ExtractInput> {
+  if (doc.kind === 'pdf') return { kind: 'pdf', filename: audit.filename ?? 'document.pdf', bytes: await load(env, doc.key) };
+  const images = [];
+  for (const page of doc.pages) images.push({ bytes: await load(env, page.key), contentType: page.contentType });
+  return { kind: 'images', images };
+}
+
 // A provider that takes fewer images than the list has pages gets the pages in batches, each sent
 // as its own document numbered from page 1; mergeExtractions maps the page numbers back.
-async function documentBatches(env: Env, audit: AuditRow, doc: AuditDocument): Promise<{ firstPage: number; parts: ContentPart[] }[]> {
-  if (doc.kind === 'pdf') {
-    const url = toDataUrl(await load(env, doc.key), 'application/pdf');
-    return [{ firstPage: 1, parts: [{ type: 'text', text: TRANSCRIBE }, { type: 'file', file: { filename: audit.filename ?? 'document.pdf', file_data: url } }] }];
+function documentBatches(provider: Provider, input: ExtractInput): { firstPage: number; parts: ContentPart[] }[] {
+  if (input.kind === 'pdf') {
+    const url = toDataUrl(input.bytes, 'application/pdf');
+    return [{ firstPage: 1, parts: [{ type: 'text', text: TRANSCRIBE }, { type: 'file', file: { filename: input.filename, file_data: url } }] }];
   }
   const batches = [];
   let next = 0;
-  for (const size of pageBatches(doc.pages.length, PROVIDER_CONFIG[audit.provider].maxImages)) {
+  for (const size of pageBatches(input.images.length, PROVIDER_CONFIG[provider].maxImages)) {
     const parts: ContentPart[] = [{ type: 'text', text: pagesInstruction(size) }];
-    for (const page of doc.pages.slice(next, next + size)) {
-      parts.push({ type: 'image_url', image_url: { url: toDataUrl(await load(env, page.key), page.contentType) } });
+    for (const page of input.images.slice(next, next + size)) {
+      parts.push({ type: 'image_url', image_url: { url: toDataUrl(page.bytes, page.contentType) } });
     }
     batches.push({ firstPage: next + 1, parts });
     next += size;
@@ -129,14 +142,19 @@ async function documentBatches(env: Env, audit: AuditRow, doc: AuditDocument): P
   return batches;
 }
 
+// Always calls the model; the cache is the caller's business.
+export async function extractFresh(env: Env, call: ExtractCall, input: ExtractInput): Promise<GplExtraction> {
+  const batches = documentBatches(call.provider, input);
+  const extracted = await Promise.all(batches.map(async (b) => ({ firstPage: b.firstPage, x: await callExtractor(env, call, b.parts) })));
+  return mergeExtractions(extracted);
+}
+
 async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
   const doc = auditDocument(audit);
   if (doc.kind === 'pdf' && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
   const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
   if (cached) return cached;
-  const batches = await documentBatches(env, audit, doc);
-  const extracted = await Promise.all(batches.map(async (b) => ({ firstPage: b.firstPage, x: await callExtractor(env, audit, b.parts) })));
-  const extraction = mergeExtractions(extracted);
+  const extraction = await extractFresh(env, { provider: audit.provider, auditId: audit.id, purpose: 'extract' }, await loadInput(env, audit, doc));
   await putExtraction(env.DB, audit.doc_sha256, audit.provider, extraction);
   return extraction;
 }
