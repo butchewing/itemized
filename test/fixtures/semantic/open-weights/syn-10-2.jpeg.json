@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "id": "C-011",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "D-selection is not present on this list, so placement of that disclosure does not apply."
+  },
+  {
+   "id": "C-021",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No separately priced basic services fee with includesText appears on this list, so the adequacy of that list is not evaluated here."
+  },
+  {
+   "id": "C-025",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No additional mandatory fee for services, facilities or overhead was printed on the list."
+  },
+  {
+   "id": "C-031",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "D-embalming is not present on this list, so placement next to the embalming price does not apply."
+  },
+  {
+   "id": "C-032",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list contains no statement that embalming is required for direct cremation, immediate burial, or closed-casket services."
+  },
+  {
+   "id": "C-045",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "D-alt-container and the direct cremation prices both appear on page 1, which counts as immediate conjunction for this check."
+  },
+  {
+   "id": "C-046",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The direct cremation options describe fiberboard and wood box alternatives and a purchaser-provided container, with no text stating a casket is required."
+  },
+  {
+   "id": "C-047",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The direct cremation includesText states the charge includes cremation, and no separate cash advance for the crematory fee is listed."
+  },
+  {
+   "id": "C-075",
+   "applies": true,
+   "concern": true,
+   "quote": "Includes basic services, embalming, viewing, funeral ceremony, hearse, and a 20 gauge steel casket. Each item is also available separately at the prices above.",
+   "page": 1,
+   "explanation": "The Traditional Funeral Package describes embalming, viewing, funeral ceremony, hearse and casket as included, but those services have no separate line items with prices elsewhere on the list."
+  },
+  {
+   "id": "C-080",
+   "applies": true,
+   "concern": true,
+   "quote": "Includes basic services, embalming, viewing, funeral ceremony, hearse, and a 20 gauge steel casket. Each item is also available separately at the prices above.",
+   "page": 1,
+   "explanation": "The Traditional Funeral Package combines multiple goods and services at one price, and its components do not appear as separately priced itemized entries."
+  },
+  {
+   "id": "C-081",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list contains no assertion that any purchase is required by law, cemetery or crematory."
+  },
+  {
+   "id": "C-082",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No text about delaying decomposition or protecting the body from gravesite substances appears on the list."
+  },
+  {
+   "id": "C-083",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No wording was found that undercuts or contradicts the required disclosures present on the list."
+  }
+ ]
+}

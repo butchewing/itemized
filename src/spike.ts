@@ -139,13 +139,17 @@ spike.get('/eval/:id', async (c) => {
   const semantic = await getSemantic(c.env.DB, audit.doc_sha256, audit.provider);
   const report = (input: 'pdf' | 'images') => runChecks(x, ruleset, { auditDate: EVAL_AUDIT_DATE, semantic, input });
 
-  // The newest successful call of each kind for this document and provider made the cached result.
+  // The audit behind the newest successful call of each kind for this document and provider made the
+  // cached result; its successful calls of that kind are summed, since a batched extraction makes several.
   const firstRun = (purpose: string) =>
     c.env.DB.prepare(
-      `SELECT m.cost_usd AS usd, m.ms FROM model_calls m JOIN audits a ON a.id = m.audit_id
-       WHERE a.doc_sha256 = ? AND a.provider = ? AND m.ok = 1 AND m.purpose LIKE ? ORDER BY m.id DESC LIMIT 1`,
+      `SELECT SUM(m.cost_usd) AS usd, SUM(m.ms) AS ms FROM model_calls m
+       WHERE m.ok = 1 AND m.purpose LIKE ?1 AND m.audit_id = (
+         SELECT m2.audit_id FROM model_calls m2 JOIN audits a ON a.id = m2.audit_id
+         WHERE a.doc_sha256 = ?2 AND a.provider = ?3 AND m2.ok = 1 AND m2.purpose LIKE ?1 ORDER BY m2.id DESC LIMIT 1)
+       HAVING COUNT(*) > 0`,
     )
-      .bind(audit.doc_sha256, audit.provider, `${purpose}/%`)
+      .bind(`${purpose}/%`, audit.doc_sha256, audit.provider)
       .first<{ usd: number; ms: number }>();
   const [extract, judge] = await Promise.all([firstRun('extract'), firstRun('semantic')]);
   return c.json({

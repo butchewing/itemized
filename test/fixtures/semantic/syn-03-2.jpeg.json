@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "The list does not contain a D-selection disclosure, so placement of that disclosure cannot be evaluated.",
+   "id": "C-011",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "The list has no priced basic services item, so adequacy of its includesText cannot be evaluated.",
+   "id": "C-021",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list shows no basic services fee and no other mandatory fee for services, facilities or overhead.",
+   "id": "C-025",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "The list does not contain a D-embalming disclosure, so placement next to an embalming price cannot be evaluated.",
+   "id": "C-031",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list contains no statement about embalming being required.",
+   "id": "C-032",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The alternative-container disclosure and the direct cremation prices both appear on page 1, so they are on the same page.",
+   "id": "C-045",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list offers direct cremation with purchaser-provided container and does not state a casket is required.",
+   "id": "C-046",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The direct cremation description mentions cremation, but no separate crematory cash-advance charge appears on the list.",
+   "id": "C-047",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The direct cremation description mentions basic services, removal, transportation and other services that have no separate line item with a price on the list.",
+   "id": "C-075",
+   "page": 1,
+   "quote": "Our charge for a direct cremation (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; transportation to crematory; necessary authorizations and cremation."
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "The list contains only required direct cremation and immediate burial single-price items and individual merchandise, not an optional package combination.",
+   "id": "C-080",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list contains no assertion that any purchase is required by law, cemetery or crematory beyond prescribed disclosure wording.",
+   "id": "C-081",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list contains no claims about delaying decomposition or protecting the body.",
+   "id": "C-082",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No other text undercuts a required disclosure, and the unfilled template blank alone is not a concern for this check.",
+   "id": "C-083",
+   "page": null,
+   "quote": null
+  }
+ ]
+}

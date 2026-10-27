@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "id": "C-011",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "D-selection is not present in the disclosures array, so the placement requirement does not apply to this list."
+  },
+  {
+   "id": "C-021",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No item with a basic services fee is priced on this list, so the includesText adequacy check is not triggered."
+  },
+  {
+   "id": "C-025",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list does not show a second mandatory fee for facilities, staff or overhead beyond the basic services component built into the other charges."
+  },
+  {
+   "id": "C-031",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "D-embalming is not present in the disclosures, so the adjacency check for the embalming disclosure does not apply."
+  },
+  {
+   "id": "C-032",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list contains no text stating that embalming is required for direct cremation, immediate burial, or closed-casket services."
+  },
+  {
+   "id": "C-045",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The alternative-container disclosure and the direct cremation price range both appear on page 1, which counts as immediate conjunction under the same-page rule."
+  },
+  {
+   "id": "C-046",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The direct cremation options include a choice with a container provided by the purchaser, and no text says a casket is required for cremation."
+  },
+  {
+   "id": "C-047",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The direct cremation includesText states the charge includes cremation, and no separate cash advance line for a crematory fee is listed to create ambiguity."
+  },
+  {
+   "id": "C-075",
+   "applies": true,
+   "concern": true,
+   "quote": null,
+   "page": null,
+   "explanation": "Forwarding remains is one of the four items the FTC tip sheet treats as expected, and no line item for forwarding remains appears on the list."
+  },
+  {
+   "id": "C-080",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list contains only receiving, direct cremation, immediate burial and other merchandise; no optional package combining multiple goods and services at a single price is offered."
+  },
+  {
+   "id": "C-081",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No text on the list asserts that a purchase is required by law, a cemetery or a crematory."
+  },
+  {
+   "id": "C-082",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list contains no claims about delaying decomposition or protecting a body from gravesite substances."
+  },
+  {
+   "id": "C-083",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No other wording contradicts or undercuts the disclosed alternative-container statement, and the disclosure is presented on page 1 with the related prices."
+  }
+ ]
+}

@@ -82,11 +82,11 @@
   },
   {
    "category": "transfer",
-   "label": "Transfer of Remains to the Funeral Home within a 25 mile radius; beyond this radius we charge $3.50 per mile",
+   "label": "Transfer of Remains to the Funeral Home",
    "price": 495,
    "priceRange": null,
    "priceText": "$495",
-   "includesText": null,
+   "includesText": "within a 25 mile radius; beyond this radius we charge $3.50 per mile",
    "page": 1
   },
   {
@@ -152,7 +152,7 @@
     11950
    ],
    "priceText": "$995 to $11,950",
-   "includesText": null,
+   "includesText": "A complete price list will be provided at the funeral home.",
    "page": 1
   },
   {
@@ -173,7 +173,7 @@
     6800
    ],
    "priceText": "$1,095 to $6,800",
-   "includesText": null,
+   "includesText": "A complete price list will be provided at the funeral home.",
    "page": 1
   }
  ]

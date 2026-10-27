@@ -24,6 +24,11 @@
    "page": 1
   },
   {
+   "id": "D-alt-container",
+   "text": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are a fiberboard container or an unfinished wood box.",
+   "page": 2
+  },
+  {
    "id": "D-casket-list",
    "text": "A complete price list will be provided at the funeral home.",
    "page": 2
@@ -31,11 +36,6 @@
   {
    "id": "D-obc-list",
    "text": "A complete price list will be provided at the funeral home.",
-   "page": 2
-  },
-  {
-   "id": "D-alt-container",
-   "text": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are a fiberboard container or an unfinished wood box.",
    "page": 2
   }
  ],
@@ -172,7 +172,7 @@
    "price": null,
    "priceRange": null,
    "priceText": null,
-   "includesText": "Our charge for a direct cremation (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; transportation to crematory; necessary authorizations [and cremation] °.",
+   "includesText": "Our charge for a direct cremation (without ceremony) includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; transportation to crematory; necessary authorizations [and cremation]°.",
    "page": 2
   },
   {

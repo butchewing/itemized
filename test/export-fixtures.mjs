@@ -12,9 +12,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const D1_DIR = join(ROOT, '.wrangler/state/v3/d1/miniflare-D1DatabaseObject');
 const OUT = join(ROOT, 'test/fixtures/extractions');
 const SEMANTIC_OUT = join(ROOT, 'test/fixtures/semantic');
+const PROMPT_VERSION = readFileSync(join(ROOT, 'src/extraction.ts'), 'utf8').match(/PROMPT_VERSION = '([^']+)'/)[1];
 const SEMANTIC_PROMPT_VERSION = readFileSync(join(ROOT, 'src/rules/semantic.ts'), 'utf8').match(/SEMANTIC_PROMPT_VERSION = '([^']+)'/)[1];
 const ALLOWED = /^(syn-\d{2}(-\d)?\.(pdf|jpeg)|ftc-sample1-gpl-template\.pdf)$/;
 const SUBDIR = { 'meta-api': '', 'open-weights': 'open-weights' };
+
+// A multi-page photo upload is named after its first page, so only single-file audits match a fixture name.
+const SINGLE_DOCUMENT = '(a.pages IS NULL OR json_array_length(a.pages) = 1)';
 
 const dbFile = readdirSync(D1_DIR).find((f) => f.endsWith('.sqlite') && f !== 'metadata.sqlite');
 if (!dbFile) throw new Error('no local D1 database; run wrangler dev once');
@@ -23,9 +27,9 @@ const rows = db
   .prepare(
     `SELECT DISTINCT a.filename, e.provider, e.json FROM extractions e
      JOIN audits a ON a.doc_sha256 = e.doc_sha256 AND a.provider = e.provider
-     WHERE e.prompt_version = 'extract-1' ORDER BY a.filename, e.provider`,
+     WHERE e.prompt_version = ? AND ${SINGLE_DOCUMENT} ORDER BY a.filename, e.provider`,
   )
-  .all();
+  .all(PROMPT_VERSION);
 
 const written = new Set();
 for (const { filename, provider, json } of rows) {
@@ -43,9 +47,9 @@ const semanticRows = db
   .prepare(
     `SELECT DISTINCT a.filename, s.provider, s.json FROM semantic_results s
      JOIN audits a ON a.doc_sha256 = s.doc_sha256 AND a.provider = s.provider
-     WHERE s.prompt_version = ? AND s.extraction_prompt_version = 'extract-1' ORDER BY a.filename, s.provider`,
+     WHERE s.prompt_version = ? AND s.extraction_prompt_version = ? AND ${SINGLE_DOCUMENT} ORDER BY a.filename, s.provider`,
   )
-  .all(SEMANTIC_PROMPT_VERSION);
+  .all(SEMANTIC_PROMPT_VERSION, PROMPT_VERSION);
 for (const { filename, provider, json } of semanticRows) {
   if (!ALLOWED.test(filename ?? '') || !(provider in SUBDIR)) continue;
   const dir = join(SEMANTIC_OUT, SUBDIR[provider]);

@@ -1,6 +1,14 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import type { AuditDocument, AuditStatus } from './audit';
-import { EXTRACTION_SCHEMA, ExtractionError, parseExtraction, SYSTEM_PROMPT, type GplExtraction } from './extraction';
+import {
+  EXTRACTION_SCHEMA,
+  ExtractionError,
+  mergeExtractions,
+  pageBatches,
+  parseExtraction,
+  SYSTEM_PROMPT,
+  type GplExtraction,
+} from './extraction';
 import {
   chatJson,
   costUsd,
@@ -101,16 +109,24 @@ async function load(env: Env, key: string) {
   return object.arrayBuffer();
 }
 
-async function documentParts(env: Env, audit: AuditRow, doc: AuditDocument): Promise<ContentPart[]> {
+// A provider that takes fewer images than the list has pages gets the pages in batches, each sent
+// as its own document numbered from page 1; mergeExtractions maps the page numbers back.
+async function documentBatches(env: Env, audit: AuditRow, doc: AuditDocument): Promise<{ firstPage: number; parts: ContentPart[] }[]> {
   if (doc.kind === 'pdf') {
     const url = toDataUrl(await load(env, doc.key), 'application/pdf');
-    return [{ type: 'text', text: TRANSCRIBE }, { type: 'file', file: { filename: audit.filename ?? 'document.pdf', file_data: url } }];
+    return [{ firstPage: 1, parts: [{ type: 'text', text: TRANSCRIBE }, { type: 'file', file: { filename: audit.filename ?? 'document.pdf', file_data: url } }] }];
   }
-  const parts: ContentPart[] = [{ type: 'text', text: pagesInstruction(doc.pages.length) }];
-  for (const page of doc.pages) {
-    parts.push({ type: 'image_url', image_url: { url: toDataUrl(await load(env, page.key), page.contentType) } });
+  const batches = [];
+  let next = 0;
+  for (const size of pageBatches(doc.pages.length, PROVIDER_CONFIG[audit.provider].maxImages)) {
+    const parts: ContentPart[] = [{ type: 'text', text: pagesInstruction(size) }];
+    for (const page of doc.pages.slice(next, next + size)) {
+      parts.push({ type: 'image_url', image_url: { url: toDataUrl(await load(env, page.key), page.contentType) } });
+    }
+    batches.push({ firstPage: next + 1, parts });
+    next += size;
   }
-  return parts;
+  return batches;
 }
 
 async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
@@ -118,7 +134,9 @@ async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
   if (doc.kind === 'pdf' && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
   const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
   if (cached) return cached;
-  const extraction = await callExtractor(env, audit, await documentParts(env, audit, doc));
+  const batches = await documentBatches(env, audit, doc);
+  const extracted = await Promise.all(batches.map(async (b) => ({ firstPage: b.firstPage, x: await callExtractor(env, audit, b.parts) })));
+  const extraction = mergeExtractions(extracted);
   await putExtraction(env.DB, audit.doc_sha256, audit.provider, extraction);
   return extraction;
 }

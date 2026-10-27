@@ -1,5 +1,5 @@
 import type { DisclosureId, ExtractedItem, GplExtraction, ItemCategory } from '../extraction';
-import { normalize } from './text';
+import { normalize, splitLabel } from './text';
 import type { DisclosureMatch, Ruleset } from './types';
 
 export type ConditionId = keyof Ruleset['conditions'];
@@ -38,13 +38,16 @@ const CASKET = /\bcasket\b/;
 // Purchaser wording the PURCHASER pattern missed ("customer-furnished container") must not read as an alternative container.
 const PURCHASER_HINT = /\b(purchaser|family|customer|client|own|you|your)\b/;
 
+// Both read the label's head: a description folded into the label is not part of its name.
+const labelHead = (i: ExtractedItem) => normalize(splitLabel(i.label).head);
+
 export function isOptionHeader(i: ExtractedItem): boolean {
-  const l = normalize(i.label);
+  const l = labelHead(i);
   return i.priceRange !== null || /^(direct cremation|immediate burial)( without ceremony)?$/.test(l);
 }
 
 export function classifyOption(i: ExtractedItem): OptionClass {
-  const l = normalize(i.label);
+  const l = labelHead(i);
   if (PURCHASER.test(l)) return 'purchaser';
   if (PURCHASER_HINT.test(l)) return 'unknown';
   if (CONTAINER_WORDS.test(l) && !CASKET.test(l)) return 'alt_container';
@@ -54,6 +57,30 @@ export function classifyOption(i: ExtractedItem): OptionClass {
 
 export const optionsOf = (x: GplExtraction, c: 'direct_cremation' | 'immediate_burial') =>
   itemsOf(x, c).filter((i) => !isOptionHeader(i));
+
+// An option with nothing printed for its price, listed under a "Direct cremation" or "Immediate
+// burial" line that has one price, reads as included at that price ("1. Cardboard box" under a
+// priced Direct Cremation), in the spirit of decision 2026-10-20. Only a clear structure inherits:
+// one unpriced option, numbered or bulleted, right under the priced line on the same page. A looser
+// structure under a priced line is 'maybe_inherited' (review). A printed blank ("$____") never inherits.
+export type OptionPrice = { state: PriceState | 'inherited' | 'maybe_inherited'; parent?: ExtractedItem };
+const LIST_MARKER = /^\s*(?:\d{1,2}|[a-z])[.)]\s|^\s*[-•*]\s/i;
+
+export function optionPrice(x: GplExtraction, o: ExtractedItem): OptionPrice {
+  const state = priceState(o);
+  if (state !== 'missing' || o.priceText !== null) return { state };
+  const unpricedSibling = (i: ExtractedItem | undefined) => i?.category === o.category && !isPriced(i) && i.priceText === null;
+  const at = x.items.indexOf(o);
+  let start = at;
+  while (unpricedSibling(x.items[start - 1])) start--;
+  let end = at;
+  while (unpricedSibling(x.items[end + 1])) end++;
+  const parent = x.items[start - 1];
+  if (!parent || parent.category !== o.category || parent.price === null || parent.priceRange !== null) return { state };
+  const run = x.items.slice(start, end + 1);
+  const clear = isOptionHeader(parent) && run.length === 1 && o.page === parent.page && LIST_MARKER.test(o.label);
+  return { state: clear ? 'inherited' : 'maybe_inherited', parent };
+}
 
 // Decision 2026-10-20: a direct cremation price plus a separately priced alternative container passes C-041.
 const SOLD_CONTAINER = /\b(alternative container|cremation container|fiberboard|cardboard|corrugated|composition|pressboard|unfinished wood|wood box)\b/;

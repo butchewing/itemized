@@ -1,7 +1,7 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 
 // Bump on any change to the prompt or schema: it is part of the extraction cache key.
-export const PROMPT_VERSION = 'extract-1';
+export const PROMPT_VERSION = 'extract-2';
 
 export const REQUIRED_ITEM_IDS = [
   'forwarding',
@@ -114,6 +114,7 @@ Rules:
 - Prices exactly as printed. "price" is a single dollar amount as a number. For a range such as "$995 to $11,950", set price to null and priceRange to [995, 11950]. For "Call for pricing", "Varies" or similar, both are null. "priceText" is the price string verbatim as printed, or null when no price text is printed.
 - "caption" is the document title as printed (for example "General Price List"), even if it is wrong. "effectiveDate.raw" is the effective-date text as printed; "iso" is YYYY-MM-DD or null if it cannot be read as a full date.
 - "address" is the street address lines joined with ", ". "phone" is the provider telephone as printed.
+- The provider name, address and phone may appear only in a logo, letterhead, header or footer graphic. Transcribe them from there.
 - "items" has one entry per priced or named line item, in document order, including sub-options (such as "A. Direct cremation with container provided by the purchaser") and other merchandise. Sub-options use the category of the item they belong to. Items not matching a required category use "other". "includesText" is the verbatim "Our services include..." or "Our charge includes..." paragraph attached to the item, else null.
 - Required item categories:
 ${itemGuide}
@@ -187,5 +188,30 @@ export function parseExtraction(json: unknown): GplExtraction {
         page: page(it.page, `items[${i}].page`),
       };
     }),
+  };
+}
+
+// Sizes of page batches of at most `max` pages, as even as possible: 10 pages at 8 become 5 + 5.
+export function pageBatches(pages: number, max: number): number[] {
+  const n = Math.ceil(pages / max);
+  return Array.from({ length: n }, (_, i) => Math.floor(pages / n) + (i < pages % n ? 1 : 0));
+}
+
+// Each batch was transcribed as its own document starting at page 1; `firstPage` maps it back.
+export type ExtractionBatch = { firstPage: number; x: GplExtraction };
+
+export function mergeExtractions(batches: readonly ExtractionBatch[]): GplExtraction {
+  const xs = batches.map((b) => b.x);
+  const first = <K extends 'caption' | 'providerName' | 'address' | 'phone' | 'effectiveDate'>(k: K) =>
+    xs.find((x) => x[k] !== null)?.[k] ?? null;
+  const shift = <T extends { page: number }>(b: ExtractionBatch, t: T): T => ({ ...t, page: t.page + b.firstPage - 1 });
+  return {
+    caption: first('caption'),
+    providerName: first('providerName'),
+    address: first('address'),
+    phone: first('phone'),
+    effectiveDate: first('effectiveDate'),
+    disclosures: batches.flatMap((b) => b.x.disclosures.map((d) => shift(b, d))),
+    items: batches.flatMap((b) => b.x.items.map((i) => shift(b, i))),
   };
 }

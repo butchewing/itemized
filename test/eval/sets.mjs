@@ -12,8 +12,8 @@ export const CORPUS_PAGES = join(CORPUS, 'eval/pages');
 
 // Real lists may only go to this provider (PLAN.md "Data handling", decided 2026-10-26).
 export const CORPUS_PROVIDER = 'open-weights';
-// PROVIDER_CONFIG['open-weights'].maxImages; uploads with more pages are rejected.
-export const OPEN_WEIGHTS_MAX_IMAGES = 8;
+// MAX_PAGES in src/audit.ts; uploads with more pages are rejected.
+export const MAX_PAGES = 10;
 export const PHOTO_LISTS = ['syn-01', 'syn-03', 'syn-09', 'syn-10'];
 
 export const isCorpusPath = (p) => {

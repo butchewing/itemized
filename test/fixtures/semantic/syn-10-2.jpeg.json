@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No D-selection disclosure text is present in the disclosures array, so placement cannot be assessed.",
+   "id": "C-011",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No basic services item with a price is present in the items, so adequacy of its includesText cannot be assessed.",
+   "id": "C-021",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list shows no additional mandatory fee for services, facilities or overhead beyond the basic services concept.",
+   "id": "C-025",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No D-embalming disclosure is present in the disclosures array.",
+   "id": "C-031",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The list states that state law requires embalming before any cremation by the firm, which includes direct cremation.",
+   "id": "C-032",
+   "page": 1,
+   "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "Both the alternative-container disclosure and the direct cremation prices are on page 1, which counts as correctly placed.",
+   "id": "C-045",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text states that a casket is required for direct cremation; the list offers purchaser-provided container and alternative containers.",
+   "id": "C-046",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The list does not show a crematory cash-advance charge, so there is no affirmative showing of double-billing or ambiguity.",
+   "id": "C-047",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The package description lists basic services, embalming, viewing, ceremony, hearse and casket, none of which have their own itemized lines with prices.",
+   "id": "C-075",
+   "page": 1,
+   "quote": "Includes basic services, embalming, viewing, funeral ceremony, hearse, and a 20 gauge steel casket. Each item is also available separately at the prices above."
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The Traditional Funeral Package combines multiple services and a casket at one price, but those components do not appear as separate itemized prices.",
+   "id": "C-080",
+   "page": 1,
+   "quote": "Includes basic services, embalming, viewing, funeral ceremony, hearse, and a 20 gauge steel casket. Each item is also available separately at the prices above."
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The list asserts that state law requires embalming before any cremation performed by the firm.",
+   "id": "C-081",
+   "page": 1,
+   "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The list claims sealed burial vaults protect from water and the elements for generations.",
+   "id": "C-082",
+   "page": 1,
+   "quote": "Our sealed burial vaults protect your loved one from water and the elements for generations to come."
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The statement that state law requires embalming before any cremation undercuts the required message that embalming is usually not required by law.",
+   "id": "C-083",
+   "page": 1,
+   "quote": "Please note: state law requires embalming before any cremation performed by our firm."
+  }
+ ]
+}

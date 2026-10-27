@@ -3,7 +3,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "D-selection is on page 1, the same page as the start of the itemized prices, so placement counts as correct.",
+   "explanation": "D-selection is on page 1 and itemized prices start on page 1, so same-page placement counts as correct.",
    "id": "C-011",
    "page": null,
    "quote": null
@@ -11,7 +11,7 @@
   {
    "applies": false,
    "concern": false,
-   "explanation": "The basic services item is priced at $2,195 but has no includesText, so the condition for reviewing the adequacy of the list is not met.",
+   "explanation": "The basic services line is priced at $2,195 but has no includesText, so the condition requiring includesText is not met.",
    "id": "C-021",
    "page": null,
    "quote": null
@@ -19,7 +19,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "The list shows only the Basic Services of Funeral Director and Staff and Overhead as a mandatory overhead charge, with no other mandatory facilities or staff fee.",
+   "explanation": "The list shows only the Basic Services of Funeral Director and Staff and Overhead as a mandatory overhead fee, with no second staff or facilities fee.",
    "id": "C-025",
    "page": null,
    "quote": null
@@ -27,7 +27,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "D-embalming and the $795 Embalming price are both on page 1, so the disclosure is on the same page as the price.",
+   "explanation": "D-embalming is on page 1 and the Embalming $795 price is on page 1, so same-page placement counts as correct.",
    "id": "C-031",
    "page": null,
    "quote": null
@@ -35,7 +35,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No text states that embalming is required for direct cremation, immediate burial, or a closed-casket funeral without viewing.",
+   "explanation": "No text states that embalming is required for direct cremation, immediate burial, or closed-casket service; only the standard embalming disclosure appears.",
    "id": "C-032",
    "page": null,
    "quote": null
@@ -43,7 +43,7 @@
   {
    "applies": false,
    "concern": false,
-   "explanation": "No D-alt-container disclosure is printed on the list, so the placement condition is not met.",
+   "explanation": "No D-alt-container disclosure is transcribed in the disclosures array.",
    "id": "C-045",
    "page": null,
    "quote": null
@@ -51,7 +51,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "Direct cremation is offered with options including a purchaser-provided container, and no text says a casket is required.",
+   "explanation": "Direct cremation is offered with an option using a container provided by the purchaser, and no text says a casket is required.",
    "id": "C-046",
    "page": null,
    "quote": null
@@ -59,7 +59,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "The direct cremation description mentions transportation to crematory and cremation but lists no separate crematory cash advance, so no double-billing is shown.",
+   "explanation": "The direct cremation includes text lists transportation to crematory and cremation, and no cash-advance crematory fee is shown to evaluate.",
    "id": "C-047",
    "page": null,
    "quote": null
@@ -67,7 +67,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "Forwarding, receiving, direct cremation, and immediate burial each have their own priced lines, and no other offered goods or services lack a price.",
+   "explanation": "Forwarding, receiving, direct cremation and immediate burial each have their own priced lines, and no goods or services appear only inside a package or description.",
    "id": "C-075",
    "page": null,
    "quote": null
@@ -75,7 +75,7 @@
   {
    "applies": false,
    "concern": false,
-   "explanation": "The list contains only required itemized offerings like forwarding, receiving, direct cremation, and immediate burial, with no optional package combinations.",
+   "explanation": "No optional combination package is offered; forwarding, receiving, direct cremation and immediate burial are not treated as packages.",
    "id": "C-080",
    "page": null,
    "quote": null
@@ -83,7 +83,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No text asserts that law, a cemetery, or a crematory requires a purchase; the only law language is the required not-required statements.",
+   "explanation": "No text asserts that law, a cemetery, or a crematory requires a purchase beyond the wording of the required disclosures.",
    "id": "C-081",
    "page": null,
    "quote": null
@@ -91,7 +91,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No text claims that goods or services delay decomposition long-term or protect the body from gravesite substances.",
+   "explanation": "No text claims that a product delays decomposition long-term or protects the body from gravesite substances.",
    "id": "C-082",
    "page": null,
    "quote": null
@@ -99,7 +99,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No other wording undercuts a required disclosure, and no disclosure is shown printed in a way that is hard to notice.",
+   "explanation": "No other wording undercuts a required disclosure, and the transcribed disclosures use standard wording.",
    "id": "C-083",
    "page": null,
    "quote": null

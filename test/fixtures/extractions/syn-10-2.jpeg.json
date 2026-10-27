@@ -14,6 +14,16 @@
    "id": "unknown",
    "text": "Please note: state law requires embalming before any cremation performed by our firm.",
    "page": 1
+  },
+  {
+   "id": "unknown",
+   "text": "Our sealed burial vaults protect your loved one from water and the elements for generations to come.",
+   "page": 1
+  },
+  {
+   "id": "unknown",
+   "text": "Includes basic services, embalming, viewing, funeral ceremony, hearse, and a 20 gauge steel casket. Each item is also available separately at the prices above.",
+   "page": 1
   }
  ],
  "items": [
@@ -137,7 +147,7 @@
    "price": 8995,
    "priceRange": null,
    "priceText": "$8,995",
-   "includesText": "Includes basic services, embalming, viewing, funeral ceremony, hearse, and a 20 gauge steel casket. Each item is also available separately at the prices above.",
+   "includesText": null,
    "page": 1
   }
  ]

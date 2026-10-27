@@ -2,7 +2,7 @@ import ruleset from '../../prep/rules/ftc-453@2026.1.json';
 import type { GplExtraction } from '../extraction';
 import { CHECKS, type CheckContext, type DeterministicCheckId } from './checks';
 import { itemsOf } from './conditions';
-import { isDescription, normalize } from './text';
+import { descriptionOf, normalize } from './text';
 import type { Evidence, Outcome } from './types';
 
 // Bump on any change to the prompt or schema: it is part of the semantic cache key.
@@ -125,7 +125,7 @@ const yesNo = (b: boolean): Applicability => (b ? 'yes' : 'no');
 // paraphrased or unfilled disclosure as having no placement to judge.
 const APPLIES: Record<SemanticCheckId, (ctx: CheckContext) => Applicability> = {
   'C-011': (ctx) => yesNo(metDet(ctx, 'C-010')),
-  'C-021': (ctx) => yesNo(ctx.cond.basic_services_priced && itemsOf(ctx.x, 'basic_services').some((i) => isDescription(i.includesText, ctx.ruleset))),
+  'C-021': (ctx) => yesNo(ctx.cond.basic_services_priced && itemsOf(ctx.x, 'basic_services').some((i) => descriptionOf(i, ctx.ruleset) !== null)),
   'C-025': () => 'yes',
   'C-031': (ctx) => yesNo(metDet(ctx, 'C-030')),
   'C-032': () => 'yes',

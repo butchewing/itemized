@@ -37,44 +37,43 @@ describe('combinedSha256', () => {
 
 describe('parseUpload', () => {
   it('accepts one PDF', () => {
-    expect(parseUpload([pdf()], 10)).toMatchObject({ kind: 'pdf' });
+    expect(parseUpload([pdf()])).toMatchObject({ kind: 'pdf' });
   });
 
   it('accepts page images in the order given', () => {
     const files = [jpeg(1), file('p2.png', 'image/png'), file('p3.webp', 'image/webp')];
-    const out = parseUpload(files, 10);
+    const out = parseUpload(files);
     expect(out).toEqual({ kind: 'pages', files });
   });
 
   it('rejects a PDF mixed with images, and two PDFs', () => {
-    expect(parseUpload([pdf(), jpeg(1)], 10)).toMatchObject({ status: 400 });
-    expect(parseUpload([jpeg(1), pdf()], 10)).toMatchObject({ status: 400 });
-    expect(parseUpload([pdf(), pdf()], 10)).toMatchObject({ status: 400 });
+    expect(parseUpload([pdf(), jpeg(1)])).toMatchObject({ status: 400 });
+    expect(parseUpload([jpeg(1), pdf()])).toMatchObject({ status: 400 });
+    expect(parseUpload([pdf(), pdf()])).toMatchObject({ status: 400 });
   });
 
   it('rejects more pages than the cap', () => {
     const eleven = Array.from({ length: 11 }, (_, i) => jpeg(i));
-    expect(parseUpload(eleven, 10)).toEqual({ status: 400, error: 'Upload at most 10 pages.' });
-    expect(parseUpload(eleven.slice(0, 10), 10)).toMatchObject({ kind: 'pages' });
-    expect(parseUpload(eleven.slice(0, 9), 8)).toMatchObject({ status: 400 });
+    expect(parseUpload(eleven)).toEqual({ status: 400, error: 'Upload at most 10 pages.' });
+    expect(parseUpload(eleven.slice(0, 10))).toMatchObject({ kind: 'pages' });
   });
 
   it('enforces the per-file size on every file', () => {
-    expect(parseUpload([jpeg(1), jpeg(2, MAX_UPLOAD_BYTES + 1)], 10)).toMatchObject({ status: 413 });
-    expect(parseUpload([jpeg(1, 0)], 10)).toMatchObject({ status: 413 });
-    expect(parseUpload([jpeg(1, MAX_UPLOAD_BYTES)], 10)).toMatchObject({ kind: 'pages' });
+    expect(parseUpload([jpeg(1), jpeg(2, MAX_UPLOAD_BYTES + 1)])).toMatchObject({ status: 413 });
+    expect(parseUpload([jpeg(1, 0)])).toMatchObject({ status: 413 });
+    expect(parseUpload([jpeg(1, MAX_UPLOAD_BYTES)])).toMatchObject({ kind: 'pages' });
   });
 
   it('enforces the total size across pages', () => {
     const twelve = (n: number) => jpeg(n, 12 * MB);
-    expect(parseUpload([twelve(1), twelve(2)], 10)).toMatchObject({ kind: 'pages' });
-    expect(parseUpload([twelve(1), twelve(2), jpeg(3)], 10)).toMatchObject({ status: 413 });
+    expect(parseUpload([twelve(1), twelve(2)])).toMatchObject({ kind: 'pages' });
+    expect(parseUpload([twelve(1), twelve(2), jpeg(3)])).toMatchObject({ status: 413 });
   });
 
   it('rejects no files and unsupported types', () => {
-    expect(parseUpload([], 10)).toMatchObject({ status: 400 });
-    expect(parseUpload(['not a file'], 10)).toMatchObject({ status: 400 });
-    expect(parseUpload([jpeg(1), file('x.gif', 'image/gif')], 10)).toMatchObject({ status: 415 });
+    expect(parseUpload([])).toMatchObject({ status: 400 });
+    expect(parseUpload(['not a file'])).toMatchObject({ status: 400 });
+    expect(parseUpload([jpeg(1), file('x.gif', 'image/gif')])).toMatchObject({ status: 415 });
   });
 });
 

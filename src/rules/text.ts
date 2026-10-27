@@ -1,4 +1,4 @@
-import type { DisclosureId, GplExtraction } from '../extraction';
+import type { DisclosureId, ExtractedItem, GplExtraction } from '../extraction';
 import type { CompleteListMatch, DisclosureMatch, Evidence, Ruleset, SegmentStatus, SlotFill } from './types';
 
 export function normalize(s: string): string {
@@ -185,6 +185,14 @@ export function matchDisclosure(c: Corpus, ruleset: Ruleset, id: DisclosureId): 
   const fmt = (n: number) => n.toFixed(2);
 
   if (status === 'absent') {
+    const close = paraphraseBlocks(c, segments, KEY_TERMS[id])[0];
+    if (close) {
+      return {
+        id, status: 'altered', band: 'paraphrase', score: min, segmentScores: scores, optional, conditional, slots,
+        evidence: evidenceOf(close, id),
+        reason: `partly matches the Rule text (segment scores ${scores.map(fmt).join(', ')}); wording differs or was misread`,
+      };
+    }
     const tagged = c.blocks.find((b) => b.modelId === id);
     if (tagged) {
       return {
@@ -207,6 +215,55 @@ export function matchDisclosure(c: Corpus, ruleset: Ruleset, id: DisclosureId): 
   };
 }
 
+// Below the altered band, a block is a close paraphrase (review, never pass) when it keeps the
+// statement's key content: one phrase from every group, all within a statement's length of each
+// other. A rewrite that drops that content ("required only in certain arrangements") stays absent.
+const PARAPHRASE_SCORE = 0.45;
+const KEY_TERMS: Record<DisclosureId, readonly (readonly string[])[]> = {
+  'D-selection': [
+    ['choose only', 'select only', 'purchase only', 'buy only', 'only the items', 'only those items', 'only the goods'],
+    ['in writing'],
+  ],
+  'D-basic-nondeclinable': [['basic services'], ['will be added', 'added to the total', 'added to the cost', 'added to your']],
+  'D-basic-in-casket': [['basic services'], ['included in'], ['casket', 'caskets']],
+  'D-embalming': [
+    ['embalming'],
+    ['not required by law', 'not required by state law', 'not required by state or local law', 'not legally required', 'no law requires', 'law does not require'],
+  ],
+  'D-alt-container': [
+    ['alternative container', 'alternative containers'],
+    ['you can use', 'you may use', 'you can choose', 'you may choose', 'you can select', 'you may select', 'encase the body'],
+  ],
+  'D-casket-list': [['complete price list', 'complete list', 'full price list', 'full list'], ['funeral home']],
+  'D-obc-list': [['complete price list', 'complete list', 'full price list', 'full list'], ['funeral home']],
+  'D-obc-legal': [
+    ['does not require', 'do not require', 'not required', 'no law requires'],
+    ['law'],
+    ['container', 'vault', 'liner'],
+  ],
+};
+
+function phraseAt(text: string, phrase: string): number[] {
+  const out: number[] = [];
+  const padded = ` ${text} `;
+  for (let i = padded.indexOf(` ${phrase} `); i !== -1; i = padded.indexOf(` ${phrase} `, i + 1)) out.push(i);
+  return out;
+}
+
+function keyTermsNear(text: string, groups: readonly (readonly string[])[], span: number): boolean {
+  const hits = groups.map((g) => g.flatMap((p) => phraseAt(text, p)));
+  if (hits.some((h) => !h.length)) return false;
+  return hits[0]!.some((p0) => hits.every((h) => h.some((p) => Math.abs(p - p0) <= span)));
+}
+
+function paraphraseBlocks(c: Corpus, segments: readonly Segment[], groups: readonly (readonly string[])[]): Block[] {
+  const fixed = segments.filter((s) => s.kind === 'fixed').map(segText);
+  const span = Math.max(120, fixed.reduce((n, f) => n + f.length, 0));
+  const weighted = (text: string) =>
+    fixed.reduce((sum, f) => sum + align(f, text).score * f.length, 0) / fixed.reduce((n, f) => n + f.length, 0);
+  return c.blocks.filter((b) => keyTermsNear(b.norm, groups, span) && weighted(b.norm) >= PARAPHRASE_SCORE);
+}
+
 // Models sometimes file a required disclosure, such as the basic services fee statement, as an
 // item's "includes" text. That text describes no services, so it only counts as a description when
 // something substantial is left after the Rule's wording is cut out.
@@ -226,6 +283,31 @@ export function isDescription(includesText: string | null, ruleset: Ruleset): bo
     }
   }
   return !cut || s.split(' ').filter(Boolean).length >= MIN_DESCRIPTION_WORDS;
+}
+
+// Open weights sometimes fold an item's description into its label: "Forwarding ...: This charge
+// includes ..." or "Basic services: including ...". A tail counts only when it reads like a list
+// of services (an "includes" word, or three or more comma-separated parts), so an option label
+// such as "Direct cremation: with container provided by the purchaser" stays a label.
+const LABEL_CUE = /\b(?:(?:this|our) (?:charge|fee|price|services?)\b[^:]{0,40}?)?\binclud(?:e|es|ing|ed)\b/i;
+const MIN_TAIL_WORDS = 6;
+export function splitLabel(label: string): { head: string; tail: string | null } {
+  const colon = label.indexOf(':');
+  const cue = colon === -1 ? label.search(LABEL_CUE) : -1;
+  const cut = colon !== -1 ? colon + 1 : cue;
+  if (cut <= 0) return { head: label, tail: null };
+  const tail = label.slice(cut).trim();
+  const words = normalize(tail).split(' ').filter(Boolean).length;
+  const listLike = LABEL_CUE.test(tail) || (tail.match(/,/g) ?? []).length >= 2;
+  if (words < MIN_TAIL_WORDS || !listLike) return { head: label, tail: null };
+  return { head: label.slice(0, colon !== -1 ? colon : cue).trim(), tail };
+}
+
+// The item's description of what its price includes: its "includes" text, else a description folded into its label.
+export function descriptionOf(i: Pick<ExtractedItem, 'label' | 'includesText'>, ruleset: Ruleset): string | null {
+  if (isDescription(i.includesText, ruleset)) return i.includesText;
+  const { tail } = splitLabel(i.label);
+  return tail !== null && isDescription(tail, ruleset) ? tail : null;
 }
 
 const COMPLETE_LIST_IDS: readonly string[] = ['D-casket-list', 'D-obc-list'];
@@ -250,8 +332,10 @@ export function matchCompleteList(c: Corpus, ruleset: Ruleset): CompleteListMatc
     }
   }
   if (present + altered === 0) {
+    const close = paraphraseBlocks(c, ruleset.disclosures['D-casket-list'].segments as readonly Segment[], KEY_TERMS['D-casket-list']);
+    if (close.length) return { present: 0, altered: 0, paraphrase: close.length, evidence: evidenceOf(close[0]!, 'D-casket-list') };
     const tagged = c.blocks.find((b) => b.modelId !== null && COMPLETE_LIST_IDS.includes(b.modelId));
-    if (tagged) return { present: 0, altered: 1, evidence: evidenceOf(tagged, tagged.modelId!) };
+    if (tagged) return { present: 0, altered: 1, paraphrase: 0, evidence: evidenceOf(tagged, tagged.modelId!) };
   }
-  return { present, altered, evidence: evidenceOf(first, first ? 'D-casket-list' : undefined) };
+  return { present, altered, paraphrase: 0, evidence: evidenceOf(first, first ? 'D-casket-list' : undefined) };
 }

@@ -13,7 +13,7 @@ import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync }
 import { join, relative } from 'node:path';
 import { groundTruth, score } from '../eval-extraction.mjs';
 import {
-  assertSetAllowed, assertUploadAllowed, buildSets, CORPUS, OPEN_WEIGHTS_MAX_IMAGES, REDACTED_ELEMENT_CHECKS, ROOT,
+  assertSetAllowed, assertUploadAllowed, buildSets, CORPUS, MAX_PAGES, REDACTED_ELEMENT_CHECKS, ROOT,
 } from './sets.mjs';
 
 const args = Object.fromEntries(
@@ -151,9 +151,7 @@ function compare(verdicts, labels, unlistedPass) {
 
 async function runDoc(set, doc) {
   const row = { set: set.id, key: doc.key, list: doc.list };
-  if (set.provider === 'open-weights' && doc.paths.length > OPEN_WEIGHTS_MAX_IMAGES) {
-    return { ...row, skipped: `${doc.paths.length} pages; the open-weights provider takes at most ${OPEN_WEIGHTS_MAX_IMAGES} images` };
-  }
+  if (doc.paths.length > MAX_PAGES) return { ...row, skipped: `${doc.paths.length} pages; uploads take at most ${MAX_PAGES}` };
   if (!doc.paths.length) throw new Error(`${doc.key}: no input files (render step missing?)`);
   const { provider: running } = await getJson('/dev/provider');
   assertUploadAllowed(set, doc.paths, running);
@@ -277,7 +275,9 @@ function writeEvalMd(summaries, corpusAgg, spend) {
       '',
       '## Real price lists (aggregates only)',
       '',
-      `${c.n} redacted real General Price Lists ran on Muse Spark Open through Baseten, as page images. ${c.skipped} more have more than ${OPEN_WEIGHTS_MAX_IMAGES} pages and were not run, because the open-weights provider takes at most ${OPEN_WEIGHTS_MAX_IMAGES} images per request. No real list was sent to the Meta Model API.`,
+      `${c.n} redacted real General Price Lists ran on Muse Spark Open through Baseten, as page images.${
+        c.skipped ? ` ${c.skipped} more have more than ${MAX_PAGES} pages and were not run.` : ''
+      } A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API.`,
       '',
       '| Measure | Value |',
       '|---|---|',

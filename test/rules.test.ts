@@ -51,6 +51,12 @@ const KNOWN_DEVIATIONS: { list: string; check: string; got: Verdict; reason: str
     got: 'review',
     reason: 'Receiving is the last item on page 1 and the extractor dropped its "includes" paragraph (Day 2); a page-split paragraph is review, not fail.',
   },
+  {
+    list: 'syn-07',
+    check: 'C-060',
+    got: 'review',
+    reason: 'Since extract-2 the extractor files Receiving\'s page-split "includes" paragraph as a loose notice on page 2, and any loose description paragraph turns a missing description into review.',
+  },
 ];
 
 describe('registry', () => {

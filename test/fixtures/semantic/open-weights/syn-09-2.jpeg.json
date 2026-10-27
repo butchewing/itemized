@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "id": "C-011",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No D-selection disclosure is present in the transcribed list, so its placement cannot be evaluated."
+  },
+  {
+   "id": "C-021",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No basic services fee item with includesText is present to evaluate for adequacy."
+  },
+  {
+   "id": "C-025",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list shows only the receiving, direct cremation and immediate burial charges; no second mandatory facilities or handling fee is printed."
+  },
+  {
+   "id": "C-031",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No D-embalming disclosure is present in the transcribed list."
+  },
+  {
+   "id": "C-032",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No text states that embalming is required for direct cremation, immediate burial or closed-casket services."
+  },
+  {
+   "id": "C-045",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The D-alt-container disclosure and the direct cremation range both appear on page 1, which counts as immediate conjunction."
+  },
+  {
+   "id": "C-046",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The list offers direct cremation with purchaser-provided container and alternative containers, with no statement that a casket is required for cremation."
+  },
+  {
+   "id": "C-047",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "The direct cremation entries contain no description mentioning a crematory fee or cash advance to create ambiguity."
+  },
+  {
+   "id": "C-075",
+   "applies": true,
+   "concern": true,
+   "quote": null,
+   "page": null,
+   "explanation": "The list offers receiving remains but no separate price for forwarding remains to another funeral home, one of the four items the check expects to be itemized."
+  },
+  {
+   "id": "C-080",
+   "applies": false,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No optional package combining goods and services is present; receiving, direct cremation and immediate burial are not treated as packages."
+  },
+  {
+   "id": "C-081",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No statement that law, cemetery or crematory requires a purchase is printed; the only related text is the prescribed alternative-container disclosure."
+  },
+  {
+   "id": "C-082",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No language claims that goods delay decomposition or protect the body from gravesite substances."
+  },
+  {
+   "id": "C-083",
+   "applies": true,
+   "concern": false,
+   "quote": null,
+   "page": null,
+   "explanation": "No other wording undercuts a required disclosure and the sole disclosure is printed clearly on page 1."
+  }
+ ]
+}

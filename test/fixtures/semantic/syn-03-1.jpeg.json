@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The selection disclosure is on page 1, the same page as the itemized prices, which counts as placed correctly.",
+   "id": "C-011",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The includesText lists arrangements conference, planning, shelter of remains, notices, permits and authorizations, and coordination with cemetery, crematory or third parties.",
+   "id": "C-021",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No second mandatory fee for services, facilities or overhead is printed on the list.",
+   "id": "C-025",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No embalming disclosure is present in the disclosures array.",
+   "id": "C-031",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text states embalming is required for direct cremation, immediate burial, or closed-casket service.",
+   "id": "C-032",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No alternative-container disclosure is present in the disclosures array.",
+   "id": "C-045",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No direct cremation item is offered, so the condition for this check is not met.",
+   "id": "C-046",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No direct cremation item is offered, so the condition for this check is not met.",
+   "id": "C-047",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": true,
+   "explanation": "The list has no line items for direct cremation or immediate burial, which are treated as expected items.",
+   "id": "C-075",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "The list contains only itemized goods and services and required items; no optional package at one price is offered.",
+   "id": "C-080",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text asserts that law, a cemetery, or a crematory requires a purchase beyond the wording of required disclosures.",
+   "id": "C-081",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No claims about delaying decomposition or protecting the body from gravesite substances appear.",
+   "id": "C-082",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No other wording undercuts a required disclosure and disclosures appear clearly printed.",
+   "id": "C-083",
+   "page": null,
+   "quote": null
+  }
+ ]
+}

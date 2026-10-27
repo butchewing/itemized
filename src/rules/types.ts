@@ -60,6 +60,8 @@ export type DisclosureMatch = {
   slots: Record<string, SlotFill>;
   evidence: Evidence;
   reason: string;
+  // Set on an 'altered' match found only as a close paraphrase: key content present, wording rewritten.
+  band?: 'paraphrase';
 };
 
-export type CompleteListMatch = { present: number; altered: number; evidence: Evidence };
+export type CompleteListMatch = { present: number; altered: number; paraphrase: number; evidence: Evidence };

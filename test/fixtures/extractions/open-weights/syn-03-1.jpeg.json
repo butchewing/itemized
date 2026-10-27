@@ -4,7 +4,7 @@
  "address": "9 Tamsin Court, Ravel, TX 78998",
  "phone": "(830) 355-0163",
  "effectiveDate": {
-  "raw": "September 1, 2025",
+  "raw": "These prices are effective as of September 1, 2025",
   "iso": "2025-09-01"
  },
  "disclosures": [
@@ -51,9 +51,9 @@
   {
    "category": "other_prep",
    "label": "Dressing and casketing",
-   "price": 285,
+   "price": 225,
    "priceRange": null,
-   "priceText": "$285",
+   "priceText": "$225",
    "includesText": null,
    "page": 1
   },
@@ -69,9 +69,9 @@
   {
    "category": "other_prep",
    "label": "Washing and disinfecting of unembalmed remains",
-   "price": 350,
+   "price": 450,
    "priceRange": null,
-   "priceText": "$350",
+   "priceText": "$450",
    "includesText": null,
    "page": 1
   },
@@ -81,7 +81,7 @@
    "price": 495,
    "priceRange": null,
    "priceText": "$495",
-   "includesText": "within a 25 mile radius; beyond this radius we charge $3.50 per mile",
+   "includesText": null,
    "page": 1
   },
   {
@@ -105,18 +105,18 @@
   {
    "category": "memorial_service",
    "label": "Use of Facilities and Staff for Memorial Service at the Funeral Home",
-   "price": 395,
+   "price": 595,
    "priceRange": null,
-   "priceText": "$395",
+   "priceText": "$595",
    "includesText": null,
    "page": 1
   },
   {
    "category": "graveside",
    "label": "Use of Equipment and Staff for Graveside Service",
-   "price": 430,
+   "price": 450,
    "priceRange": null,
-   "priceText": "$430",
+   "priceText": "$450",
    "includesText": null,
    "page": 1
   },
@@ -144,9 +144,9 @@
    "price": null,
    "priceRange": [
     945,
-    14950
+    11950
    ],
-   "priceText": "$945 to $14,950",
+   "priceText": "$945 to $11,950",
    "includesText": null,
    "page": 1
   },

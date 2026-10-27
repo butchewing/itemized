@@ -4,6 +4,7 @@ import {
   isOptionHeader,
   isPriced,
   itemsOf,
+  optionPrice,
   optionsOf,
   priceState,
   separatelySoldContainers,
@@ -11,7 +12,7 @@ import {
   type Matches,
   type OptionClass,
 } from './conditions';
-import { isDescription, normalize, similarity } from './text';
+import { descriptionOf, normalize, similarity } from './text';
 import type { CompleteListMatch, DisclosureMatch, Evidence, Outcome, Ruleset } from './types';
 
 export const DETERMINISTIC_CHECK_IDS = [
@@ -69,8 +70,10 @@ function headerField(value: string | null, what: string): Outcome {
 const INCLUDES_BLOCK = /^(our (services|charge|charges|price|fee)\b.{0,80}\binclude|includes?\b)/;
 function includesCheck(ctx: CheckContext, category: RequiredItemId): Outcome {
   const items = itemsOf(ctx.x, category);
-  const withText = items.find((i) => isDescription(i.includesText, ctx.ruleset));
-  if (withText) return met('a description of what the price includes was found', { quote: withText.includesText, page: withText.page, itemCategory: category });
+  for (const i of items) {
+    const description = descriptionOf(i, ctx.ruleset);
+    if (description) return met('a description of what the price includes was found', { quote: description, page: i.page, itemCategory: category });
+  }
   const target = items.find((i) => isOptionHeader(i)) ?? items[0]!;
   const ev = itemEvidence(target);
   const idx = ctx.x.items.indexOf(target);
@@ -90,13 +93,17 @@ const NOUN: Record<OptionKind, string> = { direct_cremation: 'direct cremation',
 // C-040, C-041 and C-050: is there a priced option of the wanted class?
 function optionCheck(ctx: CheckContext, kind: OptionKind, wanted: OptionClass, label: string, extraPass: ExtractedItem[] = []): Outcome {
   const opts = optionsOf(ctx.x, kind);
-  const hits = opts.filter((o) => classifyOption(o) === wanted);
-  const priced = hits.find((o) => priceState(o) === 'priced');
-  if (priced) return met(`priced option found: ${priced.label}`, itemEvidence(priced));
+  const hits = opts.map((o) => ({ o, ...optionPrice(ctx.x, o) })).filter(({ o }) => classifyOption(o) === wanted);
+  const priced = hits.find((h) => h.state === 'priced');
+  if (priced) return met(`priced option found: ${priced.o.label}`, itemEvidence(priced.o));
+  const inherited = hits.find((h) => h.state === 'inherited');
+  if (inherited) return met(`option found under a priced line: ${inherited.o.label}, under ${inherited.parent!.label}`, itemEvidence(inherited.o));
   if (extraPass[0]) return met(`a ${NOUN[kind]} price plus a separately priced container: ${extraPass[0].label}`, itemEvidence(extraPass[0]));
   if (hits.length) {
-    const ev = itemEvidence(hits[0]!);
-    return hits.every((o) => priceState(o) === 'missing')
+    const ev = itemEvidence(hits[0]!.o);
+    const maybe = hits.find((h) => h.state === 'maybe_inherited');
+    if (maybe) return uncertain(`the option ${label} has no price of its own; it may be included in the price of ${maybe.parent!.label}`, itemEvidence(maybe.o));
+    return hits.every((h) => h.state === 'missing')
       ? violation(`the option ${label} is listed without a price`, ev)
       : uncertain(`the option ${label} has price text that could not be read as a price`, ev);
   }
@@ -122,11 +129,11 @@ function rangeCheck(ctx: CheckContext, kind: OptionKind): Outcome {
 }
 
 function completeListOutcome(ctx: CheckContext, what: string): Outcome {
-  const { present, altered, evidence } = ctx.completeList;
+  const { present, altered, paraphrase, evidence } = ctx.completeList;
   const needed = Number(ctx.cond.caskets_as_range) + Number(ctx.cond.obc_as_range);
   if (present >= needed) return met(`${what} shown as a range with the complete-price-list statement`, evidence);
-  if (present + altered === 0) return violation(`${what} shown as a range, but the statement that a complete price list will be provided was not found`);
-  return uncertain(`found ${present} exact and ${altered} partial complete-price-list statements for ${needed} price ranges`, evidence);
+  if (present + altered + paraphrase === 0) return violation(`${what} shown as a range, but the statement that a complete price list will be provided was not found`);
+  return uncertain(`found ${present} exact and ${altered + paraphrase} partial complete-price-list statements for ${needed} price ranges`, evidence);
 }
 
 const RANGE_CATEGORIES: readonly RequiredItemId[] = ['caskets', 'outer_burial_containers', 'direct_cremation', 'immediate_burial'];
@@ -230,7 +237,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
     if (!ctx.cond.immediate_burial_offered) return na('immediate burial not listed');
     const opt = optionsOf(ctx.x, 'immediate_burial').find((o) => {
       const k = classifyOption(o);
-      return (k === 'casket' || k === 'alt_container') && isPriced(o);
+      return (k === 'casket' || k === 'alt_container') && ['priced', 'inherited'].includes(optionPrice(ctx.x, o).state);
     });
     if (opt) return met(`priced option found: ${opt.label}`, itemEvidence(opt));
     const ref = itemsOf(ctx.x, 'immediate_burial').find((i) => /casket price list/.test(normalize(`${i.label} ${i.includesText ?? ''}`)));
@@ -273,8 +280,8 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
     if (!caskets.length) return na('caskets not listed');
     if (ctx.cond.caskets_itemized) return met('individual casket prices shown', itemEvidence(caskets.find((i) => i.price !== null)!));
     if (ctx.cond.caskets_as_range) return completeListOutcome(ctx, 'casket prices');
-    const { present, altered, evidence } = ctx.completeList;
-    return present + altered > 0
+    const { present, altered, paraphrase, evidence } = ctx.completeList;
+    return present + altered + paraphrase > 0
       ? met('casket line carries the complete-price-list statement; its missing price is reported under C-070', evidence)
       : uncertain('caskets are listed without prices or a range, so the pricing form is unclear', itemEvidence(caskets[0]!));
   },
@@ -288,7 +295,7 @@ export const CHECKS: Record<DeterministicCheckId, CheckFn> = {
     if (outcomes.length) {
       return outcomes.find((o) => o.result === 'met') ?? outcomes.find((o) => o.result === 'uncertain') ?? outcomes[0]!;
     }
-    if (ctx.completeList.present + ctx.completeList.altered > 0 || legal.status !== 'absent') {
+    if (ctx.completeList.present + ctx.completeList.altered + ctx.completeList.paraphrase > 0 || legal.status !== 'absent') {
       return met('container line carries its statement; its missing price is reported under C-070', legal.status !== 'absent' ? legal.evidence : ctx.completeList.evidence);
     }
     return uncertain('outer burial containers are listed without prices or a range, so the pricing form is unclear', itemEvidence(obc[0]!));

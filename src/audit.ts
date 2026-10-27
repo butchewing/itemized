@@ -34,7 +34,7 @@ export function isAcceptedType(value: string): value is AcceptedType {
 
 export const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
 export const MAX_PAGES = 10;
-// Every page is base64-encoded into one model request, so the total stays well inside Worker memory.
+// Every page is held base64-encoded for the model requests, so the total stays well inside Worker memory.
 export const MAX_TOTAL_BYTES = 24 * 1024 * 1024;
 
 export type ImageType = Exclude<AcceptedType, 'application/pdf'>;
@@ -54,7 +54,7 @@ export const combinedSha256 = (pageShas: readonly string[]) => sha256Hex(new Tex
 export type Upload = { kind: 'pdf'; file: File } | { kind: 'pages'; files: File[] };
 export type UploadError = { status: 400 | 413 | 415; error: string };
 
-export function parseUpload(entries: readonly unknown[], maxPages: number): Upload | UploadError {
+export function parseUpload(entries: readonly unknown[]): Upload | UploadError {
   const files = entries.filter((e): e is File => e instanceof File);
   if (!files.length) return { status: 400, error: 'Expected a multipart "file" field.' };
   for (const f of files) {
@@ -66,7 +66,7 @@ export function parseUpload(entries: readonly unknown[], maxPages: number): Uplo
     if (files.length > 1) return { status: 400, error: 'Upload one PDF, or images of each page, not both.' };
     return { kind: 'pdf', file: pdfs[0]! };
   }
-  if (files.length > maxPages) return { status: 400, error: `Upload at most ${maxPages} pages.` };
+  if (files.length > MAX_PAGES) return { status: 400, error: `Upload at most ${MAX_PAGES} pages.` };
   if (files.reduce((n, f) => n + f.size, 0) > MAX_TOTAL_BYTES) return { status: 413, error: 'Files must total 24 MB or less.' };
   return { kind: 'pages', files };
 }

@@ -4,7 +4,6 @@ import {
   combinedSha256,
   docKey,
   isProvider,
-  MAX_PAGES,
   parseUpload,
   sha256Hex,
   type AuditDocument,
@@ -26,7 +25,6 @@ import {
   type AuditRow,
 } from './store';
 import { renderLetterHtml } from './letter';
-import { PROVIDER_CONFIG } from './models';
 import { PAGE } from './page';
 import { notFoundPage, PDF_FAILED, pdfFilename, reviewPage } from './review';
 import { spike } from './spike';
@@ -61,7 +59,7 @@ app.post('/api/audits', async (c) => {
   }
 
   const form = await c.req.formData().catch(() => null);
-  const upload = parseUpload(form?.getAll('file') ?? [], Math.min(MAX_PAGES, PROVIDER_CONFIG[provider].maxImages));
+  const upload = parseUpload(form?.getAll('file') ?? []);
   if ('error' in upload) return c.json({ error: upload.error }, upload.status);
 
   // Always re-put: a fresh write resets the object's age for the bucket's 30-day lifecycle rule.

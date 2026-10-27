@@ -4,7 +4,13 @@
  "address": null,
  "phone": null,
  "effectiveDate": null,
- "disclosures": [],
+ "disclosures": [
+  {
+   "id": "D-alt-container",
+   "text": "If you want to arrange a direct cremation, you can use an alternative container. Alternative containers encase the body and can be made of materials like fiberboard or composition materials (with or without an outside covering). The containers we provide are a fiberboard container or an unfinished wood box.",
+   "page": 1
+  }
+ ],
  "items": [
   {
    "category": "receiving",
@@ -12,7 +18,7 @@
    "price": 2195,
    "priceRange": null,
    "priceText": "$2,195",
-   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; removal of remains; preparation of remains; and local transportation.",
    "page": 1
   },
   {

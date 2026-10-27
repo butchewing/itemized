@@ -55,15 +55,6 @@
   },
   {
    "category": "other_prep",
-   "label": "Other Preparation of the Body",
-   "price": null,
-   "priceRange": null,
-   "priceText": null,
-   "includesText": null,
-   "page": 1
-  },
-  {
-   "category": "other_prep",
    "label": "Dressing and casketing",
    "price": 225,
    "priceRange": null,
@@ -137,7 +128,7 @@
   {
    "category": "hearse",
    "label": "Hearse",
-   "price": 395,
+   "price": null,
    "priceRange": null,
    "priceText": "Starting at $395",
    "includesText": null,
@@ -165,7 +156,7 @@
    "page": 1
   },
   {
-   "category": "other",
+   "category": "caskets",
    "label": "Casket Handling Fee (applies when a casket is purchased elsewhere)",
    "price": 295,
    "priceRange": null,

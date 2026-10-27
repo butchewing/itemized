@@ -4,8 +4,8 @@
  "address": "9 Tamsin Court, Ravel, TX 78998",
  "phone": "(830) 355-0163",
  "effectiveDate": {
-  "raw": "These prices are effective as of September 1, 2025",
-  "iso": "2025-09-01"
+  "raw": "These prices are effective as of September 1, 2026.",
+  "iso": "2026-09-01"
  },
  "disclosures": [
   {
@@ -96,9 +96,9 @@
   {
    "category": "funeral_ceremony",
    "label": "Use of Facilities and Staff for Funeral Ceremony at the Funeral Home",
-   "price": 645,
+   "price": 695,
    "priceRange": null,
-   "priceText": "$645",
+   "priceText": "$695",
    "includesText": null,
    "page": 1
   },

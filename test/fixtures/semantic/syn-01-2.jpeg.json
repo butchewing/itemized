@@ -1,0 +1,108 @@
+{
+ "checks": [
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No D-selection disclosure text appears in the disclosures array, so placement cannot be evaluated.",
+   "id": "C-011",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No basic services fee line item is listed, so there is no includesText for that fee to evaluate.",
+   "id": "C-021",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text describes a second mandatory charge for services, facilities or overhead.",
+   "id": "C-025",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "No D-embalming disclosure appears in the disclosures array.",
+   "id": "C-031",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text states that embalming is required for direct cremation, immediate burial or closed-casket arrangements.",
+   "id": "C-032",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The alternative-container disclosure and the direct cremation range both appear on page 1, which counts as placed correctly.",
+   "id": "C-045",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "Direct cremation is offered but no text states that a casket is required for it.",
+   "id": "C-046",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "The direct cremation description includes cremation, and no separate cash-advance crematory fee is listed to create ambiguity.",
+   "id": "C-047",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "All goods and services mentioned have their own priced lines, and no package, description or policy mentions an additional offered item without a price.",
+   "id": "C-075",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": false,
+   "concern": false,
+   "explanation": "The list contains only required separate items like receiving, direct cremation and immediate burial, not an optional combination package.",
+   "id": "C-080",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text asserts that any purchase is required by law, a cemetery or a crematory.",
+   "id": "C-081",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No text claims that goods or services delay decomposition or protect the body from gravesite substances.",
+   "id": "C-082",
+   "page": null,
+   "quote": null
+  },
+  {
+   "applies": true,
+   "concern": false,
+   "explanation": "No other wording undercuts the alternative-container disclosure, which uses the expected language.",
+   "id": "C-083",
+   "page": null,
+   "quote": null
+  }
+ ]
+}
