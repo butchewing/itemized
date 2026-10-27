@@ -2,7 +2,7 @@
 
 Itemized checks funeral home price lists against the FTC Funeral Rule and flags missing required disclosures and prices, with citations.
 
-Built for the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai.
+Built by Butch Ewing during the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/butchewing/itemized)
 

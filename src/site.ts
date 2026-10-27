@@ -152,7 +152,7 @@ ${LINKS_MD.trim()}
 // llmstxt.org: an H1, a blockquote summary, then sections whose lists are links.
 export const LLMS_TXT = `# Itemized
 
-> ${DESCRIPTION} Free to use at ${SITE}; built by Mortuary.AI for the Meta Global AI Developer Hackathon.
+> ${DESCRIPTION} Free to use at ${SITE}; built by Butch Ewing during the Meta Global AI Developer Hackathon.
 
 Itemized reviews a US funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). A Meta Muse Spark model transcribes the list; fixed rules written from the Rule's text decide what passes. Results are pass, fail, review or not applicable, each with the Rule section it comes from.
 
@@ -177,7 +177,7 @@ export const ABOUT: SitePage = {
   title: 'About Itemized',
   heading: 'About Itemized',
   md: `
-Itemized checks a funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). It was built by Mortuary.AI, which makes software for funeral homes, mortuaries and crematories, for the Meta Global AI Developer Hackathon in October and November 2026. It is free to use.
+Itemized checks a funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). It was built by Butch Ewing during the Meta Global AI Developer Hackathon (October 26 to November 4, 2026), and it is free to use. It is hosted on mortuary.ai, the domain of Mortuary.AI, a company Butch Ewing also runs.
 
 ## Why it exists
 
@@ -234,7 +234,7 @@ export const CONTACT: SitePage = {
   title: 'Itemized: contact',
   heading: 'Contact',
   md: `
-Itemized is made by Mortuary.AI. For questions about a review, corrections to a check, deletion requests, or problems with the site, email [${CONTACT_EMAIL}](mailto:${CONTACT_EMAIL}).
+Itemized was built by Butch Ewing. For questions about a review, corrections to a check, deletion requests, or problems with the site, email [${CONTACT_EMAIL}](mailto:${CONTACT_EMAIL}).
 
 When writing about a review, include its link (it starts with ${SITE}/r/). Itemized cannot see who uploaded a list, so the link is the only way to find it.
 
@@ -301,7 +301,7 @@ export const JSON_LD = {
       operatingSystem: 'Any (web browser)',
       isAccessibleForFree: true,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      publisher: { '@id': 'https://www.mortuary.ai/#organization' },
+      author: { '@type': 'Person', name: 'Butch Ewing', url: 'https://github.com/butchewing' },
       sameAs: [REPO],
       license: 'https://www.apache.org/licenses/LICENSE-2.0',
     },
