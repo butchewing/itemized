@@ -49,6 +49,115 @@ export const letterDate = (date: Date) =>
 
 export const citeOf = (f: Finding) => f.cite || BASIS[f.basis] || '';
 
+// Shared by the PDF and the fix-prompt download so both files of one review sort together.
+export function fileStem(provider: string | null, date: Date): string {
+  const slug = (provider ?? '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+    .replace(/-+$/, '');
+  return `${slug || 'price-list'}-${date.toISOString().slice(0, 10)}`;
+}
+
+type DisclosureKey = keyof typeof ruleset.disclosures;
+type Segment = { kind: string; t?: string; name?: string; when?: string; within?: string; omission_note?: string };
+
+// Checks that report a required statement as missing or reworded, and the statement each one asks for.
+const STATEMENT_OF: Record<string, DisclosureKey> = {
+  'C-010': 'D-selection',
+  'C-022': 'D-basic-nondeclinable',
+  'C-024': 'D-basic-in-casket',
+  'C-030': 'D-embalming',
+  'C-044': 'D-alt-container',
+  'C-072': 'D-casket-list',
+  'C-073': 'D-obc-list',
+};
+// C-073 covers two statements; its evidence names D-obc-legal only when that one was the one checked.
+const statementOf = (f: Finding): DisclosureKey | undefined =>
+  f.checkId === 'C-073' && f.evidence.disclosureId === 'D-obc-legal' ? 'D-obc-legal' : STATEMENT_OF[f.checkId];
+
+const CONDITION_LABELS: Record<string, string> = {
+  basic_services_declared_nondeclinable: 'your basic services fee cannot be declined',
+};
+
+// Wording comes only from the ruleset's segments. An optional phrase with an omission note is kept
+// inline. The full Rule wording is lawful everywhere, and leaving the phrase out is lawful only in some states.
+export function requiredWording(id: DisclosureKey): string {
+  const out: string[] = [];
+  for (const s of ruleset.disclosures[id].segments as readonly Segment[]) {
+    if (s.kind === 'conditional') {
+      out.push(`[only when ${CONDITION_LABELS[s.when!] ?? s.when}: ${s.t}]`);
+      continue;
+    }
+    const piece = s.kind === 'slot' ? `[${s.name}]` : s.kind === 'optional' && !s.omission_note ? `[optional: ${s.t}]` : s.t!;
+    if (s.within === 'previous' && out.length) out[out.length - 1] = out[out.length - 1]!.replace(/\]$/, ` ${piece}]`);
+    else out.push(piece);
+  }
+  // The ruleset splits statements at optional, conditional and slot pieces, so a sentence-ending
+  // period that follows one of them belongs to no piece. The Rule's text ends every sentence.
+  const ended = out.map((p) => (p.startsWith('[only when') && !/[.?!]\]$/.test(p) ? p.replace(/\]$/, '.]') : p));
+  const text = ended.join(' ');
+  return /[.?!]$/.test(text) ? text : `${text}.`;
+}
+
+const PROMPT_LABELS: [Verdict, string][] = [
+  ['fail', 'Did not pass'],
+  ['review', "Needs a person's review"],
+];
+
+const oneLine = (text: string) => text.replace(/\s+/g, ' ').trim();
+
+function promptBlock(f: Finding, label: string): string {
+  const cite = citeOf(f).replace(/\.$/, '');
+  const lines = [`- ${label}: ${oneLine(f.title)}${cite ? ` (${cite})` : ''}. ${oneLine(f.plain)}`];
+  if (f.evidence.quote) {
+    lines.push(`  From our list${f.evidence.page ? `, page ${f.evidence.page}` : ''}: "${oneLine(f.evidence.quote)}"`);
+  }
+  const statement = statementOf(f);
+  if (statement) lines.push(`  Required wording: "${requiredWording(statement)}"`);
+  return lines.join('\n');
+}
+
+// Plain text, never HTML. It is copied to the clipboard and saved as .txt as-is.
+export function fixPromptText(report: Report): string | null {
+  const blocks = PROMPT_LABELS.flatMap(([verdict, label]) =>
+    report.findings.filter((f) => f.verdict === verdict).map((f) => promptBlock(f, label)),
+  );
+  if (!blocks.length) return null;
+  return `I run a funeral home. Below is a review of our General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453), made by Itemized. Please help me draft a revised General Price List.
+
+Rules for your draft:
+- Keep every price exactly as it is. Do not invent, change or remove prices. If a required item needs a price we have not given, write [PRICE NEEDED] and leave it for me.
+- Where a required statement is missing or worded differently, add the exact required wording given below. Do not paraphrase it.
+- For items marked "Needs a person's review", do not change anything. List them at the end as questions for me.
+- Do not add services, packages or claims that are not already on our list.
+- At the end, list every change you made and every question for me.
+- Remind me to have the final list checked by our attorney or our state funeral regulator before we use it.
+
+Itemized findings:
+${blocks.join('\n')}
+
+Our current General Price List is attached.`;
+}
+
+function fixPromptSection(report: Report, filename: string): string {
+  const text = fixPromptText(report);
+  if (!text) return '';
+  return `<section class="group fix-prompt" aria-labelledby="fix-prompt-heading">
+      <h3 id="fix-prompt-heading">Fix it with your AI assistant</h3>
+      <p>Copy this prompt into an AI assistant such as ChatGPT or Claude, and attach your price list.</p>
+      <pre id="fix-prompt-text" tabindex="0" aria-labelledby="fix-prompt-heading">${escapeHtml(text)}</pre>
+      <div class="fix-prompt-actions">
+        <button type="button" class="btn" data-fix-prompt="copy">Copy prompt</button>
+        <button type="button" class="btn" data-fix-prompt="download" data-filename="${escapeHtml(filename)}">Download as text</button>
+        <p class="actions-status" id="fix-prompt-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>`;
+}
+
 function findingItem(f: Finding): string {
   const quote = f.evidence.quote
     ? `<blockquote>${escapeHtml(f.evidence.quote)}<span class="from">${
@@ -109,6 +218,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
       <div><dt>Not applicable</dt><dd>The requirement does not apply to this list, for example because the funeral home does not list that service.</dd></div>
     </dl>
     ${detailed}${listed}
+    ${mode === 'screen' ? fixPromptSection(report, `itemized-fix-prompt-${fileStem(provider ?? null, date)}.txt`) : ''}
     <div class="closing">
       <p class="signature">Itemized</p>
       <p>Read by Meta’s ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}, on ${escapeHtml(when)}.</p>

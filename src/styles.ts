@@ -4,12 +4,15 @@ export const STYLES = `
     --ground: #e9ecef;
     --sheet: #ffffff;
     --ink: #20262e;
+    --ink-deep: #000000;
     --slate: #556375;
     --rule: #d5dae0;
     --frame: #86909c;
     --gilt: #a8864a;
     --gilt-soft: #e7dcc6;
     --oxblood: #8a2b22;
+    --row-wash: #f7f8f9;
+    --drag-wash: #fbfaf7;
     --engraved: 'Cinzel', 'Trajan Pro', Georgia, serif;
     --text: 'Source Serif 4', Georgia, 'Times New Roman', serif;
     color-scheme: light;
@@ -52,13 +55,13 @@ export const STYLES = `
     letter-spacing: .2em;
     padding-left: .2em;
   }
-  .double-rule { width: min(15rem, 60%); margin: 1rem auto .85rem; border: 0; border-top: 1px solid var(--gilt); }
+  .gilt-hairline { width: min(15rem, 60%); margin: 1rem auto .85rem; border: 0; border-top: 1px solid var(--gilt); }
   .tagline { margin: 0; font-variant-caps: all-small-caps; letter-spacing: .12em; color: var(--slate); font-size: 1.05rem; }
   .lede { max-width: 33rem; margin: 1.75rem auto 0; text-align: center; font-size: 1.1rem; }
 
   .letterhead-compact .monogram { width: 2.25rem; height: 2.25rem; margin-bottom: .6rem; }
   .letterhead-compact .house { margin: 0; font: 600 1.25rem/1 var(--engraved); letter-spacing: .2em; padding-left: .2em; }
-  .letterhead-compact .double-rule { width: min(9rem, 40%); margin: .75rem auto 0; }
+  .letterhead-compact .gilt-hairline { width: min(9rem, 40%); margin: .75rem auto 0; }
 
   .entry { margin-top: 2.5rem; }
   .entry-label { display: block; font: 500 .8rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; margin-bottom: .6rem; }
@@ -67,7 +70,7 @@ export const STYLES = `
     padding: 1.1rem 1.25rem; border: 1px solid var(--frame); outline: 1px solid transparent; outline-offset: 4px;
     transition: border-color .2s ease-out, outline-color .2s ease-out, background-color .2s ease-out;
   }
-  .field.dragging { border-color: var(--gilt); outline-color: var(--gilt-soft); background: #fbfaf7; }
+  .field.dragging { border-color: var(--gilt); outline-color: var(--gilt-soft); background: var(--drag-wash); }
   .file-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .file-name { font-style: italic; color: var(--slate); min-width: 0; overflow-wrap: anywhere; }
   .file-name.chosen { font-style: normal; color: var(--ink); }
@@ -77,7 +80,7 @@ export const STYLES = `
   .pages li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .2rem 0; border-bottom: 1px solid var(--rule); }
   .pages li span { min-width: 0; overflow-wrap: anywhere; font-variant-numeric: lining-nums; }
   .text-btn {
-    font: 500 .75rem/1 var(--engraved); letter-spacing: .16em; text-transform: uppercase;
+    font: 500 .8rem/1 var(--engraved); letter-spacing: .16em; text-transform: uppercase;
     color: var(--slate); background: none; border: 0; padding: .65rem 0; cursor: pointer;
     text-decoration: underline; text-decoration-color: var(--gilt); text-underline-offset: .35em;
   }
@@ -91,10 +94,9 @@ export const STYLES = `
     transition: background-color .18s ease-out, color .18s ease-out;
   }
   .btn:hover:not(:disabled) { background: var(--ink); color: var(--sheet); }
-  .btn:disabled { opacity: .45; cursor: not-allowed; }
   .btn-primary { background: var(--ink); color: var(--sheet); }
-  .btn-primary:hover:not(:disabled) { background: #000; }
-  .btn-primary:disabled { background: transparent; color: var(--slate); border-color: var(--rule); opacity: 1; }
+  .btn-primary:hover:not(:disabled) { background: var(--ink-deep); }
+  .btn:disabled { background: transparent; color: var(--slate); border-color: var(--rule); cursor: not-allowed; }
   .submit-row { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center; margin-top: 1rem; }
   .fine { font-size: .95rem; color: var(--slate); margin: 0; }
 
@@ -107,11 +109,12 @@ export const STYLES = `
     font: inherit; color: inherit; background: none; border: 0; border-bottom: 1px solid var(--rule);
     padding: .85rem .25rem; cursor: pointer; transition: background-color .18s ease-out;
   }
-  .sample:hover:not(:disabled) { background: #f7f8f9; }
-  .sample:disabled { cursor: not-allowed; opacity: .5; }
+  .sample:hover:not(:disabled) { background: var(--row-wash); }
+  .sample:disabled { color: var(--slate); cursor: not-allowed; }
+  .sample:disabled .sample-action { border-bottom-color: var(--rule); }
   .sample-name { font-weight: 600; }
   .sample-note { grid-column: 1; color: var(--slate); font-size: .95rem; }
-  .sample-action { grid-column: 2; grid-row: 1 / span 2; align-self: center; font: 500 .75rem/1 var(--engraved); letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--gilt); padding-bottom: .2rem; }
+  .sample-action { grid-column: 2; grid-row: 1 / span 2; align-self: center; font: 500 .8rem/1 var(--engraved); letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--gilt); padding-bottom: .2rem; }
 
   .status { margin: 2rem 0 0; min-height: 1.6em; font-style: italic; color: var(--slate); text-align: center; }
   .status.error { color: var(--oxblood); font-style: normal; }
@@ -133,7 +136,7 @@ export const STYLES = `
   .steps li { margin: .5rem 0; padding-left: .25rem; }
   .steps li::marker { font-family: var(--engraved); color: var(--gilt); }
   .group { margin-top: 2.25rem; }
-  .group > h3 { font: 500 .85rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; margin: 0; padding-bottom: .55rem; border-bottom: 1px solid var(--ink); display: flex; justify-content: space-between; gap: 1rem; }
+  .group > h3 { font: 500 .8rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; margin: 0; padding-bottom: .55rem; border-bottom: 1px solid var(--ink); display: flex; justify-content: space-between; gap: 1rem; }
   .group > h3 .count { font-family: var(--text); font-variant-numeric: lining-nums tabular-nums; letter-spacing: 0; text-transform: none; color: var(--slate); }
   .findings { list-style: none; margin: 0; padding: 0; }
   .finding { display: grid; grid-template-columns: minmax(0, 1fr) 9.5rem; gap: .25rem 1.5rem; padding: 1.1rem 0 1.2rem; border-bottom: 1px solid var(--rule); }
@@ -143,11 +146,18 @@ export const STYLES = `
   .finding .from { display: block; margin-top: .25rem; font-style: normal; font-variant-caps: all-small-caps; letter-spacing: .08em; color: var(--slate); font-size: .95rem; }
   .finding .review-note { margin: .6rem 0 0; color: var(--slate); font-size: .95rem; }
   .margin { grid-column: 2; grid-row: 1 / span 4; font-size: .85rem; line-height: 1.45; color: var(--slate); padding-top: .15rem; }
-  details.group > summary { cursor: pointer; font: 500 .85rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; padding-bottom: .55rem; border-bottom: 1px solid var(--rule); list-style-position: inside; }
+  details.group > summary { cursor: pointer; font: 500 .8rem/1.2 var(--engraved); letter-spacing: .16em; text-transform: uppercase; padding-bottom: .55rem; border-bottom: 1px solid var(--rule); list-style-position: inside; }
   details.group > summary::marker { color: var(--gilt); }
   .simple { list-style: none; margin: 0; padding: 0; }
   .simple li { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem 0; border-bottom: 1px solid var(--rule); }
   .simple .cite { color: var(--slate); font-size: .85rem; text-align: right; }
+  .fix-prompt > p { margin: .75rem 0 0; }
+  .fix-prompt pre {
+    margin: 1rem 0 0; padding: .1rem 0 .1rem 1rem; border-left: 1px solid var(--gilt);
+    font: 400 .95rem/1.55 var(--text); white-space: pre-wrap; overflow-wrap: anywhere;
+    max-height: 22rem; overflow: auto;
+  }
+  .fix-prompt-actions { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; margin-top: 1rem; }
   .closing { margin-top: 2.25rem; color: var(--slate); font-size: .95rem; }
   .closing p { margin: .35rem 0; }
 
@@ -185,7 +195,7 @@ export const STYLES = `
     html, body { background: #fff; }
     body { padding: 0; min-height: 0; font-size: 11pt; }
     .sheet { max-width: none; padding: 0; box-shadow: none; }
-    .actions { display: none; }
+    .actions, .fix-prompt { display: none; }
     body:has(.review-sheet:not([hidden])) .sheet:not(.review-sheet) { display: none; }
     .finding, .simple li { break-inside: avoid; }
     .group > h3, details.group > summary, .limits h3 { break-after: avoid; }

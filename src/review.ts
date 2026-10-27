@@ -1,11 +1,11 @@
-import { escapeHtml } from './letter';
+import { escapeHtml, fileStem } from './letter';
 import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
 
 // The house mark that heads every review sheet. The standalone page makes it its h1.
 export const compactLetterhead = (tag: 'h1' | 'p') => `<header class="letterhead letterhead-compact">
     ${MONOGRAM}
     <${tag} class="house">Itemized</${tag}>
-    <hr class="double-rule">
+    <hr class="gilt-hairline">
   </header>`;
 
 export const PDF_FAILED = 'The PDF could not be made right now. You can print this review from its own page instead.';
@@ -50,6 +50,39 @@ for (const link of document.querySelectorAll('a[data-pdf]')) {
   });
 }`;
 
+// Delegated from document because on / the letter is inserted after this script runs.
+// The <pre> is the one copy of the text; textContent undoes the HTML escaping.
+export const FIX_PROMPT_SCRIPT = `
+document.addEventListener('click', async (e) => {
+  const button = e.target.closest('[data-fix-prompt]');
+  if (!button) return;
+  const pre = document.getElementById('fix-prompt-text');
+  const out = document.getElementById('fix-prompt-status');
+  const text = pre.textContent;
+  if (button.dataset.fixPrompt === 'download') {
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = button.dataset.filename;
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    return;
+  }
+  out.replaceChildren();
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    copied = true;
+  } catch {
+    getSelection().selectAllChildren(pre);
+    copied = document.execCommand('copy');
+  }
+  // Cleared first so a second copy is announced again.
+  if (copied) setTimeout(() => { out.textContent = 'Copied'; }, 50);
+});`;
+
 export const actionsRow = (id: string, second: string) => `<div class="actions">
     <a class="btn btn-primary" href="/r/${escapeHtml(id)}/pdf" download data-pdf="pdf-status">Download PDF</a>
     ${second}
@@ -81,6 +114,7 @@ export function reviewPage(id: string, letterHtml: string, provider: string | nu
 </main>
 <script>
 ${PDF_SCRIPT}
+${FIX_PROMPT_SCRIPT}
 addEventListener('beforeprint', () => { for (const d of document.querySelectorAll('details')) d.open = true; });
 </script>`,
     `/r/${id}`,
@@ -105,14 +139,4 @@ export const notFoundPage = (kind: keyof typeof NOT_FOUND = 'review') =>
 </main>`,
   );
 
-export function pdfFilename(provider: string | null, date: Date): string {
-  const slug = (provider ?? '')
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 60)
-    .replace(/-+$/, '');
-  return `itemized-review-${slug || 'price-list'}-${date.toISOString().slice(0, 10)}.pdf`;
-}
+export const pdfFilename = (provider: string | null, date: Date) => `itemized-review-${fileStem(provider, date)}.pdf`;

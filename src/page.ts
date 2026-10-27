@@ -1,6 +1,6 @@
 import { ACCEPTED_TYPES, MAX_PAGES, MAX_UPLOAD_BYTES } from './audit';
 import { LIMITS_PARAGRAPHS } from './letter';
-import { actionsRow, compactLetterhead, PDF_SCRIPT } from './review';
+import { actionsRow, compactLetterhead, FIX_PROMPT_SCRIPT, PDF_SCRIPT } from './review';
 import { HEAD_LINKS, MONOGRAM, socialMeta } from './styles';
 
 const accept = Object.keys(ACCEPTED_TYPES).join(',');
@@ -43,7 +43,7 @@ ${HEAD_LINKS}
   <header class="letterhead">
     ${MONOGRAM}
     <h1 id="house-name">Itemized</h1>
-    <hr class="double-rule">
+    <hr class="gilt-hairline">
     <p class="tagline">A Funeral Rule review of General Price Lists</p>
     <ol class="steps" aria-label="How it works">
       <li>Every funeral home must give a General Price List to anyone who asks in person about funeral arrangements. A federal rule, the Federal Trade Commission’s Funeral Rule, says what that list has to include.</li>
@@ -148,10 +148,14 @@ function setBusy(busy, message) {
   statusEl.textContent = message || '';
 }
 
-function showError(message) {
+// fetch rejects with a TypeError, and a cut-off response fails JSON parsing with a SyntaxError;
+// their browser wording ("Failed to fetch") is not for the reader.
+function showError(err) {
   progress.classList.remove('working');
   statusEl.classList.add('error');
-  statusEl.textContent = message;
+  statusEl.textContent = err instanceof TypeError || err instanceof SyntaxError
+    ? 'Itemized could not be reached. Check your connection and try again.'
+    : err.message;
 }
 
 function pageItem() {
@@ -254,7 +258,7 @@ async function review(formData) {
     }
   } catch (err) {
     setBusy(false);
-    showError(err.message);
+    showError(err);
   }
 }
 
@@ -296,12 +300,13 @@ for (const button of samples) {
       review(data);
     } catch (err) {
       setBusy(false);
-      showError(err.message);
+      showError(err);
     }
   });
 }
 addEventListener('beforeprint', () => { for (const d of letter.querySelectorAll('details')) d.open = true; });
 ${PDF_SCRIPT}
+${FIX_PROMPT_SCRIPT}
 </script>
 </body>
 </html>`;
