@@ -29,17 +29,23 @@ export const SPECIMEN_FINDINGS = [
   specimenFinding('C-030', null, null),
 ];
 
-const specimen = `<aside class="sheet specimen" aria-labelledby="specimen-caption">
+// "From your list" in a real letter means the reader's upload; here it would read as their list already reviewed.
+const specimenFindings = SPECIMEN_FINDINGS.map(findingItem).join('').replaceAll('From your list', 'From the sample list');
+
+const specimen = `<aside class="sheet specimen" aria-labelledby="specimen-heading">
+  <h2 class="specimen-heading" id="specimen-heading">What you get back</h2>
+  <p class="specimen-intro">An example review of Bellwether Memorial Chapel, a fictional funeral home.</p>
   <div class="specimen-page">
+    <span class="specimen-stamp" aria-hidden="true">Example</span>
     <p class="specimen-house" aria-hidden="true">${MONOGRAM}<span>Itemized</span></p>
     <div class="letter">
       <p class="letter-re">Re: the General Price List of Bellwether Memorial Chapel</p>
       <p class="summary">${summarySentence(3, 0, 34)}</p>
-      <section class="group fail"><p class="group-head">Did not pass<span class="count">3</span></p><ul class="findings">${SPECIMEN_FINDINGS.map(findingItem).join('')}</ul></section>
+      <section class="group fail"><p class="group-head">Did not pass<span class="count">3</span></p><ul class="findings">${specimenFindings}</ul></section>
     </div>
   </div>
-  <p class="specimen-caption" id="specimen-caption">A page from a real review of a fictional sample list. Every finding cites the Rule and quotes the list.
-    <button type="button" class="text-btn sample" data-files="syn-03.pdf">Run this review</button></p>
+  <p class="specimen-caption">Every finding cites the Rule and quotes the list.
+    <button type="button" class="text-btn sample" data-files="syn-03.pdf">Run this example</button></p>
 </aside>`;
 
 export const PAGE = `<!doctype html>

@@ -146,9 +146,18 @@ export const STYLES = `
   /* A real page of a review, laid beside the intake like a letter on a desk. */
   .specimen { padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.25rem) 1.5rem; }
   .specimen-page {
-    max-height: 36rem; overflow: hidden; font-size: .95rem;
+    position: relative; max-height: 36rem; overflow: hidden; font-size: .95rem;
+    border-top: 1px solid var(--rule); padding-top: 1.25rem;
     -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
     mask-image: linear-gradient(to bottom, #000 80%, transparent);
+  }
+  .specimen-heading { margin: 0; font: 600 1.2rem/1.3 var(--text); }
+  .specimen-intro { margin: .3rem 0 1.25rem; font-size: .95rem; color: var(--slate); }
+  /* A printer's specimen stamp: engraved capitals in faint slate, turned across the page. */
+  .specimen-stamp {
+    position: absolute; z-index: 1; top: 42%; left: 50%; transform: translate(-50%, -50%) rotate(-14deg);
+    font: 600 2.6rem/1 var(--engraved); letter-spacing: .3em; padding: .45rem .3em .4rem .6em; text-transform: uppercase;
+    color: rgba(85, 99, 117, .2); border: 2px solid rgba(85, 99, 117, .2); pointer-events: none; white-space: nowrap;
   }
   .specimen-house { display: flex; align-items: center; justify-content: center; gap: .6rem; margin: 0 0 1.25rem; font: 600 .95rem/1 var(--engraved); letter-spacing: .2em; }
   .specimen-house .monogram { width: 1.6rem; height: 1.6rem; margin: 0; }
