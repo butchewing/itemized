@@ -1,7 +1,10 @@
 import type { Provider } from './audit';
 
 type ProviderConfig = {
+  // Called directly when AI_GATEWAY_URL is unset (the portable config and forks).
   baseUrl: string;
+  // The same base under Cloudflare AI Gateway: AI_GATEWAY_URL + '/' + gatewayPath.
+  gatewayPath: string;
   model: string;
   // How the model is named to readers of a review.
   displayName: string;
@@ -18,6 +21,8 @@ const bearer = (key: string) => ({ Authorization: `Bearer ${key}` });
 export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
   'meta-api': {
     baseUrl: 'https://api.meta.ai/v1',
+    // A gateway custom provider with slug "meta" and base_url https://api.meta.ai.
+    gatewayPath: 'custom-meta/v1',
     model: 'muse-spark-1.3',
     displayName: 'Muse Spark 1.3',
     keyName: 'META_API_KEY',
@@ -28,6 +33,7 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
   },
   'open-weights': {
     baseUrl: 'https://inference.baseten.co/v1',
+    gatewayPath: 'baseten/v1',
     model: 'meta-models/muse-spark-open-1026',
     displayName: 'Muse Spark Open',
     keyName: 'BASETEN_API_KEY',
@@ -62,6 +68,21 @@ export class ModelError extends Error {
   ) {
     super(`${provider} responded ${status}: ${body}`);
   }
+}
+
+// Every model call goes through AI Gateway when AI_GATEWAY_URL is set. The gateway keeps metadata
+// only (tokens, cost, latency, status): uploads never land in its logs, so the 30-day deletion holds.
+export function endpoint(env: Env, provider: Provider): { baseUrl: string; headers: Record<string, string> } {
+  const cfg = PROVIDER_CONFIG[provider];
+  const gateway = env.AI_GATEWAY_URL?.replace(/\/+$/, '');
+  if (!gateway) return { baseUrl: cfg.baseUrl, headers: {} };
+  return {
+    baseUrl: `${gateway}/${cfg.gatewayPath}`,
+    headers: {
+      'cf-aig-collect-log-payload': 'false',
+      ...(env.CF_AIG_TOKEN && { 'cf-aig-authorization': `Bearer ${env.CF_AIG_TOKEN}` }),
+    },
+  };
 }
 
 const truncate = (s: string, n = 800) => (s.length > n ? `${s.slice(0, n)}...[truncated]` : s);
@@ -119,10 +140,11 @@ export async function chatJson(env: Env, provider: Provider, opts: ChatJsonOptio
     }),
   };
 
+  const { baseUrl, headers } = endpoint(env, provider);
   const t0 = Date.now();
-  const res = await fetch(`${cfg.baseUrl}/chat/completions`, {
+  const res = await fetch(`${baseUrl}/chat/completions`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...cfg.authHeader(key) },
+    headers: { 'Content-Type': 'application/json', ...headers, ...cfg.authHeader(key) },
     body: JSON.stringify(body),
   });
   const text = await res.text();
@@ -164,10 +186,11 @@ const BOX = /(\d+)<\|box;x1=(\d+);y1=(\d+);x2=(\d+);y2=(\d+);w=(\d+);h=(\d+)\|>/
 export async function sam(env: Env, imageBytes: ArrayBuffer, mime: string, phrase: string) {
   const key = env.META_API_KEY;
   if (!key) throw new ModelError('meta-api', 0, 'META_API_KEY is not set');
+  const { baseUrl, headers } = endpoint(env, 'meta-api');
   const t0 = Date.now();
-  const res = await fetch(`${PROVIDER_CONFIG['meta-api'].baseUrl}/responses`, {
+  const res = await fetch(`${baseUrl}/responses`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...PROVIDER_CONFIG['meta-api'].authHeader(key) },
+    headers: { 'Content-Type': 'application/json', ...headers, ...PROVIDER_CONFIG['meta-api'].authHeader(key) },
     body: JSON.stringify({
       model: 'sam-3.1',
       input: [

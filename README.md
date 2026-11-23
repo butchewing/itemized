@@ -80,6 +80,8 @@ Deploying:
 
 Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KEY`, and `BASETEN_API_KEY` if you use the open-weights provider.
 
+Optional: to send model calls through [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/), set the `AI_GATEWAY_URL` variable to `https://gateway.ai.cloudflare.com/v1/<account id>/<gateway id>` and the `CF_AIG_TOKEN` secret to the gateway's token. Baseten is a built-in gateway provider. The Meta Model API needs a custom provider with slug `meta` and base URL `https://api.meta.ai`. Itemized asks the gateway to keep metadata only (tokens, cost, latency, status), so uploaded documents stay out of the gateway's logs. Without `AI_GATEWAY_URL`, calls go straight to each provider.
+
 ## Provenance
 
 [PROVENANCE.md](PROVENANCE.md) records what existed before the hackathon and what was built during it, for the event's judges. It is kept as history; work since November 4, 2026 is in the git log.
