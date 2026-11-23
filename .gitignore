@@ -1,6 +1,6 @@
 # Allowlist. Everything is ignored unless listed below, so planning notes, real GPLs,
 # EditFast specimens, secrets and AI-assistant files can't reach the public repo by accident.
-# Only what judges need ships: code, config, the ruleset, synthetic fixtures, README and PROVENANCE.
+# Only what the public repo needs ships: code, config, CI, the ruleset, synthetic fixtures, README and PROVENANCE.
 /*
 
 !/.gitignore
@@ -14,6 +14,7 @@
 !/wrangler.jsonc
 !/wrangler.production.jsonc
 !/worker-configuration.d.ts
+!/.github/
 !/src/
 !/migrations/
 !/public/

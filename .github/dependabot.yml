@@ -1,0 +1,56 @@
+# Dependabot: weekly version updates held 7 days after release (cooldown).
+# Security-advisory updates bypass the cooldown. Majors open one PR each.
+# No automerge: every PR is reviewed by hand.
+version: 2
+updates:
+  # ---- GitHub Actions (keep SHA-pinned third-party actions current) ----
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'America/Chicago'
+    open-pull-requests-limit: 5
+    # 7-day age gate. Security updates bypass cooldown automatically.
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: 'ci'
+      include: 'scope'
+    groups:
+      actions:
+        patterns: ['*']
+
+  # ---- npm / pnpm / yarn (the `npm` ecosystem covers all three) ----
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'America/Chicago'
+    open-pull-requests-limit: 10
+    versioning-strategy: 'increase-if-necessary'
+    # 7-day per-package age gate. Version updates only; security-advisory
+    # updates bypass cooldown so critical fixes still land immediately.
+    cooldown:
+      default-days: 7
+    # Bare prefix + include:scope => Dependabot appends (deps)/(deps-dev).
+    # NEVER use a scoped prefix (chore(deps)) WITH include:scope -> double
+    # scope `chore(deps)(deps):`.
+    commit-message:
+      prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'
+    # Majors intentionally NOT grouped — one PR each for clean bisection.
+    groups:
+      prod-patch:
+        dependency-type: 'production'
+        update-types: ['patch']
+      prod-minor:
+        dependency-type: 'production'
+        update-types: ['minor']
+      dev-non-major:
+        dependency-type: 'development'
+        update-types: ['minor', 'patch']
