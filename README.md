@@ -2,7 +2,7 @@
 
 Itemized checks funeral home price lists against the FTC Funeral Rule and flags missing required disclosures and prices, with citations.
 
-Built by Butch Ewing during the Meta Global AI Developer Hackathon. Live at https://itemized.mortuary.ai.
+Built and maintained by Butch Ewing; started at the Meta Global AI Developer Hackathon (October 26 to November 4, 2026). Live at https://itemized.mortuary.ai.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/butchewing/itemized)
 
@@ -82,7 +82,7 @@ Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KE
 
 ## Provenance
 
-See [PROVENANCE.md](PROVENANCE.md) for what existed before the hackathon and what was built during it. In short: the ruleset transcription, the synthetic test lists and the FTC sample predate kickoff; all application code was written during the event, and the git history shows when.
+[PROVENANCE.md](PROVENANCE.md) records what existed before the hackathon and what was built during it, for the event's judges. It is kept as history; work since November 4, 2026 is in the git log.
 
 ## License
 

@@ -6,7 +6,7 @@ import { escapeHtml, LIMITS_PARAGRAPHS } from './letter';
 
 export const SITE = 'https://itemized.mortuary.ai';
 // Bump when the site's prose changes; it is the sitemap's lastmod.
-export const SITE_LAST_UPDATED = '2026-10-27';
+export const SITE_LAST_UPDATED = '2026-11-23';
 export const CONTACT_EMAIL = 'itemized@mortuary.ai';
 const REPO = 'https://github.com/butchewing/itemized';
 export const DESCRIPTION =
@@ -172,7 +172,7 @@ ${LINKS_MD.trim()}
 // llmstxt.org: an H1, a blockquote summary, then sections whose lists are links.
 export const LLMS_TXT = `# Itemized
 
-> ${DESCRIPTION} Free to use at ${SITE}; built by Butch Ewing during the Meta Global AI Developer Hackathon.
+> ${DESCRIPTION} Free to use at ${SITE}; built and maintained by Butch Ewing.
 
 Itemized reviews a US funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). A Meta Muse Spark model transcribes the list; fixed rules written from the Rule's text decide what passes. Results are pass, fail, review or not applicable, each with the Rule section it comes from.
 
@@ -197,7 +197,7 @@ export const ABOUT: SitePage = {
   title: 'About Itemized',
   heading: 'About Itemized',
   md: `
-Itemized checks a funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). It was built by Butch Ewing during the Meta Global AI Developer Hackathon (October 26 to November 4, 2026), and it is free to use. It is hosted on mortuary.ai, the domain of Mortuary.AI, a company Butch Ewing also runs.
+Itemized checks a funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). Butch Ewing built it, starting at the Meta Global AI Developer Hackathon (October 26 to November 4, 2026), and maintains it. It is free to use. It is hosted on mortuary.ai, the domain of Mortuary.AI, a company Butch Ewing also runs.
 
 ## Why it exists
 
