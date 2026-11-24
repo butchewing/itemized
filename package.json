@@ -15,7 +15,7 @@
     "eval": "node test/eval/run.mjs --config wrangler.production.jsonc"
   },
   "dependencies": {
-    "@cloudflare/puppeteer": "1.4.0",
+    "@cloudflare/puppeteer": "2.0.1",
     "hono": "4.13.19"
   },
   "devDependencies": {
