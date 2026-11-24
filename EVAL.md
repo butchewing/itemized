@@ -12,6 +12,12 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 | d. Synthetic PDFs as page images | Muse Spark Open (Baseten) | 12 | 1083/1088 | 95/96 | 497/516 (96.3%) | 0 | 1 | 17 | 5.4% | 0 | $0.0270 / $0.0313 | 19.2 s / 21.1 s |
 | d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Baseten) | 12 | 1083/1088 | 95/96 | 514/516 (99.6%) | 0 | 1 | 0 | 2.1% | 0 | $0.0270 / $0.0313 | 19.2 s / 21.1 s |
 | e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0310 / $0.0310 | 20.5 s / 20.5 s |
+| g. Synthetic PDFs | Claude Sonnet 5.5 (Anthropic API) | 12 | 1088/1088 | 95/96 | 510/516 (98.8%) | 0 | 0 | 0 | 1.9% | 0 | $0.0618 / $0.0647 | 18.1 s / 20.0 s |
+| h. Synthetic photos | Claude Sonnet 5.5 (Anthropic API) | 4 | 355/356 | 32/32 | 166/172 (96.5%) | 0 | 0 | 5 | 6.4% | 0 | $0.0689 / $0.0726 | 18.5 s / 20.0 s |
+| i. FTC Sample 1 template | Claude Sonnet 5.5 (Anthropic API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0616 / $0.0616 | 19.9 s / 19.9 s |
+| j. Synthetic PDFs | Claude Haiku 5.5 (Anthropic API) | 12 | 1087/1088 | 94/96 | 512/516 (99.2%) | 0 | 0 | 1 | 2.5% | 0 | $0.0038 / $0.0043 | 19.2 s / 22.9 s |
+| k. Synthetic photos | Claude Haiku 5.5 (Anthropic API) | 4 | 292/356 | 31/32 | 155/172 (90.1%) | 0 | 0 | 5 | 9.9% | 0 | $0.0054 / $0.0063 | 28.5 s / 36.4 s |
+| l. FTC Sample 1 template | Claude Haiku 5.5 (Anthropic API) | 1 | n/a | n/a | 42/43 (97.7%) | 0 | 0 | 0 | 9.3% | 0 | $0.0049 / $0.0049 | 27.4 s / 27.4 s |
 
 ## Real price lists (aggregates only)
 
@@ -102,6 +108,52 @@ d. Same extraction, PDF rules (diagnostic), open-weights:
 
 e. FTC Sample 1 template, meta-api: none.
 
+g. Synthetic PDFs, claude-sonnet:
+- syn-10 C-032 (other: expected review, got pass)
+- syn-10 C-081 (other: expected review, got pass)
+- syn-10 C-082 (other: expected review, got pass)
+- syn-11 C-045 (other: expected pass, got review)
+- syn-11 C-081 (other: expected pass, got review)
+- syn-11 C-083 (other: expected pass, got review)
+
+h. Synthetic photos, claude-sonnet:
+- syn-03 C-030 (fail to review: expected fail, got review)
+- syn-03 C-041 (fail to review: expected fail, got review)
+- syn-09 C-022 (fail to review: expected fail, got review)
+- syn-09 C-042 (fail to review: expected fail, got review)
+- syn-09 C-052 (fail to review: expected fail, got review)
+- syn-10 C-082 (other: expected review, got pass)
+
+i. FTC Sample 1 template, claude-sonnet: none.
+
+j. Synthetic PDFs, claude-haiku:
+- syn-08 C-061 (fail to review: expected fail, got review)
+- syn-05 C-080 (other: expected not_applicable, got pass)
+- syn-08 C-060 (other: expected pass, got review)
+- syn-11 C-083 (other: expected pass, got review)
+
+k. Synthetic photos, claude-haiku:
+- syn-03 C-030 (fail to review: expected fail, got review)
+- syn-03 C-041 (fail to review: expected fail, got review)
+- syn-09 C-022 (fail to review: expected fail, got review)
+- syn-09 C-042 (fail to review: expected fail, got review)
+- syn-09 C-052 (fail to review: expected fail, got review)
+- syn-01 C-043 (other: expected pass, got review)
+- syn-01 C-053 (other: expected pass, got review)
+- syn-01 C-070 (other: expected pass, got review)
+- syn-03 C-007 (other: expected pass, got review)
+- syn-03 C-061 (other: expected pass, got review)
+- syn-09 C-070 (other: expected pass, got review)
+- syn-10 C-032 (other: expected review, got pass)
+- syn-10 C-043 (other: expected pass, got review)
+- syn-10 C-070 (other: expected pass, got review)
+- syn-10 C-073 (other: expected pass, got review)
+- syn-10 C-081 (other: expected review, got pass)
+- syn-10 C-082 (other: expected review, got pass)
+
+l. FTC Sample 1 template, claude-haiku:
+- ftc C-080 (other: expected not_applicable, got review)
+
 ## Method
 
 - Every set goes through the local Worker the same way an upload does: store, queue, extract, semantic checks, rules engine. The harness then asks a development route for the engine verdicts on the cached extraction, with the audit date fixed at 2026-10-26 so the stale-date check does not drift between runs.
@@ -113,6 +165,7 @@ e. FTC Sample 1 template, meta-api: none.
 - Verdicts come from rules engine version `engine-5`.
 - Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.
 - Real price lists ran only on Muse Spark Open through Baseten. The harness refuses any real-list file unless the running Worker reports the open-weights provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.
+- Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.
 
 ## Rerun
 
@@ -129,6 +182,6 @@ npx wrangler d1 migrations apply DB --local
 node test/eval/run.mjs --sets a,b,c,d,e
 ```
 
-Spend is capped per run at $1 on the Meta Model API and $4 on Baseten (`--cap-meta-api`, `--cap-open-weights`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
+Spend is capped per run at $1 on the Meta Model API, $4 on Baseten, $7 on Claude Sonnet 5.5 and $3 on Claude Haiku 5.5 (`--cap-meta-api`, `--cap-open-weights`, `--cap-claude-sonnet`, `--cap-claude-haiku`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
 
-This run spent $0.0000 on the Meta Model API and $0.4196 on Baseten.
+The last run (sets on Claude Sonnet 5.5, sets on Claude Haiku 5.5) spent $1.0172 on Claude Sonnet 5.5, $0.0675 on Claude Haiku 5.5.

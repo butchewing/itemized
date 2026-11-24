@@ -10,7 +10,7 @@
 //     [--cap-claude-sonnet 7] [--cap-claude-haiku 3]   Claude sets g-l: public data only
 //   node test/eval/run.mjs [--config wrangler.jsonc] ...   the portable config, for a fresh checkout
 import { spawn, spawnSync } from 'node:child_process';
-import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { groundTruth, score } from '../eval-extraction.mjs';
 import {
@@ -53,13 +53,28 @@ function render(set) {
   }
 }
 
+// wrangler dev loads only the secrets a config lists in secrets.required, and deploy then demands
+// them, so a provider whose key production does not hold runs on a throwaway copy that lists it.
+const EVAL_ONLY_SECRET = { 'claude-sonnet': 'ANTHROPIC_API_KEY', 'claude-haiku': 'ANTHROPIC_API_KEY' };
+function configFor(provider) {
+  const secret = EVAL_ONLY_SECRET[provider];
+  const text = readFileSync(join(ROOT, CONFIG), 'utf8');
+  if (!secret || text.includes(`"${secret}"`)) return { config: CONFIG, cleanup: () => {} };
+  const listed = text.replace(/("required"\s*:\s*\[)/, `$1"${secret}", `);
+  if (listed === text) throw new Error(`${CONFIG} has no secrets.required list to add ${secret} to`);
+  const config = 'wrangler.eval.jsonc';
+  writeFileSync(join(ROOT, config), `// Written by test/eval/run.mjs for one run; never deployed.\n${listed}`);
+  return { config, cleanup: () => rmSync(join(ROOT, config), { force: true }) };
+}
+
 async function startWorker(provider) {
   if (await fetch(`${BASE}/dev/provider`).then(() => true, () => false)) throw new Error(`port ${PORT} is already serving; stop that process or pass --port`);
   mkdirSync(join(PRIVATE_DIR, 'logs'), { recursive: true });
   const log = createWriteStream(join(PRIVATE_DIR, 'logs', `wrangler-${provider}.log`));
+  const { config, cleanup } = configFor(provider);
   const child = spawn(
     'npx',
-    ['wrangler', 'dev', '-c', CONFIG, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1',
+    ['wrangler', 'dev', '-c', config, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1',
       // The run's own caps (CAPS) bound spend; the Worker's daily budget would count earlier runs today too.
       '--var', 'DAILY_BUDGET_USD:1000'],
     { cwd: ROOT, detached: true, stdio: ['ignore', 'pipe', 'pipe'] },
@@ -70,18 +85,25 @@ async function startWorker(provider) {
   // with this one still shutting down.
   const stop = async () => {
     try {
-      process.kill(-child.pid, 'SIGTERM');
-    } catch {}
-    for (let t = 0; t < 30; t++) {
-      if (!(await fetch(`${BASE}/dev/provider`).then(() => true, () => false))) return;
-      await sleep(500);
+      try {
+        process.kill(-child.pid, 'SIGTERM');
+      } catch {}
+      for (let t = 0; t < 30; t++) {
+        if (!(await fetch(`${BASE}/dev/provider`).then(() => true, () => false))) return;
+        await sleep(500);
+      }
+      try {
+        process.kill(-child.pid, 'SIGKILL');
+      } catch {}
+    } finally {
+      cleanup();
     }
-    try {
-      process.kill(-child.pid, 'SIGKILL');
-    } catch {}
   };
   for (let t = 0; t < 120; t++) {
-    if (child.exitCode !== null) throw new Error(`wrangler dev exited (${child.exitCode}); see ${relative(ROOT, join(PRIVATE_DIR, 'logs'))}`);
+    if (child.exitCode !== null) {
+      cleanup();
+      throw new Error(`wrangler dev exited (${child.exitCode}); see ${relative(ROOT, join(PRIVATE_DIR, 'logs'))}`);
+    }
     try {
       const { provider: running } = await getJson('/dev/provider');
       return { running, stop };
