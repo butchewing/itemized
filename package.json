@@ -15,6 +15,7 @@
     "eval": "node test/eval/run.mjs --config wrangler.production.jsonc"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "1.8.0",
     "@cloudflare/puppeteer": "1.4.0",
     "hono": "4.13.13"
   },

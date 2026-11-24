@@ -13,7 +13,7 @@ export function canTransition(from: AuditStatus, to: AuditStatus): boolean {
   return TRANSITIONS[from].includes(to);
 }
 
-export const PROVIDERS = ['meta-api', 'open-weights'] as const;
+export const PROVIDERS = ['meta-api', 'open-weights', 'claude-sonnet', 'claude-haiku'] as const;
 export type Provider = (typeof PROVIDERS)[number];
 
 export function isProvider(value: string): value is Provider {

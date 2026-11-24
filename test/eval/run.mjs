@@ -7,6 +7,7 @@
 //   corpus/eval/results.json real-corpus per-list results (private, gitignored)
 //   corpus/eval/fails-review.md every real-corpus fail, for a person to judge (private)
 //   npm run eval [-- --sets a,b,c,d,e,f] [--port 8790] [--cap-meta-api 1] [--cap-open-weights 4]
+//     [--cap-claude-sonnet 7] [--cap-claude-haiku 3]   Claude sets g-l: public data only
 //   node test/eval/run.mjs [--config wrangler.jsonc] ...   the portable config, for a fresh checkout
 import { spawn, spawnSync } from 'node:child_process';
 import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -24,13 +25,19 @@ const CONFIG = args.config ?? 'wrangler.jsonc';
 const PORT = Number(args.port ?? 8790);
 const BASE = `http://127.0.0.1:${PORT}`;
 const ONLY = args.sets ? new Set(args.sets.split(',')) : null;
-const CAPS = { 'meta-api': Number(args['cap-meta-api'] ?? 1), 'open-weights': Number(args['cap-open-weights'] ?? 4) };
+const PROVIDER_ORDER = ['meta-api', 'open-weights', 'claude-sonnet', 'claude-haiku'];
+const DEFAULT_CAPS = { 'meta-api': 1, 'open-weights': 4, 'claude-sonnet': 7, 'claude-haiku': 3 };
+const CAPS = Object.fromEntries(PROVIDER_ORDER.map((p) => [p, Number(args[`cap-${p}`] ?? DEFAULT_CAPS[p])]));
 const PRIVATE_DIR = join(CORPUS, 'eval');
 // Measured by extraction-variance.mjs, not by this run, so it is carried into EVAL.md as written.
 const VARIANCE_SECTION = join(ROOT, 'test/eval/variance/EVAL-section.md');
 const PUBLIC_RESULTS = join(ROOT, 'test/eval/results.json');
 const ENGINE_VERSION_NOTE = readFileSync(join(ROOT, 'src/rules/engine.ts'), 'utf8').match(/ENGINE_VERSION = '([^']+)'/)[1];
-const MODELS = { 'meta-api': 'Muse Spark 1.3 (Meta Model API)', 'open-weights': 'Muse Spark Open (Baseten)' };
+const MODELS = {
+  'meta-api': 'Muse Spark 1.3 (Meta Model API)', 'open-weights': 'Muse Spark Open (Baseten)',
+  'claude-sonnet': 'Claude Sonnet 5.5 (Anthropic API)', 'claude-haiku': 'Claude Haiku 5.5 (Anthropic API)',
+};
+const SPEND_ON = { 'meta-api': 'the Meta Model API', 'open-weights': 'Baseten', 'claude-sonnet': 'Claude Sonnet 5.5', 'claude-haiku': 'Claude Haiku 5.5' };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const getJson = async (path) => {
@@ -248,6 +255,8 @@ function tableRow(s, label) {
 const LABEL = {
   a: 'a. Synthetic PDFs', b: 'b. Synthetic photos', c: 'c. Synthetic photos', d: 'd. Synthetic PDFs as page images',
   'd/pdf': 'd. Same extraction, PDF rules (diagnostic)', e: 'e. FTC Sample 1 template',
+  g: 'g. Synthetic PDFs', h: 'h. Synthetic photos', i: 'i. FTC Sample 1 template',
+  j: 'j. Synthetic PDFs', k: 'k. Synthetic photos', l: 'l. FTC Sample 1 template',
 };
 
 function mismatchLines(s) {
@@ -319,6 +328,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     `- Verdicts come from rules engine version \`${ENGINE_VERSION_NOTE}\`.`,
     '- Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.',
     '- Real price lists ran only on Muse Spark Open through Baseten. The harness refuses any real-list file unless the running Worker reports the open-weights provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.',
+    '- Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.',
     '',
     '## Rerun',
     '',
@@ -335,9 +345,11 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     'node test/eval/run.mjs --sets a,b,c,d,e',
     '```',
     '',
-    'Spend is capped per run at $1 on the Meta Model API and $4 on Baseten (`--cap-meta-api`, `--cap-open-weights`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.',
+    'Spend is capped per run at $1 on the Meta Model API, $4 on Baseten, $7 on Claude Sonnet 5.5 and $3 on Claude Haiku 5.5 (`--cap-meta-api`, `--cap-open-weights`, `--cap-claude-sonnet`, `--cap-claude-haiku`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.',
     '',
-    `This run spent ${usd(spend['meta-api'] ?? 0)} on the Meta Model API and ${usd(spend['open-weights'] ?? 0)} on Baseten.`,
+    `The last run (${Object.keys(spend).length ? Object.keys(spend).map((p) => `sets on ${SPEND_ON[p]}`).join(', ') : 'no new sets'}) spent ${
+      Object.entries(spend).map(([p, v]) => `${usd(v)} on ${SPEND_ON[p]}`).join(', ') || '$0.0000'
+    }.`,
     '',
   );
   writeFileSync(join(ROOT, 'EVAL.md'), lines.join('\n'));
@@ -412,7 +424,7 @@ async function main() {
 
   const rows = {};
   const spend = {};
-  for (const provider of ['meta-api', 'open-weights']) {
+  for (const provider of PROVIDER_ORDER) {
     const group = runSets.filter((s) => s.provider === provider);
     if (!group.length) continue;
     const { running, stop } = await startWorker(provider);
@@ -478,7 +490,7 @@ async function main() {
 
   writeEvalMd(publicOut.summaries, corpusAgg, spend);
   for (const s of publicOut.summaries) console.log(tableRow(s, LABEL[s.mode === 'pdf' && s.set === 'd' ? 'd/pdf' : s.set]));
-  console.log(`spend this run: meta-api ${usd(spend['meta-api'] ?? 0)}, open-weights ${usd(spend['open-weights'] ?? 0)}`);
+  console.log(`spend this run: ${Object.entries(spend).map(([p, v]) => `${p} ${usd(v)}`).join(', ') || 'none'}`);
 }
 
 await main();

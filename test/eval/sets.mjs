@@ -91,8 +91,23 @@ export function buildSets() {
         labels: corpusLabels[id] ?? null, redacted: m.required_elements_redacted, pages: m.pages,
       })),
     },
+    ...CLAUDE_PROVIDERS.flatMap(([provider, ids]) => {
+      const [pdfs, phone, template] = ids;
+      const synPdfDocs = synPdfs().map((list) => ({ key: list, list, paths: [join(SYN, 'pdf', `${list}.pdf`)], mime: 'application/pdf', truth: list, labels: labels[list] }));
+      return [
+        { id: pdfs, name: 'Synthetic PDFs', provider, input: 'pdf', docs: synPdfDocs },
+        { id: phone, name: 'Synthetic phone photos', provider, input: 'images', docs: PHOTO_LISTS.map(photoDoc) },
+        {
+          id: template, name: 'FTC Sample 1 template', provider, input: 'pdf',
+          docs: [{ key: 'ftc-template', list: 'ftc', paths: [join(ROOT, 'specimens', ftc.pdf)], mime: 'application/pdf', truth: null, labels: ftc.checks, unlistedPass: true }],
+        },
+      ];
+    }),
   ];
 }
+
+// Claude runs on the public sets only (decided 2026-11-23): synthetic PDFs, phone photos, FTC template.
+export const CLAUDE_PROVIDERS = [['claude-sonnet', ['g', 'h', 'i']], ['claude-haiku', ['j', 'k', 'l']]];
 
 // ftc-453 policy "redacted_elements": presence checks for an element the redaction removed count as pass.
 export const REDACTED_ELEMENT_CHECKS = { name: 'C-002', address: 'C-003', phone: 'C-004' };

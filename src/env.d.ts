@@ -5,4 +5,6 @@ interface Env {
   DEV_ROUTES?: string;
   AI_GATEWAY_URL?: string;
   CF_AIG_TOKEN?: string;
+  // Only the claude-* providers read it; they are evaluated locally, not used in production.
+  ANTHROPIC_API_KEY?: string;
 }
