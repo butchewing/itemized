@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import { isProvider } from './audit';
+import { isProvider, PDF_UNSUPPORTED } from './audit';
 import { chatJson, costUsd, ModelError, PROVIDER_CONFIG, SAM_PER_IMAGE_USD, sam, toDataUrl, type ContentPart, type Usage } from './models';
 import { DISCLOSURE_IDS } from './extraction';
 import { extractFresh, SEMANTIC_EFFORT, type ExtractInput } from './pipeline';
@@ -141,7 +141,7 @@ spike.post('/variance-extract', async (c) => {
   if (provider !== (c.env.MODEL_PROVIDER as string)) return c.json({ error: `this Worker runs ${c.env.MODEL_PROVIDER}` }, 409);
   const pdf = files[0]!.type === 'application/pdf';
   if (pdf && files.length !== 1) return c.json({ error: 'one PDF at a time' }, 400);
-  if (pdf && provider === 'open-weights') return c.json({ error: 'PDF not supported on open-weights yet' }, 400);
+  if (pdf && !PROVIDER_CONFIG[provider].pdf) return c.json({ error: PDF_UNSUPPORTED }, 400);
   if ((await spendTodayUtc(c.env.DB)) >= Number(c.env.DAILY_BUDGET_USD)) return c.json({ error: 'daily budget reached' }, 429);
 
   const input: ExtractInput = pdf

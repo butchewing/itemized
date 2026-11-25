@@ -34,10 +34,11 @@ Many funeral homes are small businesses. Itemized gives them a reading of their 
 
 Uploading the same file again within 30 days returns the earlier review without another model call. A daily job deletes files and reviews 30 days after their last upload.
 
-## Meta models
+## Models
 
 - **Muse Spark 1.3** through the Meta Model API reads photos and PDFs and runs the 13 judgment checks. This is what the live site uses. A review costs about $0.03 to $0.04.
-- **Muse Spark Open** on Baseten (`meta-models/muse-spark-open-1026`) is a second, open-weights backend for the same pipeline, selected with one setting. It reads page images (8 per request; longer lists are read in batches and merged). Every evaluation on real price lists ran on it, so no real list was sent to a hosted API.
+- **Muse Spark Open**, Meta's open-weights model, is a second backend for the same pipeline, selected with one setting (`MODEL_PROVIDER=muse-open`). It runs through Cloudflare's Workers AI binding and is served by Fireworks, whose terms promise zero data retention and no training on what is sent. It reads page images, not PDFs (8 per request; longer lists are read in batches and merged). Real price lists in the evaluation go only to this model. Until November 2026 it ran on a Baseten deployment, now retired.
+- **Other open models** are set up for comparison on the public lists only. Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B, which Cloudflare hosts with zero data retention, did not finish a full transcription within the time limits in November 2026. Mistral Large 4 on Ollama Cloud is wired through the gateway but not yet evaluated.
 - **SAM 3.1** was measured for cropping phone photos to the page before reading. On 8 photos the crops fixed three misreads but caused three new ones, and the rule was no new errors anywhere, so it is not used.
 
 ## Accuracy
@@ -75,12 +76,12 @@ Run `npm run types` after changing either configuration (types come from `wrangl
 
 Deploying:
 
-- `npm run deploy` applies D1 migrations and deploys with the portable configuration. The button runs this in your account and creates its database, storage bucket and queue there. You need a Meta Model API key; a Baseten key is optional. Model calls are billed to your Meta account.
+- `npm run deploy` applies D1 migrations and deploys with the portable configuration. The button runs this in your account and creates its database, storage bucket and queue there. You need a Meta Model API key. Meta Model API calls are billed to your Meta account; open models on Workers AI are billed to your Cloudflare account.
 - `npm run deploy:production` applies D1 migrations and deploys itemized.mortuary.ai with `wrangler.production.jsonc`.
 
-Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KEY`, and `BASETEN_API_KEY` if you use the open-weights provider.
+Secrets are set with `wrangler secret put`, not stored in the repo: `META_API_KEY`. Open models on Workers AI need no key. `ANTHROPIC_API_KEY` and `OLLAMA_API_KEY` are only for the evaluated Claude and Ollama providers.
 
-Optional: to send model calls through [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/), set the `AI_GATEWAY_URL` variable to `https://gateway.ai.cloudflare.com/v1/<account id>/<gateway id>` and the `CF_AIG_TOKEN` secret to the gateway's token. Baseten is a built-in gateway provider. The Meta Model API needs a custom provider with slug `meta` and base URL `https://api.meta.ai`. Itemized asks the gateway to keep metadata only (tokens, cost, latency, status), so uploaded documents stay out of the gateway's logs. Without `AI_GATEWAY_URL`, calls go straight to each provider.
+Optional: to send model calls through [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/), set the `AI_GATEWAY_URL` variable to `https://gateway.ai.cloudflare.com/v1/<account id>/<gateway id>` and the `CF_AIG_TOKEN` secret to the gateway's token. The Meta Model API needs a custom provider with slug `meta` and base URL `https://api.meta.ai`, and Ollama Cloud one with slug `ollama` and base URL `https://ollama.com`. Itemized asks the gateway to keep metadata only (tokens, cost, latency, status), so uploaded documents stay out of the gateway's logs. Workers AI calls go to the same gateway with logging off, because the binding has no metadata-only option. Without `AI_GATEWAY_URL`, calls go straight to each provider.
 
 ## Provenance
 

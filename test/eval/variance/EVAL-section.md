@@ -2,7 +2,7 @@
 
 The main table runs each document once, so it cannot show how much a fresh extraction moves between runs. To measure that, syn-03 was extracted five times per model with the cache bypassed (`test/eval/extraction-variance.mjs`, raw runs in `test/eval/variance/`). Muse Spark 1.3 read the PDF, as in set a. Muse Spark Open read the rendered page image, as in set d. Each run was scored against the list's ground truth and put through the deterministic checks under both the photo rule and the PDF rule. The 13 semantic checks were not run, so 30 checks are compared.
 
-| Measure, 5 runs each | Muse Spark 1.3 (PDF) | Muse Spark Open (page image) |
+| Measure, 5 runs each | Muse Spark 1.3 (PDF) | Muse Spark Open on Baseten, retired (page image) |
 |---|---|---|
 | Fields right, per run | 86/86 in all five | 86, 83, 86, 85, 85 of 86 |
 | Disclosures right, per run | 8/8 in all five | 8/8 in all five |

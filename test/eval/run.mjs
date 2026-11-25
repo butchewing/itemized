@@ -6,15 +6,15 @@
 //   EVAL.md                  public table: synthetic, FTC, and real-corpus aggregates only
 //   corpus/eval/results.json real-corpus per-list results (private, gitignored)
 //   corpus/eval/fails-review.md every real-corpus fail, for a person to judge (private)
-//   npm run eval [-- --sets a,b,c,d,e,f] [--port 8790] [--cap-meta-api 1] [--cap-open-weights 4]
-//     [--cap-claude-sonnet 7] [--cap-claude-haiku 3]   Claude sets g-l: public data only
+//   npm run eval [-- --sets a,b,c,d,e,f] [--port 8790] [--cap-<provider> <usd>]
+//   Open candidates m-t and Claude g-l run public data only; caps per provider are in DEFAULT_CAPS.
 //   node test/eval/run.mjs [--config wrangler.jsonc] ...   the portable config, for a fresh checkout
 import { spawn, spawnSync } from 'node:child_process';
 import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { groundTruth, score } from '../eval-extraction.mjs';
 import {
-  assertSetAllowed, assertUploadAllowed, buildSets, CORPUS, MAX_PAGES, REDACTED_ELEMENT_CHECKS, ROOT,
+  assertSetAllowed, assertUploadAllowed, buildSets, CORPUS, CORPUS_PROVIDER, MAX_PAGES, REDACTED_ELEMENT_CHECKS, ROOT,
 } from './sets.mjs';
 
 const args = Object.fromEntries(
@@ -25,8 +25,10 @@ const CONFIG = args.config ?? 'wrangler.jsonc';
 const PORT = Number(args.port ?? 8790);
 const BASE = `http://127.0.0.1:${PORT}`;
 const ONLY = args.sets ? new Set(args.sets.split(',')) : null;
-const PROVIDER_ORDER = ['meta-api', 'open-weights', 'claude-sonnet', 'claude-haiku'];
-const DEFAULT_CAPS = { 'meta-api': 1, 'open-weights': 4, 'claude-sonnet': 7, 'claude-haiku': 3 };
+const PROVIDER_ORDER = ['meta-api', 'muse-open', 'gemma-4', 'llama-4-scout', 'qwen-3.8', 'ollama-mistral', 'claude-sonnet', 'claude-haiku'];
+const DEFAULT_CAPS = {
+  'meta-api': 1, 'muse-open': 4, 'gemma-4': 1, 'llama-4-scout': 1, 'qwen-3.8': 2, 'ollama-mistral': 2, 'claude-sonnet': 7, 'claude-haiku': 3,
+};
 const CAPS = Object.fromEntries(PROVIDER_ORDER.map((p) => [p, Number(args[`cap-${p}`] ?? DEFAULT_CAPS[p])]));
 const PRIVATE_DIR = join(CORPUS, 'eval');
 // Measured by extraction-variance.mjs, not by this run, so it is carried into EVAL.md as written.
@@ -34,10 +36,15 @@ const VARIANCE_SECTION = join(ROOT, 'test/eval/variance/EVAL-section.md');
 const PUBLIC_RESULTS = join(ROOT, 'test/eval/results.json');
 const ENGINE_VERSION_NOTE = readFileSync(join(ROOT, 'src/rules/engine.ts'), 'utf8').match(/ENGINE_VERSION = '([^']+)'/)[1];
 const MODELS = {
-  'meta-api': 'Muse Spark 1.3 (Meta Model API)', 'open-weights': 'Muse Spark Open (Baseten)',
+  'meta-api': 'Muse Spark 1.3 (Meta Model API)',
+  // Rows from before 2026-11-24 keep their host: the Baseten deployment is retired.
+  'open-weights': 'Muse Spark Open (Baseten, retired)',
+  'muse-open': 'Muse Spark Open (Cloudflare, served by Fireworks)',
+  'gemma-4': 'Gemma 4 26B (Cloudflare-hosted)', 'llama-4-scout': 'Llama 4 Scout (Cloudflare-hosted)', 'qwen-3.8': 'Qwen 3.8 27B (Cloudflare-hosted)',
+  'ollama-mistral': 'Mistral Large 4 (Ollama Cloud)',
   'claude-sonnet': 'Claude Sonnet 5.5 (Anthropic API)', 'claude-haiku': 'Claude Haiku 5.5 (Anthropic API)',
 };
-const SPEND_ON = { 'meta-api': 'the Meta Model API', 'open-weights': 'Baseten', 'claude-sonnet': 'Claude Sonnet 5.5', 'claude-haiku': 'Claude Haiku 5.5' };
+const SPEND_ON = Object.fromEntries(Object.entries(MODELS));
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const getJson = async (path) => {
@@ -53,9 +60,12 @@ function render(set) {
   }
 }
 
+const ACCOUNT_ID = readFileSync(join(ROOT, CONFIG), 'utf8').match(/"account_id"\s*:\s*"([0-9a-f]{32})"/)?.[1];
+const ACCOUNT_ENV = ACCOUNT_ID ? { CLOUDFLARE_ACCOUNT_ID: ACCOUNT_ID } : {};
+
 // wrangler dev loads only the secrets a config lists in secrets.required, and deploy then demands
 // them, so a provider whose key production does not hold runs on a throwaway copy that lists it.
-const EVAL_ONLY_SECRET = { 'claude-sonnet': 'ANTHROPIC_API_KEY', 'claude-haiku': 'ANTHROPIC_API_KEY' };
+const EVAL_ONLY_SECRET = { 'claude-sonnet': 'ANTHROPIC_API_KEY', 'claude-haiku': 'ANTHROPIC_API_KEY', 'ollama-mistral': 'OLLAMA_API_KEY' };
 function configFor(provider) {
   const secret = EVAL_ONLY_SECRET[provider];
   const text = readFileSync(join(ROOT, CONFIG), 'utf8');
@@ -77,7 +87,8 @@ async function startWorker(provider) {
     ['wrangler', 'dev', '-c', config, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1',
       // The run's own caps (CAPS) bound spend; the Worker's daily budget would count earlier runs today too.
       '--var', 'DAILY_BUDGET_USD:1000'],
-    { cwd: ROOT, detached: true, stdio: ['ignore', 'pipe', 'pipe'] },
+    // The AI binding bills whichever account wrangler resolves, so pin the config's own account.
+    { cwd: ROOT, detached: true, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ...ACCOUNT_ENV } },
   );
   child.stdout.pipe(log);
   child.stderr.pipe(log);
@@ -189,7 +200,8 @@ async function runDoc(set, doc) {
   const { provider: running } = await getJson('/dev/provider');
   assertUploadAllowed(set, doc.paths, running);
   const id = await upload(doc.paths, doc.mime);
-  const audit = await poll(id);
+  // A slow model's timeout fails this document, not the whole run (and every result before it).
+  const audit = await poll(id).catch((e) => ({ status: 'failed', error: e.message, provider: set.provider }));
   if (audit.provider !== set.provider) throw new Error(`${doc.key}: audit ran on ${audit.provider}, expected ${set.provider}`);
   Object.assign(row, { auditId: id, status: audit.status, error: audit.error });
   if (audit.status !== 'done') return row;
@@ -279,6 +291,8 @@ const LABEL = {
   'd/pdf': 'd. Same extraction, PDF rules (diagnostic)', e: 'e. FTC Sample 1 template',
   g: 'g. Synthetic PDFs', h: 'h. Synthetic photos', i: 'i. FTC Sample 1 template',
   j: 'j. Synthetic PDFs', k: 'k. Synthetic photos', l: 'l. FTC Sample 1 template',
+  m: 'm. Synthetic photos', n: 'n. Synthetic PDFs as page images', o: 'o. Synthetic photos', p: 'p. Synthetic PDFs as page images',
+  q: 'q. Synthetic photos', r: 'r. Synthetic PDFs as page images', s: 's. Synthetic photos', t: 't. Synthetic PDFs as page images',
 };
 
 function mismatchLines(s) {
@@ -310,9 +324,9 @@ function writeEvalMd(summaries, corpusAgg, spend) {
       '',
       '## Real price lists (aggregates only)',
       '',
-      `${c.n} redacted real General Price Lists ran on Muse Spark Open through Baseten, as page images.${
+      `${c.n} redacted real General Price Lists ran on ${MODELS[c.provider ?? 'open-weights']}, as page images.${
         c.skipped ? ` ${c.skipped} more have more than ${MAX_PAGES} pages and were not run.` : ''
-      } A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API.`,
+      } A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API or to any other provider.`,
       '',
       '| Measure | Value |',
       '|---|---|',
@@ -349,8 +363,9 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     '- Page images for sets d and the real lists are rendered at 150 DPI, 8-bit grayscale, with PDFKit (`test/eval/render-pages.swift`), outside the Worker.',
     `- Verdicts come from rules engine version \`${ENGINE_VERSION_NOTE}\`.`,
     '- Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.',
-    '- Real price lists ran only on Muse Spark Open through Baseten. The harness refuses any real-list file unless the running Worker reports the open-weights provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.',
+    `- Real price lists run on one provider only: ${MODELS[CORPUS_PROVIDER]} since 2026-11-24, Baseten before that. The harness refuses any real-list file unless the running Worker reports that provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.`,
     '- Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.',
+    '- Cloudflare-hosted Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B (sets m to r) did not finish one document each on 2026-11-24: Workers AI timed out after about 6 minutes, or the harness after 10, so they have no rows. Mistral Large 4 on Ollama Cloud (sets s and t) has not run yet.',
     '',
     '## Rerun',
     '',
@@ -367,7 +382,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     'node test/eval/run.mjs --sets a,b,c,d,e',
     '```',
     '',
-    'Spend is capped per run at $1 on the Meta Model API, $4 on Baseten, $7 on Claude Sonnet 5.5 and $3 on Claude Haiku 5.5 (`--cap-meta-api`, `--cap-open-weights`, `--cap-claude-sonnet`, `--cap-claude-haiku`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.',
+    `Spend is capped per run and provider: ${PROVIDER_ORDER.map((p) => `$${DEFAULT_CAPS[p]} on ${MODELS[p]}`).join(', ')} (override with \`--cap-<provider>\`). Set f needs the private corpus, so leave it out of \`--sets\` elsewhere.`,
     '',
     `The last run (${Object.keys(spend).length ? Object.keys(spend).map((p) => `sets on ${SPEND_ON[p]}`).join(', ') : 'no new sets'}) spent ${
       Object.entries(spend).map(([p, v]) => `${usd(v)} on ${SPEND_ON[p]}`).join(', ') || '$0.0000'
@@ -453,10 +468,16 @@ async function main() {
     try {
       if (running !== provider) throw new Error(`Worker reports ${running}, wanted ${provider}; check .dev.vars MODEL_PROVIDER`);
       const since = new Date().toISOString();
+      let timedOut = false;
       for (const set of group) {
         rows[set.id] = [];
         for (const doc of set.docs) {
+          if (timedOut) {
+            rows[set.id].push({ set: set.id, key: doc.key, list: doc.list, skipped: `${provider} timed out on an earlier document` });
+            continue;
+          }
           const row = await runDoc(set, doc);
+          if (/timed out/.test(row.error ?? '')) timedOut = true;
           rows[set.id].push(row);
           const spent = (await getJson(`/dev/spend?since=${encodeURIComponent(since)}`))[provider]?.usd ?? 0;
           spend[provider] = spent;
@@ -499,7 +520,7 @@ async function main() {
       return l ? { agree: l.agree, compared: l.compared, falseFails: l.falseFail.length, missedFails: l.missedFail.length, failsToReview: l.failToReview.length } : null;
     };
     corpusAgg = {
-      n: s.n, skipped: s.skipped.length, verdicts: s.verdicts, checksRun: s.checksRun, notRun: s.notRun,
+      provider: priv.provider, n: s.n, skipped: s.skipped.length, verdicts: s.verdicts, checksRun: s.checksRun, notRun: s.notRun,
       redactionAdjusted: s.redactionAdjusted, cost: s.cost, latencyMs: s.latencyMs, labeled: labeled('images'),
       pdfRules: { verdicts: asPdf.verdicts, listsWithFail: rows[priv.id].filter((r) => r.modes?.pdf?.counts.fail).length, labeled: labeled('pdf') },
     };

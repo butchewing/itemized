@@ -8,9 +8,9 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 12 | 1087/1088 | 95/96 | 514/516 (99.6%) | 0 | 0 | 1 | 2.3% | 0 | $0.0324 / $0.0374 | 20.1 s / 26.1 s |
 | b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 344/356 | 32/32 | 166/172 (96.5%) | 0 | 0 | 5 | 7.0% | 0 | $0.0357 / $0.0384 | 13.5 s / 14.8 s |
-| c. Synthetic photos | Muse Spark Open (Baseten) | 4 | 344/356 | 32/32 | 167/172 (97.1%) | 0 | 0 | 5 | 6.4% | 0 | $0.0299 / $0.0316 | 24.6 s / 28.1 s |
-| d. Synthetic PDFs as page images | Muse Spark Open (Baseten) | 12 | 1083/1088 | 95/96 | 497/516 (96.3%) | 0 | 1 | 17 | 5.4% | 0 | $0.0270 / $0.0313 | 19.2 s / 21.1 s |
-| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Baseten) | 12 | 1083/1088 | 95/96 | 514/516 (99.6%) | 0 | 1 | 0 | 2.1% | 0 | $0.0270 / $0.0313 | 19.2 s / 21.1 s |
+| c. Synthetic photos | Muse Spark Open (Cloudflare, served by Fireworks) | 4 | 341/356 | 32/32 | 166/172 (96.5%) | 0 | 0 | 5 | 7.0% | 0 | $0.0337 / $0.0349 | 17.4 s / 20.1 s |
+| d. Synthetic PDFs as page images | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 497/516 (96.3%) | 0 | 0 | 18 | 5.6% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
+| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 513/516 (99.4%) | 0 | 0 | 2 | 2.5% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
 | e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0310 / $0.0310 | 20.5 s / 20.5 s |
 | g. Synthetic PDFs | Claude Sonnet 5.5 (Anthropic API) | 12 | 1088/1088 | 95/96 | 510/516 (98.8%) | 0 | 0 | 0 | 1.9% | 0 | $0.0618 / $0.0647 | 18.1 s / 20.0 s |
 | h. Synthetic photos | Claude Sonnet 5.5 (Anthropic API) | 4 | 355/356 | 32/32 | 166/172 (96.5%) | 0 | 0 | 5 | 6.4% | 0 | $0.0689 / $0.0726 | 18.5 s / 20.0 s |
@@ -21,28 +21,28 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 
 ## Real price lists (aggregates only)
 
-12 redacted real General Price Lists ran on Muse Spark Open through Baseten, as page images. A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API.
+12 redacted real General Price Lists ran on Muse Spark Open (Cloudflare, served by Fireworks), as page images. A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API or to any other provider.
 
 | Measure | Value |
 |---|---|
 | Lists run | 12 |
-| Verdicts (fail / review / pass / not applicable) | 0 / 99 / 365 / 52 |
+| Verdicts (fail / review / pass / not applicable) | 0 / 95 / 368 / 53 |
 | Fails per list, mean | 0.0 |
-| Review rate | 19.2% |
+| Review rate | 18.4% |
 | Checks not run | 0 |
 | Name, address or phone checks counted as pass because the element was redacted | 30 |
 | Hand-labeled list: verdict agreement | 39/43 |
 | Hand-labeled list: false fails / missed fails / fail to review | 0 / 0 / 4 |
-| Same extractions under the PDF rules (diagnostic): fails, and lists with at least one | 19, 7 of 12 |
-| Hand-labeled list under the PDF rules: agreement; false fails / missed fails | 41/43; 0 / 0 |
-| Cost per review, mean / p90 | $0.0661 / $0.1054 |
-| Model time per review, mean / p90 | 47.8 s / 69.1 s |
+| Same extractions under the PDF rules (diagnostic): fails, and lists with at least one | 18, 7 of 12 |
+| Hand-labeled list under the PDF rules: agreement; false fails / missed fails | 40/43; 0 / 0 |
+| Cost per review, mean / p90 | $0.0745 / $0.1094 |
+| Model time per review, mean / p90 | 47.0 s / 76.3 s |
 
 ## Run-to-run variance
 
 The main table runs each document once, so it cannot show how much a fresh extraction moves between runs. To measure that, syn-03 was extracted five times per model with the cache bypassed (`test/eval/extraction-variance.mjs`, raw runs in `test/eval/variance/`). Muse Spark 1.3 read the PDF, as in set a. Muse Spark Open read the rendered page image, as in set d. Each run was scored against the list's ground truth and put through the deterministic checks under both the photo rule and the PDF rule. The 13 semantic checks were not run, so 30 checks are compared.
 
-| Measure, 5 runs each | Muse Spark 1.3 (PDF) | Muse Spark Open (page image) |
+| Measure, 5 runs each | Muse Spark 1.3 (PDF) | Muse Spark Open on Baseten, retired (page image) |
 |---|---|---|
 | Fields right, per run | 86/86 in all five | 86, 83, 86, 85, 85 of 86 |
 | Disclosures right, per run | 8/8 in all five | 8/8 in all five |
@@ -74,15 +74,15 @@ b. Synthetic photos, meta-api:
 - syn-09 C-052 (fail to review: expected fail, got review)
 - syn-03 C-007 (other: expected pass, got review)
 
-c. Synthetic photos, open-weights:
+c. Synthetic photos, muse-open:
 - syn-03 C-030 (fail to review: expected fail, got review)
 - syn-03 C-041 (fail to review: expected fail, got review)
 - syn-09 C-022 (fail to review: expected fail, got review)
 - syn-09 C-042 (fail to review: expected fail, got review)
 - syn-09 C-052 (fail to review: expected fail, got review)
+- syn-03 C-007 (other: expected pass, got review)
 
-d. Synthetic PDFs as page images, open-weights:
-- syn-07 C-060 (missed fail: expected fail, got pass)
+d. Synthetic PDFs as page images, muse-open:
 - syn-03 C-030 (fail to review: expected fail, got review)
 - syn-03 C-041 (fail to review: expected fail, got review)
 - syn-04 C-020 (fail to review: expected fail, got review)
@@ -94,6 +94,7 @@ d. Synthetic PDFs as page images, open-weights:
 - syn-06 C-073 (fail to review: expected fail, got review)
 - syn-07 C-003 (fail to review: expected fail, got review)
 - syn-07 C-005 (fail to review: expected fail, got review)
+- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-08 C-061 (fail to review: expected fail, got review)
 - syn-08 C-070 (fail to review: expected fail, got review)
 - syn-09 C-022 (fail to review: expected fail, got review)
@@ -102,8 +103,9 @@ d. Synthetic PDFs as page images, open-weights:
 - syn-11 C-004 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
 
-d. Same extraction, PDF rules (diagnostic), open-weights:
-- syn-07 C-060 (missed fail: expected fail, got pass)
+d. Same extraction, PDF rules (diagnostic), muse-open:
+- syn-07 C-005 (fail to review: expected fail, got review)
+- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
 
 e. FTC Sample 1 template, meta-api: none.
@@ -164,8 +166,9 @@ l. FTC Sample 1 template, claude-haiku:
 - Page images for sets d and the real lists are rendered at 150 DPI, 8-bit grayscale, with PDFKit (`test/eval/render-pages.swift`), outside the Worker.
 - Verdicts come from rules engine version `engine-5`.
 - Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.
-- Real price lists ran only on Muse Spark Open through Baseten. The harness refuses any real-list file unless the running Worker reports the open-weights provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.
+- Real price lists run on one provider only: Muse Spark Open (Cloudflare, served by Fireworks) since 2026-11-24, Baseten before that. The harness refuses any real-list file unless the running Worker reports that provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.
 - Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.
+- Cloudflare-hosted Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B (sets m to r) did not finish one document each on 2026-11-24: Workers AI timed out after about 6 minutes, or the harness after 10, so they have no rows. Mistral Large 4 on Ollama Cloud (sets s and t) has not run yet.
 
 ## Rerun
 
@@ -182,6 +185,6 @@ npx wrangler d1 migrations apply DB --local
 node test/eval/run.mjs --sets a,b,c,d,e
 ```
 
-Spend is capped per run at $1 on the Meta Model API, $4 on Baseten, $7 on Claude Sonnet 5.5 and $3 on Claude Haiku 5.5 (`--cap-meta-api`, `--cap-open-weights`, `--cap-claude-sonnet`, `--cap-claude-haiku`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
+Spend is capped per run and provider: $1 on Muse Spark 1.3 (Meta Model API), $4 on Muse Spark Open (Cloudflare, served by Fireworks), $1 on Gemma 4 26B (Cloudflare-hosted), $1 on Llama 4 Scout (Cloudflare-hosted), $2 on Qwen 3.8 27B (Cloudflare-hosted), $2 on Mistral Large 4 (Ollama Cloud), $7 on Claude Sonnet 5.5 (Anthropic API), $3 on Claude Haiku 5.5 (Anthropic API) (override with `--cap-<provider>`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
 
-The last run (sets on Claude Sonnet 5.5, sets on Claude Haiku 5.5) spent $1.0172 on Claude Sonnet 5.5, $0.0675 on Claude Haiku 5.5.
+The last run (sets on Muse Spark Open (Cloudflare, served by Fireworks)) spent $0.8938 on Muse Spark Open (Cloudflare, served by Fireworks).

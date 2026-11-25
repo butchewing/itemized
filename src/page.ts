@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import { ACCEPTED_TYPES, MAX_PAGES, MAX_UPLOAD_BYTES } from './audit';
+import { ACCEPTED_TYPES, MAX_PAGES, MAX_UPLOAD_BYTES, PDF_UNSUPPORTED } from './audit';
 import { findingItem, LIMITS_PARAGRAPHS, summarySentence } from './letter';
 import { actionsRow, compactLetterhead, FIX_PROMPT_SCRIPT, PDF_SCRIPT } from './review';
 import type { Finding } from './rules/types';
@@ -148,7 +148,7 @@ const LABELS = {
 };
 const FAILURES = {
   'daily budget reached': 'Itemized has reached its review limit for today. Please try again tomorrow.',
-  'PDF not supported on open-weights yet': 'This list could not be read. Try a photo of each page instead.',
+  [PDF_UNSUPPORTED]: 'This list could not be read. Try a photo of each page instead.',
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
