@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import type { AuditDocument, AuditStatus, Provider } from './audit';
+import { PDF_UNSUPPORTED, type AuditDocument, type AuditStatus, type Provider } from './audit';
 import {
   EXTRACTION_SCHEMA,
   ExtractionError,
@@ -162,7 +162,7 @@ export const betterRead = (a: GplExtraction, b: GplExtraction) => (b.disclosures
 
 async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
   const doc = auditDocument(audit);
-  if (doc.kind === 'pdf' && audit.provider === 'open-weights') throw new AuditFailure('PDF not supported on open-weights yet');
+  if (doc.kind === 'pdf' && !PROVIDER_CONFIG[audit.provider].pdf) throw new AuditFailure(PDF_UNSUPPORTED);
   const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
   if (cached) return cached;
   const input = await loadInput(env, audit, doc);
@@ -183,7 +183,7 @@ async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
 // Judgment needs some reasoning, unlike transcription.
 export const SEMANTIC_EFFORT: ReasoningEffort = 'low';
 
-// Runs on the audit's own provider so open-weights audits never send list text to the Meta API.
+// Runs on the audit's own provider so an open-model audit never sends list text to the Meta API.
 // Any failure (budget, model, parse) returns null: the report then lists these checks as not run.
 async function judge(env: Env, audit: AuditRow, extraction: GplExtraction): Promise<SemanticResults | null> {
   const { provider } = audit;
