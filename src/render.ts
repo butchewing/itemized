@@ -1,13 +1,9 @@
 import puppeteer from '@cloudflare/puppeteer';
+import { MAX_RENDER_PAGES, RENDER_DPI } from './audit';
 // Bundled as text (wrangler "rules": Text) so the remote browser never fetches code from anywhere.
 import PDFJS_SOURCE from 'pdfjs-dist/build/pdf.min.mjs';
 import PDFJS_WORKER_SOURCE from 'pdfjs-dist/build/pdf.worker.min.mjs';
 
-// PDFs go to models that read images only as page images rendered here, the way the eval's set d was
-// made: 150 DPI, grayscale. Bump RENDER_VERSION when the output changes, so cached reads are not reused.
-export const RENDER_VERSION = 'pdfjs-6.5.438@150dpi-gray';
-export const RENDER_DPI = 150;
-export const MAX_RENDER_PAGES = 24;
 // The upload is untrusted: a render that runs this long is abandoned.
 const RENDER_TIMEOUT_MS = 90_000;
 // Chunks keep each DevTools message small while the PDF is copied into the page.
@@ -19,7 +15,15 @@ export type RenderedPdf = {
   textChars: number[];
 };
 
-export class RenderFailure extends Error {}
+// A problem with the PDF itself: retrying will not help. Browser Run errors stay plain Errors and retry.
+export class RenderFailure extends Error {
+  constructor(
+    readonly kind: 'too_long' | 'unreadable',
+    message: string,
+  ) {
+    super(message);
+  }
+}
 
 const toBase64 = (u8: Uint8Array) => {
   let bin = '';
@@ -82,8 +86,8 @@ export async function renderPdf(browserBinding: Env['BROWSER'], pdf: ArrayBuffer
         PDFJS_WORKER_SOURCE,
         MAX_RENDER_PAGES,
       );
-      if (opened.error === 'too_many_pages') throw new RenderFailure(`PDF has ${opened.pages} pages; the most this model can read is ${MAX_RENDER_PAGES}`);
-      if (opened.error || !opened.pages) throw new RenderFailure(`PDF could not be opened (${opened.error ?? 'no pages'})`);
+      if (opened.error === 'too_many_pages') throw new RenderFailure('too_long', `PDF has ${opened.pages} pages; at most ${MAX_RENDER_PAGES} are rendered`);
+      if (opened.error || !opened.pages) throw new RenderFailure('unreadable', `PDF could not be opened (${opened.error ?? 'no pages'})`);
 
       const out: RenderedPdf = { pages: [], textChars: [] };
       for (let n = 1; n <= opened.pages; n++) {
@@ -126,7 +130,7 @@ export async function renderPdf(browserBinding: Env['BROWSER'], pdf: ArrayBuffer
       return out;
     })();
     const timeout = new Promise<never>((_, reject) => {
-      timer = setTimeout(() => reject(new RenderFailure('PDF took too long to render')), RENDER_TIMEOUT_MS);
+      timer = setTimeout(() => reject(new RenderFailure('unreadable', 'PDF took too long to render')), RENDER_TIMEOUT_MS);
     });
     return await Promise.race([work, timeout]);
   } finally {

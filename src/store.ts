@@ -1,6 +1,15 @@
 import { ENGINE_VERSION } from './rules/engine';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import { canTransition, type AuditDocument, type AuditStatus, type ImageType, type Provider, type StoredPage } from './audit';
+import {
+  canTransition,
+  RENDER_VERSION,
+  type AuditDocument,
+  type AuditStatus,
+  type ImageType,
+  type Provider,
+  type RenderInfo,
+  type StoredPage,
+} from './audit';
 import { PROMPT_VERSION, type GplExtraction } from './extraction';
 import { PROVIDER_CONFIG, type Usage } from './models';
 import { parseSemantic, SEMANTIC_PROMPT_VERSION } from './rules/semantic';
@@ -33,7 +42,14 @@ export function auditDocument(row: Pick<AuditRow, 'doc_key' | 'content_type' | '
 export const documentKeys = (d: AuditDocument) => (d.kind === 'pdf' ? [d.key] : d.pages.map((p) => p.key));
 
 // Every version a finished audit's report depends on. An audit is reused only when this matches.
-export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}|${ENGINE_VERSION}`;
+export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}|${ENGINE_VERSION}|${RENDER_VERSION}`;
+
+export type DocKind = AuditDocument['kind'];
+
+// A PDF read by a model that takes images only was rendered first, so its cached reads are keyed by the
+// renderer too: a change in rendering never serves an old read.
+export const extractionVersion = (provider: Provider, kind: DocKind) =>
+  kind === 'pdf' && !PROVIDER_CONFIG[provider].pdf ? `${PROMPT_VERSION}|${RENDER_VERSION}` : PROMPT_VERSION;
 
 export const REUSE_DAYS = 30;
 // toISOString matches the schema's strftime('%Y-%m-%dT%H:%M:%fZ'), so the strings compare in time order.
@@ -97,51 +113,63 @@ export async function transition(
   return res.meta.changes > 0;
 }
 
-export async function getExtraction(db: D1Database, sha256: string, provider: Provider) {
+export async function getRead(db: D1Database, sha256: string, provider: Provider, kind: DocKind) {
   const row = await db
     .prepare(
-      `SELECT json FROM extractions
+      `SELECT json, render FROM extractions
        WHERE doc_sha256 = ? AND provider = ? AND model = ? AND prompt_version = ?`,
     )
-    .bind(sha256, provider, PROVIDER_CONFIG[provider].model, PROMPT_VERSION)
-    .first<{ json: string }>();
-  return row ? (JSON.parse(row.json) as GplExtraction) : null;
+    .bind(sha256, provider, PROVIDER_CONFIG[provider].model, extractionVersion(provider, kind))
+    .first<{ json: string; render: string | null }>();
+  if (!row) return null;
+  return { extraction: JSON.parse(row.json) as GplExtraction, render: row.render ? (JSON.parse(row.render) as RenderInfo) : null };
 }
 
-export async function putExtraction(db: D1Database, sha256: string, provider: Provider, e: GplExtraction) {
+export async function getExtraction(db: D1Database, sha256: string, provider: Provider, kind: DocKind) {
+  return (await getRead(db, sha256, provider, kind))?.extraction ?? null;
+}
+
+export async function putExtraction(
+  db: D1Database,
+  sha256: string,
+  provider: Provider,
+  kind: DocKind,
+  e: GplExtraction,
+  render: RenderInfo | null,
+) {
   await db
     .prepare(
-      `INSERT OR IGNORE INTO extractions (doc_sha256, provider, model, prompt_version, json)
-       VALUES (?, ?, ?, ?, ?)`,
+      `INSERT OR IGNORE INTO extractions (doc_sha256, provider, model, prompt_version, json, render)
+       VALUES (?, ?, ?, ?, ?, ?)`,
     )
-    .bind(sha256, provider, PROVIDER_CONFIG[provider].model, PROMPT_VERSION, JSON.stringify(e))
+    .bind(sha256, provider, PROVIDER_CONFIG[provider].model, extractionVersion(provider, kind), JSON.stringify(e), render && JSON.stringify(render))
     .run();
 }
 
 // Keyed on everything its input depends on: the document, who extracted it and how, and the checks asked.
-const semanticKey = (sha256: string, provider: Provider) =>
-  [sha256, provider, PROVIDER_CONFIG[provider].model, SEMANTIC_PROMPT_VERSION, PROMPT_VERSION, `${ruleset.id}@${ruleset.version}`] as const;
+const semanticKey = (sha256: string, provider: Provider, kind: DocKind) =>
+  [sha256, provider, PROVIDER_CONFIG[provider].model, SEMANTIC_PROMPT_VERSION, extractionVersion(provider, kind), `${ruleset.id}@${ruleset.version}`] as const;
 
-export async function getSemantic(db: D1Database, sha256: string, provider: Provider) {
+export async function getSemantic(db: D1Database, sha256: string, provider: Provider, kind: DocKind) {
   const row = await db
     .prepare(
       `SELECT json FROM semantic_results
        WHERE doc_sha256 = ? AND provider = ? AND model = ? AND prompt_version = ? AND extraction_prompt_version = ? AND ruleset_version = ?`,
     )
-    .bind(...semanticKey(sha256, provider))
+    .bind(...semanticKey(sha256, provider, kind))
     .first<{ json: string }>();
   return row ? parseSemantic(JSON.parse(row.json)) : null;
 }
 
 // Stores the model's output as returned, so fixtures and cache share one parser.
-export async function putSemantic(db: D1Database, sha256: string, provider: Provider, modelJson: unknown) {
+export async function putSemantic(db: D1Database, sha256: string, provider: Provider, kind: DocKind, modelJson: unknown) {
   await db
     .prepare(
       `INSERT OR IGNORE INTO semantic_results
          (doc_sha256, provider, model, prompt_version, extraction_prompt_version, ruleset_version, json)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
     )
-    .bind(...semanticKey(sha256, provider), JSON.stringify(modelJson))
+    .bind(...semanticKey(sha256, provider, kind), JSON.stringify(modelJson))
     .run();
 }
 
@@ -204,7 +232,7 @@ export async function loadReview(db: D1Database, id: string): Promise<ReviewView
   const row = await getAudit(db, id);
   if (!row) return 'not_found';
   if (row.status !== 'done') return 'not_ready';
-  const [extraction, report] = await Promise.all([getExtraction(db, row.doc_sha256, row.provider), getReport(db, row.id)]);
+  const [extraction, report] = await Promise.all([getExtraction(db, row.doc_sha256, row.provider, auditDocument(row).kind), getReport(db, row.id)]);
   if (!report) return 'not_ready';
   return {
     id: row.id,

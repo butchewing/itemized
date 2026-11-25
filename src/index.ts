@@ -18,6 +18,7 @@ import {
   createAudit,
   findReusable,
   getAudit,
+  auditDocument,
   getExtraction,
   getReport,
   loadReview,
@@ -127,7 +128,7 @@ app.get('/api/audits/:id', async (c) => {
   const row = await getAudit(c.env.DB, c.req.param('id'));
   if (!row) return c.json({ error: 'Not found.' }, 404);
   const [extraction, report, spend] = await Promise.all([
-    getExtraction(c.env.DB, row.doc_sha256, row.provider),
+    getExtraction(c.env.DB, row.doc_sha256, row.provider, auditDocument(row).kind),
     getReport(c.env.DB, row.id),
     auditSpend(c.env.DB, row.id),
   ]);
