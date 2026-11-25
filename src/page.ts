@@ -148,7 +148,8 @@ const LABELS = {
 };
 const FAILURES = {
   'daily budget reached': 'Itemized has reached its review limit for today. Please try again tomorrow.',
-  [PDF_UNSUPPORTED]: 'This list could not be read. Try a photo of each page instead.',
+  // Interpolated on the server: this script runs in the browser, where PDF_UNSUPPORTED does not exist.
+  ${JSON.stringify(PDF_UNSUPPORTED)}: 'This list could not be read. Try a photo of each page instead.',
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
