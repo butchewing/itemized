@@ -7,9 +7,10 @@
 //   corpus/eval/results.json real-corpus per-list results (private, gitignored)
 //   corpus/eval/fails-review.md every real-corpus fail, for a person to judge (private)
 //   npm run eval [-- --sets a,b,c,d,e,f] [--port 8790] [--cap-meta-api 1] [--cap-open-weights 4]
+//     [--cap-claude-sonnet 7] [--cap-claude-haiku 3]   Claude sets g-l: public data only
 //   node test/eval/run.mjs [--config wrangler.jsonc] ...   the portable config, for a fresh checkout
 import { spawn, spawnSync } from 'node:child_process';
-import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { groundTruth, score } from '../eval-extraction.mjs';
 import {
@@ -24,13 +25,19 @@ const CONFIG = args.config ?? 'wrangler.jsonc';
 const PORT = Number(args.port ?? 8790);
 const BASE = `http://127.0.0.1:${PORT}`;
 const ONLY = args.sets ? new Set(args.sets.split(',')) : null;
-const CAPS = { 'meta-api': Number(args['cap-meta-api'] ?? 1), 'open-weights': Number(args['cap-open-weights'] ?? 4) };
+const PROVIDER_ORDER = ['meta-api', 'open-weights', 'claude-sonnet', 'claude-haiku'];
+const DEFAULT_CAPS = { 'meta-api': 1, 'open-weights': 4, 'claude-sonnet': 7, 'claude-haiku': 3 };
+const CAPS = Object.fromEntries(PROVIDER_ORDER.map((p) => [p, Number(args[`cap-${p}`] ?? DEFAULT_CAPS[p])]));
 const PRIVATE_DIR = join(CORPUS, 'eval');
 // Measured by extraction-variance.mjs, not by this run, so it is carried into EVAL.md as written.
 const VARIANCE_SECTION = join(ROOT, 'test/eval/variance/EVAL-section.md');
 const PUBLIC_RESULTS = join(ROOT, 'test/eval/results.json');
 const ENGINE_VERSION_NOTE = readFileSync(join(ROOT, 'src/rules/engine.ts'), 'utf8').match(/ENGINE_VERSION = '([^']+)'/)[1];
-const MODELS = { 'meta-api': 'Muse Spark 1.3 (Meta Model API)', 'open-weights': 'Muse Spark Open (Baseten)' };
+const MODELS = {
+  'meta-api': 'Muse Spark 1.3 (Meta Model API)', 'open-weights': 'Muse Spark Open (Baseten)',
+  'claude-sonnet': 'Claude Sonnet 5.5 (Anthropic API)', 'claude-haiku': 'Claude Haiku 5.5 (Anthropic API)',
+};
+const SPEND_ON = { 'meta-api': 'the Meta Model API', 'open-weights': 'Baseten', 'claude-sonnet': 'Claude Sonnet 5.5', 'claude-haiku': 'Claude Haiku 5.5' };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const getJson = async (path) => {
@@ -46,13 +53,28 @@ function render(set) {
   }
 }
 
+// wrangler dev loads only the secrets a config lists in secrets.required, and deploy then demands
+// them, so a provider whose key production does not hold runs on a throwaway copy that lists it.
+const EVAL_ONLY_SECRET = { 'claude-sonnet': 'ANTHROPIC_API_KEY', 'claude-haiku': 'ANTHROPIC_API_KEY' };
+function configFor(provider) {
+  const secret = EVAL_ONLY_SECRET[provider];
+  const text = readFileSync(join(ROOT, CONFIG), 'utf8');
+  if (!secret || text.includes(`"${secret}"`)) return { config: CONFIG, cleanup: () => {} };
+  const listed = text.replace(/("required"\s*:\s*\[)/, `$1"${secret}", `);
+  if (listed === text) throw new Error(`${CONFIG} has no secrets.required list to add ${secret} to`);
+  const config = 'wrangler.eval.jsonc';
+  writeFileSync(join(ROOT, config), `// Written by test/eval/run.mjs for one run; never deployed.\n${listed}`);
+  return { config, cleanup: () => rmSync(join(ROOT, config), { force: true }) };
+}
+
 async function startWorker(provider) {
   if (await fetch(`${BASE}/dev/provider`).then(() => true, () => false)) throw new Error(`port ${PORT} is already serving; stop that process or pass --port`);
   mkdirSync(join(PRIVATE_DIR, 'logs'), { recursive: true });
   const log = createWriteStream(join(PRIVATE_DIR, 'logs', `wrangler-${provider}.log`));
+  const { config, cleanup } = configFor(provider);
   const child = spawn(
     'npx',
-    ['wrangler', 'dev', '-c', CONFIG, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1',
+    ['wrangler', 'dev', '-c', config, '--port', String(PORT), '--ip', '127.0.0.1', '--var', `MODEL_PROVIDER:${provider}`, '--var', 'DEV_ROUTES:1',
       // The run's own caps (CAPS) bound spend; the Worker's daily budget would count earlier runs today too.
       '--var', 'DAILY_BUDGET_USD:1000'],
     { cwd: ROOT, detached: true, stdio: ['ignore', 'pipe', 'pipe'] },
@@ -63,18 +85,25 @@ async function startWorker(provider) {
   // with this one still shutting down.
   const stop = async () => {
     try {
-      process.kill(-child.pid, 'SIGTERM');
-    } catch {}
-    for (let t = 0; t < 30; t++) {
-      if (!(await fetch(`${BASE}/dev/provider`).then(() => true, () => false))) return;
-      await sleep(500);
+      try {
+        process.kill(-child.pid, 'SIGTERM');
+      } catch {}
+      for (let t = 0; t < 30; t++) {
+        if (!(await fetch(`${BASE}/dev/provider`).then(() => true, () => false))) return;
+        await sleep(500);
+      }
+      try {
+        process.kill(-child.pid, 'SIGKILL');
+      } catch {}
+    } finally {
+      cleanup();
     }
-    try {
-      process.kill(-child.pid, 'SIGKILL');
-    } catch {}
   };
   for (let t = 0; t < 120; t++) {
-    if (child.exitCode !== null) throw new Error(`wrangler dev exited (${child.exitCode}); see ${relative(ROOT, join(PRIVATE_DIR, 'logs'))}`);
+    if (child.exitCode !== null) {
+      cleanup();
+      throw new Error(`wrangler dev exited (${child.exitCode}); see ${relative(ROOT, join(PRIVATE_DIR, 'logs'))}`);
+    }
     try {
       const { provider: running } = await getJson('/dev/provider');
       return { running, stop };
@@ -248,6 +277,8 @@ function tableRow(s, label) {
 const LABEL = {
   a: 'a. Synthetic PDFs', b: 'b. Synthetic photos', c: 'c. Synthetic photos', d: 'd. Synthetic PDFs as page images',
   'd/pdf': 'd. Same extraction, PDF rules (diagnostic)', e: 'e. FTC Sample 1 template',
+  g: 'g. Synthetic PDFs', h: 'h. Synthetic photos', i: 'i. FTC Sample 1 template',
+  j: 'j. Synthetic PDFs', k: 'k. Synthetic photos', l: 'l. FTC Sample 1 template',
 };
 
 function mismatchLines(s) {
@@ -319,6 +350,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     `- Verdicts come from rules engine version \`${ENGINE_VERSION_NOTE}\`.`,
     '- Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.',
     '- Real price lists ran only on Muse Spark Open through Baseten. The harness refuses any real-list file unless the running Worker reports the open-weights provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.',
+    '- Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.',
     '',
     '## Rerun',
     '',
@@ -335,9 +367,11 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     'node test/eval/run.mjs --sets a,b,c,d,e',
     '```',
     '',
-    'Spend is capped per run at $1 on the Meta Model API and $4 on Baseten (`--cap-meta-api`, `--cap-open-weights`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.',
+    'Spend is capped per run at $1 on the Meta Model API, $4 on Baseten, $7 on Claude Sonnet 5.5 and $3 on Claude Haiku 5.5 (`--cap-meta-api`, `--cap-open-weights`, `--cap-claude-sonnet`, `--cap-claude-haiku`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.',
     '',
-    `This run spent ${usd(spend['meta-api'] ?? 0)} on the Meta Model API and ${usd(spend['open-weights'] ?? 0)} on Baseten.`,
+    `The last run (${Object.keys(spend).length ? Object.keys(spend).map((p) => `sets on ${SPEND_ON[p]}`).join(', ') : 'no new sets'}) spent ${
+      Object.entries(spend).map(([p, v]) => `${usd(v)} on ${SPEND_ON[p]}`).join(', ') || '$0.0000'
+    }.`,
     '',
   );
   writeFileSync(join(ROOT, 'EVAL.md'), lines.join('\n'));
@@ -412,7 +446,7 @@ async function main() {
 
   const rows = {};
   const spend = {};
-  for (const provider of ['meta-api', 'open-weights']) {
+  for (const provider of PROVIDER_ORDER) {
     const group = runSets.filter((s) => s.provider === provider);
     if (!group.length) continue;
     const { running, stop } = await startWorker(provider);
@@ -478,7 +512,7 @@ async function main() {
 
   writeEvalMd(publicOut.summaries, corpusAgg, spend);
   for (const s of publicOut.summaries) console.log(tableRow(s, LABEL[s.mode === 'pdf' && s.set === 'd' ? 'd/pdf' : s.set]));
-  console.log(`spend this run: meta-api ${usd(spend['meta-api'] ?? 0)}, open-weights ${usd(spend['open-weights'] ?? 0)}`);
+  console.log(`spend this run: ${Object.entries(spend).map(([p, v]) => `${p} ${usd(v)}`).join(', ') || 'none'}`);
 }
 
 await main();

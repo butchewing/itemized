@@ -20,6 +20,17 @@ describe('real price lists only reach the open-weights provider', () => {
     }
   });
 
+  it('refuses a private set declared on a Claude provider', () => {
+    for (const provider of ['claude-sonnet', 'claude-haiku']) expect(() => assertSetAllowed({ id: 'x', provider, private: true })).toThrow(GuardError);
+  });
+
+  it('the Claude sets are public and contain no corpus file', () => {
+    for (const s of (buildSets() as Set[]).filter((x) => x.provider.startsWith('claude-'))) {
+      expect(s.private).toBeFalsy();
+      for (const d of s.docs) for (const p of d.paths) expect(p.startsWith(CORPUS)).toBe(false);
+    }
+  });
+
   it('refuses a private set declared on meta-api', () => {
     expect(() => assertSetAllowed({ id: 'x', provider: 'meta-api', private: true })).toThrow(GuardError);
   });
