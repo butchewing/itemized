@@ -30,7 +30,13 @@
   "ratelimits": [{ "name": "UPLOAD_LIMITER", "namespace_id": "4530", "simple": { "limit": 5, "period": 60 } }],
   // Daily cleanup of audits, cached results and stored files unused for 30 days.
   "triggers": { "crons": ["17 7 * * *"] },
-  "vars": { "MODEL_PROVIDER": "meta-api", "DAILY_BUDGET_USD": "5" },
+  // Model calls go through the "itemized" AI Gateway (metadata-only logs; see endpoint() in src/models.ts).
+  "vars": {
+    "MODEL_PROVIDER": "meta-api",
+    "DAILY_BUDGET_USD": "5",
+    "AI_GATEWAY_URL": "https://gateway.ai.cloudflare.com/v1/59ca9600755f3d160a17444d639f329c/itemized"
+  },
   // Names only, set with `wrangler secret put`. Typed from here instead of inferred from .dev.vars.
-  "secrets": { "required": ["META_API_KEY", "BASETEN_API_KEY"] }
+  // CF_AIG_TOKEN is the gateway's token: listed so a deploy without it fails instead of every audit.
+  "secrets": { "required": ["META_API_KEY", "BASETEN_API_KEY", "CF_AIG_TOKEN"] }
 }
