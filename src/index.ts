@@ -149,11 +149,13 @@ app.get('/r/:id', async (c) => {
 });
 
 // setContent leaves the page at about:blank, so <base> points the self-hosted fonts back at this origin.
+// Puppeteer 25 (@cloudflare/puppeteer 2) dropped networkidle* for setContent; the page loads nothing but
+// fonts, so 'load' plus document.fonts.ready waits for everything the PDF needs.
 async function renderPdf(browserBinding: Env['BROWSER'], html: string, origin: string): Promise<Uint8Array> {
   const browser = await puppeteer.launch(browserBinding);
   try {
     const page = await browser.newPage();
-    await page.setContent(html.replace('<head>', `<head>\n<base href="${origin}/">`), { waitUntil: 'networkidle0' });
+    await page.setContent(html.replace('<head>', `<head>\n<base href="${origin}/">`), { waitUntil: 'load' });
     await page.evaluateHandle('document.fonts.ready');
     const pdf = await page.pdf({
       format: 'letter',
