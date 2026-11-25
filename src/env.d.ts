@@ -7,4 +7,6 @@ interface Env {
   CF_AIG_TOKEN?: string;
   // Only the claude-* providers read it; they are evaluated locally, not used in production.
   ANTHROPIC_API_KEY?: string;
+  // Ollama Cloud, for the ollama-* evaluated providers.
+  OLLAMA_API_KEY?: string;
 }
