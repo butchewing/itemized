@@ -200,7 +200,8 @@ async function runDoc(set, doc) {
   const { provider: running } = await getJson('/dev/provider');
   assertUploadAllowed(set, doc.paths, running);
   const id = await upload(doc.paths, doc.mime);
-  const audit = await poll(id);
+  // A slow model's timeout fails this document, not the whole run (and every result before it).
+  const audit = await poll(id).catch((e) => ({ status: 'failed', error: e.message, provider: set.provider }));
   if (audit.provider !== set.provider) throw new Error(`${doc.key}: audit ran on ${audit.provider}, expected ${set.provider}`);
   Object.assign(row, { auditId: id, status: audit.status, error: audit.error });
   if (audit.status !== 'done') return row;
@@ -364,6 +365,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     '- Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.',
     `- Real price lists run on one provider only: ${MODELS[CORPUS_PROVIDER]} since 2026-11-24, Baseten before that. The harness refuses any real-list file unless the running Worker reports that provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.`,
     '- Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.',
+    '- Cloudflare-hosted Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B (sets m to r) did not finish one document each on 2026-11-24: Workers AI timed out after about 6 minutes, or the harness after 10, so they have no rows. Mistral Large 4 on Ollama Cloud (sets s and t) has not run yet.',
     '',
     '## Rerun',
     '',
@@ -466,10 +468,16 @@ async function main() {
     try {
       if (running !== provider) throw new Error(`Worker reports ${running}, wanted ${provider}; check .dev.vars MODEL_PROVIDER`);
       const since = new Date().toISOString();
+      let timedOut = false;
       for (const set of group) {
         rows[set.id] = [];
         for (const doc of set.docs) {
+          if (timedOut) {
+            rows[set.id].push({ set: set.id, key: doc.key, list: doc.list, skipped: `${provider} timed out on an earlier document` });
+            continue;
+          }
           const row = await runDoc(set, doc);
+          if (/timed out/.test(row.error ?? '')) timedOut = true;
           rows[set.id].push(row);
           const spent = (await getJson(`/dev/spend?since=${encodeURIComponent(since)}`))[provider]?.usd ?? 0;
           spend[provider] = spent;
