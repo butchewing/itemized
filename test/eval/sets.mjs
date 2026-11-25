@@ -1,4 +1,4 @@
-// The eval's sets, and the rule that real price lists only ever reach the open-weights provider.
+// The eval's sets, and the rule that real price lists only ever reach one open-weights provider.
 // Pure module: test/eval-guard.test.ts imports it without a Worker running.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, relative, sep } from 'node:path';
@@ -10,8 +10,10 @@ const SYN = join(ROOT, 'prep/synthetic');
 const SYN_PAGES = join(ROOT, 'test/eval/pages');
 export const CORPUS_PAGES = join(CORPUS, 'eval/pages');
 
-// Real lists may only go to this provider (PLAN.md "Data handling", decided 2026-10-26).
-export const CORPUS_PROVIDER = 'open-weights';
+// Real lists may only go to this provider. Decided 2026-10-26 for Baseten (PLAN.md "Data handling");
+// moved 2026-11-24 to Muse Spark Open through Cloudflare (served by Fireworks: zero data retention and
+// no training on Content, Fireworks ToS 3.6), approved by Butch once the public sets pass.
+export const CORPUS_PROVIDER = 'muse-open';
 // MAX_PAGES in src/audit.ts; uploads with more pages are rejected.
 export const MAX_PAGES = 10;
 export const PHOTO_LISTS = ['syn-01', 'syn-03', 'syn-09', 'syn-10'];
@@ -73,9 +75,9 @@ export function buildSets() {
       docs: synPdfs().map((list) => ({ key: list, list, paths: [join(SYN, 'pdf', `${list}.pdf`)], mime: 'application/pdf', truth: list, labels: labels[list] })),
     },
     { id: 'b', name: 'Synthetic phone photos', provider: 'meta-api', input: 'images', docs: PHOTO_LISTS.map(photoDoc) },
-    { id: 'c', name: 'Synthetic phone photos', provider: 'open-weights', input: 'images', docs: PHOTO_LISTS.map(photoDoc) },
+    { id: 'c', name: 'Synthetic phone photos', provider: CORPUS_PROVIDER, input: 'images', docs: PHOTO_LISTS.map(photoDoc) },
     {
-      id: 'd', name: 'Synthetic PDFs as page images', provider: 'open-weights', input: 'images', diagnosticPdfMode: true,
+      id: 'd', name: 'Synthetic PDFs as page images', provider: CORPUS_PROVIDER, input: 'images', diagnosticPdfMode: true,
       render: synPdfs().map((list) => ({ pdf: join(SYN, 'pdf', `${list}.pdf`), out: join(SYN_PAGES, list) })),
       docs: synPdfs().map((list) => ({ key: list, list, paths: pngs(join(SYN_PAGES, list)), mime: 'image/png', truth: list, labels: labels[list] })),
     },
@@ -91,6 +93,14 @@ export function buildSets() {
         labels: corpusLabels[id] ?? null, redacted: m.required_elements_redacted, pages: m.pages,
       })),
     },
+    ...OPEN_CANDIDATES.flatMap(([provider, [photos, pages]]) => [
+      { id: photos, name: 'Synthetic phone photos', provider, input: 'images', docs: PHOTO_LISTS.map(photoDoc) },
+      {
+        id: pages, name: 'Synthetic PDFs as page images', provider, input: 'images', diagnosticPdfMode: true,
+        render: synPdfs().map((list) => ({ pdf: join(SYN, 'pdf', `${list}.pdf`), out: join(SYN_PAGES, list) })),
+        docs: synPdfs().map((list) => ({ key: list, list, paths: pngs(join(SYN_PAGES, list)), mime: 'image/png', truth: list, labels: labels[list] })),
+      },
+    ]),
     ...CLAUDE_PROVIDERS.flatMap(([provider, ids]) => {
       const [pdfs, phone, template] = ids;
       const synPdfDocs = synPdfs().map((list) => ({ key: list, list, paths: [join(SYN, 'pdf', `${list}.pdf`)], mime: 'application/pdf', truth: list, labels: labels[list] }));
@@ -107,6 +117,10 @@ export function buildSets() {
 }
 
 // Claude runs on the public sets only (decided 2026-11-23): synthetic PDFs, phone photos, FTC template.
+// Other open models, on public sets only: Cloudflare-hosted (zero data retention per their catalog
+// pages) and Ollama Cloud. Each gets phone photos and the synthetic PDFs as page images.
+export const OPEN_CANDIDATES = [['gemma-4', ['m', 'n']], ['llama-4-scout', ['o', 'p']], ['qwen-3.8', ['q', 'r']], ['ollama-mistral', ['s', 't']]];
+
 export const CLAUDE_PROVIDERS = [['claude-sonnet', ['g', 'h', 'i']], ['claude-haiku', ['j', 'k', 'l']]];
 
 // ftc-453 policy "redacted_elements": presence checks for an element the redaction removed count as pass.

@@ -13,7 +13,12 @@ export function canTransition(from: AuditStatus, to: AuditStatus): boolean {
   return TRANSITIONS[from].includes(to);
 }
 
-export const PROVIDERS = ['meta-api', 'open-weights', 'claude-sonnet', 'claude-haiku'] as const;
+// The error an audit records when its provider cannot read PDFs; page.ts words it for the reader.
+export const PDF_UNSUPPORTED = 'PDF not supported by this model';
+
+export const PROVIDERS = [
+  'meta-api', 'muse-open', 'gemma-4', 'llama-4-scout', 'qwen-3.8', 'ollama-mistral', 'claude-sonnet', 'claude-haiku',
+] as const;
 export type Provider = (typeof PROVIDERS)[number];
 
 export function isProvider(value: string): value is Provider {

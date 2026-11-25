@@ -26,6 +26,8 @@
   },
   // remote: wrangler dev renders on Cloudflare's Browser Run instead of downloading a local Chromium.
   "browser": { "binding": "BROWSER", "remote": true },
+  // Workers AI: Muse Spark Open (third-party, Unified Billing credits) and the Cloudflare-hosted open models.
+  "ai": { "binding": "AI" },
   // namespace_id is account-wide; 4530 is unused elsewhere on Mortuary.Services
   "ratelimits": [{ "name": "UPLOAD_LIMITER", "namespace_id": "4530", "simple": { "limit": 5, "period": 60 } }],
   // Daily cleanup of audits, cached results and stored files unused for 30 days.
@@ -38,5 +40,5 @@
   },
   // Names only, set with `wrangler secret put`. Typed from here instead of inferred from .dev.vars.
   // CF_AIG_TOKEN is the gateway's token: listed so a deploy without it fails instead of every audit.
-  "secrets": { "required": ["META_API_KEY", "BASETEN_API_KEY", "CF_AIG_TOKEN"] }
+  "secrets": { "required": ["META_API_KEY", "CF_AIG_TOKEN"] }
 }
