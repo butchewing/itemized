@@ -21,6 +21,8 @@
   "browser": { "binding": "BROWSER", "remote": true },
   // Workers AI: Muse Spark Open (third-party, Unified Billing credits) and the Cloudflare-hosted open models.
   "ai": { "binding": "AI" },
+  // pdf.js goes into the bundle as text and is handed to the browser that renders PDFs (src/render.ts).
+  "rules": [{ "type": "Text", "globs": ["**/pdf.min.mjs", "**/pdf.worker.min.mjs"], "fallthrough": false }],
   // namespace_id is any integer unique among rate limiters in the deploying account.
   "ratelimits": [{ "name": "UPLOAD_LIMITER", "namespace_id": "4531", "simple": { "limit": 5, "period": 60 } }],
   // Daily cleanup of audits, cached results and stored files unused for 30 days.

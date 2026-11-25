@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { isProvider, PDF_UNSUPPORTED } from './audit';
+import { renderPdf } from './render';
 import { chatJson, costUsd, ModelError, PROVIDER_CONFIG, SAM_PER_IMAGE_USD, sam, toDataUrl, type ContentPart, type Usage } from './models';
 import { DISCLOSURE_IDS } from './extraction';
 import { extractFresh, SEMANTIC_EFFORT, type ExtractInput } from './pipeline';
@@ -178,6 +179,22 @@ spike.post('/variance-extract', async (c) => {
 });
 
 // test/eval/run.mjs refuses to upload a set unless this matches the set's declared provider.
+// Renders an uploaded PDF the way the pipeline will, and reports pages, sizes and text-layer counts.
+spike.post('/render', async (c) => {
+  const form = await c.req.formData().catch(() => null);
+  const file = form?.get('file');
+  if (!(file instanceof File)) return c.json({ error: 'file required' }, 400);
+  const t0 = Date.now();
+  try {
+    const r = await renderPdf(c.env.BROWSER, await file.arrayBuffer());
+    const want = Number(c.req.query('page') ?? 0);
+    if (want) return new Response(r.pages[want - 1]!.bytes, { headers: { 'Content-Type': 'image/png' } });
+    return c.json({ ms: Date.now() - t0, pages: r.pages.length, bytes: r.pages.map((p) => p.bytes.byteLength), textChars: r.textChars });
+  } catch (e) {
+    return c.json({ error: e instanceof Error ? `${e.name}: ${e.message}` : String(e), ms: Date.now() - t0 }, 422);
+  }
+});
+
 spike.get('/provider', (c) => c.json({ provider: c.env.MODEL_PROVIDER }));
 
 // Engine verdicts for a finished audit in both input modes, on a fixed audit date so the stale-date
