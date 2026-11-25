@@ -159,3 +159,15 @@ describe('not found', () => {
     expect(await api.json()).toEqual({ error: 'Not found.' });
   });
 });
+
+describe('home page script', () => {
+  it('runs past its top-level constants (no server-side names leak into the browser script)', () => {
+    const script = PAGE.slice(PAGE.lastIndexOf('<script>') + '<script>'.length, PAGE.lastIndexOf('</script>'));
+    expect(script).not.toMatch(/\[[A-Z][A-Z0-9_]+\]\s*:/);
+    // Parses as a script; evaluating the FAILURES table must not throw.
+    expect(() => new Function(script)).not.toThrow();
+    const failures = script.match(/const FAILURES = (\{[\s\S]*?\});/)?.[1];
+    expect(failures).toBeDefined();
+    expect(() => new Function(`return ${failures}`)()).not.toThrow();
+  });
+});
