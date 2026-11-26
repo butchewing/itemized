@@ -70,10 +70,20 @@ export async function renderPdf(browserBinding: Env['BROWSER'], pdf: ArrayBuffer
           const url = (src: string) => URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
           const pdfjs = await import(url(lib));
           pdfjs.GlobalWorkerOptions.workerSrc = url(worker);
-          const bin = atob(g.__pdf.join(''));
+          // Each chunk is its own base64 string (with its own padding), so decode them one by one.
+          const parts = g.__pdf.map((c) => {
+            const bin = atob(c);
+            const u = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+            return u;
+          });
           g.__pdf = [];
-          const data = new Uint8Array(bin.length);
-          for (let i = 0; i < bin.length; i++) data[i] = bin.charCodeAt(i);
+          const data = new Uint8Array(parts.reduce((n, u) => n + u.length, 0));
+          let at = 0;
+          for (const u of parts) {
+            data.set(u, at);
+            at += u.length;
+          }
           try {
             const doc = await pdfjs.getDocument({ data, isEvalSupported: false, enableXfa: false, disableAutoFetch: true }).promise;
             g.__doc = doc;
