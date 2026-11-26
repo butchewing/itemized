@@ -20,8 +20,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 569,
-    "compared": 571
+    "agree": 558,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -43,12 +43,12 @@
    ],
    "verdicts": {
     "fail": 19,
-    "review": 25,
+    "review": 13,
     "pass": 449,
-    "not_applicable": 78
+    "not_applicable": 79
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -80,8 +80,8 @@
     "total": 32
    },
    "agreement": {
-    "agree": 186,
-    "compared": 192
+    "agree": 182,
+    "compared": 188
    },
    "falseFails": [],
    "missedFails": [],
@@ -127,12 +127,12 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 16,
+    "review": 12,
     "pass": 148,
     "not_applicable": 26
    },
    "redactionAdjusted": 0,
-   "checksRun": 192,
+   "checksRun": 188,
    "notRun": 0,
    "cost": {
     "n": 4,
@@ -164,8 +164,8 @@
     "total": 32
    },
    "agreement": {
-    "agree": 186,
-    "compared": 192
+    "agree": 182,
+    "compared": 188
    },
    "falseFails": [],
    "missedFails": [],
@@ -211,12 +211,12 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 16,
+    "review": 12,
     "pass": 148,
     "not_applicable": 26
    },
    "redactionAdjusted": 0,
-   "checksRun": 192,
+   "checksRun": 188,
    "notRun": 0,
    "cost": {
     "n": 4,
@@ -248,8 +248,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 552,
-    "compared": 571
+    "agree": 541,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -373,12 +373,12 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 42,
+    "review": 30,
     "pass": 449,
-    "not_applicable": 78
+    "not_applicable": 79
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -410,8 +410,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 568,
-    "compared": 571
+    "agree": 557,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -439,12 +439,12 @@
    ],
    "verdicts": {
     "fail": 18,
-    "review": 26,
+    "review": 14,
     "pass": 449,
-    "not_applicable": 78
+    "not_applicable": 79
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -516,8 +516,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 565,
-    "compared": 571
+    "agree": 554,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -562,12 +562,12 @@
    ],
    "verdicts": {
     "fail": 20,
-    "review": 23,
+    "review": 11,
     "pass": 450,
-    "not_applicable": 78
+    "not_applicable": 79
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -599,8 +599,8 @@
     "total": 32
    },
    "agreement": {
-    "agree": 186,
-    "compared": 192
+    "agree": 182,
+    "compared": 188
    },
    "falseFails": [],
    "missedFails": [],
@@ -646,12 +646,12 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 15,
+    "review": 11,
     "pass": 149,
     "not_applicable": 26
    },
    "redactionAdjusted": 0,
-   "checksRun": 192,
+   "checksRun": 188,
    "notRun": 0,
    "cost": {
     "n": 4,
@@ -723,8 +723,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 567,
-    "compared": 571
+    "agree": 556,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -758,12 +758,12 @@
    ],
    "verdicts": {
     "fail": 19,
-    "review": 26,
+    "review": 14,
     "pass": 449,
-    "not_applicable": 77
+    "not_applicable": 78
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -795,8 +795,8 @@
     "total": 32
    },
    "agreement": {
-    "agree": 175,
-    "compared": 192
+    "agree": 171,
+    "compared": 188
    },
    "falseFails": [],
    "missedFails": [],
@@ -908,12 +908,12 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 21,
+    "review": 17,
     "pass": 143,
     "not_applicable": 26
    },
    "redactionAdjusted": 0,
-   "checksRun": 192,
+   "checksRun": 188,
    "notRun": 0,
    "cost": {
     "n": 4,
@@ -992,8 +992,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 552,
-    "compared": 571
+    "agree": 541,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -1117,12 +1117,12 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 42,
+    "review": 30,
     "pass": 449,
-    "not_applicable": 78
+    "not_applicable": 79
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -1154,8 +1154,8 @@
     "total": 96
    },
    "agreement": {
-    "agree": 568,
-    "compared": 571
+    "agree": 557,
+    "compared": 560
    },
    "falseFails": [],
    "missedFails": [],
@@ -1183,12 +1183,12 @@
    ],
    "verdicts": {
     "fail": 18,
-    "review": 26,
+    "review": 14,
     "pass": 449,
-    "not_applicable": 78
+    "not_applicable": 79
    },
    "redactionAdjusted": 0,
-   "checksRun": 571,
+   "checksRun": 560,
    "notRun": 0,
    "cost": {
     "n": 12,
@@ -1365,21 +1365,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1462,21 +1461,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1559,21 +1557,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1656,21 +1653,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1753,21 +1749,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 39,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1850,21 +1845,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2053,21 +2047,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 2,
+      "review": 1,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2150,21 +2143,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2247,21 +2239,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2342,23 +2333,22 @@
       "C-082": "pass",
       "C-083": "pass",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 2,
       "pass": 36,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2443,21 +2433,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2540,21 +2529,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2637,21 +2625,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 34,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -2761,21 +2748,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -2877,21 +2863,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2974,21 +2959,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3071,21 +3055,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 34,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -3198,21 +3181,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -3314,21 +3296,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3413,21 +3394,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3483,21 +3463,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3580,21 +3559,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3650,21 +3628,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3747,21 +3724,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
+      "review": 2,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -3828,21 +3804,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3925,21 +3900,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4006,21 +3980,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4103,21 +4076,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 39,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4184,21 +4156,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 39,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4281,21 +4252,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
+      "review": 3,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4367,21 +4337,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4663,21 +4632,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
+      "review": 3,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4744,21 +4712,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 2,
+      "review": 1,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4841,21 +4808,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4927,21 +4893,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5024,21 +4989,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5094,21 +5058,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5191,23 +5154,22 @@
       "C-082": "pass",
       "C-083": "pass",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 5,
+      "review": 3,
       "pass": 36,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 47,
+      "compared": 47,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -5267,23 +5229,22 @@
       "C-082": "pass",
       "C-083": "pass",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 2,
       "pass": 36,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5368,21 +5329,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5438,21 +5398,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5616,21 +5575,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5713,21 +5671,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5810,21 +5767,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5907,21 +5863,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6004,21 +5959,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 39,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6101,21 +6055,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6290,21 +6243,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 2,
+      "review": 1,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6387,21 +6339,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6484,21 +6435,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
+      "review": 3,
       "pass": 39,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6595,23 +6545,22 @@
       "C-082": "pass",
       "C-083": "review",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 7,
+      "review": 5,
       "pass": 33,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6712,21 +6661,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6809,21 +6757,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -6906,21 +6853,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
+      "review": 2,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -7014,21 +6960,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -7127,21 +7072,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 47,
+      "compared": 47,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7313,21 +7257,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7410,21 +7353,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7507,21 +7449,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7606,21 +7547,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7703,21 +7643,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 47,
+      "compared": 47,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7806,21 +7745,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -7995,21 +7933,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -8104,21 +8041,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -8201,21 +8137,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -8298,23 +8233,22 @@
       "C-082": "pass",
       "C-083": "review",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 5,
+      "review": 3,
       "pass": 35,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 47,
+      "compared": 47,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -8405,21 +8339,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -8502,21 +8435,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
+      "review": 3,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -8622,21 +8554,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 5,
+      "review": 4,
       "pass": 33,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 44,
+      "compared": 47,
+      "agree": 43,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -8749,21 +8680,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 5,
+      "review": 4,
       "pass": 36,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 44,
+      "compared": 47,
+      "agree": 43,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -8888,21 +8818,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 42,
+      "compared": 47,
+      "agree": 41,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9139,21 +9068,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9209,21 +9137,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9306,21 +9233,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9376,21 +9302,20 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 40,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9473,21 +9398,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
+      "review": 2,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -9554,21 +9478,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 35,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9651,21 +9574,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -9732,21 +9654,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9829,21 +9750,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 3,
+      "review": 2,
       "pass": 39,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -9910,21 +9830,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 1,
+      "review": 0,
       "pass": 39,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10007,21 +9926,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
+      "review": 3,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10093,21 +10011,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10388,21 +10305,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
+      "review": 3,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 46,
+      "compared": 47,
+      "agree": 45,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10469,21 +10385,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
-      "review": 2,
+      "review": 1,
       "pass": 38,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10566,21 +10481,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 3,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 45,
+      "compared": 47,
+      "agree": 44,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10652,21 +10566,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
-      "review": 1,
+      "review": 0,
       "pass": 37,
       "not_applicable": 6
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10749,21 +10662,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10819,21 +10731,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 7,
+      "review": 6,
       "pass": 36,
       "not_applicable": 5
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10916,23 +10827,22 @@
       "C-082": "pass",
       "C-083": "pass",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 5,
+      "review": 3,
       "pass": 36,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 47,
+      "compared": 47,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10992,23 +10902,22 @@
       "C-082": "pass",
       "C-083": "pass",
       "TX-001": "not_applicable",
-      "TX-002": "review",
+      "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 4,
+      "review": 2,
       "pass": 36,
-      "not_applicable": 7
+      "not_applicable": 8
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11093,21 +11002,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11163,21 +11071,20 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable",
-      "TX-005": "review"
+      "TX-004": "not_applicable"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
+      "review": 0,
       "pass": 38,
       "not_applicable": 9
      },
-     "checksRun": 48,
+     "checksRun": 47,
      "notRun": [],
      "labels": {
-      "compared": 48,
-      "agree": 48,
+      "compared": 47,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],

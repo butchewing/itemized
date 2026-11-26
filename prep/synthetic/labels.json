@@ -152,9 +152,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -310,9 +307,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -469,9 +463,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -627,9 +618,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -785,9 +773,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -944,9 +929,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -1247,9 +1229,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -1407,9 +1386,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -1575,9 +1551,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -1590,8 +1563,7 @@
    "defects": [
     "C-004",
     "C-010",
-    "C-023",
-    "TX-002"
+    "C-023"
    ],
    "notes": "Heavy paraphrase should score below the 'altered' threshold; review is tolerated while thresholds are tuned. With the conditional sentence gone and the non-declinable disclosure still present, C-023 reviews.",
    "checks": {
@@ -1731,19 +1703,13 @@
      "expected": "not_applicable"
     },
     "TX-002": {
-     "expected": "review",
-     "also_ok": [
-      "not_applicable"
-     ]
+     "expected": "not_applicable"
     },
     "TX-003": {
      "expected": "not_applicable"
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   },
@@ -1896,9 +1862,6 @@
     },
     "TX-004": {
      "expected": "not_applicable"
-    },
-    "TX-005": {
-     "expected": "review"
     }
    }
   }

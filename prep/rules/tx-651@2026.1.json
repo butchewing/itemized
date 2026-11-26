@@ -68,17 +68,6 @@
       "applies_when": "the list mentions paying with life insurance and does not offer claim filing",
       "test": "the statement about third-party claim filing fees is on the list",
       "plain": "If the funeral home asks for payment before insurance pays out and does not file the claim itself, the list must say that a third party who files the claim will charge a fee. Whether that applies depends on the home's payment terms, so a person should check."
-    },
-    {
-      "id": "TX-005",
-      "title": "Urns described by material",
-      "cite": "22 TAC §203.46(b)(4)(A)",
-      "basis": "rule",
-      "engine": "deterministic",
-      "on_violation": "review",
-      "applies_when": "the list prices individual urns",
-      "test": "each priced urn names the material it is mainly made of; bronze urns say sheet or cast bronze",
-      "plain": "Urn prices must come with the material each urn is mainly made of, and bronze urns must say whether they are sheet or cast bronze."
     }
   ]
 }

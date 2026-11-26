@@ -20,10 +20,10 @@ const uncertain = (reason: string, evidence: Evidence = NONE): Outcome => ({ res
 const na = (reason: string): Outcome => ({ result: 'not_applicable', reason, evidence: NONE });
 const itemEvidence = (i: ExtractedItem): Evidence => ({ quote: i.priceText ? `${i.label}: ${i.priceText}` : i.label, page: i.page, itemCategory: i.category });
 
-// A Texas address: "TX" or "Texas" in the address line, or a Texas ZIP code (75000-79999, 885xx).
+// A Texas address: "TX" or "Texas" in the address line, or a Texas ZIP code (75000-79999, 885xx) ending it.
 export function isTexas(x: GplExtraction): boolean {
   const a = x.address ?? '';
-  return /\b(TX|Tex\.?|Texas)\b/.test(a) || /\b(7[5-9]\d{3}|885\d{2})(-\d{4})?\b/.test(a);
+  return /\b(TX|Tex\.?|Texas)\b/.test(a) || /\b(7[5-9]\d{3}|885\d{2})(-\d{4})?\s*$/.test(a.trim());
 }
 
 // Every piece of the list's own words the extraction keeps: notices, item labels and descriptions,
@@ -54,8 +54,6 @@ function selectionNotices(c: Corpus) {
   return found;
 }
 
-const URN_MATERIAL =
-  /\b(bronze|brass|copper|pewter|steel|stainless|aluminum|aluminium|metal|wood|wooden|oak|walnut|cherry|maple|mahogany|pine|cedar|marble|granite|stone|onyx|alabaster|ceramic|porcelain|glass|resin|composite|biodegradable|paper|cardboard|salt|sand|clay|bamboo|cultured marble|polymer|plastic|fiberboard|keepsake)\b/i;
 
 export const TEXAS_CHECKS: Record<TexasCheckId, (ctx: Ctx) => Outcome> = {
   'TX-001': ({ x }) => {
@@ -63,7 +61,10 @@ export const TEXAS_CHECKS: Record<TexasCheckId, (ctx: Ctx) => Outcome> = {
     if (!items.length) return na('the list does not offer filing life insurance claims');
     for (const i of items) {
       if (isPriced(i) || NO_CHARGE.test(`${i.priceText ?? ''} ${i.includesText ?? ''}`)) continue;
-      if (priceTextIsMissing(i.priceText)) return violation('insurance claim filing is listed with no price', itemEvidence(i), i.priceText !== null);
+      // No price text at all may mean no charge (the fee is required only "if the funeral home charges");
+      // a printed blank or "call for price" is a price left out.
+      if (i.priceText === null) return uncertain('insurance claim filing is listed with no price and no word on whether it is free', itemEvidence(i));
+      if (priceTextIsMissing(i.priceText)) return violation('insurance claim filing is listed with no price', itemEvidence(i), true);
       return uncertain('insurance claim filing is listed but its price could not be read', itemEvidence(i));
     }
     return met('insurance claim filing shows a price or says there is no charge', itemEvidence(items[0]!));
@@ -71,7 +72,8 @@ export const TEXAS_CHECKS: Record<TexasCheckId, (ctx: Ctx) => Outcome> = {
 
   'TX-002': ({ matches }) => {
     const m = matches['D-selection'];
-    if (m.status === 'absent') return na('no selection notice on the list; the federal check reports it');
+    // Only a notice the federal check accepts: a missing or reworded one is already reported there.
+    if (m.status !== 'present') return na('the federal check reports the selection notice');
     const sentence = Object.values(m.conditional)[0] ?? 'absent';
     const overhead = Object.entries(m.optional).some(([k, v]) => /overhead/.test(k) && v);
     if (sentence === 'present' && overhead) return met('the notice includes the sentence about basic services and overhead', m.evidence);
@@ -97,15 +99,6 @@ export const TEXAS_CHECKS: Record<TexasCheckId, (ctx: Ctx) => Outcome> = {
     return violation('the list mentions insurance and does not offer claim filing, and the statement about third-party claim filing fees is not on it; it is required only if payment is due before insurance pays out', NONE);
   },
 
-  'TX-005': ({ x }) => {
-    const urns = x.items.filter((i) => /\burns?\b/i.test(i.label) && i.price !== null);
-    if (!urns.length) return na('the list does not price individual urns');
-    const vague = urns.find((i) => !URN_MATERIAL.test(`${i.label} ${i.includesText ?? ''}`));
-    if (vague) return violation('a priced urn does not name its material', itemEvidence(vague));
-    const bronze = urns.find((i) => /\bbronze\b/i.test(`${i.label} ${i.includesText ?? ''}`) && !/\b(sheet|cast|caste)\b/i.test(`${i.label} ${i.includesText ?? ''}`));
-    if (bronze) return violation('a bronze urn does not say sheet or cast bronze', itemEvidence(bronze));
-    return met('each priced urn names its material', itemEvidence(urns[0]!));
-  },
 };
 
 export type TexasOutcome = { check: TexasCheck; outcome: Outcome };

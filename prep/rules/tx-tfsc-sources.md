@@ -56,7 +56,7 @@ TFSC's §203.46 restates the federal General Price List rule (16 CFR 453.2) for 
 2. **Items not offered:** only items the funeral establishment offers must be priced. §203.46(b)(5)(B) agrees ("if offered for sale").
 3. **Combined funeral establishment and crematory:** both lists' requirements apply, so both notices are expected.
 
-4. **First version of the Texas checks:** insurance claim filing (price if offered; processing fee disclosed), selection notice wording (statute vs TFSC rule: review), crematory notice (review), third-party insurance statement (review) and urn prices with material (review).
+4. **First version of the Texas checks:** insurance claim filing (price if offered; processing fee disclosed), selection notice wording (statute vs TFSC rule: review), crematory notice (review) and third-party insurance statement (review). An urn check was built and then **dropped** (Butch, 2026-11-26): §203.46(b)(4) governs the separate urn price list, and the GPL items in (b)(5) include no urns.
 
 ## Duties that are not about the list's content (not checkable from a document)
 

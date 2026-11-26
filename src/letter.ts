@@ -27,11 +27,15 @@ export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check
 const REVIEW_NOTES = {
   deterministic: 'Itemized could not read or match this part of the list clearly enough to decide. A person should check it.',
   semantic: 'This item calls for judgment about wording or placement. A person should read the quoted text and decide.',
+  legal: 'Itemized read this part of the list. Whether it meets the requirement depends on how the law is read, or on facts the list does not show, such as payment terms. A person should decide.',
 } as const;
 
 // Keyed on the ruleset's engine, not the stored finding, so reports saved before this note existed get it too.
 const ENGINE_OF = new Map(ruleset.checks.map((c) => [c.id, c.engine]));
-const reviewNote = (f: Finding) => REVIEW_NOTES[ENGINE_OF.get(f.checkId) === 'semantic' ? 'semantic' : 'deterministic'];
+// Texas checks review by design where the law or off-list facts decide; a misread is still a misread.
+const misread = (f: Finding) => /^(extraction|photo)_uncertain:/.test(f.reason);
+const reviewNote = (f: Finding) =>
+  REVIEW_NOTES[ENGINE_OF.get(f.checkId) === 'semantic' ? 'semantic' : f.checkId.startsWith('TX-') && !misread(f) ? 'legal' : 'deterministic'];
 
 const BASIS: Record<string, string> = ruleset.basis_values;
 
@@ -127,7 +131,8 @@ export function fixPromptText(report: Report): string | null {
     report.findings.filter((f) => f.verdict === verdict).map((f) => promptBlock(f, label)),
   );
   if (!blocks.length) return null;
-  return `I run a funeral home. Below is a review of our General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453), made by Itemized. Please help me draft a revised General Price List.
+  const texas = report.findings.some((f) => f.checkId.startsWith('TX-'));
+  return `I run a funeral home. Below is a review of our General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453)${texas ? ' and the price-list requirements Texas adds' : ''}, made by Itemized. Please help me draft a revised General Price List.
 
 Rules for your draft:
 - Keep every price exactly as it is. Do not invent, change or remove prices. If a required item needs a price we have not given, write [PRICE NEEDED] and leave it for me.
@@ -214,7 +219,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
     <h2 class="letter-re" id="letter-re" tabindex="-1">Re: ${provider ? `the General Price List of ${escapeHtml(provider)}` : 'your General Price List'}</h2>
     <p class="summary">${summarySentence(c.fail, c.review, c.pass)}</p>
     <dl class="key" aria-label="How to read this review">
-      <div><dt>Did not pass</dt><dd>A requirement Itemized could check directly against the Rule’s text was not met on this list.</dd></div>
+      <div><dt>Did not pass</dt><dd>A requirement Itemized could check directly against the text of the Rule, or of Texas law for a Texas list, was not met on this list.</dd></div>
       <div><dt>Needs a person’s review</dt><dd>Itemized could not decide on its own, or the item calls for judgment.</dd></div>
       <div><dt>Passed</dt><dd>The requirement was met.</dd></div>
       <div><dt>Not applicable</dt><dd>The requirement does not apply to this list, for example because the funeral home does not list that service.</dd></div>

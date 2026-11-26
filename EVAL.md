@@ -6,20 +6,20 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 
 | Set | Model | n | Fields | Disclosures | Verdict agreement | False fails | Missed fails | Fail to review | Review rate | Checks not run | Cost per review, mean / p90 | Model time per review, mean / p90 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 12 | 1087/1088 | 95/96 | 569/571 (99.6%) | 0 | 0 | 1 | 4.4% | 0 | $0.0324 / $0.0374 | 20.1 s / 26.1 s |
-| b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 344/356 | 32/32 | 186/192 (96.9%) | 0 | 0 | 5 | 8.3% | 0 | $0.0357 / $0.0384 | 13.5 s / 14.8 s |
-| c. Synthetic photos | Muse Spark Open (Cloudflare, served by Fireworks) | 4 | 341/356 | 32/32 | 186/192 (96.9%) | 0 | 0 | 5 | 8.3% | 0 | $0.0337 / $0.0349 | 17.4 s / 20.1 s |
-| d. Synthetic PDFs as page images | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 552/571 (96.7%) | 0 | 0 | 18 | 7.4% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
-| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 568/571 (99.5%) | 0 | 0 | 2 | 4.6% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
+| a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 12 | 1087/1088 | 95/96 | 558/560 (99.6%) | 0 | 0 | 1 | 2.3% | 0 | $0.0324 / $0.0374 | 20.1 s / 26.1 s |
+| b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 344/356 | 32/32 | 182/188 (96.8%) | 0 | 0 | 5 | 6.4% | 0 | $0.0357 / $0.0384 | 13.5 s / 14.8 s |
+| c. Synthetic photos | Muse Spark Open (Cloudflare, served by Fireworks) | 4 | 341/356 | 32/32 | 182/188 (96.8%) | 0 | 0 | 5 | 6.4% | 0 | $0.0337 / $0.0349 | 17.4 s / 20.1 s |
+| d. Synthetic PDFs as page images | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 541/560 (96.6%) | 0 | 0 | 18 | 5.4% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
+| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 557/560 (99.5%) | 0 | 0 | 2 | 2.5% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
 | e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0310 / $0.0310 | 20.5 s / 20.5 s |
-| g. Synthetic PDFs | Claude Sonnet 5.5 (Anthropic API) | 12 | 1088/1088 | 95/96 | 565/571 (98.9%) | 0 | 0 | 0 | 4.0% | 0 | $0.0618 / $0.0647 | 18.1 s / 20.0 s |
-| h. Synthetic photos | Claude Sonnet 5.5 (Anthropic API) | 4 | 355/356 | 32/32 | 186/192 (96.9%) | 0 | 0 | 5 | 7.8% | 0 | $0.0689 / $0.0726 | 18.5 s / 20.0 s |
+| g. Synthetic PDFs | Claude Sonnet 5.5 (Anthropic API) | 12 | 1088/1088 | 95/96 | 554/560 (98.9%) | 0 | 0 | 0 | 2.0% | 0 | $0.0618 / $0.0647 | 18.1 s / 20.0 s |
+| h. Synthetic photos | Claude Sonnet 5.5 (Anthropic API) | 4 | 355/356 | 32/32 | 182/188 (96.8%) | 0 | 0 | 5 | 5.9% | 0 | $0.0689 / $0.0726 | 18.5 s / 20.0 s |
 | i. FTC Sample 1 template | Claude Sonnet 5.5 (Anthropic API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0616 / $0.0616 | 19.9 s / 19.9 s |
-| j. Synthetic PDFs | Claude Haiku 5.5 (Anthropic API) | 12 | 1087/1088 | 94/96 | 567/571 (99.3%) | 0 | 0 | 1 | 4.6% | 0 | $0.0038 / $0.0043 | 19.2 s / 22.9 s |
-| k. Synthetic photos | Claude Haiku 5.5 (Anthropic API) | 4 | 292/356 | 31/32 | 175/192 (91.1%) | 0 | 0 | 5 | 10.9% | 0 | $0.0054 / $0.0063 | 28.5 s / 36.4 s |
+| j. Synthetic PDFs | Claude Haiku 5.5 (Anthropic API) | 12 | 1087/1088 | 94/96 | 556/560 (99.3%) | 0 | 0 | 1 | 2.5% | 0 | $0.0038 / $0.0043 | 19.2 s / 22.9 s |
+| k. Synthetic photos | Claude Haiku 5.5 (Anthropic API) | 4 | 292/356 | 31/32 | 171/188 (91.0%) | 0 | 0 | 5 | 9.0% | 0 | $0.0054 / $0.0063 | 28.5 s / 36.4 s |
 | l. FTC Sample 1 template | Claude Haiku 5.5 (Anthropic API) | 1 | n/a | n/a | 42/43 (97.7%) | 0 | 0 | 0 | 9.3% | 0 | $0.0049 / $0.0049 | 27.4 s / 27.4 s |
-| u. Synthetic PDFs rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1086/1088 | 95/96 | 552/571 (96.7%) | 0 | 0 | 18 | 7.4% | 0 | $0.0289 / $0.0309 | 17.4 s / 20.2 s |
-| u. Same, PDF rules (the product's choice for these 2-page lists) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1086/1088 | 95/96 | 568/571 (99.5%) | 0 | 0 | 2 | 4.6% | 0 | $0.0289 / $0.0309 | 17.4 s / 20.2 s |
+| u. Synthetic PDFs rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1086/1088 | 95/96 | 541/560 (96.6%) | 0 | 0 | 18 | 5.4% | 0 | $0.0289 / $0.0309 | 17.4 s / 20.2 s |
+| u. Same, PDF rules (the product's choice for these 2-page lists) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1086/1088 | 95/96 | 557/560 (99.5%) | 0 | 0 | 2 | 2.5% | 0 | $0.0289 / $0.0309 | 17.4 s / 20.2 s |
 | v. FTC template rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 39/43 (90.7%) | 0 | 0 | 4 | 16.3% | 0 | $0.0260 / $0.0260 | 19.6 s / 19.6 s |
 | v. Same, PDF rules (the product's choice) | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0260 / $0.0260 | 19.6 s / 19.6 s |
 
@@ -206,7 +206,7 @@ v. Same, PDF rules (the product's choice), muse-open: none.
 - Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.
 - Real price lists run on one provider only: Muse Spark Open (Cloudflare, served by Fireworks) since 2026-11-24, Baseten before that. The harness refuses any real-list file unless the running Worker reports that provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.
 - Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.
-- Texas checks (tx-651@2026.1, TX-001 to TX-005) run only when the list's address is in Texas. Eleven synthetic lists have Texas addresses (syn-07 has none), so each Texas set row counts 55 Texas labels: every list flags its "Temporary cremation urn", priced without its material, for review (TX-005), and syn-02 and syn-11 review the selection notice (TX-002). No synthetic list offers insurance claim filing, mentions insurance, or says it runs a crematory, so TX-001, TX-003 and TX-004 are covered by unit tests (test/texas.test.ts), not by the eval. The real lists' addresses are redacted, so no Texas check runs on them.
+- Texas checks (tx-651@2026.1, TX-001 to TX-004) run only when the list's address is in Texas. Eleven synthetic lists have Texas addresses (syn-07 has none), so the PDF and page-image sets carry 44 Texas labels and the photo sets 16 (4 lists × 4). syn-02 reviews the selection notice (TX-002); syn-11's reworded notice is left to the federal check. No synthetic list offers insurance claim filing, mentions insurance, or says it runs a crematory, so TX-001, TX-003 and TX-004 are covered by unit tests (test/texas.test.ts), not by the eval. The real lists' addresses are redacted, so no Texas check runs on them.
 - Cloudflare-hosted Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B (sets m to r) did not finish one document each on 2026-11-24: Workers AI timed out after about 6 minutes, or the harness after 10, so they have no rows. Mistral Large 4 on Ollama Cloud (sets s and t) has not run yet.
 
 ## Rerun

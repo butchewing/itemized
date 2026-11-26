@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import tx from '../prep/rules/tx-651@2026.1.json';
 import { parseExtraction, type ExtractedItem, type GplExtraction } from '../src/extraction';
+import { fixPromptText, renderLetterHtml } from '../src/letter';
 import { runChecks } from '../src/rules/engine';
 import { isTexas } from '../src/rules/texas';
 import type { Verdict } from '../src/rules/types';
@@ -43,6 +44,9 @@ describe('Texas checks run only for a Texas provider', () => {
     expect(isTexas({ ...base(), address: '1 Main St, Austin, Texas' })).toBe(true);
     expect(isTexas({ ...base(), address: '100 Main Street, Yourtown, USA 12345' })).toBe(false);
     expect(isTexas({ ...base(), address: null })).toBe(false);
+    // A street number in the Texas ZIP range is not a ZIP code.
+    expect(isTexas({ ...base(), address: '75012 Ocean Avenue, Carmel, CA 93921' })).toBe(false);
+    expect(isTexas({ ...base(), address: '500 Main St, Lubbock 79401' })).toBe(true);
   });
 
   it('adds no Texas findings or ruleset for the FTC template', () => {
@@ -62,6 +66,9 @@ describe('TX-002 selection notice: statute vs TFSC rule', () => {
   });
   it('flags the federal minimum (no basic-services sentence) for review, never pass', () => {
     expect(texasVerdicts(withNotices(base(), FEDERAL_MIN)).out['TX-002']).toBe('review');
+  });
+  it('leaves a notice the federal check does not accept to the federal check', () => {
+    expect(texasVerdicts(load('syn-11.pdf.json')).out['TX-002']).toBe('not_applicable');
   });
   it('flags "basic services" without "and overhead" for review', () => {
     expect(texasVerdicts(withNotices(base(), BASIC_NO_OVERHEAD)).out['TX-002']).toBe('review');
@@ -96,6 +103,9 @@ describe('TX-001 life insurance claim filing', () => {
   it('fails a listed service with a blank price', () => {
     expect(texasVerdicts(withItems(base(), item('Filing life insurance claim', null, '$______'))).out['TX-001']).toBe('fail');
   });
+  it('reviews a listed service with no price text at all (it may be free)', () => {
+    expect(texasVerdicts(withItems(base(), item('Filing life insurance claim', null, null))).out['TX-001']).toBe('review');
+  });
   it('reviews an unreadable price instead of failing', () => {
     expect(texasVerdicts(withItems(base(), item('Filing life insurance claim', null, 'see staff 7'))).out['TX-001']).toBe('review');
   });
@@ -121,19 +131,19 @@ describe('TX-004 third-party insurance statement', () => {
   });
 });
 
-describe('TX-005 urns', () => {
-  const noUrns = (): GplExtraction => ({ ...base(), items: base().items.filter((i) => !/\burns?\b/i.test(i.label)) });
-  it('does not apply without priced urns', () => {
-    expect(texasVerdicts(noUrns()).out['TX-005']).toBe('not_applicable');
+
+describe('the letter for a Texas list', () => {
+  const x = withNotices(base(), BASIC_NO_OVERHEAD);
+  const report = runChecks(x, ruleset, { auditDate: AUDIT_DATE, input: 'pdf' });
+  const html = renderLetterHtml({ extraction: x, report, modelName: 'Meta’s Muse Spark 1.3', date: AUDIT_DATE, uploadedAt: AUDIT_DATE, docSha256: 'abc123def456' });
+  it('explains a Texas review as a question of law, not a misread', () => {
+    const i = html.indexOf('Selection notice includes');
+    const section = html.slice(i, html.indexOf('</li>', i));
+    expect(section).toContain('depends on how the law is read');
+    expect(section).not.toContain('could not read or match');
   });
-  it('passes urns that name their material', () => {
-    expect(texasVerdicts(withItems(noUrns(), item('Cast bronze urn', 900, '$900'), item('Cherry wood urn', 300, '$300'))).out['TX-005']).toBe('pass');
-  });
-  it('reviews syn-02, whose "Temporary cremation urn" ($35) names no material', () => {
-    expect(texasVerdicts(base()).out['TX-005']).toBe('review');
-  });
-  it('reviews an urn with no material, and bronze without sheet or cast', () => {
-    expect(texasVerdicts(withItems(base(), item('Classic urn', 250, '$250'))).out['TX-005']).toBe('review');
-    expect(texasVerdicts(withItems(base(), item('Bronze urn', 900, '$900'))).out['TX-005']).toBe('review');
+  it('names Texas in the fix prompt and the ruleset line', () => {
+    expect(fixPromptText(report)).toContain('and the price-list requirements Texas adds');
+    expect(html).toContain('and Texas price-list requirements, ruleset tx-651@2026.1');
   });
 });
