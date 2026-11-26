@@ -972,6 +972,339 @@
     "mean": 27381,
     "p90": 27381
    }
+  },
+  {
+   "set": "u",
+   "name": "Synthetic PDFs, rendered by the Worker",
+   "provider": "muse-open",
+   "mode": "images",
+   "private": false,
+   "n": 12,
+   "skipped": [],
+   "failed": [],
+   "labeledDocs": 12,
+   "fields": {
+    "right": 1086,
+    "total": 1088
+   },
+   "disclosures": {
+    "right": 95,
+    "total": 96
+   },
+   "agreement": {
+    "agree": 497,
+    "compared": 516
+   },
+   "falseFails": [],
+   "missedFails": [],
+   "failsToReview": [
+    {
+     "list": "syn-03",
+     "check": "C-030",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-03",
+     "check": "C-041",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-04",
+     "check": "C-020",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-04",
+     "check": "C-044",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-05",
+     "check": "C-040",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-05",
+     "check": "C-050",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-06",
+     "check": "C-002",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-06",
+     "check": "C-072",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-06",
+     "check": "C-073",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-07",
+     "check": "C-003",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-07",
+     "check": "C-005",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-08",
+     "check": "C-061",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-08",
+     "check": "C-070",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-09",
+     "check": "C-022",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-09",
+     "check": "C-042",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-09",
+     "check": "C-052",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-11",
+     "check": "C-004",
+     "expected": "fail",
+     "got": "review"
+    }
+   ],
+   "otherMismatches": [
+    {
+     "list": "syn-07",
+     "check": "C-061",
+     "expected": "pass",
+     "got": "review"
+    }
+   ],
+   "verdicts": {
+    "fail": 2,
+    "review": 29,
+    "pass": 440,
+    "not_applicable": 45
+   },
+   "redactionAdjusted": 0,
+   "checksRun": 516,
+   "notRun": 0,
+   "cost": {
+    "n": 12,
+    "mean": 0.028911212499999995,
+    "p90": 0.030879450000000003
+   },
+   "latencyMs": {
+    "n": 12,
+    "mean": 17359,
+    "p90": 20210
+   }
+  },
+  {
+   "set": "u",
+   "name": "Synthetic PDFs, rendered by the Worker",
+   "provider": "muse-open",
+   "mode": "pdf",
+   "private": false,
+   "n": 12,
+   "skipped": [],
+   "failed": [],
+   "labeledDocs": 12,
+   "fields": {
+    "right": 1086,
+    "total": 1088
+   },
+   "disclosures": {
+    "right": 95,
+    "total": 96
+   },
+   "agreement": {
+    "agree": 513,
+    "compared": 516
+   },
+   "falseFails": [],
+   "missedFails": [],
+   "failsToReview": [
+    {
+     "list": "syn-07",
+     "check": "C-005",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "review"
+    }
+   ],
+   "otherMismatches": [
+    {
+     "list": "syn-07",
+     "check": "C-061",
+     "expected": "pass",
+     "got": "review"
+    }
+   ],
+   "verdicts": {
+    "fail": 18,
+    "review": 13,
+    "pass": 440,
+    "not_applicable": 45
+   },
+   "redactionAdjusted": 0,
+   "checksRun": 516,
+   "notRun": 0,
+   "cost": {
+    "n": 12,
+    "mean": 0.028911212499999995,
+    "p90": 0.030879450000000003
+   },
+   "latencyMs": {
+    "n": 12,
+    "mean": 17359,
+    "p90": 20210
+   }
+  },
+  {
+   "set": "v",
+   "name": "FTC Sample 1 template, rendered by the Worker",
+   "provider": "muse-open",
+   "mode": "images",
+   "private": false,
+   "n": 1,
+   "skipped": [],
+   "failed": [],
+   "labeledDocs": 1,
+   "fields": null,
+   "disclosures": null,
+   "agreement": {
+    "agree": 39,
+    "compared": 43
+   },
+   "falseFails": [],
+   "missedFails": [],
+   "failsToReview": [
+    {
+     "list": "ftc",
+     "check": "C-040",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "ftc",
+     "check": "C-041",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "ftc",
+     "check": "C-050",
+     "expected": "fail",
+     "got": "review"
+    },
+    {
+     "list": "ftc",
+     "check": "C-070",
+     "expected": "fail",
+     "got": "review"
+    }
+   ],
+   "otherMismatches": [],
+   "verdicts": {
+    "fail": 1,
+    "review": 7,
+    "pass": 30,
+    "not_applicable": 5
+   },
+   "redactionAdjusted": 0,
+   "checksRun": 43,
+   "notRun": 0,
+   "cost": {
+    "n": 1,
+    "mean": 0.026023900000000003,
+    "p90": 0.026023900000000003
+   },
+   "latencyMs": {
+    "n": 1,
+    "mean": 19634,
+    "p90": 19634
+   }
+  },
+  {
+   "set": "v",
+   "name": "FTC Sample 1 template, rendered by the Worker",
+   "provider": "muse-open",
+   "mode": "pdf",
+   "private": false,
+   "n": 1,
+   "skipped": [],
+   "failed": [],
+   "labeledDocs": 1,
+   "fields": null,
+   "disclosures": null,
+   "agreement": {
+    "agree": 43,
+    "compared": 43
+   },
+   "falseFails": [],
+   "missedFails": [],
+   "failsToReview": [],
+   "otherMismatches": [],
+   "verdicts": {
+    "fail": 5,
+    "review": 3,
+    "pass": 30,
+    "not_applicable": 5
+   },
+   "redactionAdjusted": 0,
+   "checksRun": 43,
+   "notRun": 0,
+   "cost": {
+    "n": 1,
+    "mean": 0.026023900000000003,
+    "p90": 0.026023900000000003
+   },
+   "latencyMs": {
+    "n": 1,
+    "mean": 19634,
+    "p90": 19634
+   }
   }
  ],
  "documents": [
@@ -8391,6 +8724,2184 @@
    "cost": {
     "usd": 0.0049148,
     "ms": 27381,
+    "complete": true
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-01",
+   "list": "syn-01",
+   "auditId": "55dee2c5-a11c-4cab-9627-584a1eee8aae",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 40,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 40,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.030761749999999997,
+    "ms": 17384,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 89,
+     "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-02",
+   "list": "syn-02",
+   "auditId": "6ed7df91-2474-4c58-873a-a6a0b5d05b92",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "review",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 40,
+      "not_applicable": 2
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "review",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 40,
+      "not_applicable": 2
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0278197,
+    "ms": 16369,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 110,
+     "total": 110
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-03",
+   "list": "syn-03",
+   "auditId": "9e1e865a-cc0b-411e-b56e-861c855a7f93",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "review",
+      "C-031": "not_applicable",
+      "C-032": "pass",
+      "C-033": "not_applicable",
+      "C-040": "pass",
+      "C-041": "review",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "fail",
+      "C-045": "not_applicable",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 2,
+      "pass": 34,
+      "not_applicable": 6
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 41,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-030",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-041",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "fail",
+      "C-031": "not_applicable",
+      "C-032": "pass",
+      "C-033": "not_applicable",
+      "C-040": "pass",
+      "C-041": "fail",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "fail",
+      "C-045": "not_applicable",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 3,
+      "review": 0,
+      "pass": 34,
+      "not_applicable": 6
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.030879450000000003,
+    "ms": 16074,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 86,
+     "total": 86
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-04",
+   "list": "syn-04",
+   "auditId": "7a20a7cc-a54d-4ce8-98ab-041316761ab1",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "review",
+      "C-021": "not_applicable",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "review",
+      "C-045": "not_applicable",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 2,
+      "pass": 36,
+      "not_applicable": 5
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 41,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-020",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-044",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "fail",
+      "C-021": "not_applicable",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "fail",
+      "C-045": "not_applicable",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 2,
+      "review": 0,
+      "pass": 36,
+      "not_applicable": 5
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.02944345,
+    "ms": 14782,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 88,
+     "total": 88
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-05",
+   "list": "syn-05",
+   "auditId": "41fe2a51-8ef6-4328-a140-bae47b44d439",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "review",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "review",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 2,
+      "pass": 38,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 41,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-040",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-050",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "fail",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "fail",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 2,
+      "review": 0,
+      "pass": 38,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.02886395,
+    "ms": 22957,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 86,
+     "total": 86
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-06",
+   "list": "syn-06",
+   "auditId": "8f695657-b76f-40ec-bfcb-cde34368875a",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "review",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "review",
+      "C-073": "review",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 3,
+      "pass": 37,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 40,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-002",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-072",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-073",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "fail",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "fail",
+      "C-073": "fail",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 3,
+      "review": 0,
+      "pass": 37,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0292322,
+    "ms": 15961,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 89,
+     "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-07",
+   "list": "syn-07",
+   "auditId": "b5081fea-83c7-4e20-9ef2-e95deb606c54",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "review",
+      "C-004": "pass",
+      "C-005": "review",
+      "C-006": "not_applicable",
+      "C-007": "not_applicable",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "review",
+      "C-061": "review",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 4,
+      "pass": 34,
+      "not_applicable": 5
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 39,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-003",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-005",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [
+       {
+        "check": "C-061",
+        "expected": "pass",
+        "got": "review"
+       }
+      ],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "fail",
+      "C-004": "pass",
+      "C-005": "review",
+      "C-006": "not_applicable",
+      "C-007": "not_applicable",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "review",
+      "C-061": "review",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 3,
+      "pass": 34,
+      "not_applicable": 5
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 40,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-005",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [
+       {
+        "check": "C-061",
+        "expected": "pass",
+        "got": "review"
+       }
+      ],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0303917,
+    "ms": 18819,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 87,
+     "total": 88
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "effectiveDate.raw: want null got \".effectiveDate = \\\"\\\"\""
+    ]
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-08",
+   "list": "syn-08",
+   "auditId": "d37c5bfa-ae4e-42c9-9506-99a83c5783cd",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "review",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "review",
+      "C-070": "review",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 3,
+      "pass": 37,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 41,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-061",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-070",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "review",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "fail",
+      "C-070": "fail",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 2,
+      "review": 1,
+      "pass": 37,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.03094195,
+    "ms": 18739,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 88,
+     "total": 88
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-09",
+   "list": "syn-09",
+   "auditId": "44c99756-fef3-4b98-bac6-484592b9e535",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "fail",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "review",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "review",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "review",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 3,
+      "pass": 36,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 40,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-022",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-042",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-052",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "fail",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "fail",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "fail",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "fail",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 4,
+      "review": 0,
+      "pass": 36,
+      "not_applicable": 3
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.029709199999999998,
+    "ms": 14926,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 87,
+     "total": 87
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-10",
+   "list": "syn-10",
+   "auditId": "fff75a8e-d432-4dee-bc58-a7b005dc36f3",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "review",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "review",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "review",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "pass",
+      "C-081": "review",
+      "C-082": "review",
+      "C-083": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 6,
+      "pass": 35,
+      "not_applicable": 2
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "review",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "review",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "review",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "pass",
+      "C-081": "review",
+      "C-082": "review",
+      "C-083": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 6,
+      "pass": 35,
+      "not_applicable": 2
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.029950400000000002,
+    "ms": 19602,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 93,
+     "total": 94
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "price Hearse: want Starting at $395 got price=null range=null"
+    ]
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-11",
+   "list": "syn-11",
+   "auditId": "4b30440a-6995-4020-905f-98d14626680b",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "review",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "review",
+      "C-011": "not_applicable",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "review",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 3,
+      "pass": 36,
+      "not_applicable": 4
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 42,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-004",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "fail",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "review",
+      "C-011": "not_applicable",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "review",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 2,
+      "pass": 36,
+      "not_applicable": 4
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0225159,
+    "ms": 12485,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 89,
+     "total": 89
+    },
+    "disclosures": {
+     "right": 7,
+     "total": 8
+    },
+    "misses": [
+     "disclosure D-selection: want absent (source is a paraphrase; not an extraction fault if labelled by meaning)"
+    ]
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-12",
+   "list": "syn-12",
+   "auditId": "8281bed9-59a4-43f7-b88c-e2bd1375a79b",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "not_applicable",
+      "C-021": "not_applicable",
+      "C-022": "not_applicable",
+      "C-023": "not_applicable",
+      "C-024": "pass",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 37,
+      "not_applicable": 6
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "not_applicable",
+      "C-021": "not_applicable",
+      "C-022": "not_applicable",
+      "C-023": "not_applicable",
+      "C-024": "pass",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 37,
+      "not_applicable": 6
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0264249,
+    "ms": 20210,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 94,
+     "total": 94
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": []
+   }
+  },
+  {
+   "set": "v",
+   "key": "ftc-template",
+   "list": "ftc",
+   "auditId": "ef5c3200-57b6-4221-9ba8-e6d6cc7b9d90",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "fail",
+      "C-006": "not_applicable",
+      "C-007": "not_applicable",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "review",
+      "C-041": "review",
+      "C-042": "pass",
+      "C-043": "review",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "review",
+      "C-051": "review",
+      "C-052": "pass",
+      "C-053": "review",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "review",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 7,
+      "pass": 30,
+      "not_applicable": 5
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 39,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-040",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-041",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-050",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-070",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "fail",
+      "C-006": "not_applicable",
+      "C-007": "not_applicable",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "fail",
+      "C-041": "fail",
+      "C-042": "pass",
+      "C-043": "review",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "fail",
+      "C-051": "review",
+      "C-052": "pass",
+      "C-053": "review",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "fail",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 5,
+      "review": 3,
+      "pass": 30,
+      "not_applicable": 5
+     },
+     "checksRun": 43,
+     "notRun": [],
+     "labels": {
+      "compared": 43,
+      "agree": 43,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.026023900000000003,
+    "ms": 19634,
     "complete": true
    }
   }

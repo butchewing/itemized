@@ -1,9 +1,10 @@
 import { Hono } from 'hono';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import { isProvider, PDF_UNSUPPORTED } from './audit';
+import { renderPdf } from './render';
 import { chatJson, costUsd, ModelError, PROVIDER_CONFIG, SAM_PER_IMAGE_USD, sam, toDataUrl, type ContentPart, type Usage } from './models';
 import { DISCLOSURE_IDS } from './extraction';
-import { extractFresh, SEMANTIC_EFFORT, type ExtractInput } from './pipeline';
+import { extractFresh, ruleInput, SEMANTIC_EFFORT, type ExtractInput } from './pipeline';
 import { runChecks } from './rules/engine';
 import { buildCorpus, matchDisclosure } from './rules/text';
 import {
@@ -15,7 +16,7 @@ import {
   semanticUserText,
   type SemanticResults,
 } from './rules/semantic';
-import { auditDocument, getAudit, getExtraction, getSemantic, recordModelCall, spendTodayUtc } from './store';
+import { auditDocument, getAudit, getExtraction, getRead, getSemantic, recordModelCall, spendTodayUtc } from './store';
 
 const SCHEMA = {
   type: 'object',
@@ -92,7 +93,7 @@ spike.post('/spike', async (c) => {
 spike.post('/semantic-variance', async (c) => {
   const { sha256, runs, fixture } = await c.req.json<{ sha256: string; runs: number; fixture: unknown }>();
   const provider = 'meta-api';
-  const x = await getExtraction(c.env.DB, sha256, provider);
+  const x = await getExtraction(c.env.DB, sha256, provider, 'pdf');
   if (!x) return c.json({ error: 'no cached extraction for this document' }, 404);
   const verdicts = (semantic: SemanticResults) => {
     const r = runChecks(x, ruleset, { auditDate: new Date('2026-10-26T00:00:00Z'), semantic });
@@ -178,6 +179,22 @@ spike.post('/variance-extract', async (c) => {
 });
 
 // test/eval/run.mjs refuses to upload a set unless this matches the set's declared provider.
+// Renders an uploaded PDF the way the pipeline will, and reports pages, sizes and text-layer counts.
+spike.post('/render', async (c) => {
+  const form = await c.req.formData().catch(() => null);
+  const file = form?.get('file');
+  if (!(file instanceof File)) return c.json({ error: 'file required' }, 400);
+  const t0 = Date.now();
+  try {
+    const r = await renderPdf(c.env.BROWSER, await file.arrayBuffer());
+    const want = Number(c.req.query('page') ?? 0);
+    if (want) return new Response(r.pages[want - 1]!.bytes, { headers: { 'Content-Type': 'image/png' } });
+    return c.json({ ms: Date.now() - t0, pages: r.pages.length, bytes: r.pages.map((p) => p.bytes.byteLength), textChars: r.textChars });
+  } catch (e) {
+    return c.json({ error: e instanceof Error ? `${e.name}: ${e.message}` : String(e), ms: Date.now() - t0 }, 422);
+  }
+});
+
 spike.get('/provider', (c) => c.json({ provider: c.env.MODEL_PROVIDER }));
 
 // Engine verdicts for a finished audit in both input modes, on a fixed audit date so the stale-date
@@ -186,9 +203,11 @@ spike.get('/provider', (c) => c.json({ provider: c.env.MODEL_PROVIDER }));
 spike.get('/eval/:id', async (c) => {
   const audit = await getAudit(c.env.DB, c.req.param('id'));
   if (!audit || audit.status !== 'done') return c.json({ error: 'no finished audit' }, 404);
-  const x = await getExtraction(c.env.DB, audit.doc_sha256, audit.provider);
-  if (!x) return c.json({ error: 'no cached extraction' }, 404);
-  const semantic = await getSemantic(c.env.DB, audit.doc_sha256, audit.provider);
+  const kind = auditDocument(audit).kind;
+  const read = await getRead(c.env.DB, audit.doc_sha256, audit.provider, kind);
+  if (!read) return c.json({ error: 'no cached extraction' }, 404);
+  const x = read.extraction;
+  const semantic = await getSemantic(c.env.DB, audit.doc_sha256, audit.provider, kind);
   const report = (input: 'pdf' | 'images') => runChecks(x, ruleset, { auditDate: EVAL_AUDIT_DATE, semantic, input });
 
   // The audit behind the newest successful call of each kind for this document and provider made the
@@ -206,7 +225,9 @@ spike.get('/eval/:id', async (c) => {
   const [extract, judge] = await Promise.all([firstRun('extract'), firstRun('semantic')]);
   return c.json({
     provider: audit.provider,
-    input: auditDocument(audit).kind === 'pdf' ? 'pdf' : 'images',
+    // The rules the product applied (pipeline ruleInput); reports below show both for comparison.
+    input: ruleInput(audit.provider, kind, read.render),
+    render: read.render,
     extraction: x,
     reports: { pdf: report('pdf'), images: report('images') },
     cost: { extract, semantic: judge },

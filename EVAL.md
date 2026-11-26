@@ -18,6 +18,10 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 | j. Synthetic PDFs | Claude Haiku 5.5 (Anthropic API) | 12 | 1087/1088 | 94/96 | 512/516 (99.2%) | 0 | 0 | 1 | 2.5% | 0 | $0.0038 / $0.0043 | 19.2 s / 22.9 s |
 | k. Synthetic photos | Claude Haiku 5.5 (Anthropic API) | 4 | 292/356 | 31/32 | 155/172 (90.1%) | 0 | 0 | 5 | 9.9% | 0 | $0.0054 / $0.0063 | 28.5 s / 36.4 s |
 | l. FTC Sample 1 template | Claude Haiku 5.5 (Anthropic API) | 1 | n/a | n/a | 42/43 (97.7%) | 0 | 0 | 0 | 9.3% | 0 | $0.0049 / $0.0049 | 27.4 s / 27.4 s |
+| u. Synthetic PDFs rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1086/1088 | 95/96 | 497/516 (96.3%) | 0 | 0 | 18 | 5.6% | 0 | $0.0289 / $0.0309 | 17.4 s / 20.2 s |
+| u. Same, PDF rules (the product's choice for these 2-page lists) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1086/1088 | 95/96 | 513/516 (99.4%) | 0 | 0 | 2 | 2.5% | 0 | $0.0289 / $0.0309 | 17.4 s / 20.2 s |
+| v. FTC template rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 39/43 (90.7%) | 0 | 0 | 4 | 16.3% | 0 | $0.0260 / $0.0260 | 19.6 s / 19.6 s |
+| v. Same, PDF rules (the product's choice) | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0260 / $0.0260 | 19.6 s / 19.6 s |
 
 ## Real price lists (aggregates only)
 
@@ -156,6 +160,40 @@ k. Synthetic photos, claude-haiku:
 l. FTC Sample 1 template, claude-haiku:
 - ftc C-080 (other: expected not_applicable, got review)
 
+u. Synthetic PDFs rendered by the Worker, photo rule, muse-open:
+- syn-03 C-030 (fail to review: expected fail, got review)
+- syn-03 C-041 (fail to review: expected fail, got review)
+- syn-04 C-020 (fail to review: expected fail, got review)
+- syn-04 C-044 (fail to review: expected fail, got review)
+- syn-05 C-040 (fail to review: expected fail, got review)
+- syn-05 C-050 (fail to review: expected fail, got review)
+- syn-06 C-002 (fail to review: expected fail, got review)
+- syn-06 C-072 (fail to review: expected fail, got review)
+- syn-06 C-073 (fail to review: expected fail, got review)
+- syn-07 C-003 (fail to review: expected fail, got review)
+- syn-07 C-005 (fail to review: expected fail, got review)
+- syn-07 C-060 (fail to review: expected fail, got review)
+- syn-08 C-061 (fail to review: expected fail, got review)
+- syn-08 C-070 (fail to review: expected fail, got review)
+- syn-09 C-022 (fail to review: expected fail, got review)
+- syn-09 C-042 (fail to review: expected fail, got review)
+- syn-09 C-052 (fail to review: expected fail, got review)
+- syn-11 C-004 (fail to review: expected fail, got review)
+- syn-07 C-061 (other: expected pass, got review)
+
+u. Same, PDF rules (the product's choice for these 2-page lists), muse-open:
+- syn-07 C-005 (fail to review: expected fail, got review)
+- syn-07 C-060 (fail to review: expected fail, got review)
+- syn-07 C-061 (other: expected pass, got review)
+
+v. FTC template rendered by the Worker, photo rule, muse-open:
+- ftc C-040 (fail to review: expected fail, got review)
+- ftc C-041 (fail to review: expected fail, got review)
+- ftc C-050 (fail to review: expected fail, got review)
+- ftc C-070 (fail to review: expected fail, got review)
+
+v. Same, PDF rules (the product's choice), muse-open: none.
+
 ## Method
 
 - Every set goes through the local Worker the same way an upload does: store, queue, extract, semantic checks, rules engine. The harness then asks a development route for the engine verdicts on the cached extraction, with the audit date fixed at 2026-10-26 so the stale-date check does not drift between runs.
@@ -187,4 +225,4 @@ node test/eval/run.mjs --sets a,b,c,d,e
 
 Spend is capped per run and provider: $1 on Muse Spark 1.3 (Meta Model API), $4 on Muse Spark Open (Cloudflare, served by Fireworks), $1 on Gemma 4 26B (Cloudflare-hosted), $1 on Llama 4 Scout (Cloudflare-hosted), $2 on Qwen 3.8 27B (Cloudflare-hosted), $2 on Mistral Large 4 (Ollama Cloud), $7 on Claude Sonnet 5.5 (Anthropic API), $3 on Claude Haiku 5.5 (Anthropic API) (override with `--cap-<provider>`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
 
-The last run (sets on Muse Spark Open (Cloudflare, served by Fireworks)) spent $0.8938 on Muse Spark Open (Cloudflare, served by Fireworks).
+The last run (sets on Muse Spark Open (Cloudflare, served by Fireworks)) spent $0.3730 on Muse Spark Open (Cloudflare, served by Fireworks).

@@ -10,3 +10,13 @@ interface Env {
   // Ollama Cloud, for the ollama-* evaluated providers.
   OLLAMA_API_KEY?: string;
 }
+
+// pdf.js builds bundled as text by the wrangler "rules" entry (src/render.ts).
+declare module 'pdfjs-dist/build/pdf.min.mjs' {
+  const source: string;
+  export default source;
+}
+declare module 'pdfjs-dist/build/pdf.worker.min.mjs' {
+  const source: string;
+  export default source;
+}

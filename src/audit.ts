@@ -13,8 +13,18 @@ export function canTransition(from: AuditStatus, to: AuditStatus): boolean {
   return TRANSITIONS[from].includes(to);
 }
 
-// The error an audit records when its provider cannot read PDFs; page.ts words it for the reader.
+// Errors an audit records when a PDF cannot be turned into page images; page.ts words them for the reader.
 export const PDF_UNSUPPORTED = 'PDF not supported by this model';
+export const PDF_UNREADABLE = 'PDF could not be rendered';
+export const PDF_TOO_LONG = 'PDF has too many pages to render';
+
+// PDFs for models that read images only are rendered to page images (src/render.ts), the way the eval's
+// set d was made. RENDER_VERSION is part of every cache key for rendered reads: bump it when output changes.
+export const RENDER_VERSION = 'pdfjs-6.5.438@150dpi-gray';
+export const RENDER_DPI = 150;
+export const MAX_RENDER_PAGES = 24;
+// What a rendered read records: pages and each page's text-layer characters (0 means scanned).
+export type RenderInfo = { version: string; pages: number; textChars: number[] };
 
 export const PROVIDERS = [
   'meta-api', 'muse-open', 'gemma-4', 'llama-4-scout', 'qwen-3.8', 'ollama-mistral', 'claude-sonnet', 'claude-haiku',

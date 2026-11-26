@@ -289,11 +289,16 @@ function tableRow(s, label) {
 const LABEL = {
   a: 'a. Synthetic PDFs', b: 'b. Synthetic photos', c: 'c. Synthetic photos', d: 'd. Synthetic PDFs as page images',
   'd/pdf': 'd. Same extraction, PDF rules (diagnostic)', e: 'e. FTC Sample 1 template',
+  'u/images': 'u. Synthetic PDFs rendered by the Worker, photo rule', 'u/pdf': "u. Same, PDF rules (the product's choice for these 2-page lists)",
+  'v/images': 'v. FTC template rendered by the Worker, photo rule', 'v/pdf': "v. Same, PDF rules (the product's choice)",
   g: 'g. Synthetic PDFs', h: 'h. Synthetic photos', i: 'i. FTC Sample 1 template',
   j: 'j. Synthetic PDFs', k: 'k. Synthetic photos', l: 'l. FTC Sample 1 template',
   m: 'm. Synthetic photos', n: 'n. Synthetic PDFs as page images', o: 'o. Synthetic photos', p: 'p. Synthetic PDFs as page images',
   q: 'q. Synthetic photos', r: 'r. Synthetic PDFs as page images', s: 's. Synthetic photos', t: 't. Synthetic PDFs as page images',
 };
+
+// A set reported in both rule modes has a label per mode.
+const labelOf = (s) => LABEL[`${s.set}/${s.mode}`] ?? LABEL[s.set];
 
 function mismatchLines(s) {
   const all = [
@@ -316,7 +321,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     '',
     '| Set | Model | n | Fields | Disclosures | Verdict agreement | False fails | Missed fails | Fail to review | Review rate | Checks not run | Cost per review, mean / p90 | Model time per review, mean / p90 |',
     '|---|---|---|---|---|---|---|---|---|---|---|---|---|',
-    ...pub.map((s) => tableRow(s, LABEL[s.mode === 'pdf' && s.set === 'd' ? 'd/pdf' : s.set])),
+    ...pub.map((s) => tableRow(s, labelOf(s))),
   ];
   if (corpusAgg) {
     const c = corpusAgg;
@@ -351,7 +356,7 @@ function writeEvalMd(summaries, corpusAgg, spend) {
     '',
     ...pub.flatMap((s) => {
       const ms = mismatchLines(s);
-      return [`${LABEL[s.mode === 'pdf' && s.set === 'd' ? 'd/pdf' : s.set]}, ${s.provider}${ms.length ? ':' : ': none.'}`, ...ms.map((m) => `- ${m}`), ''];
+      return [`${labelOf(s)}, ${s.provider}${ms.length ? ':' : ': none.'}`, ...ms.map((m) => `- ${m}`), ''];
     }),
     '## Method',
     '',
@@ -532,7 +537,7 @@ async function main() {
   }
 
   writeEvalMd(publicOut.summaries, corpusAgg, spend);
-  for (const s of publicOut.summaries) console.log(tableRow(s, LABEL[s.mode === 'pdf' && s.set === 'd' ? 'd/pdf' : s.set]));
+  for (const s of publicOut.summaries) console.log(tableRow(s, labelOf(s)));
   console.log(`spend this run: ${Object.entries(spend).map(([p, v]) => `${p} ${usd(v)}`).join(', ') || 'none'}`);
 }
 

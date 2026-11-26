@@ -1,5 +1,14 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import { PDF_UNSUPPORTED, type AuditDocument, type AuditStatus, type Provider } from './audit';
+import {
+  PDF_TOO_LONG,
+  PDF_UNREADABLE,
+  RENDER_VERSION,
+  type AuditDocument,
+  type AuditStatus,
+  type Provider,
+  type RenderInfo,
+} from './audit';
+import { RenderFailure, renderPdf } from './render';
 import {
   EXTRACTION_SCHEMA,
   ExtractionError,
@@ -31,7 +40,7 @@ import {
 import {
   auditDocument,
   getAudit,
-  getExtraction,
+  getRead,
   getSemantic,
   putExtraction,
   putReport,
@@ -40,12 +49,15 @@ import {
   spendTodayUtc,
   transition,
   type AuditRow,
+  type DocKind,
 } from './store';
 
 // Failures whose message is safe to show the uploader.
 class AuditFailure extends Error {}
+// Browser Run could not render right now; the queue retries the audit.
+class RenderUnavailable extends Error {}
 
-const isRetryable = (e: unknown) => e instanceof ModelError && (e.status === 429 || e.status >= 500);
+const isRetryable = (e: unknown) => e instanceof RenderUnavailable || (e instanceof ModelError && (e.status === 429 || e.status >= 500));
 
 async function assertUnderBudget(env: Env) {
   const limit = Number(env.DAILY_BUDGET_USD);
@@ -160,12 +172,41 @@ export const needsReread = (x: GplExtraction) => x.disclosures.length < MIN_NOTI
 // Keeps the read that found more notice text; a tie keeps the first.
 export const betterRead = (a: GplExtraction, b: GplExtraction) => (b.disclosures.length > a.disclosures.length ? b : a);
 
-async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
+export type Read = { extraction: GplExtraction; render: RenderInfo | null };
+
+// Which rules apply to a finished read (decided 2026-11-25). Photos get the photo rule. A PDF a model
+// read natively gets the PDF rules. A rendered PDF gets the PDF rules only if every page had a text
+// layer (born-digital, not a scan) and it was read in one request: a list read in batches has page
+// breaks the model could not see across, and no labeled long list has shown the PDF rules hold there.
+export function ruleInput(provider: Provider, kind: DocKind, render: RenderInfo | null): 'pdf' | 'images' {
+  if (kind !== 'pdf') return 'images';
+  if (PROVIDER_CONFIG[provider].pdf) return 'pdf';
+  if (!render) return 'images';
+  const born = render.textChars.length === render.pages && render.textChars.every((n) => n > 0);
+  return born && render.pages <= PROVIDER_CONFIG[provider].maxImages ? 'pdf' : 'images';
+}
+
+async function renderForModel(env: Env, pdf: ArrayBuffer): Promise<{ input: ExtractInput; render: RenderInfo }> {
+  try {
+    const r = await renderPdf(env.BROWSER, pdf);
+    return {
+      input: { kind: 'images', images: r.pages },
+      render: { version: RENDER_VERSION, pages: r.pages.length, textChars: r.textChars },
+    };
+  } catch (e) {
+    // A bad PDF fails the audit with a message for the reader; a Browser Run error is retried.
+    if (e instanceof RenderFailure) throw new AuditFailure(e.kind === 'too_long' ? PDF_TOO_LONG : PDF_UNREADABLE);
+    throw new RenderUnavailable(e instanceof Error ? e.message : String(e));
+  }
+}
+
+async function extract(env: Env, audit: AuditRow): Promise<Read> {
   const doc = auditDocument(audit);
-  if (doc.kind === 'pdf' && !PROVIDER_CONFIG[audit.provider].pdf) throw new AuditFailure(PDF_UNSUPPORTED);
-  const cached = await getExtraction(env.DB, audit.doc_sha256, audit.provider);
+  const cached = await getRead(env.DB, audit.doc_sha256, audit.provider, doc.kind);
   if (cached) return cached;
-  const input = await loadInput(env, audit, doc);
+  let input = await loadInput(env, audit, doc);
+  let render: RenderInfo | null = null;
+  if (input.kind === 'pdf' && !PROVIDER_CONFIG[audit.provider].pdf) ({ input, render } = await renderForModel(env, input.bytes));
   const call = { provider: audit.provider, auditId: audit.id };
   let extraction = await extractFresh(env, { ...call, purpose: 'extract' }, input);
   if (needsReread(extraction)) {
@@ -176,8 +217,8 @@ async function extract(env: Env, audit: AuditRow): Promise<GplExtraction> {
     });
     if (second) extraction = betterRead(extraction, second);
   }
-  await putExtraction(env.DB, audit.doc_sha256, audit.provider, extraction);
-  return extraction;
+  await putExtraction(env.DB, audit.doc_sha256, audit.provider, doc.kind, extraction, render);
+  return { extraction, render };
 }
 
 // Judgment needs some reasoning, unlike transcription.
@@ -192,7 +233,7 @@ async function judge(env: Env, audit: AuditRow, extraction: GplExtraction): Prom
     return null;
   };
   try {
-    const cached = await getSemantic(env.DB, audit.doc_sha256, provider);
+    const cached = await getSemantic(env.DB, audit.doc_sha256, provider, auditDocument(audit).kind);
     if (cached) return cached;
     await assertUnderBudget(env);
   } catch (e) {
@@ -215,7 +256,7 @@ async function judge(env: Env, audit: AuditRow, extraction: GplExtraction): Prom
     });
     usage = out.usage;
     const results = parseSemantic(out.json);
-    await putSemantic(env.DB, audit.doc_sha256, provider, out.json);
+    await putSemantic(env.DB, audit.doc_sha256, provider, auditDocument(audit).kind, out.json);
     await record(null, out.ms);
     return results;
   } catch (e) {
@@ -229,6 +270,7 @@ function failureMessage(e: unknown): string {
   if (e instanceof AuditFailure) return e.message;
   if (e instanceof ExtractionError) return 'model returned an invalid extraction';
   if (e instanceof ModelError) return `model request failed (${e.status})`;
+  if (e instanceof RenderUnavailable) return 'PDF rendering is unavailable';
   console.error('audit pipeline error', e instanceof Error ? e.name : typeof e);
   return 'internal error';
 }
@@ -246,9 +288,9 @@ export async function runAudit(env: Env, auditId: string, canRetry: boolean): Pr
     status = 'extracting';
   }
 
-  let extraction: GplExtraction;
+  let read: Read;
   try {
-    extraction = await extract(env, audit);
+    read = await extract(env, audit);
   } catch (e) {
     if (canRetry && isRetryable(e)) return 'retry';
     await transition(env.DB, audit.id, status, 'failed', failureMessage(e));
@@ -256,9 +298,10 @@ export async function runAudit(env: Env, auditId: string, canRetry: boolean): Pr
   }
   if (status === 'extracting') await transition(env.DB, audit.id, 'extracting', 'checking');
 
+  const { extraction, render } = read;
   const semantic = await judge(env, audit, extraction);
   try {
-    const input = auditDocument(audit).kind === 'pdf' ? 'pdf' : 'images';
+    const input = ruleInput(audit.provider, auditDocument(audit).kind, render);
     await putReport(env.DB, audit.id, runChecks(extraction, ruleset, { auditDate: new Date(), semantic, input }));
   } catch (e) {
     await transition(env.DB, audit.id, 'checking', 'failed', failureMessage(e));
