@@ -28,6 +28,9 @@ export type Finding = {
 export type Report = {
   rulesetId: string;
   rulesetVersion: string;
+  // Every ruleset that ran, as id@version: the federal one, plus Texas for a Texas provider.
+  // Absent on reports stored before Texas checks existed.
+  rulesets?: string[];
   findings: Finding[];
   counts: Record<Verdict, number>;
   // Semantic checks left out because the model step was skipped or failed.

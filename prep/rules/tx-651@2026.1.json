@@ -1,0 +1,84 @@
+{
+  "id": "tx-651",
+  "version": "2026.1",
+  "title": "Texas General Price List checks (Occupations Code Ch. 651, 22 TAC Ch. 203)",
+  "scope": "Texas providers only: run when the list's address is in Texas. Adds what Texas requires beyond the federal checks (ftc-453); requirements Texas shares with the federal rule are left to those checks. General Price List only.",
+  "status": "draft, not legal advice; see prep/rules/tx-tfsc-sources.md",
+  "source": {
+    "statute": "Texas Occupations Code Ch. 651, statutes.capitol.texas.gov, current through the 89th Legislature, 2nd Called Session, 2025",
+    "rules": "22 TAC Part 10, Texas Secretary of State TAC viewer, query date 2026-11-26",
+    "read": "2026-11-26",
+    "decisions": "prep/rules/tx-tfsc-sources.md, Decisions (Butch, 2026-11-26)"
+  },
+  "notices": {
+    "N-tx-selection": {
+      "cite": "Tex. Occ. Code §651.405(b)",
+      "t": "The goods and services shown below are those we can provide to our customers. You may choose only the items you desire. However, any funeral arrangements you select will include a charge for our basic services and overhead. If legal or other requirements mean you must buy any items you did not specifically ask for, we will explain the reason in writing on the statement we provide describing the funeral goods and services you selected."
+    },
+    "N-tx-crematory": {
+      "cite": "Tex. Occ. Code §651.4055(c)",
+      "t": "The goods and services shown below are those we can provide to our customers. You may choose only the items you desire. If legal or other requirements mean you must buy any items you did not specifically ask for, we will explain the reason in writing on the statement we provide describing the goods and services you selected."
+    },
+    "N-tx-third-party-insurance": {
+      "cite": "22 TAC §203.46(b)(5)(C)(v)",
+      "t": "Please note that if you utilize a third party to file a claim seeking expedited receipt of life insurance proceeds on behalf of a beneficiary, there will be a fee to be paid associated with the filing of such a claim."
+    }
+  },
+  "checks": [
+    {
+      "id": "TX-001",
+      "title": "Life insurance claim filing priced",
+      "cite": "Tex. Occ. Code §651.405(a)(9); 22 TAC §203.46(b)(5)(B)(xiv), (C)(iv)",
+      "basis": "rule",
+      "engine": "deterministic",
+      "on_violation": "fail",
+      "applies_when": "the list offers filing life insurance claims",
+      "test": "an item for filing or processing a life insurance claim shows a price, or says there is no charge",
+      "plain": "If the funeral home offers to file life insurance claims for the family, the list must show what it charges for that, or say there is no charge."
+    },
+    {
+      "id": "TX-002",
+      "title": "Selection notice includes \"basic services and overhead\"",
+      "cite": "Tex. Occ. Code §651.405(b); compare 22 TAC §203.49(b)(2)(A)(i)",
+      "basis": "rule",
+      "engine": "deterministic",
+      "on_violation": "review",
+      "applies_when": "the federal selection notice is on the list",
+      "test": "the notice includes the sentence about a charge for basic services and overhead",
+      "plain": "Texas law prints the notice above the prices with the sentence \"However, any funeral arrangements you select will include a charge for our basic services and overhead.\" The Funeral Service Commission's rule lets that sentence be shortened or left out, so a list without it is flagged for a person to decide."
+    },
+    {
+      "id": "TX-003",
+      "title": "Crematory notice",
+      "cite": "Tex. Occ. Code §651.4055(c)",
+      "basis": "rule",
+      "engine": "deterministic",
+      "on_violation": "review",
+      "applies_when": "the list says the provider operates a crematory",
+      "test": "the crematory notice, without the basic-services sentence, is on the list",
+      "plain": "A crematory's price list must carry its own notice. When the list says the provider runs a crematory, both notices are expected."
+    },
+    {
+      "id": "TX-004",
+      "title": "Third-party insurance filing statement",
+      "cite": "22 TAC §203.46(b)(5)(C)(v)",
+      "basis": "rule",
+      "engine": "deterministic",
+      "on_violation": "review",
+      "applies_when": "the list mentions paying with life insurance and does not offer claim filing",
+      "test": "the statement about third-party claim filing fees is on the list",
+      "plain": "If the funeral home asks for payment before insurance pays out and does not file the claim itself, the list must say that a third party who files the claim will charge a fee. Whether that applies depends on the home's payment terms, so a person should check."
+    },
+    {
+      "id": "TX-005",
+      "title": "Urns described by material",
+      "cite": "22 TAC §203.46(b)(4)(A)",
+      "basis": "rule",
+      "engine": "deterministic",
+      "on_violation": "review",
+      "applies_when": "the list prices individual urns",
+      "test": "each priced urn names the material it is mainly made of; bronze urns say sheet or cast bronze",
+      "plain": "Urn prices must come with the material each urn is mainly made of, and bronze urns must say whether they are sheet or cast bronze."
+    }
+  ]
+}

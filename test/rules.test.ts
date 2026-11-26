@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
+import txRuleset from '../prep/rules/tx-651@2026.1.json';
 import synLabels from '../prep/synthetic/labels.json';
 import ftcLabels from '../specimens/labels.json';
 import { parseExtraction, type GplExtraction } from '../src/extraction';
@@ -126,7 +127,7 @@ describe('hard gates', () => {
     const docs = [...SYN_LISTS.map((l) => `${l}.pdf.json`), 'ftc-sample1-gpl-template.pdf.json'];
     for (const file of docs) {
       for (const f of run(load(file)).findings) {
-        const check = ruleset.checks.find((c) => c.id === f.checkId)!;
+        const check = [...ruleset.checks, ...txRuleset.checks].find((c) => c.id === f.checkId)!;
         expect(f.plain.trim(), f.checkId).not.toBe('');
         expect(f.cite, f.checkId).toBe(check.cite);
         if (check.cite === null) expect(f.basis, f.checkId).toBe('heuristic');
