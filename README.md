@@ -27,7 +27,7 @@ Many funeral homes are small businesses. Itemized gives them a reading of their 
 ## How it works
 
 1. **Upload.** One PDF, or up to 10 phone photos of the pages in order. Files go to R2 and an audit goes on a Cloudflare Queue.
-2. **Read.** Meta's Muse Spark transcribes the list into structured data with a strict JSON schema: every item and price, every block of notice text, and the page each came from. PDFs go in natively. If a read finds fewer than 3 notice blocks, Itemized reads the list again and keeps the fuller read, because a read that drops notices would turn present statements into false fails.
+2. **Read.** Muse Spark Open, Meta's open-weights model, transcribes the list into structured data with a strict JSON schema: every item and price, every block of notice text, and the page each came from. PDFs go in natively. If a read finds fewer than 3 notice blocks, Itemized reads the list again and keeps the fuller read, because a read that drops notices would turn present statements into false fails.
 3. **Check, part one: 30 fixed rules.** A rules engine runs checks compiled from `prep/rules/ftc-453@2026.1.json`, a transcription of 16 CFR 453: required statements matched against the Rule's wording, itemized prices, and required options such as direct cremation with an alternative container. **Only these rules can mark a requirement as not passed.** When the evidence is unclear (a statement close to the Rule's wording but altered, or a line read from a photo rather than a clean PDF), the result is review, not fail.
 4. **Check, part two: 13 judgment checks.** Questions that need judgment, such as whether a claim says the law requires a purchase or whether a required statement sits next to the right price, go to the model with the quoted text. These can only pass or go to a person for review. Itemized never accuses a funeral home on a model's say-so.
 5. **Report.** A letter groups the results into did not pass, review and passed. Each finding cites its section of the Rule and quotes the part of the list it is based on. The same server-rendered letter backs the web page, a shareable review link and a PDF made with Cloudflare Browser Run.
@@ -36,8 +36,8 @@ Uploading the same file again within 30 days returns the earlier review without 
 
 ## Models
 
-- **Muse Spark 1.3** through the Meta Model API reads photos and PDFs and runs the 13 judgment checks. This is what the live site uses. A review costs about $0.03 to $0.04.
-- **Muse Spark Open**, Meta's open-weights model, is a second backend for the same pipeline, selected with one setting (`MODEL_PROVIDER=muse-open`). It runs through Cloudflare's Workers AI binding and is served by Fireworks, whose terms promise zero data retention and no training on what is sent. It reads page images, 8 per request; longer lists are read in batches and merged. An uploaded PDF is first rendered to page images (150 DPI, grayscale) with pdf.js in Cloudflare's Browser Run, with the page cut off from the network. A born-digital PDF read in one request is checked with the PDF rules; a longer one, or a scan, with the photo rule. Real price lists in the evaluation go only to this model. Until November 2026 it ran on a Baseten deployment, now retired.
+- **Muse Spark 1.3** through the Meta Model API reads photos and PDFs natively and runs the 13 judgment checks. The live site used it until November 2026; it remains selectable with `MODEL_PROVIDER=meta-api`.
+- **Muse Spark Open**, Meta's open-weights model, is what the live site uses (`MODEL_PROVIDER=muse-open`), at about $0.03 per review. It runs through Cloudflare's Workers AI binding and is served by Fireworks, whose terms promise zero data retention and no training on what is sent. It reads page images, 8 per request; longer lists are read in batches and merged. An uploaded PDF is first rendered to page images (150 DPI, grayscale) with pdf.js in Cloudflare's Browser Run, with the page cut off from the network. A born-digital PDF read in one request is checked with the PDF rules; a longer one, or a scan, with the photo rule. Real price lists in the evaluation go only to this model. Until November 2026 it ran on a Baseten deployment, now retired.
 - **Other open models** are set up for comparison on the public lists only. Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B, which Cloudflare hosts with zero data retention, did not finish a full transcription within the time limits in November 2026. Mistral Large 4 on Ollama Cloud is wired through the gateway but not yet evaluated.
 - **SAM 3.1** was measured for cropping phone photos to the page before reading. On 8 photos the crops fixed three misreads but caused three new ones, and the rule was no new errors anywhere, so it is not used.
 
@@ -58,7 +58,7 @@ Uploading the same file again within 30 days returns the earlier review without 
 
 ## Privacy
 
-No accounts, cookies or analytics, and the browser talks only to itemized.mortuary.ai; the fonts are self-hosted. Uploaded lists are processed by Meta AI models, and Meta may use them to improve its products. Files and reviews are deleted 30 days after the last upload. See [the privacy page](https://itemized.mortuary.ai/privacy).
+No accounts, cookies or analytics, and the browser talks only to itemized.mortuary.ai; the fonts are self-hosted. Uploaded lists are read by Muse Spark Open, which Fireworks runs through Cloudflare; Fireworks' terms say it does not keep documents after reading them or use them to train models, and Itemized does not send uploads to Meta. Files and reviews are deleted 30 days after the last upload. See [the privacy page](https://itemized.mortuary.ai/privacy).
 
 ## Local development
 

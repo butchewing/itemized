@@ -36,7 +36,7 @@
   "triggers": { "crons": ["17 7 * * *"] },
   // Model calls go through the "itemized" AI Gateway (metadata-only logs; see endpoint() in src/models.ts).
   "vars": {
-    "MODEL_PROVIDER": "meta-api",
+    "MODEL_PROVIDER": "muse-open",
     "DAILY_BUDGET_USD": "5",
     "AI_GATEWAY_URL": "https://gateway.ai.cloudflare.com/v1/59ca9600755f3d160a17444d639f329c/itemized"
   },

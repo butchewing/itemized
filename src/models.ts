@@ -70,7 +70,7 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
     // A gateway custom provider with slug "meta" and base_url https://api.meta.ai.
     gatewayPath: 'custom-meta/v1',
     model: 'muse-spark-1.3',
-    displayName: 'Muse Spark 1.3',
+    displayName: 'Meta’s Muse Spark 1.3',
     keyName: 'META_API_KEY',
     authHeader: bearer,
     jsonSchema: true,
@@ -85,16 +85,16 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
   'muse-open': {
     api: 'workers-ai',
     model: 'meta/muse-spark-open',
-    displayName: 'Muse Spark Open',
+    displayName: 'Muse Spark Open, Meta’s open-weights model',
     jsonSchema: true,
     maxImages: 8,
     pdf: false,
     reasoning: true,
   },
-  // Evaluated beside Muse Spark (EVAL.md); production stays on MODEL_PROVIDER meta-api.
-  'gemma-4': cloudflareHosted('@cf/google/gemma-4-26b-a4b-it', 'Gemma 4 26B', true),
-  'llama-4-scout': cloudflareHosted('@cf/meta/llama-4-scout-17b-16e-instruct', 'Llama 4 Scout', false),
-  'qwen-3.8': cloudflareHosted('@cf/qwen/qwen3.8-27b', 'Qwen 3.8 27B', true),
+  // Evaluated beside Muse Spark (EVAL.md); production runs MODEL_PROVIDER muse-open.
+  'gemma-4': cloudflareHosted('@cf/google/gemma-4-26b-a4b-it', 'Google’s Gemma 4 26B', true),
+  'llama-4-scout': cloudflareHosted('@cf/meta/llama-4-scout-17b-16e-instruct', 'Meta’s Llama 4 Scout', false),
+  'qwen-3.8': cloudflareHosted('@cf/qwen/qwen3.8-27b', 'Alibaba’s Qwen 3.8 27B', true),
   // Ollama Cloud through a gateway custom provider (slug "ollama", base_url https://ollama.com).
   // Its cloud models do not support structured outputs (docs.ollama.com/cloud, read 2026-11-24).
   'ollama-mistral': {
@@ -102,7 +102,7 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
     baseUrl: 'https://ollama.com/v1',
     gatewayPath: 'custom-ollama/v1',
     model: 'mistral-large-4',
-    displayName: 'Mistral Large 4 (Ollama Cloud)',
+    displayName: 'Mistral’s Mistral Large 4',
     keyName: 'OLLAMA_API_KEY',
     authHeader: bearer,
     jsonSchema: false,
@@ -110,8 +110,8 @@ export const PROVIDER_CONFIG: Record<Provider, ProviderConfig> = {
     pdf: false,
     reasoning: false,
   },
-  'claude-sonnet': anthropicModel('claude-sonnet-5-5', 'Claude Sonnet 5.5'),
-  'claude-haiku': anthropicModel('claude-haiku-5-5', 'Claude Haiku 5.5'),
+  'claude-sonnet': anthropicModel('claude-sonnet-5-5', 'Anthropic’s Claude Sonnet 5.5'),
+  'claude-haiku': anthropicModel('claude-haiku-5-5', 'Anthropic’s Claude Haiku 5.5'),
 };
 
 export type ContentPart =
