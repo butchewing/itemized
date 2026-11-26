@@ -221,7 +221,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
     ${mode === 'screen' ? fixPromptSection(report, `itemized-fix-prompt-${fileStem(provider ?? null, date)}.txt`) : ''}
     <div class="closing">
       <p class="signature">Itemized</p>
-      <p>Read by Meta’s ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}, on ${escapeHtml(when)}.</p>
+      <p>Read by ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}, on ${escapeHtml(when)}.</p>
       <p>This review covers the document first uploaded to Itemized on ${escapeHtml(letterDate(uploadedAt))} (file fingerprint ${escapeHtml(docSha256.slice(0, 12).toLowerCase())}). Itemized does not verify who published the document.</p>
       ${notRun}
     </div>

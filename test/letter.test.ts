@@ -40,9 +40,9 @@ const FINDINGS = [
 ];
 
 describe('renderLetterHtml', () => {
-  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE });
+  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Meta’s Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE });
 
-  it('names the Meta model that read the list', () => {
+  it('names the model that read the list, with its maker', () => {
     expect(html).toContain('Read by Meta’s Muse Spark 1.3.');
   });
 
@@ -75,7 +75,7 @@ describe('renderLetterHtml', () => {
     expect(html).toContain('<strong>1</strong> needs a person’s review');
     const two = renderLetterHtml({
       extraction: null,
-      modelName: 'Muse Spark 1.3', report: report([...FINDINGS, finding('e', 'review')]),
+      modelName: 'Meta’s Muse Spark 1.3', report: report([...FINDINGS, finding('e', 'review')]),
       date: DATE,
       ...PROVENANCE,
     });
@@ -98,7 +98,7 @@ describe('renderLetterHtml', () => {
     expect(at.every((i) => i > 0)).toBe(true);
     expect([...at].sort((x, y) => x - y)).toEqual(at);
     expect(html).toContain('<details class="group"><summary>Passed (1)');
-    const print = renderLetterHtml({ extraction: null, modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE }, 'print');
+    const print = renderLetterHtml({ extraction: null, modelName: 'Meta’s Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE }, 'print');
     expect(print).toContain('<details class="group" open><summary>Passed (1)');
     expect(print).toContain('<details class="group" open><summary>Not applicable to this list (1)');
   });
@@ -114,7 +114,7 @@ describe('review notes', () => {
   const JUDGMENT_NOTE = 'This item calls for judgment about wording or placement. A person should read the quoted text and decide.';
   const html = renderLetterHtml({
     extraction: null,
-    modelName: 'Muse Spark 1.3',
+    modelName: 'Meta’s Muse Spark 1.3',
     report: report([finding('C-081', 'review', { title: 'Semantic one' }), finding('C-010', 'review', { title: 'Deterministic one' })]),
     date: DATE,
     ...PROVENANCE,
@@ -133,7 +133,7 @@ describe('review notes', () => {
 });
 
 describe('provenance', () => {
-  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE });
+  const html = renderLetterHtml({ extraction: extraction(HOSTILE), modelName: 'Meta’s Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE });
 
   it('states the first upload date and a 12-hex lowercase fingerprint after the model line', () => {
     expect(html).toContain(
@@ -145,7 +145,7 @@ describe('provenance', () => {
   });
 
   it('carries the same sentence into the print version that becomes the PDF', () => {
-    const print = renderLetterHtml({ extraction: null, modelName: 'Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE }, 'print');
+    const print = renderLetterHtml({ extraction: null, modelName: 'Meta’s Muse Spark 1.3', report: report(FINDINGS), date: DATE, ...PROVENANCE }, 'print');
     expect(print).toContain('(file fingerprint a3f09c21b7e4)');
   });
 });

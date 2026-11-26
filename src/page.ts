@@ -91,7 +91,7 @@ ${jsonLdScript()}
     </div>
     <div class="submit-row">
       <button class="btn btn-primary" id="submit" type="submit" disabled>Review this list</button>
-      <p class="fine">Documents are processed by Meta AI models, and Meta may use them to improve its products. Uploaded files and their reviews are deleted 30 days after the file was last uploaded. Upload only price lists you are allowed to share.</p>
+      <p class="fine">Documents are read by Muse Spark Open, Meta’s open-weights model, which Fireworks runs through Cloudflare. Fireworks’ terms say it does not keep documents after reading them or use them to train models. Uploaded files and their reviews are deleted 30 days after the file was last uploaded. Upload only price lists you are allowed to share.</p>
     </div>
   </form>
 

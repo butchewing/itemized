@@ -66,7 +66,7 @@ Sources: the FTC’s [January 2024 announcement](https://www.ftc.gov/news-events
 
 ## How it decides
 
-- **Meta's Muse Spark reads the list.** It writes down every item, price and statement, and the page each one came from.
+- **Muse Spark Open, Meta's open-weights model, reads the list.** It writes down every item, price and statement, and the page each one came from.
 - **Fixed rules decide what passes.** The rules are written from the Rule's text, and only they can mark a requirement as not passed. Each result cites the section of the Rule and quotes the list.
 - **Anything uncertain goes to a person.** When a photo is hard to read or wording calls for judgment, the result is "needs a person's review", never "did not pass".
 
@@ -108,7 +108,7 @@ const SAMPLES_MD = SAMPLES.map(
 ).join('\n');
 
 const UPLOAD_NOTICE =
-  'Documents are processed by Meta AI models, and Meta may use them to improve its products. Uploaded files and their reviews are deleted 30 days after the file was last uploaded. Upload only price lists you are allowed to share.';
+  'Documents are read by Muse Spark Open, Meta’s open-weights model, which Fireworks runs through Cloudflare. Fireworks’ terms say it does not keep documents after reading them or use them to train models. Uploaded files and their reviews are deleted 30 days after the file was last uploaded. Upload only price lists you are allowed to share.';
 
 // For an agent acting for a person: when Itemized is the right tool, and the three calls that use it.
 const AGENTS_MD = `
@@ -174,7 +174,7 @@ export const LLMS_TXT = `# Itemized
 
 > ${DESCRIPTION} Free to use at ${SITE}; built and maintained by Butch Ewing.
 
-Itemized reviews a US funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). A Meta Muse Spark model transcribes the list; fixed rules written from the Rule's text decide what passes. Results are pass, fail, review or not applicable, each with the Rule section it comes from.
+Itemized reviews a US funeral home's General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453). Muse Spark Open, Meta's open-weights model, transcribes the list; fixed rules written from the Rule's text decide what passes. Results are pass, fail, review or not applicable, each with the Rule section it comes from.
 
 ${AGENTS_MD.trim()}
 
@@ -205,7 +205,7 @@ The Funeral Rule gives families the right to an itemized price list so they can 
 
 ## How it decides
 
-A Meta Muse Spark model transcribes the list into structured data: each item, each price, and each block of notice text, with the page it came from. Fixed rules written from the Rule's text then check that data. Only those fixed rules can mark a requirement as not passed. Questions that need judgment about wording or placement go to the model, and those results can only be marked for a person to review. Every result cites the section of the Rule it comes from and quotes the part of the list it is based on.
+Muse Spark Open, Meta's open-weights model, transcribes the list into structured data: each item, each price, and each block of notice text, with the page it came from. Fixed rules written from the Rule's text then check that data. Only those fixed rules can mark a requirement as not passed. Questions that need judgment about wording or placement go to the model, and those results can only be marked for a person to review. Every result cites the section of the Rule it comes from and quotes the part of the list it is based on.
 
 The rules, the checks and the evaluation are open source under the Apache-2.0 license at [github.com/butchewing/itemized](${REPO}). The evaluation, in EVAL.md, measures every check against labeled price lists, including fictional lists written for the purpose and the FTC's own sample list.
 
@@ -228,7 +228,14 @@ Itemized has no accounts, sets no cookies and runs no analytics or advertising s
 
 ## What you upload
 
-When you upload a price list, Itemized stores the file, a fingerprint of it (a SHA-256 hash), its file name, the text the model transcribed from it, and the review. The file and the transcription are sent to Meta's Model API to be read and checked. Meta may use them to improve its products. Upload only price lists you are allowed to share. A General Price List is a public price document and should not contain anyone's personal information; do not upload documents that do.
+When you upload a price list, Itemized stores the file, a fingerprint of it (a SHA-256 hash), its file name, the text the model transcribed from it, and the review.
+
+To read and check the list, Itemized sends it, and then the transcription, to Muse Spark Open, an open-weights model released by Meta. Fireworks runs the model; the requests reach Fireworks through Cloudflare's Workers AI. A PDF is first opened in a browser on Cloudflare (Browser Run) to make an image of each page; those images are not stored. Itemized does not send uploads to Meta.
+
+- **Fireworks** says in its terms of service (section 3.6, dated July 10, 2026) that it does not use what it is sent to train its models or improve its service, and does not keep it after returning the result, unless the law requires it or it is needed to provide support. It may run automated safety checks on it.
+- **Cloudflare** says it does not use content processed by Workers AI to train AI models. Itemized turns off logging for these requests in its Cloudflare AI Gateway, so the gateway keeps no copy of the document.
+
+Upload only price lists you are allowed to share. A General Price List is a public price document and should not contain anyone's personal information; do not upload documents that do.
 
 ## Who can see a review
 
