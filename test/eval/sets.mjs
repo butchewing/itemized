@@ -93,6 +93,16 @@ export function buildSets() {
         labels: corpusLabels[id] ?? null, redacted: m.required_elements_redacted, pages: m.pages,
       })),
     },
+    // PDFs uploaded as PDFs to a model that reads images: the Worker renders them (src/render.ts). Both
+    // rule sets are reported; the product's choice is in each row's `input` (pipeline ruleInput).
+    {
+      id: 'u', name: 'Synthetic PDFs, rendered by the Worker', provider: CORPUS_PROVIDER, input: 'pdf', diagnosticPdfMode: true,
+      docs: synPdfs().map((list) => ({ key: list, list, paths: [join(SYN, 'pdf', `${list}.pdf`)], mime: 'application/pdf', truth: list, labels: labels[list] })),
+    },
+    {
+      id: 'v', name: 'FTC Sample 1 template, rendered by the Worker', provider: CORPUS_PROVIDER, input: 'pdf', diagnosticPdfMode: true,
+      docs: [{ key: 'ftc-template', list: 'ftc', paths: [join(ROOT, 'specimens', ftc.pdf)], mime: 'application/pdf', truth: null, labels: ftc.checks, unlistedPass: true }],
+    },
     ...OPEN_CANDIDATES.flatMap(([provider, [photos, pages]]) => [
       { id: photos, name: 'Synthetic phone photos', provider, input: 'images', docs: PHOTO_LISTS.map(photoDoc) },
       {
