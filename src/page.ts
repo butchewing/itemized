@@ -148,9 +148,10 @@ const LABELS = {
 };
 const FAILURES = {
   'daily budget reached': 'Itemized has reached its review limit for today. Please try again tomorrow.',
-  [PDF_UNSUPPORTED]: 'This list could not be read. Try a photo of each page instead.',
-  [PDF_UNREADABLE]: 'This PDF could not be opened. Try a photo of each page instead.',
-  [PDF_TOO_LONG]: `This PDF has more than ${MAX_RENDER_PAGES} pages. Upload the General Price List pages only, as a shorter PDF or as photos.`,
+  // Interpolated on the server: this script runs in the browser, where these constants do not exist.
+  ${JSON.stringify(PDF_UNSUPPORTED)}: 'This list could not be read. Try a photo of each page instead.',
+  ${JSON.stringify(PDF_UNREADABLE)}: 'This PDF could not be opened. Try a photo of each page instead.',
+  ${JSON.stringify(PDF_TOO_LONG)}: 'This PDF has more than ${MAX_RENDER_PAGES} pages. Upload the General Price List pages only, as a shorter PDF or as photos.',
   'PDF rendering is unavailable': 'Itemized could not open PDFs just now. Please try again in a few minutes.',
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
