@@ -102,6 +102,9 @@ export const STYLES = `
   .btn-primary { background: var(--ink); color: var(--sheet); }
   .btn-primary:hover:not(:disabled) { background: var(--ink-deep); }
   .btn:disabled { background: transparent; color: var(--slate); border-color: var(--rule); cursor: not-allowed; }
+  .state-row { display: flex; flex-wrap: wrap; gap: .4rem .75rem; align-items: center; margin: 1rem 0 0; }
+  .state-row label { font-weight: 600; }
+  .state-row select { font: inherit; padding: .35rem .5rem; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: inherit; }
   .submit-row { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center; margin-top: 1rem; }
   .fine { font-size: .95rem; color: var(--slate); margin: 0; }
 

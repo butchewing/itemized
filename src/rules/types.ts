@@ -31,6 +31,8 @@ export type Report = {
   // Every ruleset that ran, as id@version: the federal one, plus Texas for a Texas provider.
   // Absent on reports stored before Texas checks existed.
   rulesets?: string[];
+  // Which state's rules applied and why (absent on reports from before engine-7).
+  jurisdiction?: { state: string | null; source: 'upload' | 'address' | 'none' };
   findings: Finding[];
   counts: Record<Verdict, number>;
   // Semantic checks left out because the model step was skipped or failed.

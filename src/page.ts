@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import { ACCEPTED_TYPES, MAX_PAGES, MAX_RENDER_PAGES, MAX_UPLOAD_BYTES, PDF_TOO_LONG, PDF_UNREADABLE, PDF_UNSUPPORTED } from './audit';
+import { ACCEPTED_TYPES, STATES, MAX_PAGES, MAX_RENDER_PAGES, MAX_UPLOAD_BYTES, PDF_TOO_LONG, PDF_UNREADABLE, PDF_UNSUPPORTED } from './audit';
 import { findingItem, LIMITS_PARAGRAPHS, summarySentence } from './letter';
 import { actionsRow, compactLetterhead, FIX_PROMPT_SCRIPT, PDF_SCRIPT } from './review';
 import type { Finding } from './rules/types';
@@ -8,6 +8,9 @@ import { HEAD_LINKS, MONOGRAM, SITE_FOOTER, socialMeta } from './styles';
 
 const accept = Object.keys(ACCEPTED_TYPES).join(',');
 const maxMb = MAX_UPLOAD_BYTES / (1024 * 1024);
+const stateOptions = Object.entries(STATES)
+  .map(([code, name]) => `<option value="${code}">${name}</option>`)
+  .join('');
 
 // Files are sent in page order. The photo pairs passed the Day 5 bar: no fail their PDF does not have.
 const sampleItems = SAMPLES.map(
@@ -89,6 +92,10 @@ ${jsonLdScript()}
       <ol class="pages" id="pages" aria-label="Pages" aria-live="polite" aria-relevant="additions" hidden></ol>
       <button class="text-btn add-page" id="add-page" type="button" hidden>Add another page</button>
     </div>
+    <p class="state-row">
+      <label for="state">State where the funeral home is licensed</label>
+      <select id="state" name="state"><option value="">Use the address on the list</option>${stateOptions}</select>
+    </p>
     <div class="submit-row">
       <button class="btn btn-primary" id="submit" type="submit" disabled>Review this list</button>
       <p class="fine">Documents are read by Muse Spark Open, Meta’s open-weights model, which Fireworks runs through Cloudflare. Fireworks’ terms say it does not keep documents after reading them or use them to train models. Uploaded files and their reviews are deleted 30 days after the file was last uploaded. Upload only price lists you are allowed to share.</p>
@@ -307,6 +314,7 @@ form.addEventListener('submit', (e) => {
   if (!chosen.length) return;
   const data = new FormData();
   for (const f of chosen) data.append('file', f, f.name);
+  data.append('state', document.getElementById('state').value);
   review(data);
 });
 
