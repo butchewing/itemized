@@ -10,6 +10,11 @@
     "read": "2026-11-26",
     "decisions": "prep/rules/tx-tfsc-sources.md, Decisions (Butch, 2026-11-26)"
   },
+  "basis_values": {
+    "statute": "Requirement stated in the Texas Occupations Code; the check cites the section.",
+    "agency_rule": "Requirement stated in a Texas Funeral Service Commission rule (22 TAC Part 10); the check cites the rule."
+  },
+  "sections": "Each check lists the ids of the sections of Texas law it rests on: us-tx/occ/<section> for the Occupations Code, us-tx/22tac/<rule> for 22 TAC.",
   "notices": {
     "N-tx-selection": {
       "cite": "Tex. Occ. Code §651.405(b)",
@@ -29,7 +34,11 @@
       "id": "TX-001",
       "title": "Life insurance claim filing priced",
       "cite": "Tex. Occ. Code §651.405(a)(9); 22 TAC §203.46(b)(5)(B)(xiv), (C)(iv)",
-      "basis": "rule",
+      "sections": [
+        "us-tx/occ/651.405",
+        "us-tx/22tac/203.46"
+      ],
+      "basis": "statute",
       "engine": "deterministic",
       "on_violation": "fail",
       "applies_when": "the list offers filing life insurance claims",
@@ -40,7 +49,11 @@
       "id": "TX-002",
       "title": "Selection notice includes \"basic services and overhead\"",
       "cite": "Tex. Occ. Code §651.405(b); compare 22 TAC §203.49(b)(2)(A)(i)",
-      "basis": "rule",
+      "sections": [
+        "us-tx/occ/651.405",
+        "us-tx/22tac/203.49"
+      ],
+      "basis": "statute",
       "engine": "deterministic",
       "on_violation": "review",
       "applies_when": "the federal selection notice is on the list",
@@ -51,7 +64,10 @@
       "id": "TX-003",
       "title": "Crematory notice",
       "cite": "Tex. Occ. Code §651.4055(c)",
-      "basis": "rule",
+      "sections": [
+        "us-tx/occ/651.4055"
+      ],
+      "basis": "statute",
       "engine": "deterministic",
       "on_violation": "review",
       "applies_when": "the list says the provider operates a crematory",
@@ -62,7 +78,10 @@
       "id": "TX-004",
       "title": "Third-party insurance filing statement",
       "cite": "22 TAC §203.46(b)(5)(C)(v)",
-      "basis": "rule",
+      "sections": [
+        "us-tx/22tac/203.46"
+      ],
+      "basis": "agency_rule",
       "engine": "deterministic",
       "on_violation": "review",
       "applies_when": "the list mentions paying with life insurance and does not offer claim filing",

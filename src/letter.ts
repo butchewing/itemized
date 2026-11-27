@@ -1,4 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
+import txRuleset from '../prep/rules/tx-651@2026.1.json';
 import type { GplExtraction } from './extraction';
 import type { Finding, Report, Verdict } from './rules/types';
 
@@ -37,7 +38,7 @@ const misread = (f: Finding) => /^(extraction|photo)_uncertain:/.test(f.reason);
 const reviewNote = (f: Finding) =>
   REVIEW_NOTES[ENGINE_OF.get(f.checkId) === 'semantic' ? 'semantic' : f.checkId.startsWith('TX-') && !misread(f) ? 'legal' : 'deterministic'];
 
-const BASIS: Record<string, string> = ruleset.basis_values;
+const BASIS: Record<string, string> = { ...ruleset.basis_values, ...txRuleset.basis_values };
 
 const DETAILED: [Verdict, string][] = [
   ['fail', 'Did not pass'],

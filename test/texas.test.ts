@@ -147,3 +147,21 @@ describe('the letter for a Texas list', () => {
     expect(html).toContain('and Texas price-list requirements, ruleset tx-651@2026.1');
   });
 });
+
+describe('Texas ruleset metadata', () => {
+  it('says whether each check rests on the statute or a TFSC rule', () => {
+    expect(Object.fromEntries(tx.checks.map((c) => [c.id, c.basis]))).toEqual({
+      'TX-001': 'statute', 'TX-002': 'statute', 'TX-003': 'statute', 'TX-004': 'agency_rule',
+    });
+    for (const c of tx.checks) expect(Object.keys(tx.basis_values)).toContain(c.basis);
+  });
+  it('points every check at the sections of law it rests on', () => {
+    for (const c of tx.checks) {
+      expect(c.sections.length, c.id).toBeGreaterThan(0);
+      for (const s of c.sections) expect(s, c.id).toMatch(/^us-tx\/(occ|22tac)\/\d+\.\d+$/);
+    }
+  });
+  it('a statute-based check can still fail a list', () => {
+    expect(texasVerdicts(withItems(base(), item('Filing life insurance claim', null, '$______'))).out['TX-001']).toBe('fail');
+  });
+});
