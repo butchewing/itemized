@@ -1,5 +1,6 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import txRuleset from '../prep/rules/tx-651@2026.1.json';
+import { STATES } from './audit';
 import type { GplExtraction } from './extraction';
 import type { Finding, Report, Verdict } from './rules/types';
 
@@ -20,7 +21,25 @@ const ESCAPES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;'
 export const escapeHtml = (value: unknown) => String(value).replace(/[&<>"']/g, (ch) => ESCAPES[ch]!);
 
 // Compliance-reviewed wording. Shown on the page before any upload and as the letter's postscript.
-export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). When the list has a Texas address, it also checks a few price-list requirements that Texas adds (Texas Occupations Code §651.405 and §651.4055, and Texas Funeral Service Commission rules 22 TAC §203.46 and §203.49). It does not check any other state law. It does not check the Casket Price List, the Outer Burial Container Price List, the Urn Price List or the Statement of Funeral Goods and Services Selected.</p>
+// Why state checks did or did not run. Reports from before engine-7 carry no jurisdiction: say nothing.
+export function stateSentence(report: Report, extraction: GplExtraction | null): string | null {
+  const j = report.jurisdiction;
+  if (!j) return null;
+  if (j.state === 'TX') {
+    return j.source === 'upload'
+      ? 'Texas requirements were checked because Texas was chosen as the funeral home’s state.'
+      : 'Texas requirements were checked because the list’s address is in Texas.';
+  }
+  if (j.state) {
+    const name = STATES[j.state] ?? j.state;
+    return `${name} was chosen as the funeral home’s state. Itemized does not check ${name} law, so only the federal Funeral Rule was checked.`;
+  }
+  return extraction?.address
+    ? 'Only the federal Funeral Rule was checked: the list’s address is not in Texas, and no state was chosen.'
+    : 'Only the federal Funeral Rule was checked: the list shows no address, and no state was chosen.';
+}
+
+export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). When the funeral home is in Texas, by the state chosen at upload or else by the list’s address, it also checks a few price-list requirements that Texas adds (Texas Occupations Code §651.405 and §651.4055, and Texas Funeral Service Commission rules 22 TAC §203.46 and §203.49). It does not check any other state law. It does not check the Casket Price List, the Outer Burial Container Price List, the Urn Price List or the Statement of Funeral Goods and Services Selected.</p>
       <p>The AI can misread documents, especially photos. These results are not legal advice and are not a finding that anyone broke the law.</p>
       <p><strong>Funeral homes:</strong> confirm any result with your attorney or your state funeral regulator before acting on it.</p>
       <p><strong>Families:</strong> if something here concerns you, ask the funeral home about it. You can also contact the Federal Trade Commission or the state agency that licenses funeral homes.</p>`;
@@ -196,6 +215,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
   const when = letterDate(date);
   // Reports stored before Texas checks existed have no `rulesets`; they name the federal ruleset only.
   const texasRuleset = report.rulesets?.find((r) => r.startsWith('tx-')) ?? null;
+  const stateLine = stateSentence(report, extraction);
   const c = report.counts;
   const byVerdict = (v: Verdict) => report.findings.filter((f) => f.verdict === v);
 
@@ -229,7 +249,8 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
     ${mode === 'screen' ? fixPromptSection(report, `itemized-fix-prompt-${fileStem(provider ?? null, date)}.txt`) : ''}
     <div class="closing">
       <p class="signature">Itemized</p>
-      <p>Read by ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}${texasRuleset ? `, and Texas price-list requirements, ruleset ${escapeHtml(texasRuleset)}` : ''}, on ${escapeHtml(when)}.</p>
+      <p>Read by ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}${texasRuleset ? `, and Texas price-list requirements, ruleset ${escapeHtml(texasRuleset)}` : ''}, on ${escapeHtml(when)}.</p>${stateLine ? `
+      <p>${escapeHtml(stateLine)}</p>` : ''}
       <p>This review covers the document first uploaded to Itemized on ${escapeHtml(letterDate(uploadedAt))} (file fingerprint ${escapeHtml(docSha256.slice(0, 12).toLowerCase())}). Itemized does not verify who published the document.</p>
       ${notRun}
     </div>

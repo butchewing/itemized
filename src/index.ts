@@ -4,6 +4,7 @@ import {
   combinedSha256,
   docKey,
   isProvider,
+  parseState,
   parseUpload,
   sha256Hex,
   type AuditDocument,
@@ -89,6 +90,8 @@ app.post('/api/audits', async (c) => {
   const form = await c.req.formData().catch(() => null);
   const upload = parseUpload(form?.getAll('file') ?? []);
   if ('error' in upload) return c.json({ error: upload.error }, upload.status);
+  const state = parseState(form?.get('state'));
+  if (state === undefined) return c.json({ error: 'Choose a state from the list, or leave it on the address.' }, 400);
 
   // Always re-put: a fresh write resets the object's age for the bucket's 30-day lifecycle rule.
   const store = async (file: File) => {
@@ -111,14 +114,14 @@ app.post('/api/audits', async (c) => {
   const filename = (upload.kind === 'pdf' ? upload.file : upload.files[0]!).name || null;
 
   const now = new Date();
-  const reusable = await findReusable(c.env.DB, sha256, provider, now);
+  const reusable = await findReusable(c.env.DB, sha256, provider, state, now);
   if (reusable) {
     await touchAudit(c.env.DB, reusable.id, now);
     return c.json({ id: reusable.id, status: reusable.status }, 202);
   }
 
   const id = crypto.randomUUID();
-  await createAudit(c.env.DB, { id, provider, document, sha256, filename }, now);
+  await createAudit(c.env.DB, { id, provider, document, sha256, filename, state }, now);
   await c.env.AUDITS.send({ auditId: id } satisfies AuditMessage);
 
   return c.json({ id, status: 'queued' satisfies AuditStatus }, 202);

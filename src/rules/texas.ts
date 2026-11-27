@@ -103,9 +103,24 @@ export const TEXAS_CHECKS: Record<TexasCheckId, (ctx: Ctx) => Outcome> = {
 
 export type TexasOutcome = { check: TexasCheck; outcome: Outcome };
 
+// Where the state came from: the uploader's choice wins over the list's address.
+export type Jurisdiction = { state: string | null; source: 'upload' | 'address' | 'none' };
+export function jurisdictionOf(x: GplExtraction, state: string | null | undefined): Jurisdiction {
+  if (state) return { state, source: 'upload' };
+  return isTexas(x) ? { state: 'TX', source: 'address' } : { state: null, source: 'none' };
+}
+
+// A notice the federal check may read as a weakened copy of the selection notice, but that Texas
+// requires of a crematory (Occupations Code §651.4055(c)).
+export function isCrematoryNotice(text: string): boolean {
+  const n = normalize(text);
+  return n.includes('you may choose only the items you desire') && /describing the goods and services you selected/.test(n)
+    && !/will include a charge for our basic services/.test(n);
+}
+
 // Runs only for a Texas provider; elsewhere there is nothing to report.
-export function runTexasChecks(x: GplExtraction, corpus: Corpus, matches: Matches, thresholds: Ctx['thresholds']): TexasOutcome[] {
-  if (!isTexas(x)) return [];
+export function runTexasChecks(x: GplExtraction, corpus: Corpus, matches: Matches, thresholds: Ctx['thresholds'], where: Jurisdiction): TexasOutcome[] {
+  if (where.state !== 'TX') return [];
   const ctx: Ctx = { x, corpus, matches, thresholds };
   return TX_RULESET.checks.map((check) => ({ check, outcome: TEXAS_CHECKS[check.id](ctx) }));
 }

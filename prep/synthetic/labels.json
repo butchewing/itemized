@@ -1864,6 +1864,619 @@
      "expected": "not_applicable"
     }
    }
+  },
+  {
+   "id": "syn-13",
+   "title": "Texas: life insurance claim filing priced",
+   "provider": "Caddo Springs Funeral Home",
+   "html": "html/syn-13.html",
+   "pdf": "pdf/syn-13.pdf",
+   "defects": [],
+   "notes": "TX-004 does not apply because the home files the claim itself.",
+   "checks": {
+    "C-001": {
+     "expected": "pass"
+    },
+    "C-002": {
+     "expected": "pass"
+    },
+    "C-003": {
+     "expected": "pass"
+    },
+    "C-004": {
+     "expected": "pass"
+    },
+    "C-005": {
+     "expected": "pass"
+    },
+    "C-006": {
+     "expected": "pass"
+    },
+    "C-007": {
+     "expected": "pass"
+    },
+    "C-010": {
+     "expected": "pass"
+    },
+    "C-011": {
+     "expected": "pass"
+    },
+    "C-020": {
+     "expected": "pass"
+    },
+    "C-021": {
+     "expected": "pass"
+    },
+    "C-022": {
+     "expected": "pass"
+    },
+    "C-023": {
+     "expected": "pass"
+    },
+    "C-024": {
+     "expected": "not_applicable"
+    },
+    "C-025": {
+     "expected": "pass"
+    },
+    "C-030": {
+     "expected": "pass"
+    },
+    "C-031": {
+     "expected": "pass"
+    },
+    "C-032": {
+     "expected": "pass"
+    },
+    "C-033": {
+     "expected": "pass"
+    },
+    "C-040": {
+     "expected": "pass"
+    },
+    "C-041": {
+     "expected": "pass"
+    },
+    "C-042": {
+     "expected": "pass"
+    },
+    "C-043": {
+     "expected": "pass"
+    },
+    "C-044": {
+     "expected": "pass"
+    },
+    "C-045": {
+     "expected": "pass"
+    },
+    "C-046": {
+     "expected": "pass"
+    },
+    "C-047": {
+     "expected": "pass"
+    },
+    "C-050": {
+     "expected": "pass"
+    },
+    "C-051": {
+     "expected": "pass"
+    },
+    "C-052": {
+     "expected": "pass"
+    },
+    "C-053": {
+     "expected": "pass"
+    },
+    "C-060": {
+     "expected": "pass"
+    },
+    "C-061": {
+     "expected": "pass"
+    },
+    "C-070": {
+     "expected": "pass"
+    },
+    "C-071": {
+     "expected": "pass"
+    },
+    "C-072": {
+     "expected": "pass"
+    },
+    "C-073": {
+     "expected": "pass"
+    },
+    "C-074": {
+     "expected": "not_applicable"
+    },
+    "C-075": {
+     "expected": "pass"
+    },
+    "C-080": {
+     "expected": "not_applicable"
+    },
+    "C-081": {
+     "expected": "pass"
+    },
+    "C-082": {
+     "expected": "pass"
+    },
+    "C-083": {
+     "expected": "pass"
+    },
+    "TX-001": {
+     "expected": "pass"
+    },
+    "TX-002": {
+     "expected": "pass"
+    },
+    "TX-003": {
+     "expected": "not_applicable"
+    },
+    "TX-004": {
+     "expected": "not_applicable"
+    }
+   }
+  },
+  {
+   "id": "syn-14",
+   "title": "Texas: life insurance claim filing listed with a blank price",
+   "provider": "Brazos Bend Funeral Chapel",
+   "html": "html/syn-14.html",
+   "pdf": "pdf/syn-14.pdf",
+   "defects": [
+    "TX-001"
+   ],
+   "notes": "The blank is printed on the list, so it fails rather than reviews.",
+   "checks": {
+    "C-001": {
+     "expected": "pass"
+    },
+    "C-002": {
+     "expected": "pass"
+    },
+    "C-003": {
+     "expected": "pass"
+    },
+    "C-004": {
+     "expected": "pass"
+    },
+    "C-005": {
+     "expected": "pass"
+    },
+    "C-006": {
+     "expected": "pass"
+    },
+    "C-007": {
+     "expected": "pass"
+    },
+    "C-010": {
+     "expected": "pass"
+    },
+    "C-011": {
+     "expected": "pass"
+    },
+    "C-020": {
+     "expected": "pass"
+    },
+    "C-021": {
+     "expected": "pass"
+    },
+    "C-022": {
+     "expected": "pass"
+    },
+    "C-023": {
+     "expected": "pass"
+    },
+    "C-024": {
+     "expected": "not_applicable"
+    },
+    "C-025": {
+     "expected": "pass"
+    },
+    "C-030": {
+     "expected": "pass"
+    },
+    "C-031": {
+     "expected": "pass"
+    },
+    "C-032": {
+     "expected": "pass"
+    },
+    "C-033": {
+     "expected": "pass"
+    },
+    "C-040": {
+     "expected": "pass"
+    },
+    "C-041": {
+     "expected": "pass"
+    },
+    "C-042": {
+     "expected": "pass"
+    },
+    "C-043": {
+     "expected": "pass"
+    },
+    "C-044": {
+     "expected": "pass"
+    },
+    "C-045": {
+     "expected": "pass"
+    },
+    "C-046": {
+     "expected": "pass"
+    },
+    "C-047": {
+     "expected": "pass"
+    },
+    "C-050": {
+     "expected": "pass"
+    },
+    "C-051": {
+     "expected": "pass"
+    },
+    "C-052": {
+     "expected": "pass"
+    },
+    "C-053": {
+     "expected": "pass"
+    },
+    "C-060": {
+     "expected": "pass"
+    },
+    "C-061": {
+     "expected": "pass"
+    },
+    "C-070": {
+     "expected": "pass"
+    },
+    "C-071": {
+     "expected": "pass"
+    },
+    "C-072": {
+     "expected": "pass"
+    },
+    "C-073": {
+     "expected": "pass"
+    },
+    "C-074": {
+     "expected": "not_applicable"
+    },
+    "C-075": {
+     "expected": "pass"
+    },
+    "C-080": {
+     "expected": "not_applicable"
+    },
+    "C-081": {
+     "expected": "pass"
+    },
+    "C-082": {
+     "expected": "pass"
+    },
+    "C-083": {
+     "expected": "pass"
+    },
+    "TX-001": {
+     "expected": "fail"
+    },
+    "TX-002": {
+     "expected": "pass"
+    },
+    "TX-003": {
+     "expected": "not_applicable"
+    },
+    "TX-004": {
+     "expected": "not_applicable"
+    }
+   }
+  },
+  {
+   "id": "syn-15",
+   "title": "Texas: funeral home with its own crematory, establishment notice only; insurance assignment without the third-party statement",
+   "provider": "Llano Crossing Funeral Home and Crematory",
+   "html": "html/syn-15.html",
+   "pdf": "pdf/syn-15.pdf",
+   "defects": [
+    "TX-003",
+    "TX-004"
+   ],
+   "notes": "Both are reviews: the crematory notice is missing, and whether the third-party statement is required depends on payment terms.",
+   "checks": {
+    "C-001": {
+     "expected": "pass"
+    },
+    "C-002": {
+     "expected": "pass"
+    },
+    "C-003": {
+     "expected": "pass"
+    },
+    "C-004": {
+     "expected": "pass"
+    },
+    "C-005": {
+     "expected": "pass"
+    },
+    "C-006": {
+     "expected": "pass"
+    },
+    "C-007": {
+     "expected": "pass"
+    },
+    "C-010": {
+     "expected": "pass"
+    },
+    "C-011": {
+     "expected": "pass"
+    },
+    "C-020": {
+     "expected": "pass"
+    },
+    "C-021": {
+     "expected": "pass"
+    },
+    "C-022": {
+     "expected": "pass"
+    },
+    "C-023": {
+     "expected": "pass"
+    },
+    "C-024": {
+     "expected": "not_applicable"
+    },
+    "C-025": {
+     "expected": "pass"
+    },
+    "C-030": {
+     "expected": "pass"
+    },
+    "C-031": {
+     "expected": "pass"
+    },
+    "C-032": {
+     "expected": "pass"
+    },
+    "C-033": {
+     "expected": "pass"
+    },
+    "C-040": {
+     "expected": "pass"
+    },
+    "C-041": {
+     "expected": "pass"
+    },
+    "C-042": {
+     "expected": "pass"
+    },
+    "C-043": {
+     "expected": "pass"
+    },
+    "C-044": {
+     "expected": "pass"
+    },
+    "C-045": {
+     "expected": "pass"
+    },
+    "C-046": {
+     "expected": "pass"
+    },
+    "C-047": {
+     "expected": "pass"
+    },
+    "C-050": {
+     "expected": "pass"
+    },
+    "C-051": {
+     "expected": "pass"
+    },
+    "C-052": {
+     "expected": "pass"
+    },
+    "C-053": {
+     "expected": "pass"
+    },
+    "C-060": {
+     "expected": "pass"
+    },
+    "C-061": {
+     "expected": "pass"
+    },
+    "C-070": {
+     "expected": "pass"
+    },
+    "C-071": {
+     "expected": "pass"
+    },
+    "C-072": {
+     "expected": "pass"
+    },
+    "C-073": {
+     "expected": "pass"
+    },
+    "C-074": {
+     "expected": "not_applicable"
+    },
+    "C-075": {
+     "expected": "pass"
+    },
+    "C-080": {
+     "expected": "not_applicable"
+    },
+    "C-081": {
+     "expected": "pass"
+    },
+    "C-082": {
+     "expected": "pass"
+    },
+    "C-083": {
+     "expected": "pass"
+    },
+    "TX-001": {
+     "expected": "not_applicable"
+    },
+    "TX-002": {
+     "expected": "pass"
+    },
+    "TX-003": {
+     "expected": "review"
+    },
+    "TX-004": {
+     "expected": "review"
+    }
+   }
+  },
+  {
+   "id": "syn-16",
+   "title": "Texas: funeral home with its own crematory, both notices; insurance assignment with the third-party statement",
+   "provider": "Medina Hills Funeral Home and Crematory",
+   "html": "html/syn-16.html",
+   "pdf": "pdf/syn-16.pdf",
+   "defects": [],
+   "notes": "Two selection notices, the establishment's and the crematory's; the federal selection checks must still pass.",
+   "checks": {
+    "C-001": {
+     "expected": "pass"
+    },
+    "C-002": {
+     "expected": "pass"
+    },
+    "C-003": {
+     "expected": "pass"
+    },
+    "C-004": {
+     "expected": "pass"
+    },
+    "C-005": {
+     "expected": "pass"
+    },
+    "C-006": {
+     "expected": "pass"
+    },
+    "C-007": {
+     "expected": "pass"
+    },
+    "C-010": {
+     "expected": "pass"
+    },
+    "C-011": {
+     "expected": "pass"
+    },
+    "C-020": {
+     "expected": "pass"
+    },
+    "C-021": {
+     "expected": "pass"
+    },
+    "C-022": {
+     "expected": "pass"
+    },
+    "C-023": {
+     "expected": "pass"
+    },
+    "C-024": {
+     "expected": "not_applicable"
+    },
+    "C-025": {
+     "expected": "pass"
+    },
+    "C-030": {
+     "expected": "pass"
+    },
+    "C-031": {
+     "expected": "pass"
+    },
+    "C-032": {
+     "expected": "pass"
+    },
+    "C-033": {
+     "expected": "pass"
+    },
+    "C-040": {
+     "expected": "pass"
+    },
+    "C-041": {
+     "expected": "pass"
+    },
+    "C-042": {
+     "expected": "pass"
+    },
+    "C-043": {
+     "expected": "pass"
+    },
+    "C-044": {
+     "expected": "pass"
+    },
+    "C-045": {
+     "expected": "pass"
+    },
+    "C-046": {
+     "expected": "pass"
+    },
+    "C-047": {
+     "expected": "pass"
+    },
+    "C-050": {
+     "expected": "pass"
+    },
+    "C-051": {
+     "expected": "pass"
+    },
+    "C-052": {
+     "expected": "pass"
+    },
+    "C-053": {
+     "expected": "pass"
+    },
+    "C-060": {
+     "expected": "pass"
+    },
+    "C-061": {
+     "expected": "pass"
+    },
+    "C-070": {
+     "expected": "pass"
+    },
+    "C-071": {
+     "expected": "pass"
+    },
+    "C-072": {
+     "expected": "pass"
+    },
+    "C-073": {
+     "expected": "pass"
+    },
+    "C-074": {
+     "expected": "not_applicable"
+    },
+    "C-075": {
+     "expected": "pass"
+    },
+    "C-080": {
+     "expected": "not_applicable"
+    },
+    "C-081": {
+     "expected": "pass"
+    },
+    "C-082": {
+     "expected": "pass"
+    },
+    "C-083": {
+     "expected": "pass"
+    },
+    "TX-001": {
+     "expected": "not_applicable"
+    },
+    "TX-002": {
+     "expected": "pass"
+    },
+    "TX-003": {
+     "expected": "pass"
+    },
+    "TX-004": {
+     "expected": "pass"
+    }
+   }
   }
  ]
 }

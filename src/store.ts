@@ -31,6 +31,7 @@ export type AuditRow = {
   last_used_at: string | null;
   versions: string | null;
   pages: string | null;
+  state: string | null;
 };
 
 // Rows from before migration 0006 hold a single image with pages NULL.
@@ -60,22 +61,22 @@ export const daysBefore = (now: Date, days: number) => new Date(now.getTime() - 
 // would otherwise be handed back, never finishing, for as long as people keep uploading the file.
 const STALLED_AFTER_MS = 15 * 60_000;
 
-export async function findReusable(db: D1Database, sha256: string, provider: Provider, now: Date) {
+export async function findReusable(db: D1Database, sha256: string, provider: Provider, state: string | null, now: Date) {
   return db
     .prepare(
       `SELECT id, status FROM audits
-       WHERE doc_sha256 = ? AND provider = ? AND versions = ? AND last_used_at >= ?
+       WHERE doc_sha256 = ? AND provider = ? AND state IS ? AND versions = ? AND last_used_at >= ?
          AND (status = 'done' OR (status != 'failed' AND updated_at >= ?))
        ORDER BY created_at DESC LIMIT 1`,
     )
-    .bind(sha256, provider, PIPELINE_VERSIONS, daysBefore(now, REUSE_DAYS), new Date(now.getTime() - STALLED_AFTER_MS).toISOString())
+    .bind(sha256, provider, state, PIPELINE_VERSIONS, daysBefore(now, REUSE_DAYS), new Date(now.getTime() - STALLED_AFTER_MS).toISOString())
     .first<{ id: string; status: AuditStatus }>();
 }
 
 export const touchAudit = (db: D1Database, id: string, now: Date) =>
   db.prepare('UPDATE audits SET last_used_at = ? WHERE id = ?').bind(now.toISOString(), id).run();
 
-export type NewAudit = { id: string; provider: Provider; document: AuditDocument; sha256: string; filename: string | null };
+export type NewAudit = { id: string; provider: Provider; document: AuditDocument; sha256: string; filename: string | null; state: string | null };
 
 export async function createAudit(db: D1Database, a: NewAudit, now: Date) {
   const at = now.toISOString();
@@ -85,10 +86,10 @@ export async function createAudit(db: D1Database, a: NewAudit, now: Date) {
     d.kind === 'pdf' ? [d.key, 'application/pdf', null] : [d.pages[0]!.key, d.pages[0]!.contentType, JSON.stringify(d.pages)];
   await db
     .prepare(
-      `INSERT INTO audits (id, status, provider, doc_key, doc_sha256, content_type, filename, created_at, updated_at, last_used_at, versions, pages)
-       VALUES (?, 'queued', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO audits (id, status, provider, doc_key, doc_sha256, content_type, filename, created_at, updated_at, last_used_at, versions, pages, state)
+       VALUES (?, 'queued', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
-    .bind(a.id, a.provider, docKey, a.sha256, contentType, a.filename, at, at, at, PIPELINE_VERSIONS, pages)
+    .bind(a.id, a.provider, docKey, a.sha256, contentType, a.filename, at, at, at, PIPELINE_VERSIONS, pages, a.state)
     .run();
 }
 

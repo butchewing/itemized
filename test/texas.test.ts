@@ -6,7 +6,8 @@ import tx from '../prep/rules/tx-651@2026.1.json';
 import { parseExtraction, type ExtractedItem, type GplExtraction } from '../src/extraction';
 import { fixPromptText, renderLetterHtml } from '../src/letter';
 import { runChecks } from '../src/rules/engine';
-import { isTexas } from '../src/rules/texas';
+import synLabels from '../prep/synthetic/labels.json';
+import { isCrematoryNotice, isTexas, jurisdictionOf } from '../src/rules/texas';
 import type { Verdict } from '../src/rules/types';
 
 const FIXTURES = join(import.meta.dirname, 'fixtures/extractions');
@@ -163,5 +164,75 @@ describe('Texas ruleset metadata', () => {
   });
   it('a statute-based check can still fail a list', () => {
     expect(texasVerdicts(withItems(base(), item('Filing life insurance claim', null, '$______'))).out['TX-001']).toBe('fail');
+  });
+});
+
+describe('synthetic Texas lists against labels.json', () => {
+  // Muse Spark 1.3 (the fixtures' model) read syn-14's printed blank as no price text at all; no price
+  // text may mean no charge, so it reviews. Muse Spark Open reads the blank and fails it (eval set u).
+  const DEVIATIONS: Record<string, Verdict> = { 'syn-14 TX-001': 'review' };
+  for (const doc of synLabels.documents.filter((d) => ['syn-13', 'syn-14', 'syn-15', 'syn-16'].includes(d.id))) {
+    it(doc.id, () => {
+      const { out } = texasVerdicts(load(`${doc.id}.pdf.json`));
+      for (const id of ['TX-001', 'TX-002', 'TX-003', 'TX-004']) {
+        const want = DEVIATIONS[`${doc.id} ${id}`] ?? (doc.checks as Record<string, { expected: string }>)[id]!.expected;
+        expect(out[id], `${doc.id} ${id}`).toBe(want);
+      }
+    });
+  }
+});
+
+describe('the state chosen at upload', () => {
+  const ca = { ...base(), address: '1 Main St, Carmel, CA 93921' };
+  it('runs Texas checks for a list without a Texas address when Texas is chosen', () => {
+    const r = runChecks(ca, ruleset, { auditDate: AUDIT_DATE, input: 'pdf', state: 'TX' });
+    expect(r.rulesets).toEqual(['ftc-453@2026.1', 'tx-651@2026.1']);
+    expect(r.jurisdiction).toEqual({ state: 'TX', source: 'upload' });
+  });
+  it('another state wins over a Texas address', () => {
+    const r = runChecks(base(), ruleset, { auditDate: AUDIT_DATE, input: 'pdf', state: 'OK' });
+    expect(r.rulesets).toEqual(['ftc-453@2026.1']);
+    expect(r.jurisdiction).toEqual({ state: 'OK', source: 'upload' });
+  });
+  it('falls back to the address, and says when there is nothing to go on', () => {
+    expect(jurisdictionOf(base(), null)).toEqual({ state: 'TX', source: 'address' });
+    expect(jurisdictionOf(ca, null)).toEqual({ state: null, source: 'none' });
+  });
+  it('the letter says why state checks did or did not run', () => {
+    const letter = (x: GplExtraction, state: string | null) =>
+      renderLetterHtml({ extraction: x, report: runChecks(x, ruleset, { auditDate: AUDIT_DATE, input: 'pdf', state }), modelName: 'm', date: AUDIT_DATE, uploadedAt: AUDIT_DATE, docSha256: 'abc' });
+    expect(letter(ca, 'TX')).toContain('Texas requirements were checked because Texas was chosen as the funeral home’s state.');
+    expect(letter(base(), null)).toContain('Texas requirements were checked because the list’s address is in Texas.');
+    expect(letter(base(), 'OK')).toContain('Oklahoma was chosen as the funeral home’s state. Itemized does not check Oklahoma law');
+    expect(letter({ ...ca, address: null }, null)).toContain('the list shows no address, and no state was chosen');
+  });
+});
+
+describe('a combined funeral home and crematory in Texas', () => {
+  it('recognizes the crematory notice, and not the establishment notice, as the crematory form', () => {
+    expect(isCrematoryNotice(CREMATORY)).toBe(true);
+    expect(isCrematoryNotice(STATUTE)).toBe(false);
+    expect(isCrematoryNotice(FEDERAL_MIN)).toBe(false);
+  });
+  it('a C-083 review aimed only at the crematory notice passes once TX-003 has found it', () => {
+    const x = { ...withNotices(base(), STATUTE, CREMATORY), providerName: 'Hollis Springs Funeral Home and Crematory' };
+    const semantic = { 'C-083': { id: 'C-083', applies: true, concern: true, quote: CREMATORY, page: 1, explanation: 'second notice omits the basic services sentence' } };
+    const r = runChecks(x, ruleset, { auditDate: AUDIT_DATE, input: 'pdf', semantic: semantic as never });
+    const f = r.findings.find((f) => f.checkId === 'C-083');
+    expect(r.findings.find((f) => f.checkId === 'TX-003')?.verdict).toBe('pass');
+    expect(f?.verdict).toBe('pass');
+  });
+});
+
+describe('parseState', () => {
+  it('accepts a USPS code, treats blank as not given, and rejects anything else', async () => {
+    const { parseState } = await import('../src/audit');
+    expect(parseState('TX')).toBe('TX');
+    expect(parseState('DC')).toBe('DC');
+    expect(parseState('')).toBeNull();
+    expect(parseState(null)).toBeNull();
+    expect(parseState('tx')).toBeUndefined();
+    expect(parseState('Texas')).toBeUndefined();
+    expect(parseState('constructor')).toBeUndefined();
   });
 });
