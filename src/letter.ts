@@ -19,7 +19,7 @@ const ESCAPES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;'
 export const escapeHtml = (value: unknown) => String(value).replace(/[&<>"']/g, (ch) => ESCAPES[ch]!);
 
 // Compliance-reviewed wording. Shown on the page before any upload and as the letter's postscript.
-export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). It does not check state law, such as Texas Funeral Service Commission rules. It does not check the Casket Price List, the Outer Burial Container Price List or the Statement of Funeral Goods and Services Selected.</p>
+export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). When the list has a Texas address, it also checks a few price-list requirements that Texas adds (Texas Occupations Code §651.405 and §651.4055, and Texas Funeral Service Commission rules 22 TAC §203.46 and §203.49). It does not check any other state law. It does not check the Casket Price List, the Outer Burial Container Price List, the Urn Price List or the Statement of Funeral Goods and Services Selected.</p>
       <p>The AI can misread documents, especially photos. These results are not legal advice and are not a finding that anyone broke the law.</p>
       <p><strong>Funeral homes:</strong> confirm any result with your attorney or your state funeral regulator before acting on it.</p>
       <p><strong>Families:</strong> if something here concerns you, ask the funeral home about it. You can also contact the Federal Trade Commission or the state agency that licenses funeral homes.</p>`;
@@ -27,11 +27,15 @@ export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check
 const REVIEW_NOTES = {
   deterministic: 'Itemized could not read or match this part of the list clearly enough to decide. A person should check it.',
   semantic: 'This item calls for judgment about wording or placement. A person should read the quoted text and decide.',
+  legal: 'Itemized read this part of the list. Whether it meets the requirement depends on how the law is read, or on facts the list does not show, such as payment terms. A person should decide.',
 } as const;
 
 // Keyed on the ruleset's engine, not the stored finding, so reports saved before this note existed get it too.
 const ENGINE_OF = new Map(ruleset.checks.map((c) => [c.id, c.engine]));
-const reviewNote = (f: Finding) => REVIEW_NOTES[ENGINE_OF.get(f.checkId) === 'semantic' ? 'semantic' : 'deterministic'];
+// Texas checks review by design where the law or off-list facts decide; a misread is still a misread.
+const misread = (f: Finding) => /^(extraction|photo)_uncertain:/.test(f.reason);
+const reviewNote = (f: Finding) =>
+  REVIEW_NOTES[ENGINE_OF.get(f.checkId) === 'semantic' ? 'semantic' : f.checkId.startsWith('TX-') && !misread(f) ? 'legal' : 'deterministic'];
 
 const BASIS: Record<string, string> = ruleset.basis_values;
 
@@ -127,7 +131,8 @@ export function fixPromptText(report: Report): string | null {
     report.findings.filter((f) => f.verdict === verdict).map((f) => promptBlock(f, label)),
   );
   if (!blocks.length) return null;
-  return `I run a funeral home. Below is a review of our General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453), made by Itemized. Please help me draft a revised General Price List.
+  const texas = report.findings.some((f) => f.checkId.startsWith('TX-'));
+  return `I run a funeral home. Below is a review of our General Price List against the Federal Trade Commission's Funeral Rule (16 CFR Part 453)${texas ? ' and the price-list requirements Texas adds' : ''}, made by Itemized. Please help me draft a revised General Price List.
 
 Rules for your draft:
 - Keep every price exactly as it is. Do not invent, change or remove prices. If a required item needs a price we have not given, write [PRICE NEEDED] and leave it for me.
@@ -188,6 +193,8 @@ export function summarySentence(fail: number, review: number, pass: number): str
 export function renderLetterHtml({ extraction, report, modelName, date, uploadedAt, docSha256 }: LetterInput, mode: LetterMode = 'screen'): string {
   const provider = extraction?.providerName;
   const when = letterDate(date);
+  // Reports stored before Texas checks existed have no `rulesets`; they name the federal ruleset only.
+  const texasRuleset = report.rulesets?.find((r) => r.startsWith('tx-')) ?? null;
   const c = report.counts;
   const byVerdict = (v: Verdict) => report.findings.filter((f) => f.verdict === v);
 
@@ -212,7 +219,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
     <h2 class="letter-re" id="letter-re" tabindex="-1">Re: ${provider ? `the General Price List of ${escapeHtml(provider)}` : 'your General Price List'}</h2>
     <p class="summary">${summarySentence(c.fail, c.review, c.pass)}</p>
     <dl class="key" aria-label="How to read this review">
-      <div><dt>Did not pass</dt><dd>A requirement Itemized could check directly against the Rule’s text was not met on this list.</dd></div>
+      <div><dt>Did not pass</dt><dd>A requirement Itemized could check directly against the text of the Rule, or of Texas law for a Texas list, was not met on this list.</dd></div>
       <div><dt>Needs a person’s review</dt><dd>Itemized could not decide on its own, or the item calls for judgment.</dd></div>
       <div><dt>Passed</dt><dd>The requirement was met.</dd></div>
       <div><dt>Not applicable</dt><dd>The requirement does not apply to this list, for example because the funeral home does not list that service.</dd></div>
@@ -221,7 +228,7 @@ export function renderLetterHtml({ extraction, report, modelName, date, uploaded
     ${mode === 'screen' ? fixPromptSection(report, `itemized-fix-prompt-${fileStem(provider ?? null, date)}.txt`) : ''}
     <div class="closing">
       <p class="signature">Itemized</p>
-      <p>Read by ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}, on ${escapeHtml(when)}.</p>
+      <p>Read by ${escapeHtml(modelName)}. Checked against the FTC Funeral Rule, ruleset ${escapeHtml(report.rulesetId)}@${escapeHtml(report.rulesetVersion)}${texasRuleset ? `, and Texas price-list requirements, ruleset ${escapeHtml(texasRuleset)}` : ''}, on ${escapeHtml(when)}.</p>
       <p>This review covers the document first uploaded to Itemized on ${escapeHtml(letterDate(uploadedAt))} (file fingerprint ${escapeHtml(docSha256.slice(0, 12).toLowerCase())}). Itemized does not verify who published the document.</p>
       ${notRun}
     </div>

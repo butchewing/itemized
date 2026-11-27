@@ -118,7 +118,7 @@ const AGENTS_MD = `
 - A family, journalist or consumer advocate has a funeral home's General Price List and wants to know which of the Rule's requirements it meets.
 - Someone drafting a General Price List wants to see which required statements or options are missing.
 
-Do not use it for state funeral law, the Casket Price List, the Outer Burial Container Price List, the Statement of Funeral Goods and Services Selected, legal advice, or comparing prices between funeral homes. It reviews US lists under the federal Funeral Rule only.
+Do not use it for state funeral law beyond the Texas price-list checks it runs on Texas lists, the Casket Price List, the Outer Burial Container Price List, the Urn Price List, the Statement of Funeral Goods and Services Selected, legal advice, or comparing prices between funeral homes. It reviews US lists under the federal Funeral Rule, and Texas lists also against a few price-list requirements Texas adds.
 
 ## How an agent calls Itemized
 
@@ -267,7 +267,7 @@ When writing about a review, include its link (it starts with ${SITE}/r/). Itemi
 
 ## What we can and cannot help with
 
-We can explain why Itemized gave a result, fix a check that reads the Rule wrongly, and delete a review before its 30 days are up. We cannot give legal advice, review state law, or say whether a funeral home broke the law.
+We can explain why Itemized gave a result, fix a check that reads the Rule wrongly, and delete a review before its 30 days are up. We cannot give legal advice, review state law beyond the Texas price-list checks, or say whether a funeral home broke the law.
 
 For a question about your own funeral arrangements, ask the funeral home first. You can also contact the [Federal Trade Commission](https://reportfraud.ftc.gov/) or the state agency that licenses funeral homes. Funeral homes should confirm any result with their attorney or their state funeral regulator before acting on it.
 

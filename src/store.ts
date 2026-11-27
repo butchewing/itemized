@@ -1,4 +1,5 @@
 import { ENGINE_VERSION } from './rules/engine';
+import { TX_RULESET } from './rules/texas';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
 import {
   canTransition,
@@ -42,7 +43,7 @@ export function auditDocument(row: Pick<AuditRow, 'doc_key' | 'content_type' | '
 export const documentKeys = (d: AuditDocument) => (d.kind === 'pdf' ? [d.key] : d.pages.map((p) => p.key));
 
 // Every version a finished audit's report depends on. An audit is reused only when this matches.
-export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}|${ENGINE_VERSION}|${RENDER_VERSION}`;
+export const PIPELINE_VERSIONS = `${PROMPT_VERSION}|${SEMANTIC_PROMPT_VERSION}|${ruleset.id}@${ruleset.version}|${TX_RULESET.id}@${TX_RULESET.version}|${ENGINE_VERSION}|${RENDER_VERSION}`;
 
 export type DocKind = AuditDocument['kind'];
 

@@ -2,20 +2,22 @@ import { DISCLOSURE_IDS, type GplExtraction } from '../extraction';
 import { CHECKS, type CheckContext, type DeterministicCheckId } from './checks';
 import { evaluateConditions, type Matches } from './conditions';
 import { semanticOutcome, type SemanticCheckId, type SemanticResults } from './semantic';
+import { runTexasChecks, TX_RULESET } from './texas';
 import { buildCorpus, matchCompleteList, matchDisclosure } from './text';
 import { VERDICTS, type Finding, type Outcome, type Report, type Ruleset, type RulesetCheck, type Verdict } from './types';
 
 // `semantic` is null or absent when the model step was skipped or failed; those checks go to notRun.
 // Bump on any change to how checks map to verdicts: it is part of the reuse key, so stale reviews are not handed back.
-export const ENGINE_VERSION = 'engine-5';
+export const ENGINE_VERSION = 'engine-6';
 
 // `input: 'images'` means the list was read from photos, where a statement or price can be missed or misread.
 export type RunOptions = { auditDate: Date; semantic?: SemanticResults | null; input?: 'pdf' | 'images' };
 
 // Only a deterministic check that cites Rule text and is declared fail-capable may fail.
-const canFail = (c: RulesetCheck) => c.basis === 'rule' && c.engine === 'deterministic' && c.on_violation === 'fail';
+type CheckDef = Pick<RulesetCheck, 'basis' | 'engine' | 'on_violation'>;
+const canFail = (c: CheckDef) => c.basis === 'rule' && c.engine === 'deterministic' && c.on_violation === 'fail';
 
-function verdictOf(c: RulesetCheck, o: Outcome, input: 'pdf' | 'images'): { verdict: Verdict; reason: string } {
+function verdictOf(c: CheckDef, o: Outcome, input: 'pdf' | 'images'): { verdict: Verdict; reason: string } {
   switch (o.result) {
     case 'met':
       return { verdict: 'pass', reason: o.reason };
@@ -70,7 +72,22 @@ export function runChecks(x: GplExtraction, ruleset: Ruleset, opts: RunOptions):
     }
   }
 
+  // Texas adds its own checks for a Texas provider (src/rules/texas.ts); elsewhere none run.
+  const texas = runTexasChecks(x, corpus, matches, ruleset.text_matching.thresholds);
+  for (const { check, outcome } of texas) {
+    findings.push({
+      checkId: check.id,
+      ...verdictOf(check, outcome, opts.input ?? 'pdf'),
+      title: check.title,
+      cite: check.cite,
+      basis: check.basis,
+      plain: check.plain,
+      evidence: outcome.evidence,
+    });
+  }
+
   const counts = Object.fromEntries(VERDICTS.map((v) => [v, 0])) as Record<Verdict, number>;
   for (const f of findings) counts[f.verdict]++;
-  return { rulesetId: ruleset.id, rulesetVersion: ruleset.version, findings, counts, notRun };
+  const rulesets = [`${ruleset.id}@${ruleset.version}`, ...(texas.length ? [`${TX_RULESET.id}@${TX_RULESET.version}`] : [])];
+  return { rulesetId: ruleset.id, rulesetVersion: ruleset.version, rulesets, findings, counts, notRun };
 }
