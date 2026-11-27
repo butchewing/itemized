@@ -213,3 +213,14 @@ describe('Day 7 eval fixes', () => {
     expect(got['C-071']).toBe('review');
   });
 });
+
+describe('Funeral Rule ruleset metadata', () => {
+  it('points every cited check at the Funeral Rule sections its cite names', () => {
+    for (const c of ruleset.checks) {
+      const cited = [...new Set([...(c.cite ?? '').matchAll(/453\.\d+/g)].map((m) => `us-fed/16cfr/${m[0]}`))];
+      for (const s of cited) expect(c.sections, c.id).toContain(s);
+      for (const s of c.sections) expect(s, c.id).toMatch(/^us-fed\/16cfr\/453\.\d+$/);
+      if (!c.cite) expect(c.sections, c.id).toEqual([]);
+    }
+  });
+});
