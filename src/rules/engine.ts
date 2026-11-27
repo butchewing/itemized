@@ -15,7 +15,9 @@ export type RunOptions = { auditDate: Date; semantic?: SemanticResults | null; i
 
 // Only a deterministic check that cites Rule text and is declared fail-capable may fail.
 type CheckDef = Pick<RulesetCheck, 'basis' | 'engine' | 'on_violation'>;
-const canFail = (c: CheckDef) => c.basis === 'rule' && c.engine === 'deterministic' && c.on_violation === 'fail';
+// Only text of law can fail a list: the Funeral Rule ('rule') or a state statute or agency rule.
+const LAW = new Set(['rule', 'statute', 'agency_rule']);
+const canFail = (c: CheckDef) => LAW.has(c.basis) && c.engine === 'deterministic' && c.on_violation === 'fail';
 
 function verdictOf(c: CheckDef, o: Outcome, input: 'pdf' | 'images'): { verdict: Verdict; reason: string } {
   switch (o.result) {
