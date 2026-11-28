@@ -61,7 +61,8 @@ export function buildSets() {
     paths: photos.filter((p) => p.list === list).sort((a, b) => a.page - b.page).map((p) => join(SYN, 'photos', p.file)),
     mime: 'image/jpeg',
     truth: list,
-    labels: labels[list],
+    // The photos were taken of the printouts before syn lists carried a license number (2026-11-27).
+    labels: labels[list] && { ...labels[list], ...(labels[list]['TX-006'] && { 'TX-006': { expected: 'review' } }) },
   });
   const ftc = json(join(ROOT, 'specimens/labels.json')).documents[0];
   const manifest = existsSync(join(CORPUS, 'manifest.json')) ? json(join(CORPUS, 'manifest.json')).documents : {};

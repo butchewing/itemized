@@ -6,41 +6,41 @@ Produced by `npm run eval` (`test/eval/run.mjs`). Machine-readable results for t
 
 | Set | Model | n | Fields | Disclosures | Verdict agreement | False fails | Missed fails | Fail to review | Review rate | Checks not run | Cost per review, mean / p90 | Model time per review, mean / p90 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 16 | 1446/1448 | 127/128 | 745/748 (99.6%) | 0 | 0 | 2 | 2.1% | 0 | $0.0328 / $0.0374 | 20.2 s / 26.1 s |
-| b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 344/356 | 32/32 | 182/188 (96.8%) | 0 | 0 | 5 | 6.4% | 0 | $0.0357 / $0.0384 | 13.5 s / 14.8 s |
-| c. Synthetic photos | Muse Spark Open (Cloudflare, served by Fireworks) | 4 | 341/356 | 32/32 | 182/188 (96.8%) | 0 | 0 | 5 | 6.4% | 0 | $0.0337 / $0.0349 | 17.4 s / 20.1 s |
-| d. Synthetic PDFs as page images | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 541/560 (96.6%) | 0 | 0 | 18 | 5.4% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
-| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Cloudflare, served by Fireworks) | 12 | 1085/1088 | 95/96 | 557/560 (99.5%) | 0 | 0 | 2 | 2.5% | 0 | $0.0279 / $0.0334 | 15.5 s / 18.8 s |
-| e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0310 / $0.0310 | 20.5 s / 20.5 s |
+| a. Synthetic PDFs | Muse Spark 1.3 (Meta Model API) | 17 | 1533/1549 | 135/136 | 825/827 (99.8%) | 0 | 0 | 1 | 2.2% | 0 | $0.0339 / $0.0377 | 20.9 s / 30.2 s |
+| b. Synthetic photos | Muse Spark 1.3 (Meta Model API) | 4 | 340/356 | 32/32 | 190/196 (96.9%) | 0 | 0 | 5 | 8.2% | 0 | $0.0383 / $0.0400 | 21.5 s / 23.4 s |
+| c. Synthetic photos | Muse Spark Open (Cloudflare, served by Fireworks) | 4 | 337/356 | 32/32 | 190/196 (96.9%) | 0 | 0 | 5 | 8.2% | 0 | $0.0330 / $0.0364 | 15.7 s / 18.2 s |
+| d. Synthetic PDFs as page images | Muse Spark Open (Cloudflare, served by Fireworks) | 17 | 1530/1549 | 135/136 | 807/827 (97.6%) | 0 | 1 | 17 | 4.1% | 0 | $0.0278 / $0.0294 | 15.2 s / 17.2 s |
+| d. Same extraction, PDF rules (diagnostic) | Muse Spark Open (Cloudflare, served by Fireworks) | 17 | 1530/1549 | 135/136 | 823/827 (99.5%) | 0 | 1 | 1 | 2.2% | 0 | $0.0278 / $0.0294 | 15.2 s / 17.2 s |
+| e. FTC Sample 1 template | Muse Spark 1.3 (Meta Model API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0294 / $0.0294 | 14.5 s / 14.5 s |
 | g. Synthetic PDFs | Claude Sonnet 5.5 (Anthropic API) | 12 | 1088/1088 | 95/96 | 554/560 (98.9%) | 0 | 0 | 0 | 2.0% | 0 | $0.0618 / $0.0647 | 18.1 s / 20.0 s |
 | h. Synthetic photos | Claude Sonnet 5.5 (Anthropic API) | 4 | 355/356 | 32/32 | 182/188 (96.8%) | 0 | 0 | 5 | 5.9% | 0 | $0.0689 / $0.0726 | 18.5 s / 20.0 s |
 | i. FTC Sample 1 template | Claude Sonnet 5.5 (Anthropic API) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0616 / $0.0616 | 19.9 s / 19.9 s |
 | j. Synthetic PDFs | Claude Haiku 5.5 (Anthropic API) | 12 | 1087/1088 | 94/96 | 556/560 (99.3%) | 0 | 0 | 1 | 2.5% | 0 | $0.0038 / $0.0043 | 19.2 s / 22.9 s |
 | k. Synthetic photos | Claude Haiku 5.5 (Anthropic API) | 4 | 292/356 | 31/32 | 171/188 (91.0%) | 0 | 0 | 5 | 9.0% | 0 | $0.0054 / $0.0063 | 28.5 s / 36.4 s |
 | l. FTC Sample 1 template | Claude Haiku 5.5 (Anthropic API) | 1 | n/a | n/a | 42/43 (97.7%) | 0 | 0 | 0 | 9.3% | 0 | $0.0049 / $0.0049 | 27.4 s / 27.4 s |
-| u. Synthetic PDFs rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 16 | 1446/1448 | 127/128 | 728/748 (97.3%) | 0 | 0 | 18 | 4.1% | 0 | $0.0295 / $0.0309 | 19.9 s / 28.2 s |
-| u. Same, PDF rules (the product's choice for these 2-page lists) | Muse Spark Open (Cloudflare, served by Fireworks) | 16 | 1446/1448 | 127/128 | 744/748 (99.5%) | 0 | 0 | 2 | 2.0% | 0 | $0.0295 / $0.0309 | 19.9 s / 28.2 s |
-| v. FTC template rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 39/43 (90.7%) | 0 | 0 | 4 | 16.3% | 0 | $0.0260 / $0.0260 | 19.6 s / 19.6 s |
-| v. Same, PDF rules (the product's choice) | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0260 / $0.0260 | 19.6 s / 19.6 s |
+| u. Synthetic PDFs rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 17 | 1530/1549 | 135/136 | 808/827 (97.7%) | 0 | 1 | 17 | 4.1% | 0 | $0.0280 / $0.0306 | 15.4 s / 17.6 s |
+| u. Same, PDF rules (the product's choice for these 2-page lists) | Muse Spark Open (Cloudflare, served by Fireworks) | 17 | 1530/1549 | 135/136 | 824/827 (99.6%) | 0 | 1 | 1 | 2.2% | 0 | $0.0280 / $0.0306 | 15.4 s / 17.6 s |
+| v. FTC template rendered by the Worker, photo rule | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 39/43 (90.7%) | 0 | 0 | 4 | 16.3% | 0 | $0.0254 / $0.0254 | 13.6 s / 13.6 s |
+| v. Same, PDF rules (the product's choice) | Muse Spark Open (Cloudflare, served by Fireworks) | 1 | n/a | n/a | 43/43 (100.0%) | 0 | 0 | 0 | 7.0% | 0 | $0.0254 / $0.0254 | 13.6 s / 13.6 s |
 
 ## Real price lists (aggregates only)
 
-12 redacted real General Price Lists ran on Muse Spark Open (Cloudflare, served by Fireworks), as page images. A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API or to any other provider.
+11 redacted real General Price Lists ran on Muse Spark Open (Cloudflare, served by Fireworks), as page images. A list with more pages than the provider takes in one request (8 images) is read in batches of pages and merged. No real list was sent to the Meta Model API or to any other provider.
 
 | Measure | Value |
 |---|---|
-| Lists run | 12 |
-| Verdicts (fail / review / pass / not applicable) | 0 / 95 / 368 / 53 |
+| Lists run | 11 |
+| Verdicts (fail / review / pass / not applicable) | 0 / 93 / 328 / 52 |
 | Fails per list, mean | 0.0 |
-| Review rate | 18.4% |
+| Review rate | 19.7% |
 | Checks not run | 0 |
-| Name, address or phone checks counted as pass because the element was redacted | 30 |
+| Name, address or phone checks counted as pass because the element was redacted | 27 |
 | Hand-labeled list: verdict agreement | 39/43 |
 | Hand-labeled list: false fails / missed fails / fail to review | 0 / 0 / 4 |
-| Same extractions under the PDF rules (diagnostic): fails, and lists with at least one | 18, 7 of 12 |
-| Hand-labeled list under the PDF rules: agreement; false fails / missed fails | 40/43; 0 / 0 |
-| Cost per review, mean / p90 | $0.0745 / $0.1094 |
-| Model time per review, mean / p90 | 47.0 s / 76.3 s |
+| Same extractions under the PDF rules (diagnostic): fails, and lists with at least one | 17, 5 of 11 |
+| Hand-labeled list under the PDF rules: agreement; false fails / missed fails | 41/43; 0 / 0 |
+| Cost per review, mean / p90 | $0.0696 / $0.0915 |
+| Model time per review, mean / p90 | 34.7 s / 53.8 s |
 
 ## Run-to-run variance
 
@@ -68,7 +68,6 @@ The variance runs are repeated with `node test/eval/extraction-variance.mjs --li
 
 a. Synthetic PDFs, meta-api:
 - syn-07 C-060 (fail to review: expected fail, got review)
-- syn-14 TX-001 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
 
 b. Synthetic photos, meta-api:
@@ -88,6 +87,7 @@ c. Synthetic photos, muse-open:
 - syn-03 C-007 (other: expected pass, got review)
 
 d. Synthetic PDFs as page images, muse-open:
+- syn-07 C-060 (missed fail: expected fail, got pass)
 - syn-03 C-030 (fail to review: expected fail, got review)
 - syn-03 C-041 (fail to review: expected fail, got review)
 - syn-04 C-020 (fail to review: expected fail, got review)
@@ -99,7 +99,6 @@ d. Synthetic PDFs as page images, muse-open:
 - syn-06 C-073 (fail to review: expected fail, got review)
 - syn-07 C-003 (fail to review: expected fail, got review)
 - syn-07 C-005 (fail to review: expected fail, got review)
-- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-08 C-061 (fail to review: expected fail, got review)
 - syn-08 C-070 (fail to review: expected fail, got review)
 - syn-09 C-022 (fail to review: expected fail, got review)
@@ -107,11 +106,13 @@ d. Synthetic PDFs as page images, muse-open:
 - syn-09 C-052 (fail to review: expected fail, got review)
 - syn-11 C-004 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
+- syn-16 TX-004 (other: expected pass, got not_applicable)
 
 d. Same extraction, PDF rules (diagnostic), muse-open:
+- syn-07 C-060 (missed fail: expected fail, got pass)
 - syn-07 C-005 (fail to review: expected fail, got review)
-- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
+- syn-16 TX-004 (other: expected pass, got not_applicable)
 
 e. FTC Sample 1 template, meta-api: none.
 
@@ -162,6 +163,7 @@ l. FTC Sample 1 template, claude-haiku:
 - ftc C-080 (other: expected not_applicable, got review)
 
 u. Synthetic PDFs rendered by the Worker, photo rule, muse-open:
+- syn-07 C-060 (missed fail: expected fail, got pass)
 - syn-03 C-030 (fail to review: expected fail, got review)
 - syn-03 C-041 (fail to review: expected fail, got review)
 - syn-04 C-020 (fail to review: expected fail, got review)
@@ -173,7 +175,6 @@ u. Synthetic PDFs rendered by the Worker, photo rule, muse-open:
 - syn-06 C-073 (fail to review: expected fail, got review)
 - syn-07 C-003 (fail to review: expected fail, got review)
 - syn-07 C-005 (fail to review: expected fail, got review)
-- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-08 C-061 (fail to review: expected fail, got review)
 - syn-08 C-070 (fail to review: expected fail, got review)
 - syn-09 C-022 (fail to review: expected fail, got review)
@@ -181,13 +182,11 @@ u. Synthetic PDFs rendered by the Worker, photo rule, muse-open:
 - syn-09 C-052 (fail to review: expected fail, got review)
 - syn-11 C-004 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
-- syn-15 TX-004 (other: expected review, got not_applicable)
 
 u. Same, PDF rules (the product's choice for these 2-page lists), muse-open:
+- syn-07 C-060 (missed fail: expected fail, got pass)
 - syn-07 C-005 (fail to review: expected fail, got review)
-- syn-07 C-060 (fail to review: expected fail, got review)
 - syn-07 C-061 (other: expected pass, got review)
-- syn-15 TX-004 (other: expected review, got not_applicable)
 
 v. FTC template rendered by the Worker, photo rule, muse-open:
 - ftc C-040 (fail to review: expected fail, got review)
@@ -209,7 +208,7 @@ v. Same, PDF rules (the product's choice), muse-open: none.
 - Cost and model time per review are the extraction call plus the semantic call that produced each cached result, read from the local `model_calls` table. Each document ran once (n=1 per document and model). The numbers carry sampling noise that a single run cannot show.
 - Real price lists run on one provider only: Muse Spark Open (Cloudflare, served by Fireworks) since 2026-11-24, Baseten before that. The harness refuses any real-list file unless the running Worker reports that provider, and a test asserts that rule. Per-list results stay in a private, gitignored folder; this file carries aggregates only.
 - Sets g to l run the same public documents as sets a, b and e on Claude Sonnet 5.5 and Claude Haiku 5.5 through the Anthropic API, at effort low for transcription and for the semantic checks. They are a comparison only; the live site runs Muse Spark 1.3.
-- Texas checks (tx-651@2026.1, TX-001 to TX-004) run when Texas is chosen at upload, or else when the list's address is in Texas; the eval uploads without a state, so the address decides. Fifteen synthetic lists have Texas addresses (syn-07 has none), so the PDF and page-image sets carry 60 Texas labels and the photo sets 16 (4 lists × 4). syn-02 reviews the selection notice (TX-002); syn-11's reworded notice is left to the federal check. syn-13 and syn-14 price and blank the life insurance claim filing (TX-001); syn-15 and syn-16 are combined funeral homes and crematories without and with the crematory notice (TX-003) and the third-party insurance statement (TX-004). Off label: Muse Spark 1.3 reads syn-14's printed blank as no price text, so TX-001 reviews instead of failing; Muse Spark Open skips syn-15's line about accepting insurance assignments, so TX-004 does not apply instead of reviewing. The real lists' addresses are redacted, so no Texas check runs on them.
+- Texas checks (tx-651@2026.2, TX-001 to TX-006) run when Texas is chosen at upload, or else when the list's address is in Texas; the eval uploads without a state, so the address decides. Sixteen synthetic lists have Texas addresses (syn-07 has none), so the PDF and page-image sets carry 96 Texas labels and the photo sets 24 (4 lists × 6). syn-02 reviews the selection notice (TX-002); syn-11's reworded notice is left to the federal check. syn-13 and syn-14 price and blank the life insurance claim filing (TX-001); syn-15 and syn-16 are combined funeral homes and crematories without and with the crematory notice (TX-003) and the third-party insurance statement (TX-004). syn-02 and syn-12 price caskets one by one without naming wood type or lining, and syn-17 names both (TX-005). Every list but syn-17 prints a license number (TX-006); the phone photos were taken before that line was added, so TX-006 reviews on them. The real lists' addresses are redacted, so no Texas check runs on them.
 - Cloudflare-hosted Gemma 4 26B, Llama 4 Scout and Qwen 3.8 27B (sets m to r) did not finish one document each on 2026-11-24: Workers AI timed out after about 6 minutes, or the harness after 10, so they have no rows. Mistral Large 4 on Ollama Cloud (sets s and t) has not run yet.
 
 ## Rerun
@@ -229,4 +228,4 @@ node test/eval/run.mjs --sets a,b,c,d,e
 
 Spend is capped per run and provider: $1 on Muse Spark 1.3 (Meta Model API), $4 on Muse Spark Open (Cloudflare, served by Fireworks), $1 on Gemma 4 26B (Cloudflare-hosted), $1 on Llama 4 Scout (Cloudflare-hosted), $2 on Qwen 3.8 27B (Cloudflare-hosted), $2 on Mistral Large 4 (Ollama Cloud), $7 on Claude Sonnet 5.5 (Anthropic API), $3 on Claude Haiku 5.5 (Anthropic API) (override with `--cap-<provider>`). Set f needs the private corpus, so leave it out of `--sets` elsewhere.
 
-The last run (sets on Muse Spark 1.3 (Meta Model API), sets on Muse Spark Open (Cloudflare, served by Fireworks)) spent $0.0000 on Muse Spark 1.3 (Meta Model API), $0.0000 on Muse Spark Open (Cloudflare, served by Fireworks).
+The last run (sets on Muse Spark Open (Cloudflare, served by Fireworks)) spent $0.3300 on Muse Spark Open (Cloudflare, served by Fireworks).

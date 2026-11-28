@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import tx from '../prep/rules/tx-651@2026.1.json';
+import tx from '../prep/rules/tx-651@2026.2.json';
 import { parseExtraction, type ExtractedItem, type GplExtraction } from '../src/extraction';
 import { fixPromptText, renderLetterHtml } from '../src/letter';
 import { runChecks } from '../src/rules/engine';
@@ -57,7 +57,7 @@ describe('Texas checks run only for a Texas provider', () => {
   });
 
   it('names both rulesets for a Texas list', () => {
-    expect(texasVerdicts(base()).rulesets).toEqual(['ftc-453@2026.1', 'tx-651@2026.1']);
+    expect(texasVerdicts(base()).rulesets).toEqual(['ftc-453@2026.1', 'tx-651@2026.2']);
   });
 });
 
@@ -145,7 +145,7 @@ describe('the letter for a Texas list', () => {
   });
   it('names Texas in the fix prompt and the ruleset line', () => {
     expect(fixPromptText(report)).toContain('and the price-list requirements Texas adds');
-    expect(html).toContain('and Texas price-list requirements, ruleset tx-651@2026.1');
+    expect(html).toContain('and Texas price-list requirements, ruleset tx-651@2026.2');
   });
 });
 
@@ -153,6 +153,7 @@ describe('Texas ruleset metadata', () => {
   it('says whether each check rests on the statute or a TFSC rule', () => {
     expect(Object.fromEntries(tx.checks.map((c) => [c.id, c.basis]))).toEqual({
       'TX-001': 'statute', 'TX-002': 'statute', 'TX-003': 'statute', 'TX-004': 'agency_rule',
+      'TX-005': 'agency_rule', 'TX-006': 'agency_rule',
     });
     for (const c of tx.checks) expect(Object.keys(tx.basis_values)).toContain(c.basis);
   });
@@ -168,14 +169,11 @@ describe('Texas ruleset metadata', () => {
 });
 
 describe('synthetic Texas lists against labels.json', () => {
-  // Muse Spark 1.3 (the fixtures' model) read syn-14's printed blank as no price text at all; no price
-  // text may mean no charge, so it reviews. Muse Spark Open reads the blank and fails it (eval set u).
-  const DEVIATIONS: Record<string, Verdict> = { 'syn-14 TX-001': 'review' };
-  for (const doc of synLabels.documents.filter((d) => ['syn-13', 'syn-14', 'syn-15', 'syn-16'].includes(d.id))) {
+  for (const doc of synLabels.documents.filter((d) => d.id !== 'syn-07')) {
     it(doc.id, () => {
       const { out } = texasVerdicts(load(`${doc.id}.pdf.json`));
-      for (const id of ['TX-001', 'TX-002', 'TX-003', 'TX-004']) {
-        const want = DEVIATIONS[`${doc.id} ${id}`] ?? (doc.checks as Record<string, { expected: string }>)[id]!.expected;
+      for (const id of ['TX-001', 'TX-002', 'TX-003', 'TX-004', 'TX-005', 'TX-006']) {
+        const want = (doc.checks as Record<string, { expected: string }>)[id]!.expected;
         expect(out[id], `${doc.id} ${id}`).toBe(want);
       }
     });
@@ -186,7 +184,7 @@ describe('the state chosen at upload', () => {
   const ca = { ...base(), address: '1 Main St, Carmel, CA 93921' };
   it('runs Texas checks for a list without a Texas address when Texas is chosen', () => {
     const r = runChecks(ca, ruleset, { auditDate: AUDIT_DATE, input: 'pdf', state: 'TX' });
-    expect(r.rulesets).toEqual(['ftc-453@2026.1', 'tx-651@2026.1']);
+    expect(r.rulesets).toEqual(['ftc-453@2026.1', 'tx-651@2026.2']);
     expect(r.jurisdiction).toEqual({ state: 'TX', source: 'upload' });
   });
   it('another state wins over a Texas address', () => {
@@ -234,5 +232,41 @@ describe('parseState', () => {
     expect(parseState('tx')).toBeUndefined();
     expect(parseState('Texas')).toBeUndefined();
     expect(parseState('constructor')).toBeUndefined();
+  });
+});
+
+describe('TX-005 casket and outer burial container descriptions', () => {
+  const casket = (label: string): ExtractedItem => ({ ...item(label, 2795, '$2,795'), category: 'caskets' });
+  const vault = (label: string): ExtractedItem => ({ ...item(label, 1095, '$1,095'), category: 'outer_burial_containers' });
+  const ranges = (x: GplExtraction) => ({ ...x, items: x.items.filter((i) => !(['caskets', 'outer_burial_containers'].includes(i.category) && i.price !== null)) });
+  const v = (...items: ExtractedItem[]) => texasVerdicts(withItems(ranges(base()), ...items)).out['TX-005'];
+  it('does not apply to ranges', () => {
+    expect(texasVerdicts(ranges(base())).out['TX-005']).toBe('not_applicable');
+  });
+  it('passes caskets that name material and lining, and containers that name material', () => {
+    expect(v(casket('18 gauge steel casket, bronze tone, crepe interior'), casket('Solid cherry casket with velvet interior'),
+      casket('32 oz. bronze casket, silk lined'), casket('Cardboard cremation casket, cotton lining'), vault('Concrete grave liner'), vault('12 gauge galvanized steel vault'))).toBe('pass');
+  });
+  it('reviews a casket without a named wood type or a lining', () => {
+    expect(v(casket('Oak-stained soft-wood casket, crepe interior'))).toBe('review');
+    expect(v(casket('Solid poplar casket, satin finish'))).toBe('review');
+    expect(v(casket('Bronze casket, velvet interior'))).toBe('review');
+  });
+  it('reviews a container that does not name its material', () => {
+    expect(v(vault('Standard burial vault'))).toBe('review');
+  });
+});
+
+describe('TX-006 license number', () => {
+  it('passes with the transcribed license number, or a license number in the text', () => {
+    expect(texasVerdicts({ ...base(), licenseNumber: 'Funeral Establishment License No. 1234' }).out['TX-006']).toBe('pass');
+    expect(texasVerdicts(withItems({ ...base(), licenseNumber: null }, item('Funeral establishment lic. #4F017', null, null))).out['TX-006']).toBe('pass');
+  });
+  it('reviews a list without one', () => {
+    expect(texasVerdicts({ ...base(), licenseNumber: null }).out['TX-006']).toBe('review');
+  });
+  it('a read made before the field existed parses with no license number', () => {
+    const { licenseNumber: _, ...old } = base();
+    expect(parseExtraction(JSON.parse(JSON.stringify(old))).licenseNumber).toBeNull();
   });
 });

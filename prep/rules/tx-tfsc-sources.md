@@ -58,6 +58,14 @@ TFSC's §203.46 restates the federal General Price List rule (16 CFR 453.2) for 
 
 4. **First version of the Texas checks:** insurance claim filing (price if offered; processing fee disclosed), selection notice wording (statute vs TFSC rule: review), crematory notice (review) and third-party insurance statement (review). An urn check was built and then **dropped** (Butch, 2026-11-26): §203.46(b)(4) governs the separate urn price list, and the GPL items in (b)(5) include no urns.
 
+## Decisions (Butch, 2026-11-27)
+
+Three readings a person had to settle, each answered with the most compliant reading:
+
+5. **Individually priced caskets and outer burial containers:** §203.46(b)(5)(C)(i)(II) and (ii)(II) say individual prices are "disclosed in the manner specified by" the casket and container price list paragraphs. Read as requiring the specifications those lists carry: for caskets, the predominant material ((b)(2)(B)(i): steel by gauge or stainless, wood by type, bronze or copper by weight, or another named material) and the interior lining ((iii)); for containers, the material and type of construction ((b)(3)(A)(i)). The sealing feature is required only "if specified", so it is not checked. TX-005, review.
+6. **License number:** §203.9(1) requires the price lists filed with a license application to "reflect the establishment's name and provide a placeholder for the establishment's license number." Read as applying to every price list in use. TX-006, review.
+7. **Crematories that serve only funeral establishments** still need a retail price list under Occupations Code §651.4055. No change: TX-003 runs whenever the list says the provider operates a crematory.
+
 ## Duties that are not about the list's content (not checkable from a document)
 
 - Consumer brochure: provide it when services are discussed (§651.404), at the start of arrangements (§651.454(1), §203.26), display it (§201.7(c)).

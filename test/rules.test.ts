@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import txRuleset from '../prep/rules/tx-651@2026.1.json';
+import txRuleset from '../prep/rules/tx-651@2026.2.json';
 import synLabels from '../prep/synthetic/labels.json';
 import ftcLabels from '../specimens/labels.json';
 import { parseExtraction, type GplExtraction } from '../src/extraction';
@@ -68,7 +68,7 @@ describe('a description attached to two items', () => {
     const got = byCheck(run(both));
     expect(got['C-060']).toBe('review');
     expect(got['C-061']).toBe('review');
-    const one = { ...x, items: x.items.map((i) => (i.category === 'receiving' ? { ...i, includesText: paragraph } : i)) };
+    const one = { ...x, items: x.items.map((i) => (i.category === 'receiving' ? { ...i, includesText: paragraph } : i.category === 'forwarding' ? { ...i, includesText: null } : i)) };
     expect(byCheck(run(one))['C-061']).toBe('pass');
   });
 });

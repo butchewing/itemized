@@ -7,21 +7,21 @@
    "provider": "meta-api",
    "mode": "pdf",
    "private": false,
-   "n": 16,
+   "n": 17,
    "skipped": [],
    "failed": [],
-   "labeledDocs": 16,
+   "labeledDocs": 17,
    "fields": {
-    "right": 1446,
-    "total": 1448
+    "right": 1533,
+    "total": 1549
    },
    "disclosures": {
-    "right": 127,
-    "total": 128
+    "right": 135,
+    "total": 136
    },
    "agreement": {
-    "agree": 745,
-    "compared": 748
+    "agree": 825,
+    "compared": 827
    },
    "falseFails": [],
    "missedFails": [],
@@ -29,12 +29,6 @@
     {
      "list": "syn-07",
      "check": "C-060",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-14",
-     "check": "TX-001",
      "expected": "fail",
      "got": "review"
     }
@@ -48,23 +42,23 @@
     }
    ],
    "verdicts": {
-    "fail": 19,
-    "review": 16,
-    "pass": 616,
-    "not_applicable": 97
+    "fail": 20,
+    "review": 18,
+    "pass": 674,
+    "not_applicable": 115
    },
    "redactionAdjusted": 0,
-   "checksRun": 748,
+   "checksRun": 827,
    "notRun": 0,
    "cost": {
-    "n": 16,
-    "mean": 0.0328138125,
-    "p90": 0.03743825
+    "n": 17,
+    "mean": 0.03387058235294117,
+    "p90": 0.03770345
    },
    "latencyMs": {
-    "n": 16,
-    "mean": 20196.5625,
-    "p90": 26110
+    "n": 17,
+    "mean": 20937.764705882353,
+    "p90": 30228
    }
   },
   {
@@ -78,7 +72,7 @@
    "failed": [],
    "labeledDocs": 4,
    "fields": {
-    "right": 344,
+    "right": 340,
     "total": 356
    },
    "disclosures": {
@@ -86,8 +80,8 @@
     "total": 32
    },
    "agreement": {
-    "agree": 182,
-    "compared": 188
+    "agree": 190,
+    "compared": 196
    },
    "falseFails": [],
    "missedFails": [],
@@ -133,22 +127,22 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 12,
+    "review": 16,
     "pass": 148,
-    "not_applicable": 26
+    "not_applicable": 30
    },
    "redactionAdjusted": 0,
-   "checksRun": 188,
+   "checksRun": 196,
    "notRun": 0,
    "cost": {
     "n": 4,
-    "mean": 0.035690025,
-    "p90": 0.0384337
+    "mean": 0.03831975,
+    "p90": 0.040008249999999995
    },
    "latencyMs": {
     "n": 4,
-    "mean": 13489.75,
-    "p90": 14759
+    "mean": 21456.75,
+    "p90": 23434
    }
   },
   {
@@ -162,7 +156,7 @@
    "failed": [],
    "labeledDocs": 4,
    "fields": {
-    "right": 341,
+    "right": 337,
     "total": 356
    },
    "disclosures": {
@@ -170,8 +164,8 @@
     "total": 32
    },
    "agreement": {
-    "agree": 182,
-    "compared": 188
+    "agree": 190,
+    "compared": 196
    },
    "falseFails": [],
    "missedFails": [],
@@ -217,22 +211,22 @@
    ],
    "verdicts": {
     "fail": 2,
-    "review": 12,
+    "review": 16,
     "pass": 148,
-    "not_applicable": 26
+    "not_applicable": 30
    },
    "redactionAdjusted": 0,
-   "checksRun": 188,
+   "checksRun": 196,
    "notRun": 0,
    "cost": {
     "n": 4,
-    "mean": 0.0337275875,
-    "p90": 0.034865
+    "mean": 0.03298016249999999,
+    "p90": 0.0363613
    },
    "latencyMs": {
     "n": 4,
-    "mean": 17402.5,
-    "p90": 20141
+    "mean": 15683.5,
+    "p90": 18233
    }
   },
   {
@@ -241,24 +235,31 @@
    "provider": "muse-open",
    "mode": "images",
    "private": false,
-   "n": 12,
+   "n": 17,
    "skipped": [],
    "failed": [],
-   "labeledDocs": 12,
+   "labeledDocs": 17,
    "fields": {
-    "right": 1085,
-    "total": 1088
+    "right": 1530,
+    "total": 1549
    },
    "disclosures": {
-    "right": 95,
-    "total": 96
+    "right": 135,
+    "total": 136
    },
    "agreement": {
-    "agree": 541,
-    "compared": 560
+    "agree": 807,
+    "compared": 827
    },
    "falseFails": [],
-   "missedFails": [],
+   "missedFails": [
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "pass"
+    }
+   ],
    "failsToReview": [
     {
      "list": "syn-03",
@@ -327,12 +328,6 @@
      "got": "review"
     },
     {
-     "list": "syn-07",
-     "check": "C-060",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
      "list": "syn-08",
      "check": "C-061",
      "expected": "fail",
@@ -375,26 +370,32 @@
      "check": "C-061",
      "expected": "pass",
      "got": "review"
+    },
+    {
+     "list": "syn-16",
+     "check": "TX-004",
+     "expected": "pass",
+     "got": "not_applicable"
     }
    ],
    "verdicts": {
-    "fail": 2,
-    "review": 30,
-    "pass": 449,
-    "not_applicable": 79
+    "fail": 3,
+    "review": 34,
+    "pass": 674,
+    "not_applicable": 116
    },
    "redactionAdjusted": 0,
-   "checksRun": 560,
+   "checksRun": 827,
    "notRun": 0,
    "cost": {
-    "n": 12,
-    "mean": 0.027877666666666665,
-    "p90": 0.033372700000000005
+    "n": 17,
+    "mean": 0.027777399999999997,
+    "p90": 0.0294423
    },
    "latencyMs": {
-    "n": 12,
-    "mean": 15481.75,
-    "p90": 18830
+    "n": 17,
+    "mean": 15248.470588235294,
+    "p90": 17229
    }
   },
   {
@@ -403,34 +404,35 @@
    "provider": "muse-open",
    "mode": "pdf",
    "private": false,
-   "n": 12,
+   "n": 17,
    "skipped": [],
    "failed": [],
-   "labeledDocs": 12,
+   "labeledDocs": 17,
    "fields": {
-    "right": 1085,
-    "total": 1088
+    "right": 1530,
+    "total": 1549
    },
    "disclosures": {
-    "right": 95,
-    "total": 96
+    "right": 135,
+    "total": 136
    },
    "agreement": {
-    "agree": 557,
-    "compared": 560
+    "agree": 823,
+    "compared": 827
    },
    "falseFails": [],
-   "missedFails": [],
+   "missedFails": [
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "pass"
+    }
+   ],
    "failsToReview": [
     {
      "list": "syn-07",
      "check": "C-005",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-07",
-     "check": "C-060",
      "expected": "fail",
      "got": "review"
     }
@@ -441,26 +443,32 @@
      "check": "C-061",
      "expected": "pass",
      "got": "review"
+    },
+    {
+     "list": "syn-16",
+     "check": "TX-004",
+     "expected": "pass",
+     "got": "not_applicable"
     }
    ],
    "verdicts": {
-    "fail": 18,
-    "review": 14,
-    "pass": 449,
-    "not_applicable": 79
+    "fail": 19,
+    "review": 18,
+    "pass": 674,
+    "not_applicable": 116
    },
    "redactionAdjusted": 0,
-   "checksRun": 560,
+   "checksRun": 827,
    "notRun": 0,
    "cost": {
-    "n": 12,
-    "mean": 0.027877666666666665,
-    "p90": 0.033372700000000005
+    "n": 17,
+    "mean": 0.027777399999999997,
+    "p90": 0.0294423
    },
    "latencyMs": {
-    "n": 12,
-    "mean": 15481.75,
-    "p90": 18830
+    "n": 17,
+    "mean": 15248.470588235294,
+    "p90": 17229
    }
   },
   {
@@ -494,13 +502,13 @@
    "notRun": 0,
    "cost": {
     "n": 1,
-    "mean": 0.030972,
-    "p90": 0.030972
+    "mean": 0.02944045,
+    "p90": 0.02944045
    },
    "latencyMs": {
     "n": 1,
-    "mean": 20528,
-    "p90": 20528
+    "mean": 14497,
+    "p90": 14497
    }
   },
   {
@@ -985,24 +993,31 @@
    "provider": "muse-open",
    "mode": "images",
    "private": false,
-   "n": 16,
+   "n": 17,
    "skipped": [],
    "failed": [],
-   "labeledDocs": 16,
+   "labeledDocs": 17,
    "fields": {
-    "right": 1446,
-    "total": 1448
+    "right": 1530,
+    "total": 1549
    },
    "disclosures": {
-    "right": 127,
-    "total": 128
+    "right": 135,
+    "total": 136
    },
    "agreement": {
-    "agree": 728,
-    "compared": 748
+    "agree": 808,
+    "compared": 827
    },
    "falseFails": [],
-   "missedFails": [],
+   "missedFails": [
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "pass"
+    }
+   ],
    "failsToReview": [
     {
      "list": "syn-03",
@@ -1071,12 +1086,6 @@
      "got": "review"
     },
     {
-     "list": "syn-07",
-     "check": "C-060",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
      "list": "syn-08",
      "check": "C-061",
      "expected": "fail",
@@ -1119,32 +1128,26 @@
      "check": "C-061",
      "expected": "pass",
      "got": "review"
-    },
-    {
-     "list": "syn-15",
-     "check": "TX-004",
-     "expected": "review",
-     "got": "not_applicable"
     }
    ],
    "verdicts": {
     "fail": 3,
-    "review": 31,
-    "pass": 616,
-    "not_applicable": 98
+    "review": 34,
+    "pass": 675,
+    "not_applicable": 115
    },
    "redactionAdjusted": 0,
-   "checksRun": 748,
+   "checksRun": 827,
    "notRun": 0,
    "cost": {
-    "n": 16,
-    "mean": 0.029497106249999995,
-    "p90": 0.03094195
+    "n": 17,
+    "mean": 0.02804471764705882,
+    "p90": 0.030593099999999998
    },
    "latencyMs": {
-    "n": 16,
-    "mean": 19941.0625,
-    "p90": 28243
+    "n": 17,
+    "mean": 15421.176470588236,
+    "p90": 17615
    }
   },
   {
@@ -1153,34 +1156,35 @@
    "provider": "muse-open",
    "mode": "pdf",
    "private": false,
-   "n": 16,
+   "n": 17,
    "skipped": [],
    "failed": [],
-   "labeledDocs": 16,
+   "labeledDocs": 17,
    "fields": {
-    "right": 1446,
-    "total": 1448
+    "right": 1530,
+    "total": 1549
    },
    "disclosures": {
-    "right": 127,
-    "total": 128
+    "right": 135,
+    "total": 136
    },
    "agreement": {
-    "agree": 744,
-    "compared": 748
+    "agree": 824,
+    "compared": 827
    },
    "falseFails": [],
-   "missedFails": [],
+   "missedFails": [
+    {
+     "list": "syn-07",
+     "check": "C-060",
+     "expected": "fail",
+     "got": "pass"
+    }
+   ],
    "failsToReview": [
     {
      "list": "syn-07",
      "check": "C-005",
-     "expected": "fail",
-     "got": "review"
-    },
-    {
-     "list": "syn-07",
-     "check": "C-060",
      "expected": "fail",
      "got": "review"
     }
@@ -1191,32 +1195,26 @@
      "check": "C-061",
      "expected": "pass",
      "got": "review"
-    },
-    {
-     "list": "syn-15",
-     "check": "TX-004",
-     "expected": "review",
-     "got": "not_applicable"
     }
    ],
    "verdicts": {
     "fail": 19,
-    "review": 15,
-    "pass": 616,
-    "not_applicable": 98
+    "review": 18,
+    "pass": 675,
+    "not_applicable": 115
    },
    "redactionAdjusted": 0,
-   "checksRun": 748,
+   "checksRun": 827,
    "notRun": 0,
    "cost": {
-    "n": 16,
-    "mean": 0.029497106249999995,
-    "p90": 0.03094195
+    "n": 17,
+    "mean": 0.02804471764705882,
+    "p90": 0.030593099999999998
    },
    "latencyMs": {
-    "n": 16,
-    "mean": 19941.0625,
-    "p90": 28243
+    "n": 17,
+    "mean": 15421.176470588236,
+    "p90": 17615
    }
   },
   {
@@ -1275,13 +1273,13 @@
    "notRun": 0,
    "cost": {
     "n": 1,
-    "mean": 0.026023900000000003,
-    "p90": 0.026023900000000003
+    "mean": 0.0253865,
+    "p90": 0.0253865
    },
    "latencyMs": {
     "n": 1,
-    "mean": 19634,
-    "p90": 19634
+    "mean": 13645,
+    "p90": 13645
    }
   },
   {
@@ -1315,13 +1313,13 @@
    "notRun": 0,
    "cost": {
     "n": 1,
-    "mean": 0.026023900000000003,
-    "p90": 0.026023900000000003
+    "mean": 0.0253865,
+    "p90": 0.0253865
    },
    "latencyMs": {
     "n": 1,
-    "mean": 19634,
-    "p90": 19634
+    "mean": 13645,
+    "p90": 13645
    }
   }
  ],
@@ -1330,7 +1328,7 @@
    "set": "a",
    "key": "syn-01",
    "list": "syn-01",
-   "auditId": "1036e618-ece3-4768-acf2-8173f9ade53c",
+   "auditId": "c44b4d1b-d8c9-4b95-87be-468be2e324a4",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1383,20 +1381,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 6
+      "pass": 42,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1406,27 +1406,29 @@
     }
    },
    "cost": {
-    "usd": 0.0300695,
-    "ms": 14921,
+    "usd": 0.03264125,
+    "ms": 19990,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"418 Larkspur Avenue Cedar Bend, TX 78999 Funeral Establishment License No. 4F017\" got \"418 Larkspur Avenue, Cedar Bend, TX 78999\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-02",
    "list": "syn-02",
-   "auditId": "b468422d-4706-4e69-8ba8-dc7e41b4d825",
+   "auditId": "270966e4-8814-4f27-a4ab-da6cb1839cd9",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1479,20 +1481,22 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 2,
-      "pass": 40,
+      "review": 3,
+      "pass": 41,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1502,27 +1506,29 @@
     }
    },
    "cost": {
-    "usd": 0.03743825,
-    "ms": 23907,
+    "usd": 0.035418,
+    "ms": 17997,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 110,
+     "right": 109,
      "total": 110
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"72 Quarry Mill Road Hollis Springs, TX 76999 Funeral Establishment License No. 4F017\" got \"72 Quarry Mill Road, Hollis Springs, TX 76999\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-03",
    "list": "syn-03",
-   "auditId": "123c4b72-c6d8-4ddf-8945-5b2699998a77",
+   "auditId": "7f799d92-7d69-4157-afb8-7d472f325643",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1575,20 +1581,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
       "review": 0,
-      "pass": 35,
-      "not_applicable": 9
+      "pass": 36,
+      "not_applicable": 10
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1598,27 +1606,29 @@
     }
    },
    "cost": {
-    "usd": 0.0236865,
-    "ms": 16395,
+    "usd": 0.033344,
+    "ms": 21709,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 86
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"9 Tamsin Court Ravel, TX 78998 Funeral Establishment License No. 4F017\" got \"9 Tamsin Court, Ravel, TX 78998\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-04",
    "list": "syn-04",
-   "auditId": "7fc7ba9e-33a0-4d0a-aee4-69c338f26518",
+   "auditId": "3a1ee36b-a5d9-4ab3-aa25-9ed1f3b767dd",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1671,20 +1681,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 0,
-      "pass": 37,
-      "not_applicable": 8
+      "pass": 38,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1694,27 +1706,29 @@
     }
    },
    "cost": {
-    "usd": 0.03200025,
-    "ms": 26435,
+    "usd": 0.03142,
+    "ms": 15489,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 87,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"2200 Wren Street Port Ardell, TX 77999 Funeral Establishment License No. 4F017\" got \"2200 Wren Street, Port Ardell, TX 77999\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-05",
    "list": "syn-05",
-   "auditId": "71883ef9-e286-4e6d-a48f-0798d6e7c467",
+   "auditId": "cc2236d5-022d-4dd8-9305-1f81bb5b9bea",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1767,20 +1781,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 0,
-      "pass": 39,
-      "not_applicable": 6
+      "pass": 40,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1790,27 +1806,29 @@
     }
    },
    "cost": {
-    "usd": 0.0316295,
-    "ms": 19007,
+    "usd": 0.0312812,
+    "ms": 16307,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 86
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"15 Fennimore Lane Kestrel, TX 77998 Funeral Establishment License No. 4F017\" got \"15 Fennimore Lane, Kestrel, TX 77998\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-06",
    "list": "syn-06",
-   "auditId": "d7587f59-689d-438d-94c8-31b2afb91126",
+   "auditId": "762786dc-d580-4e81-834f-7ac9fcceb841",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1863,20 +1881,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
       "review": 0,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -1886,27 +1906,29 @@
     }
    },
    "cost": {
-    "usd": 0.033854999999999996,
-    "ms": 22178,
+    "usd": 0.03203125,
+    "ms": 15009,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"640 Mesquite Bluff Drive Dunmore Flats, TX 76998 Funeral Establishment License No. 4F017\" got \"640 Mesquite Bluff Drive, Dunmore Flats, TX 76998\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-07",
    "list": "syn-07",
-   "auditId": "f0809337-8f9b-4c9f-81c6-45cc2ca894d1",
+   "auditId": "5b0bf5eb-343c-48d0-b896-2d792af1adf5",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -1990,8 +2012,8 @@
     }
    },
    "cost": {
-    "usd": 0.0307025,
-    "ms": 16974,
+    "usd": 0.033149250000000005,
+    "ms": 19405,
     "complete": true
    },
    "extraction": {
@@ -2004,7 +2026,7 @@
      "total": 8
     },
     "misses": [
-     "effectiveDate.raw: want null got \"\""
+     "address: want \"Funeral Establishment License No. 4F017\" got null"
     ]
    }
   },
@@ -2012,7 +2034,7 @@
    "set": "a",
    "key": "syn-08",
    "list": "syn-08",
-   "auditId": "f0572058-e968-4e42-9dca-378a1abd2241",
+   "auditId": "216cacdd-11ee-443a-9ace-3243454b6272",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2065,20 +2087,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 1,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2088,27 +2112,29 @@
     }
    },
    "cost": {
-    "usd": 0.033473750000000004,
-    "ms": 19457,
+    "usd": 0.033533,
+    "ms": 22630,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 87,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"31 Orchard Gate Millbrae Crossing, TX 75999 Funeral Establishment License No. 4F017\" got \"31 Orchard Gate, Millbrae Crossing, TX 75999\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-09",
    "list": "syn-09",
-   "auditId": "c40f5d17-b8ec-463a-9b3a-9f15dd1d1f43",
+   "auditId": "005552af-fedc-4e34-a992-9e69d6c7cf41",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2161,20 +2187,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
       "review": 0,
-      "pass": 37,
-      "not_applicable": 6
+      "pass": 38,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2184,27 +2212,29 @@
     }
    },
    "cost": {
-    "usd": 0.03219,
-    "ms": 16186,
+    "usd": 0.03581145,
+    "ms": 30228,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 87,
+     "right": 86,
      "total": 87
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"88 Caprock Trail Ellery, TX 79998 Funeral Establishment License No. 4F017\" got \"88 Caprock Trail, Ellery, TX 79998\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-10",
    "list": "syn-10",
-   "auditId": "88846b9e-873e-4c54-88be-b19544af0c25",
+   "auditId": "9db2e560-0f33-42b0-87b1-15a3de5e5863",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2257,20 +2287,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 6,
-      "pass": 36,
-      "not_applicable": 5
+      "pass": 37,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2280,27 +2312,29 @@
     }
    },
    "cost": {
-    "usd": 0.0407025,
-    "ms": 26110,
+    "usd": 0.041554999999999995,
+    "ms": 33208,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 94,
+     "right": 93,
      "total": 94
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"5 Sotol Row Calder Wells, TX 79997 Funeral Establishment License No. 4F017\" got \"5 Sotol Row, Calder Wells, TX 79997\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-11",
    "list": "syn-11",
-   "auditId": "7f65bc73-912e-41bc-9654-e4fc0e8b9e54",
+   "auditId": "e1f3c0b5-06bc-4049-a600-69a8f3979fe4",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2353,20 +2387,22 @@
       "TX-001": "not_applicable",
       "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 2,
-      "pass": 36,
-      "not_applicable": 8
+      "pass": 37,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2376,13 +2412,13 @@
     }
    },
    "cost": {
-    "usd": 0.03081225,
-    "ms": 19895,
+    "usd": 0.03138495,
+    "ms": 18129,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
@@ -2390,6 +2426,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"1201 Vale Street Brisco, TX 75998 Funeral Establishment License No. 4F017\" got \"1201 Vale Street, Brisco, TX 75998\"",
      "disclosure D-selection: want absent (source is a paraphrase; not an extraction fault if labelled by meaning)"
     ]
    }
@@ -2398,7 +2435,7 @@
    "set": "a",
    "key": "syn-12",
    "list": "syn-12",
-   "auditId": "0d381aea-5e96-4c16-900c-41d48b3726ec",
+   "auditId": "53b6bb3f-6e22-4212-9778-9c0b26565531",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2451,20 +2488,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 0,
-      "pass": 38,
+      "review": 1,
+      "pass": 39,
       "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2474,27 +2513,29 @@
     }
    },
    "cost": {
-    "usd": 0.03232225,
-    "ms": 19911,
+    "usd": 0.03395845,
+    "ms": 19276,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 94,
+     "right": 93,
      "total": 94
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"47 Brazos Lane Tessaly, TX 77997 Funeral Establishment License No. 4F017\" got \"47 Brazos Lane, Tessaly, TX 77997\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-13",
    "list": "syn-13",
-   "auditId": "f0078c4e-83bf-475a-84e4-001c3ea682c5",
+   "auditId": "8e4a260f-5e2c-4d6d-a0be-72a0b8d85712",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2547,20 +2588,22 @@
       "TX-001": "pass",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 42,
-      "not_applicable": 5
+      "pass": 43,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2570,27 +2613,29 @@
     }
    },
    "cost": {
-    "usd": 0.033701499999999995,
-    "ms": 23257,
+    "usd": 0.0323647,
+    "ms": 17766,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 91,
+     "right": 90,
      "total": 91
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"310 Pecan Row Lorena Flats, TX 76998 Funeral Establishment License No. 4F017\" got \"310 Pecan Row, Lorena Flats, TX 76998\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-14",
    "list": "syn-14",
-   "auditId": "71021c3d-24d1-4804-a3bc-32a0eddf7c05",
+   "auditId": "52943727-d232-4018-9c8c-97d0e605675b",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2640,40 +2685,36 @@
       "C-081": "pass",
       "C-082": "pass",
       "C-083": "pass",
-      "TX-001": "review",
+      "TX-001": "fail",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
-      "fail": 0,
-      "review": 1,
-      "pass": 41,
-      "not_applicable": 5
+      "fail": 1,
+      "review": 0,
+      "pass": 42,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 46,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
-      "failToReview": [
-       {
-        "check": "TX-001",
-        "expected": "fail",
-        "got": "review"
-       }
-      ],
+      "failToReview": [],
       "other": [],
       "notRun": []
      }
     }
    },
    "cost": {
-    "usd": 0.034243499999999996,
-    "ms": 21799,
+    "usd": 0.03152245,
+    "ms": 29536,
     "complete": true
    },
    "extraction": {
@@ -2686,7 +2727,7 @@
      "total": 8
     },
     "misses": [
-     "priceText Filing a Claim for Life Insurance Proceeds on Behalf of the Beneficiaries: want \"$______\" got null"
+     "address: want \"77 Ferry Landing Road Rosamond, TX 77996 Funeral Establishment License No. 4F017\" got \"77 Ferry Landing Road, Rosamond, TX 77996\""
     ]
    }
   },
@@ -2694,7 +2735,7 @@
    "set": "a",
    "key": "syn-15",
    "list": "syn-15",
-   "auditId": "e19a380a-f1ec-4988-9e05-70d148539d3c",
+   "auditId": "788ed69f-917d-41d4-a970-142eb930c566",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2747,20 +2788,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "review",
-      "TX-004": "review"
+      "TX-004": "review",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 2,
-      "pass": 41,
-      "not_applicable": 4
+      "pass": 42,
+      "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2770,27 +2813,29 @@
     }
    },
    "cost": {
-    "usd": 0.03311425,
-    "ms": 17887,
+    "usd": 0.03377475,
+    "ms": 17710,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"4 Granite Mill Way Kingsland Bluff, TX 78996 Funeral Establishment License No. 4F017\" got \"4 Granite Mill Way, Kingsland Bluff, TX 78996\""
+    ]
    }
   },
   {
    "set": "a",
    "key": "syn-16",
    "list": "syn-16",
-   "auditId": "888070a4-1b38-476b-9ab1-31f6725dfad6",
+   "auditId": "ce1d732c-c314-486d-bbfc-f6942a2ae697",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -2843,20 +2888,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "pass",
-      "TX-004": "pass"
+      "TX-004": "pass",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 43,
-      "not_applicable": 4
+      "pass": 44,
+      "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2866,14 +2913,114 @@
     }
    },
    "cost": {
-    "usd": 0.0350795,
-    "ms": 18826,
+    "usd": 0.03770345,
+    "ms": 27055,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"58 Cypress Ford Bandera Rise, TX 78995 Funeral Establishment License No. 4F017\" got \"58 Cypress Ford, Bandera Rise, TX 78995\""
+    ]
+   }
+  },
+  {
+   "set": "a",
+   "key": "syn-17",
+   "list": "syn-17",
+   "auditId": "5bc3ce71-fbc9-47a9-8127-914d435f6b72",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "pass",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 43,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.03490675,
+    "ms": 14498,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 101,
+     "total": 101
     },
     "disclosures": {
      "right": 8,
@@ -2886,7 +3033,7 @@
    "set": "b",
    "key": "syn-01 photos",
    "list": "syn-01",
-   "auditId": "b387ea99-8314-4849-8929-da9f2e1fe67d",
+   "auditId": "f5b3e514-1b98-44af-8a0e-3ed84f273ef7",
    "status": "done",
    "error": null,
    "input": "images",
@@ -2939,20 +3086,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 0,
+      "review": 1,
       "pass": 41,
-      "not_applicable": 6
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -2962,27 +3111,29 @@
     }
    },
    "cost": {
-    "usd": 0.03407615,
-    "ms": 14488,
+    "usd": 0.037567500000000004,
+    "ms": 18898,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"418 Larkspur Avenue Cedar Bend, TX 78999 Funeral Establishment License No. 4F017\" got \"418 Larkspur Avenue, Cedar Bend, TX 78999\""
+    ]
    }
   },
   {
    "set": "b",
    "key": "syn-03 photos",
    "list": "syn-03",
-   "auditId": "0c1fb2c3-a9ad-4f90-a33c-977c7c993bdb",
+   "auditId": "a6b95436-be80-422c-b201-ede967e54bcb",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3035,20 +3186,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
+      "review": 4,
       "pass": 34,
-      "not_applicable": 9
+      "not_applicable": 10
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 44,
+      "compared": 49,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -3075,13 +3228,13 @@
     }
    },
    "cost": {
-    "usd": 0.034489,
-    "ms": 11623,
+    "usd": 0.040008249999999995,
+    "ms": 23408,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 77,
+     "right": 76,
      "total": 86
     },
     "disclosures": {
@@ -3089,6 +3242,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"9 Tamsin Court Ravel, TX 78998 Funeral Establishment License No. 4F017\" got \"9 Tamsin Court, Ravel, TX 78998\"",
      "phone: want \"(830) 555-0163\" got \"(830) 355-0163\"",
      "effectiveDate.raw: want \"September 1, 2026\" got \"These prices are effective as of September 1, 2025.\"",
      "effectiveDate.iso: want 2026-09-01 got 2025-09-01",
@@ -3096,8 +3250,8 @@
      "priceText Use of Facilities and Staff for Memorial Service at the Funeral Home: want \"$595\" got \"$395\"",
      "price Use of Equipment and Staff for Graveside Service: want $450 got price=430 range=null",
      "priceText Use of Equipment and Staff for Graveside Service: want \"$450\" got \"$430\"",
-     "price Caskets: want $995 to $11,950 got price=null range=[945,11950]",
-     "priceText Caskets: want \"$995 to $11,950\" got \"$945 to $11,950\""
+     "price Caskets: want $995 to $11,950 got price=null range=[925,11950]",
+     "priceText Caskets: want \"$995 to $11,950\" got \"$925 to $11,950\""
     ]
    }
   },
@@ -3105,7 +3259,7 @@
    "set": "b",
    "key": "syn-09 photos",
    "list": "syn-09",
-   "auditId": "76ed220f-51f5-48e0-953d-5d842e7b345d",
+   "auditId": "34c4ddc7-efa1-41d4-a6e9-eff1c4c650b7",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3158,20 +3312,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
+      "review": 4,
       "pass": 37,
-      "not_applicable": 6
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 44,
+      "compared": 49,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -3197,13 +3353,13 @@
     }
    },
    "cost": {
-    "usd": 0.03576125,
-    "ms": 13089,
+    "usd": 0.0362595,
+    "ms": 20087,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 84,
+     "right": 83,
      "total": 87
     },
     "disclosures": {
@@ -3211,6 +3367,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"88 Caprock Trail Ellery, TX 79998 Funeral Establishment License No. 4F017\" got \"88 Caprock Trail, Ellery, TX 79998\"",
      "item missing: B. Direct cremation with a fiberboard container [$1,695]",
      "extra priced item: B. Direct cremation with container provided by the purchaser [$1,695]"
     ]
@@ -3220,7 +3377,7 @@
    "set": "b",
    "key": "syn-10 photos",
    "list": "syn-10",
-   "auditId": "8fad8a1d-7083-4725-ae8f-630c7e8af12d",
+   "auditId": "fc2947e6-55e3-45a7-aa83-74d4b24bae98",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3273,116 +3430,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 6,
+      "review": 7,
       "pass": 36,
-      "not_applicable": 5
-     },
-     "checksRun": 47,
-     "notRun": [],
-     "labels": {
-      "compared": 47,
-      "agree": 47,
-      "falseFail": [],
-      "missedFail": [],
-      "failToReview": [],
-      "other": [],
-      "notRun": []
-     }
-    }
-   },
-   "cost": {
-    "usd": 0.0384337,
-    "ms": 14759,
-    "complete": true
-   },
-   "extraction": {
-    "fields": {
-     "right": 94,
-     "total": 94
-    },
-    "disclosures": {
-     "right": 8,
-     "total": 8
-    },
-    "misses": []
-   }
-  },
-  {
-   "set": "c",
-   "key": "syn-01 photos",
-   "list": "syn-01",
-   "auditId": "59d3819c-264c-45a4-b2c1-77d2d17d49e7",
-   "status": "done",
-   "error": null,
-   "input": "images",
-   "modes": {
-    "images": {
-     "verdicts": {
-      "C-001": "pass",
-      "C-002": "pass",
-      "C-003": "pass",
-      "C-004": "pass",
-      "C-005": "pass",
-      "C-006": "pass",
-      "C-007": "pass",
-      "C-010": "pass",
-      "C-011": "pass",
-      "C-020": "pass",
-      "C-021": "pass",
-      "C-022": "pass",
-      "C-023": "pass",
-      "C-024": "not_applicable",
-      "C-025": "pass",
-      "C-030": "pass",
-      "C-031": "pass",
-      "C-032": "pass",
-      "C-033": "pass",
-      "C-040": "pass",
-      "C-041": "pass",
-      "C-042": "pass",
-      "C-043": "pass",
-      "C-044": "pass",
-      "C-045": "pass",
-      "C-046": "pass",
-      "C-047": "pass",
-      "C-050": "pass",
-      "C-051": "pass",
-      "C-052": "pass",
-      "C-053": "pass",
-      "C-060": "pass",
-      "C-061": "pass",
-      "C-070": "pass",
-      "C-071": "pass",
-      "C-072": "pass",
-      "C-073": "pass",
-      "C-074": "not_applicable",
-      "C-075": "pass",
-      "C-080": "not_applicable",
-      "C-081": "pass",
-      "C-082": "pass",
-      "C-083": "pass",
-      "TX-001": "not_applicable",
-      "TX-002": "pass",
-      "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
-     },
-     "redactionAdjusted": [],
-     "counts": {
-      "fail": 0,
-      "review": 0,
-      "pass": 41,
       "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3392,345 +3455,8 @@
     }
    },
    "cost": {
-    "usd": 0.034865,
-    "ms": 20141,
-    "complete": true
-   },
-   "extraction": {
-    "fields": {
-     "right": 89,
-     "total": 89
-    },
-    "disclosures": {
-     "right": 8,
-     "total": 8
-    },
-    "misses": []
-   }
-  },
-  {
-   "set": "c",
-   "key": "syn-03 photos",
-   "list": "syn-03",
-   "auditId": "e4883572-9a94-46f3-a331-bd96f624620e",
-   "status": "done",
-   "error": null,
-   "input": "images",
-   "modes": {
-    "images": {
-     "verdicts": {
-      "C-001": "pass",
-      "C-002": "pass",
-      "C-003": "pass",
-      "C-004": "pass",
-      "C-005": "pass",
-      "C-006": "pass",
-      "C-007": "review",
-      "C-010": "pass",
-      "C-011": "pass",
-      "C-020": "pass",
-      "C-021": "pass",
-      "C-022": "pass",
-      "C-023": "pass",
-      "C-024": "not_applicable",
-      "C-025": "pass",
-      "C-030": "review",
-      "C-031": "not_applicable",
-      "C-032": "pass",
-      "C-033": "not_applicable",
-      "C-040": "pass",
-      "C-041": "review",
-      "C-042": "pass",
-      "C-043": "pass",
-      "C-044": "fail",
-      "C-045": "not_applicable",
-      "C-046": "pass",
-      "C-047": "pass",
-      "C-050": "pass",
-      "C-051": "pass",
-      "C-052": "pass",
-      "C-053": "pass",
-      "C-060": "pass",
-      "C-061": "pass",
-      "C-070": "pass",
-      "C-071": "pass",
-      "C-072": "pass",
-      "C-073": "pass",
-      "C-074": "not_applicable",
-      "C-075": "pass",
-      "C-080": "not_applicable",
-      "C-081": "pass",
-      "C-082": "pass",
-      "C-083": "pass",
-      "TX-001": "not_applicable",
-      "TX-002": "pass",
-      "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
-     },
-     "redactionAdjusted": [],
-     "counts": {
-      "fail": 1,
-      "review": 3,
-      "pass": 34,
-      "not_applicable": 9
-     },
-     "checksRun": 47,
-     "notRun": [],
-     "labels": {
-      "compared": 47,
-      "agree": 44,
-      "falseFail": [],
-      "missedFail": [],
-      "failToReview": [
-       {
-        "check": "C-030",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-041",
-        "expected": "fail",
-        "got": "review"
-       }
-      ],
-      "other": [
-       {
-        "check": "C-007",
-        "expected": "pass",
-        "got": "review"
-       }
-      ],
-      "notRun": []
-     }
-    }
-   },
-   "cost": {
-    "usd": 0.033024200000000004,
-    "ms": 15830,
-    "complete": true
-   },
-   "extraction": {
-    "fields": {
-     "right": 75,
-     "total": 86
-    },
-    "disclosures": {
-     "right": 8,
-     "total": 8
-    },
-    "misses": [
-     "phone: want \"(830) 555-0163\" got \"(830) 355-0163\"",
-     "effectiveDate.raw: want \"September 1, 2026\" got \"These prices are effective as of September 1, 2025.\"",
-     "effectiveDate.iso: want 2026-09-01 got 2025-09-01",
-     "price Dressing and casketing: want $225 got price=285 range=null",
-     "priceText Dressing and casketing: want \"$225\" got \"$285\"",
-     "price Use of Facilities and Staff for Funeral Ceremony at the Funeral Home: want $695 got price=645 range=null",
-     "priceText Use of Facilities and Staff for Funeral Ceremony at the Funeral Home: want \"$695\" got \"$645\"",
-     "price Use of Equipment and Staff for Graveside Service: want $450 got price=430 range=null",
-     "priceText Use of Equipment and Staff for Graveside Service: want \"$450\" got \"$430\"",
-     "price Caskets: want $995 to $11,950 got price=null range=[945,11950]",
-     "priceText Caskets: want \"$995 to $11,950\" got \"$945 to $11,950\"",
-     "disclosure text not verbatim (D-alt-container): If you want to arrange a direct cremation, you can use an alternative container. Alternati"
-    ]
-   }
-  },
-  {
-   "set": "c",
-   "key": "syn-09 photos",
-   "list": "syn-09",
-   "auditId": "9dc1c3ce-ad00-4ccb-ba50-01aa3afd1124",
-   "status": "done",
-   "error": null,
-   "input": "images",
-   "modes": {
-    "images": {
-     "verdicts": {
-      "C-001": "fail",
-      "C-002": "pass",
-      "C-003": "pass",
-      "C-004": "pass",
-      "C-005": "pass",
-      "C-006": "pass",
-      "C-007": "pass",
-      "C-010": "pass",
-      "C-011": "pass",
-      "C-020": "pass",
-      "C-021": "pass",
-      "C-022": "review",
-      "C-023": "pass",
-      "C-024": "not_applicable",
-      "C-025": "pass",
-      "C-030": "pass",
-      "C-031": "pass",
-      "C-032": "pass",
-      "C-033": "pass",
-      "C-040": "pass",
-      "C-041": "pass",
-      "C-042": "review",
-      "C-043": "pass",
-      "C-044": "pass",
-      "C-045": "pass",
-      "C-046": "pass",
-      "C-047": "pass",
-      "C-050": "pass",
-      "C-051": "pass",
-      "C-052": "review",
-      "C-053": "pass",
-      "C-060": "pass",
-      "C-061": "pass",
-      "C-070": "pass",
-      "C-071": "pass",
-      "C-072": "pass",
-      "C-073": "pass",
-      "C-074": "not_applicable",
-      "C-075": "pass",
-      "C-080": "not_applicable",
-      "C-081": "pass",
-      "C-082": "pass",
-      "C-083": "pass",
-      "TX-001": "not_applicable",
-      "TX-002": "pass",
-      "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
-     },
-     "redactionAdjusted": [],
-     "counts": {
-      "fail": 1,
-      "review": 3,
-      "pass": 37,
-      "not_applicable": 6
-     },
-     "checksRun": 47,
-     "notRun": [],
-     "labels": {
-      "compared": 47,
-      "agree": 44,
-      "falseFail": [],
-      "missedFail": [],
-      "failToReview": [
-       {
-        "check": "C-022",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-042",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-052",
-        "expected": "fail",
-        "got": "review"
-       }
-      ],
-      "other": [],
-      "notRun": []
-     }
-    }
-   },
-   "cost": {
-    "usd": 0.0332442,
-    "ms": 16341,
-    "complete": true
-   },
-   "extraction": {
-    "fields": {
-     "right": 84,
-     "total": 87
-    },
-    "disclosures": {
-     "right": 8,
-     "total": 8
-    },
-    "misses": [
-     "item missing: Transfer of Remains to the Funeral Home [$495]",
-     "extra priced item: Transfer of Remains to the Funeral Home within a 25 mile radius; beyond this radius we charge $3.50 per mile [$495]"
-    ]
-   }
-  },
-  {
-   "set": "c",
-   "key": "syn-10 photos",
-   "list": "syn-10",
-   "auditId": "2c7ff649-0d20-4041-a09c-e30fe3c0be1c",
-   "status": "done",
-   "error": null,
-   "input": "images",
-   "modes": {
-    "images": {
-     "verdicts": {
-      "C-001": "pass",
-      "C-002": "pass",
-      "C-003": "pass",
-      "C-004": "pass",
-      "C-005": "pass",
-      "C-006": "pass",
-      "C-007": "pass",
-      "C-010": "pass",
-      "C-011": "pass",
-      "C-020": "pass",
-      "C-021": "pass",
-      "C-022": "pass",
-      "C-023": "pass",
-      "C-024": "not_applicable",
-      "C-025": "review",
-      "C-030": "pass",
-      "C-031": "pass",
-      "C-032": "review",
-      "C-033": "pass",
-      "C-040": "pass",
-      "C-041": "pass",
-      "C-042": "pass",
-      "C-043": "pass",
-      "C-044": "pass",
-      "C-045": "pass",
-      "C-046": "pass",
-      "C-047": "pass",
-      "C-050": "pass",
-      "C-051": "pass",
-      "C-052": "pass",
-      "C-053": "pass",
-      "C-060": "pass",
-      "C-061": "pass",
-      "C-070": "pass",
-      "C-071": "review",
-      "C-072": "pass",
-      "C-073": "pass",
-      "C-074": "not_applicable",
-      "C-075": "pass",
-      "C-080": "pass",
-      "C-081": "review",
-      "C-082": "review",
-      "C-083": "review",
-      "TX-001": "not_applicable",
-      "TX-002": "pass",
-      "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
-     },
-     "redactionAdjusted": [],
-     "counts": {
-      "fail": 0,
-      "review": 6,
-      "pass": 36,
-      "not_applicable": 5
-     },
-     "checksRun": 47,
-     "notRun": [],
-     "labels": {
-      "compared": 47,
-      "agree": 47,
-      "falseFail": [],
-      "missedFail": [],
-      "failToReview": [],
-      "other": [],
-      "notRun": []
-     }
-    }
-   },
-   "cost": {
-    "usd": 0.03377695,
-    "ms": 17298,
+    "usd": 0.03944375,
+    "ms": 23434,
     "complete": true
    },
    "extraction": {
@@ -3743,6 +3469,454 @@
      "total": 8
     },
     "misses": [
+     "address: want \"5 Sotol Row Calder Wells, TX 79997 Funeral Establishment License No. 4F017\" got \"5 Sotol Row, Calder Wells, TX 79997\""
+    ]
+   }
+  },
+  {
+   "set": "c",
+   "key": "syn-01 photos",
+   "list": "syn-01",
+   "auditId": "9ec7cb2f-52a5-4ef5-a861-756eab41e033",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 41,
+      "not_applicable": 7
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.032640749999999996,
+    "ms": 14837,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 88,
+     "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"418 Larkspur Avenue Cedar Bend, TX 78999 Funeral Establishment License No. 4F017\" got \"418 Larkspur Avenue, Cedar Bend, TX 78999\""
+    ]
+   }
+  },
+  {
+   "set": "c",
+   "key": "syn-03 photos",
+   "list": "syn-03",
+   "auditId": "0b07c484-0f6e-4de4-8735-79b231fa9cd6",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "review",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "review",
+      "C-031": "not_applicable",
+      "C-032": "pass",
+      "C-033": "not_applicable",
+      "C-040": "pass",
+      "C-041": "review",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "fail",
+      "C-045": "not_applicable",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 4,
+      "pass": 34,
+      "not_applicable": 10
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 46,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-030",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-041",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [
+       {
+        "check": "C-007",
+        "expected": "pass",
+        "got": "review"
+       }
+      ],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0310818,
+    "ms": 14511,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 74,
+     "total": 86
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"9 Tamsin Court Ravel, TX 78998 Funeral Establishment License No. 4F017\" got \"9 Tamsin Court, Ravel, TX 78998\"",
+     "phone: want \"(830) 555-0163\" got \"(830) 355-0163\"",
+     "effectiveDate.raw: want \"September 1, 2026\" got \"These prices are effective as of September 1, 2025\"",
+     "effectiveDate.iso: want 2026-09-01 got 2025-09-01",
+     "price Dressing and casketing: want $225 got price=285 range=null",
+     "priceText Dressing and casketing: want \"$225\" got \"$285\"",
+     "price Use of Facilities and Staff for Funeral Ceremony at the Funeral Home: want $695 got price=645 range=null",
+     "priceText Use of Facilities and Staff for Funeral Ceremony at the Funeral Home: want \"$695\" got \"$645\"",
+     "price Use of Facilities and Staff for Memorial Service at the Funeral Home: want $595 got price=395 range=null",
+     "priceText Use of Facilities and Staff for Memorial Service at the Funeral Home: want \"$595\" got \"$395\"",
+     "price Caskets: want $995 to $11,950 got price=null range=[945,11950]",
+     "priceText Caskets: want \"$995 to $11,950\" got \"$945 to $11,950\"",
+     "disclosure text not verbatim (D-alt-container): If you want to arrange a direct cremation, you can use an alternative container. Alternati"
+    ]
+   }
+  },
+  {
+   "set": "c",
+   "key": "syn-09 photos",
+   "list": "syn-09",
+   "auditId": "3d42af5d-00e5-4247-87e3-8fc7cd7cd57a",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "fail",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "review",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "review",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "review",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 4,
+      "pass": 37,
+      "not_applicable": 7
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 46,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [
+       {
+        "check": "C-022",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-042",
+        "expected": "fail",
+        "got": "review"
+       },
+       {
+        "check": "C-052",
+        "expected": "fail",
+        "got": "review"
+       }
+      ],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0318368,
+    "ms": 15153,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 83,
+     "total": 87
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"88 Caprock Trail Ellery, TX 79998 Funeral Establishment License No. 4F017\" got \"88 Caprock Trail, Ellery, TX 79998\"",
+     "item missing: Transfer of Remains to the Funeral Home [$495]",
+     "extra priced item: Transfer of Remains to the Funeral Home within a 25 mile radius; beyond this radius we charge $3.50 per mile [$495]"
+    ]
+   }
+  },
+  {
+   "set": "c",
+   "key": "syn-10 photos",
+   "list": "syn-10",
+   "auditId": "186e32bd-e923-4286-b7f4-f6d91936d1f3",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "review",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "review",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "review",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "pass",
+      "C-081": "review",
+      "C-082": "review",
+      "C-083": "review",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 7,
+      "pass": 36,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0363613,
+    "ms": 18233,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 92,
+     "total": 94
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"5 Sotol Row Calder Wells, TX 79997 Funeral Establishment License No. 4F017\" got \"5 Sotol Row, Calder Wells, TX 79997\"",
      "price Hearse: want Starting at $395 got price=null range=null"
     ]
    }
@@ -3751,7 +3925,7 @@
    "set": "d",
    "key": "syn-01",
    "list": "syn-01",
-   "auditId": "fc3d16fb-5a68-49fd-a05e-0356e147339f",
+   "auditId": "82fe13ed-8a0a-4f0e-80cf-4ccb61f4c683",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3804,20 +3978,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 6
+      "pass": 42,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3873,20 +4049,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 6
+      "pass": 42,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -3896,27 +4074,29 @@
     }
    },
    "cost": {
-    "usd": 0.02539935,
-    "ms": 14772,
+    "usd": 0.0274905,
+    "ms": 16336,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"418 Larkspur Avenue Cedar Bend, TX 78999 Funeral Establishment License No. 4F017\" got \"418 Larkspur Avenue, Cedar Bend, TX 78999\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-02",
    "list": "syn-02",
-   "auditId": "89e2c464-bacb-4bf8-850c-f372d0177089",
+   "auditId": "afe0da3f-bbd6-4365-b3d6-f4861a9a05a4",
    "status": "done",
    "error": null,
    "input": "images",
@@ -3969,20 +4149,22 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 2,
-      "pass": 40,
+      "review": 3,
+      "pass": 41,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4038,20 +4220,22 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 2,
-      "pass": 40,
+      "review": 3,
+      "pass": 41,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4061,27 +4245,29 @@
     }
    },
    "cost": {
-    "usd": 0.033372700000000005,
-    "ms": 16697,
+    "usd": 0.029403349999999998,
+    "ms": 15284,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 110,
+     "right": 109,
      "total": 110
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"72 Quarry Mill Road Hollis Springs, TX 76999 Funeral Establishment License No. 4F017\" got \"72 Quarry Mill Road, Hollis Springs, TX 76999\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-03",
    "list": "syn-03",
-   "auditId": "6d511358-b433-49ab-822e-457b7e52a56d",
+   "auditId": "f2aa6449-49a2-48c3-987a-5e59cd2e9a9d",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4134,20 +4320,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 2,
-      "pass": 35,
-      "not_applicable": 9
+      "pass": 36,
+      "not_applicable": 10
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4214,20 +4402,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
       "review": 0,
-      "pass": 35,
-      "not_applicable": 9
+      "pass": 36,
+      "not_applicable": 10
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4237,27 +4427,29 @@
     }
    },
    "cost": {
-    "usd": 0.027479450000000002,
-    "ms": 13594,
+    "usd": 0.02639525,
+    "ms": 13998,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 86
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"9 Tamsin Court Ravel, TX 78998 Funeral Establishment License No. 4F017\" got \"9 Tamsin Court, Ravel, TX 78998\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-04",
    "list": "syn-04",
-   "auditId": "3f6999e9-6e21-424f-bbdf-98991ef824b3",
+   "auditId": "a5a19bf8-0de0-458b-97ba-e2256283c932",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4310,20 +4502,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 2,
-      "pass": 37,
-      "not_applicable": 8
+      "pass": 38,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4390,20 +4584,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 0,
-      "pass": 37,
-      "not_applicable": 8
+      "pass": 38,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4413,27 +4609,29 @@
     }
    },
    "cost": {
-    "usd": 0.027011649999999998,
-    "ms": 14753,
+    "usd": 0.025891,
+    "ms": 12392,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 87,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"2200 Wren Street Port Ardell, TX 77999 Funeral Establishment License No. 4F017\" got \"2200 Wren Street, Port Ardell, TX 77999\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-05",
    "list": "syn-05",
-   "auditId": "5db97bc6-941f-4bb0-a48a-3244d4b81cf8",
+   "auditId": "a7048d25-a49d-45ca-aaad-b2e6b4079bdf",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4486,20 +4684,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 2,
-      "pass": 39,
-      "not_applicable": 6
+      "pass": 40,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4566,20 +4766,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 0,
-      "pass": 39,
-      "not_applicable": 6
+      "pass": 40,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4589,27 +4791,29 @@
     }
    },
    "cost": {
-    "usd": 0.026297400000000002,
-    "ms": 13693,
+    "usd": 0.02688585,
+    "ms": 16358,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 86
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"15 Fennimore Lane Kestrel, TX 77998 Funeral Establishment License No. 4F017\" got \"15 Fennimore Lane, Kestrel, TX 77998\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-06",
    "list": "syn-06",
-   "auditId": "07b23db7-b6d8-489e-b848-571532d7b27b",
+   "auditId": "deb27ab1-0d86-4948-8df9-673ddc25bf93",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4662,20 +4866,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 3,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 44,
+      "compared": 49,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -4747,20 +4953,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
       "review": 0,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -4770,27 +4978,29 @@
     }
    },
    "cost": {
-    "usd": 0.02716245,
-    "ms": 13951,
+    "usd": 0.026319099999999998,
+    "ms": 13984,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"640 Mesquite Bluff Drive Dunmore Flats, TX 76998 Funeral Establishment License No. 4F017\" got \"640 Mesquite Bluff Drive, Dunmore Flats, TX 76998\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-07",
    "list": "syn-07",
-   "auditId": "a8c5b1bd-1c45-4b70-94bf-34cb35d76d7a",
+   "auditId": "991f0cb4-0b26-460d-839e-53689296ee31",
    "status": "done",
    "error": null,
    "input": "images",
@@ -4828,7 +5038,7 @@
       "C-051": "pass",
       "C-052": "pass",
       "C-053": "pass",
-      "C-060": "review",
+      "C-060": "pass",
       "C-061": "review",
       "C-070": "pass",
       "C-071": "pass",
@@ -4844,8 +5054,8 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
-      "pass": 34,
+      "review": 3,
+      "pass": 35,
       "not_applicable": 5
      },
      "checksRun": 43,
@@ -4854,7 +5064,13 @@
       "compared": 43,
       "agree": 39,
       "falseFail": [],
-      "missedFail": [],
+      "missedFail": [
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "pass"
+       }
+      ],
       "failToReview": [
        {
         "check": "C-003",
@@ -4863,11 +5079,6 @@
        },
        {
         "check": "C-005",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-060",
         "expected": "fail",
         "got": "review"
        }
@@ -4915,7 +5126,7 @@
       "C-051": "pass",
       "C-052": "pass",
       "C-053": "pass",
-      "C-060": "review",
+      "C-060": "pass",
       "C-061": "review",
       "C-070": "pass",
       "C-071": "pass",
@@ -4931,8 +5142,8 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
-      "pass": 34,
+      "review": 2,
+      "pass": 35,
       "not_applicable": 5
      },
      "checksRun": 43,
@@ -4941,15 +5152,16 @@
       "compared": 43,
       "agree": 40,
       "falseFail": [],
-      "missedFail": [],
+      "missedFail": [
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "pass"
+       }
+      ],
       "failToReview": [
        {
         "check": "C-005",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-060",
         "expected": "fail",
         "got": "review"
        }
@@ -4966,13 +5178,13 @@
     }
    },
    "cost": {
-    "usd": 0.0261729,
-    "ms": 14850,
+    "usd": 0.02631,
+    "ms": 13007,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 88
     },
     "disclosures": {
@@ -4980,8 +5192,10 @@
      "total": 8
     },
     "misses": [
-     "effectiveDate.raw: want null got \",\"",
-     "includesText Receiving Remains from Another Funeral Home: null"
+     "address: want \"Funeral Establishment License No. 4F017\" got null",
+     "effectiveDate.raw: want null got \"null\"",
+     "includesText Receiving Remains from Another Funeral Home: null",
+     "disclosure text not verbatim (D-basic-nondeclinable): This fee for our basic services and overhead will be added to the total cost of the funera"
     ]
    }
   },
@@ -4989,7 +5203,7 @@
    "set": "d",
    "key": "syn-08",
    "list": "syn-08",
-   "auditId": "4e1e9135-2901-4086-8d22-c9158c30343e",
+   "auditId": "b9a5a98b-0f37-46ee-9155-20fbc56546b5",
    "status": "done",
    "error": null,
    "input": "images",
@@ -5042,20 +5256,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 3,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -5122,20 +5338,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 1,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5145,27 +5363,29 @@
     }
    },
    "cost": {
-    "usd": 0.02849015,
-    "ms": 16197,
+    "usd": 0.02998285,
+    "ms": 17229,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 87,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"31 Orchard Gate Millbrae Crossing, TX 75999 Funeral Establishment License No. 4F017\" got \"31 Orchard Gate, Millbrae Crossing, TX 75999\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-09",
    "list": "syn-09",
-   "auditId": "f7794eef-fe55-4ac6-84fb-4b3e863d7b58",
+   "auditId": "9dcf73e1-bd3b-4c6b-8713-9a98841bcd9d",
    "status": "done",
    "error": null,
    "input": "images",
@@ -5218,20 +5438,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 3,
-      "pass": 37,
-      "not_applicable": 6
+      "pass": 38,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 44,
+      "compared": 49,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -5303,20 +5525,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
       "review": 0,
-      "pass": 37,
-      "not_applicable": 6
+      "pass": 38,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5326,27 +5550,29 @@
     }
    },
    "cost": {
-    "usd": 0.0245445,
-    "ms": 12614,
+    "usd": 0.02629125,
+    "ms": 16066,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 87,
+     "right": 86,
      "total": 87
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"88 Caprock Trail Ellery, TX 79998 Funeral Establishment License No. 4F017\" got \"88 Caprock Trail, Ellery, TX 79998\""
+    ]
    }
   },
   {
    "set": "d",
    "key": "syn-10",
    "list": "syn-10",
-   "auditId": "6db3b9ce-a888-4102-805f-96f26b49aaa0",
+   "auditId": "0bcf1127-283b-4d89-afda-0215552c2818",
    "status": "done",
    "error": null,
    "input": "images",
@@ -5399,20 +5625,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 6,
-      "pass": 36,
-      "not_applicable": 5
+      "pass": 37,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5468,20 +5696,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 6,
-      "pass": 36,
-      "not_applicable": 5
+      "pass": 37,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5491,13 +5721,13 @@
     }
    },
    "cost": {
-    "usd": 0.034830650000000005,
-    "ms": 20607,
+    "usd": 0.028094349999999997,
+    "ms": 16258,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 93,
+     "right": 92,
      "total": 94
     },
     "disclosures": {
@@ -5505,6 +5735,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"5 Sotol Row Calder Wells, TX 79997 Funeral Establishment License No. 4F017\" got \"5 Sotol Row, Calder Wells, TX 79997\"",
      "price Hearse: want Starting at $395 got price=null range=null"
     ]
    }
@@ -5513,7 +5744,7 @@
    "set": "d",
    "key": "syn-11",
    "list": "syn-11",
-   "auditId": "2d947c7e-e76b-4bc9-b520-fa762e59cad4",
+   "auditId": "a3510038-6a35-421e-8794-d27acefb5b10",
    "status": "done",
    "error": null,
    "input": "images",
@@ -5566,20 +5797,22 @@
       "TX-001": "not_applicable",
       "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 3,
-      "pass": 36,
-      "not_applicable": 8
+      "pass": 37,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 46,
+      "compared": 49,
+      "agree": 48,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -5641,20 +5874,22 @@
       "TX-001": "not_applicable",
       "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 2,
-      "pass": 36,
-      "not_applicable": 8
+      "pass": 37,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5664,13 +5899,13 @@
     }
    },
    "cost": {
-    "usd": 0.0256289,
-    "ms": 15223,
+    "usd": 0.0274555,
+    "ms": 16513,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
@@ -5678,6 +5913,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"1201 Vale Street Brisco, TX 75998 Funeral Establishment License No. 4F017\" got \"1201 Vale Street, Brisco, TX 75998\"",
      "disclosure D-selection: want absent (source is a paraphrase; not an extraction fault if labelled by meaning)"
     ]
    }
@@ -5686,7 +5922,7 @@
    "set": "d",
    "key": "syn-12",
    "list": "syn-12",
-   "auditId": "1a0188f4-5384-44ab-9335-d5506f4cf54f",
+   "auditId": "74be3fe7-b780-4869-88dd-2f06acbcfba2",
    "status": "done",
    "error": null,
    "input": "images",
@@ -5739,20 +5975,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 0,
-      "pass": 38,
+      "review": 1,
+      "pass": 39,
       "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5808,20 +6046,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 0,
-      "pass": 38,
+      "review": 1,
+      "pass": 39,
       "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -5831,14 +6071,881 @@
     }
    },
    "cost": {
-    "usd": 0.0281419,
-    "ms": 18830,
+    "usd": 0.0294423,
+    "ms": 20058,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 94,
+     "right": 93,
      "total": 94
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"47 Brazos Lane Tessaly, TX 77997 Funeral Establishment License No. 4F017\" got \"47 Brazos Lane, Tessaly, TX 77997\""
+    ]
+   }
+  },
+  {
+   "set": "d",
+   "key": "syn-13",
+   "list": "syn-13",
+   "auditId": "ea50197c-50f6-4d68-ad0e-d8201003a82d",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "pass",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 43,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "pass",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 43,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0283095,
+    "ms": 14186,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 90,
+     "total": 91
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"310 Pecan Row Lorena Flats, TX 76998 Funeral Establishment License No. 4F017\" got \"310 Pecan Row, Lorena Flats, TX 76998\""
+    ]
+   }
+  },
+  {
+   "set": "d",
+   "key": "syn-14",
+   "list": "syn-14",
+   "auditId": "ef6a66f3-2a2c-432a-b640-e14c5553f1e2",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "fail",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 0,
+      "pass": 42,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "fail",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 1,
+      "review": 0,
+      "pass": 42,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.02736775,
+    "ms": 13754,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 90,
+     "total": 91
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"77 Ferry Landing Road Rosamond, TX 77996 Funeral Establishment License No. 4F017\" got \"77 Ferry Landing Road, Rosamond, TX 77996\""
+    ]
+   }
+  },
+  {
+   "set": "d",
+   "key": "syn-15",
+   "list": "syn-15",
+   "auditId": "0aa65b8d-ac37-4300-877e-543d5487a5b0",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "review",
+      "TX-004": "review",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 2,
+      "pass": 42,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "review",
+      "TX-004": "review",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 2,
+      "pass": 42,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.028714000000000003,
+    "ms": 14342,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 88,
+     "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"4 Granite Mill Way Kingsland Bluff, TX 78996 Funeral Establishment License No. 4F017\" got \"4 Granite Mill Way, Kingsland Bluff, TX 78996\""
+    ]
+   }
+  },
+  {
+   "set": "d",
+   "key": "syn-16",
+   "list": "syn-16",
+   "auditId": "3dd7207d-c513-4cca-a672-ea9891fe05d5",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "pass",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 43,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 48,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [
+       {
+        "check": "TX-004",
+        "expected": "pass",
+        "got": "not_applicable"
+       }
+      ],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "not_applicable",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "pass",
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 0,
+      "pass": 43,
+      "not_applicable": 6
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 48,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [
+       {
+        "check": "TX-004",
+        "expected": "pass",
+        "got": "not_applicable"
+       }
+      ],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.0288835,
+    "ms": 14925,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 88,
+     "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"58 Cypress Ford Bandera Rise, TX 78995 Funeral Establishment License No. 4F017\" got \"58 Cypress Ford, Bandera Rise, TX 78995\""
+    ]
+   }
+  },
+  {
+   "set": "d",
+   "key": "syn-17",
+   "list": "syn-17",
+   "auditId": "a2d0cf20-0d4e-4a49-a30c-65f7baa223e7",
+   "status": "done",
+   "error": null,
+   "input": "images",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "pass",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 43,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "pass",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 43,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.02897975,
+    "ms": 14534,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 101,
+     "total": 101
     },
     "disclosures": {
      "right": 8,
@@ -5851,7 +6958,7 @@
    "set": "e",
    "key": "ftc-template",
    "list": "ftc",
-   "auditId": "1c00b4f6-a925-4a10-b3c1-ab403945c5f1",
+   "auditId": "487a007d-a728-43bf-86f9-67c8a7aa6846",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -5923,8 +7030,8 @@
     }
    },
    "cost": {
-    "usd": 0.030972,
-    "ms": 20528,
+    "usd": 0.02944045,
+    "ms": 14497,
     "complete": true
    }
   },
@@ -9425,7 +10532,7 @@
    "set": "u",
    "key": "syn-01",
    "list": "syn-01",
-   "auditId": "f9e75df2-9303-460d-985b-e63813ee4467",
+   "auditId": "f2606130-99b9-4c66-a64e-eb2e826011a4",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -9478,20 +10585,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 6
+      "pass": 42,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9547,20 +10656,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 6
+      "pass": 42,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9570,27 +10681,29 @@
     }
    },
    "cost": {
-    "usd": 0.030761749999999997,
-    "ms": 17384,
+    "usd": 0.029088499999999996,
+    "ms": 15245,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"418 Larkspur Avenue Cedar Bend, TX 78999 Funeral Establishment License No. 4F017\" got \"418 Larkspur Avenue, Cedar Bend, TX 78999\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-02",
    "list": "syn-02",
-   "auditId": "74e17406-c611-45e6-9e94-d61f35c5aa9f",
+   "auditId": "7574ba06-c1a0-48d7-a2d9-ea26d555a475",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -9643,20 +10756,22 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 2,
-      "pass": 40,
+      "review": 3,
+      "pass": 41,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9712,20 +10827,22 @@
       "TX-001": "not_applicable",
       "TX-002": "review",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 2,
-      "pass": 40,
+      "review": 3,
+      "pass": 41,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9735,27 +10852,29 @@
     }
    },
    "cost": {
-    "usd": 0.0278197,
-    "ms": 16369,
+    "usd": 0.0305565,
+    "ms": 16567,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 110,
+     "right": 109,
      "total": 110
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"72 Quarry Mill Road Hollis Springs, TX 76999 Funeral Establishment License No. 4F017\" got \"72 Quarry Mill Road, Hollis Springs, TX 76999\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-03",
    "list": "syn-03",
-   "auditId": "49522475-842b-41b0-87c8-5fa103d49d0c",
+   "auditId": "ec834c4a-24ad-472c-b4ea-49ed5d8a63a6",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -9808,20 +10927,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 2,
-      "pass": 35,
-      "not_applicable": 9
+      "pass": 36,
+      "not_applicable": 10
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -9888,20 +11009,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
       "review": 0,
-      "pass": 35,
-      "not_applicable": 9
+      "pass": 36,
+      "not_applicable": 10
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -9911,27 +11034,29 @@
     }
    },
    "cost": {
-    "usd": 0.030879450000000003,
-    "ms": 16074,
+    "usd": 0.0261306,
+    "ms": 14612,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 86
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"9 Tamsin Court Ravel, TX 78998 Funeral Establishment License No. 4F017\" got \"9 Tamsin Court, Ravel, TX 78998\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-04",
    "list": "syn-04",
-   "auditId": "2593cadb-0f40-42be-b37b-644882b63133",
+   "auditId": "b79bd7c2-7ae7-4c40-8208-1aea1bab5e2a",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -9984,20 +11109,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 2,
-      "pass": 37,
-      "not_applicable": 8
+      "pass": 38,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10064,20 +11191,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 0,
-      "pass": 37,
-      "not_applicable": 8
+      "pass": 38,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10087,27 +11216,29 @@
     }
    },
    "cost": {
-    "usd": 0.02944345,
-    "ms": 14782,
+    "usd": 0.02692575,
+    "ms": 15705,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 87,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"2200 Wren Street Port Ardell, TX 77999 Funeral Establishment License No. 4F017\" got \"2200 Wren Street, Port Ardell, TX 77999\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-05",
    "list": "syn-05",
-   "auditId": "a67dc61a-9e36-40b0-b911-b0fbacf9b723",
+   "auditId": "7e216674-ff65-48fc-aa2b-fbf4985d48fc",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -10160,20 +11291,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 2,
-      "pass": 39,
-      "not_applicable": 6
+      "pass": 40,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10240,20 +11373,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 0,
-      "pass": 39,
-      "not_applicable": 6
+      "pass": 40,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10263,27 +11398,29 @@
     }
    },
    "cost": {
-    "usd": 0.02886395,
-    "ms": 22957,
+    "usd": 0.027376,
+    "ms": 15274,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 86,
+     "right": 85,
      "total": 86
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"15 Fennimore Lane Kestrel, TX 77998 Funeral Establishment License No. 4F017\" got \"15 Fennimore Lane, Kestrel, TX 77998\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-06",
    "list": "syn-06",
-   "auditId": "76eb0675-61d3-4d09-a2e5-100158374e5f",
+   "auditId": "00616a03-c52d-4d45-97ed-e498f2ccadb2",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -10336,20 +11473,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 3,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 44,
+      "compared": 49,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10421,20 +11560,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 3,
       "review": 0,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10444,27 +11585,29 @@
     }
    },
    "cost": {
-    "usd": 0.0292322,
-    "ms": 15961,
+    "usd": 0.027757,
+    "ms": 14200,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"640 Mesquite Bluff Drive Dunmore Flats, TX 76998 Funeral Establishment License No. 4F017\" got \"640 Mesquite Bluff Drive, Dunmore Flats, TX 76998\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-07",
    "list": "syn-07",
-   "auditId": "6ddc1155-1d4d-404b-884b-82495a72c31d",
+   "auditId": "87d188ad-5bbb-40b5-b8af-a4db62c0d2b3",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -10502,7 +11645,7 @@
       "C-051": "pass",
       "C-052": "pass",
       "C-053": "pass",
-      "C-060": "review",
+      "C-060": "pass",
       "C-061": "review",
       "C-070": "pass",
       "C-071": "pass",
@@ -10518,8 +11661,8 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 4,
-      "pass": 34,
+      "review": 3,
+      "pass": 35,
       "not_applicable": 5
      },
      "checksRun": 43,
@@ -10528,7 +11671,13 @@
       "compared": 43,
       "agree": 39,
       "falseFail": [],
-      "missedFail": [],
+      "missedFail": [
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "pass"
+       }
+      ],
       "failToReview": [
        {
         "check": "C-003",
@@ -10537,11 +11686,6 @@
        },
        {
         "check": "C-005",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-060",
         "expected": "fail",
         "got": "review"
        }
@@ -10589,7 +11733,7 @@
       "C-051": "pass",
       "C-052": "pass",
       "C-053": "pass",
-      "C-060": "review",
+      "C-060": "pass",
       "C-061": "review",
       "C-070": "pass",
       "C-071": "pass",
@@ -10605,8 +11749,8 @@
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
-      "review": 3,
-      "pass": 34,
+      "review": 2,
+      "pass": 35,
       "not_applicable": 5
      },
      "checksRun": 43,
@@ -10615,15 +11759,16 @@
       "compared": 43,
       "agree": 40,
       "falseFail": [],
-      "missedFail": [],
+      "missedFail": [
+       {
+        "check": "C-060",
+        "expected": "fail",
+        "got": "pass"
+       }
+      ],
       "failToReview": [
        {
         "check": "C-005",
-        "expected": "fail",
-        "got": "review"
-       },
-       {
-        "check": "C-060",
         "expected": "fail",
         "got": "review"
        }
@@ -10640,13 +11785,13 @@
     }
    },
    "cost": {
-    "usd": 0.0303917,
-    "ms": 18819,
+    "usd": 0.0283925,
+    "ms": 17615,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 87,
+     "right": 85,
      "total": 88
     },
     "disclosures": {
@@ -10654,7 +11799,9 @@
      "total": 8
     },
     "misses": [
-     "effectiveDate.raw: want null got \".effectiveDate = \\\"\\\"\""
+     "address: want \"Funeral Establishment License No. 4F017\" got null",
+     "effectiveDate.raw: want null got \"null\"",
+     "includesText Receiving Remains from Another Funeral Home: null"
     ]
    }
   },
@@ -10662,7 +11809,7 @@
    "set": "u",
    "key": "syn-08",
    "list": "syn-08",
-   "auditId": "b4e730c6-5177-44a1-baf8-f5f6c3f3b9b2",
+   "auditId": "afde0986-3f7a-467a-9974-ef73673e144e",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -10715,20 +11862,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 3,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 45,
+      "compared": 49,
+      "agree": 47,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10795,20 +11944,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 2,
       "review": 1,
-      "pass": 38,
-      "not_applicable": 6
+      "pass": 39,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10818,27 +11969,29 @@
     }
    },
    "cost": {
-    "usd": 0.03094195,
-    "ms": 18739,
+    "usd": 0.02750325,
+    "ms": 15274,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 88,
+     "right": 87,
      "total": 88
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"31 Orchard Gate Millbrae Crossing, TX 75999 Funeral Establishment License No. 4F017\" got \"31 Orchard Gate, Millbrae Crossing, TX 75999\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-09",
    "list": "syn-09",
-   "auditId": "70112251-1c66-487b-97b4-d14dcc6709a9",
+   "auditId": "ac8dc8a3-8f6d-4130-9036-f39aea2479e6",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -10891,20 +12044,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 3,
-      "pass": 37,
-      "not_applicable": 6
+      "pass": 38,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 44,
+      "compared": 49,
+      "agree": 46,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -10976,20 +12131,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 4,
       "review": 0,
-      "pass": 37,
-      "not_applicable": 6
+      "pass": 38,
+      "not_applicable": 7
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -10999,27 +12156,29 @@
     }
    },
    "cost": {
-    "usd": 0.029709199999999998,
-    "ms": 14926,
+    "usd": 0.027868499999999997,
+    "ms": 16061,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 87,
+     "right": 86,
      "total": 87
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"88 Caprock Trail Ellery, TX 79998 Funeral Establishment License No. 4F017\" got \"88 Caprock Trail, Ellery, TX 79998\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-10",
    "list": "syn-10",
-   "auditId": "112767db-014a-4e62-81a6-52a82076c7cc",
+   "auditId": "820e00f1-7ee5-41ea-ab2d-02e47f4a5df0",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -11072,20 +12231,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 6,
-      "pass": 36,
-      "not_applicable": 5
+      "pass": 37,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11141,20 +12302,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 6,
-      "pass": 36,
-      "not_applicable": 5
+      "pass": 37,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11164,13 +12327,13 @@
     }
    },
    "cost": {
-    "usd": 0.029950400000000002,
-    "ms": 19602,
+    "usd": 0.030593099999999998,
+    "ms": 16247,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 93,
+     "right": 92,
      "total": 94
     },
     "disclosures": {
@@ -11178,6 +12341,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"5 Sotol Row Calder Wells, TX 79997 Funeral Establishment License No. 4F017\" got \"5 Sotol Row, Calder Wells, TX 79997\"",
      "price Hearse: want Starting at $395 got price=null range=null"
     ]
    }
@@ -11186,7 +12350,7 @@
    "set": "u",
    "key": "syn-11",
    "list": "syn-11",
-   "auditId": "87b9c1b8-971d-4fc3-ac61-155e375781a3",
+   "auditId": "13fcd1eb-0ef4-4e6b-847a-586b475d2fd5",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -11239,20 +12403,22 @@
       "TX-001": "not_applicable",
       "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 3,
-      "pass": 36,
-      "not_applicable": 8
+      "pass": 37,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 46,
+      "compared": 49,
+      "agree": 48,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [
@@ -11314,20 +12480,22 @@
       "TX-001": "not_applicable",
       "TX-002": "not_applicable",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 2,
-      "pass": 36,
-      "not_applicable": 8
+      "pass": 37,
+      "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11337,13 +12505,13 @@
     }
    },
    "cost": {
-    "usd": 0.0225159,
-    "ms": 12485,
+    "usd": 0.027590999999999997,
+    "ms": 15711,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
@@ -11351,6 +12519,7 @@
      "total": 8
     },
     "misses": [
+     "address: want \"1201 Vale Street Brisco, TX 75998 Funeral Establishment License No. 4F017\" got \"1201 Vale Street, Brisco, TX 75998\"",
      "disclosure D-selection: want absent (source is a paraphrase; not an extraction fault if labelled by meaning)"
     ]
    }
@@ -11359,7 +12528,7 @@
    "set": "u",
    "key": "syn-12",
    "list": "syn-12",
-   "auditId": "22b2bb82-2dbb-472a-a54e-988e72746017",
+   "auditId": "011930b8-ec29-4658-a1c7-2da6a47887d2",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -11412,20 +12581,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 0,
-      "pass": 38,
+      "review": 1,
+      "pass": 39,
       "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11481,20 +12652,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "review",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 0,
-      "pass": 38,
+      "review": 1,
+      "pass": 39,
       "not_applicable": 9
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11504,27 +12677,29 @@
     }
    },
    "cost": {
-    "usd": 0.0264249,
-    "ms": 20210,
+    "usd": 0.029802749999999996,
+    "ms": 16393,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 94,
+     "right": 93,
      "total": 94
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"47 Brazos Lane Tessaly, TX 77997 Funeral Establishment License No. 4F017\" got \"47 Brazos Lane, Tessaly, TX 77997\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-13",
    "list": "syn-13",
-   "auditId": "2928d7e4-db9c-4b6d-91c6-e568dc7d1c00",
+   "auditId": "ebc26140-fd88-4edd-85a1-d6029babac01",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -11577,20 +12752,22 @@
       "TX-001": "pass",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 42,
-      "not_applicable": 5
+      "pass": 43,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11646,20 +12823,22 @@
       "TX-001": "pass",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 42,
-      "not_applicable": 5
+      "pass": 43,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11669,27 +12848,29 @@
     }
    },
    "cost": {
-    "usd": 0.02993175,
-    "ms": 24035,
+    "usd": 0.028539000000000002,
+    "ms": 15025,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 91,
+     "right": 90,
      "total": 91
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"310 Pecan Row Lorena Flats, TX 76998 Funeral Establishment License No. 4F017\" got \"310 Pecan Row, Lorena Flats, TX 76998\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-14",
    "list": "syn-14",
-   "auditId": "0b267d5d-ff5b-4714-b7a7-0bd4fda1e0af",
+   "auditId": "92e6cb13-e2b0-4fd5-873b-5121ec328540",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -11742,20 +12923,22 @@
       "TX-001": "fail",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 5
+      "pass": 42,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11811,20 +12994,22 @@
       "TX-001": "fail",
       "TX-002": "pass",
       "TX-003": "not_applicable",
-      "TX-004": "not_applicable"
+      "TX-004": "not_applicable",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 1,
       "review": 0,
-      "pass": 41,
-      "not_applicable": 5
+      "pass": 42,
+      "not_applicable": 6
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -11834,27 +13019,29 @@
     }
    },
    "cost": {
-    "usd": 0.030787250000000002,
-    "ms": 22958,
+    "usd": 0.0239728,
+    "ms": 13240,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 91,
+     "right": 90,
      "total": 91
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"77 Ferry Landing Road Rosamond, TX 77996 Funeral Establishment License No. 4F017\" got \"77 Ferry Landing Road, Rosamond, TX 77996\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-15",
    "list": "syn-15",
-   "auditId": "bd73eb35-5e81-413d-9b7d-d3f2a0523a81",
+   "auditId": "932bce75-c818-4b5d-a1ed-886337cb40d0",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -11907,30 +13094,26 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "review",
-      "TX-004": "not_applicable"
+      "TX-004": "review",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
-      "pass": 41,
+      "review": 2,
+      "pass": 42,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 46,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
-      "other": [
-       {
-        "check": "TX-004",
-        "expected": "review",
-        "got": "not_applicable"
-       }
-      ],
+      "other": [],
       "notRun": []
      }
     },
@@ -11982,56 +13165,54 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "review",
-      "TX-004": "not_applicable"
+      "TX-004": "review",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
-      "review": 1,
-      "pass": 41,
+      "review": 2,
+      "pass": 42,
       "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 46,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
-      "other": [
-       {
-        "check": "TX-004",
-        "expected": "review",
-        "got": "not_applicable"
-       }
-      ],
+      "other": [],
       "notRun": []
      }
     }
    },
    "cost": {
-    "usd": 0.030513449999999998,
-    "ms": 28243,
+    "usd": 0.0266657,
+    "ms": 14018,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
     },
     "disclosures": {
      "right": 8,
      "total": 8
     },
-    "misses": []
+    "misses": [
+     "address: want \"4 Granite Mill Way Kingsland Bluff, TX 78996 Funeral Establishment License No. 4F017\" got \"4 Granite Mill Way, Kingsland Bluff, TX 78996\""
+    ]
    }
   },
   {
    "set": "u",
    "key": "syn-16",
    "list": "syn-16",
-   "auditId": "99b8a5a9-4694-489a-8299-38e3cf673f3d",
+   "auditId": "c31160a6-e52a-476c-83c1-7fd0c6f341c4",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -12084,20 +13265,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "pass",
-      "TX-004": "pass"
+      "TX-004": "pass",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 43,
-      "not_applicable": 4
+      "pass": 44,
+      "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -12153,20 +13336,22 @@
       "TX-001": "not_applicable",
       "TX-002": "pass",
       "TX-003": "pass",
-      "TX-004": "pass"
+      "TX-004": "pass",
+      "TX-005": "not_applicable",
+      "TX-006": "pass"
      },
      "redactionAdjusted": [],
      "counts": {
       "fail": 0,
       "review": 0,
-      "pass": 43,
-      "not_applicable": 4
+      "pass": 44,
+      "not_applicable": 5
      },
-     "checksRun": 47,
+     "checksRun": 49,
      "notRun": [],
      "labels": {
-      "compared": 47,
-      "agree": 47,
+      "compared": 49,
+      "agree": 49,
       "falseFail": [],
       "missedFail": [],
       "failToReview": [],
@@ -12176,14 +13361,185 @@
     }
    },
    "cost": {
-    "usd": 0.0337867,
-    "ms": 35513,
+    "usd": 0.03293825,
+    "ms": 18465,
     "complete": true
    },
    "extraction": {
     "fields": {
-     "right": 89,
+     "right": 88,
      "total": 89
+    },
+    "disclosures": {
+     "right": 8,
+     "total": 8
+    },
+    "misses": [
+     "address: want \"58 Cypress Ford Bandera Rise, TX 78995 Funeral Establishment License No. 4F017\" got \"58 Cypress Ford, Bandera Rise, TX 78995\""
+    ]
+   }
+  },
+  {
+   "set": "u",
+   "key": "syn-17",
+   "list": "syn-17",
+   "auditId": "751ae7bd-b587-4a53-8899-fcdbf2080ebf",
+   "status": "done",
+   "error": null,
+   "input": "pdf",
+   "modes": {
+    "images": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "pass",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 43,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    },
+    "pdf": {
+     "verdicts": {
+      "C-001": "pass",
+      "C-002": "pass",
+      "C-003": "pass",
+      "C-004": "pass",
+      "C-005": "pass",
+      "C-006": "pass",
+      "C-007": "pass",
+      "C-010": "pass",
+      "C-011": "pass",
+      "C-020": "pass",
+      "C-021": "pass",
+      "C-022": "pass",
+      "C-023": "pass",
+      "C-024": "not_applicable",
+      "C-025": "pass",
+      "C-030": "pass",
+      "C-031": "pass",
+      "C-032": "pass",
+      "C-033": "pass",
+      "C-040": "pass",
+      "C-041": "pass",
+      "C-042": "pass",
+      "C-043": "pass",
+      "C-044": "pass",
+      "C-045": "pass",
+      "C-046": "pass",
+      "C-047": "pass",
+      "C-050": "pass",
+      "C-051": "pass",
+      "C-052": "pass",
+      "C-053": "pass",
+      "C-060": "pass",
+      "C-061": "pass",
+      "C-070": "pass",
+      "C-071": "pass",
+      "C-072": "pass",
+      "C-073": "pass",
+      "C-074": "pass",
+      "C-075": "pass",
+      "C-080": "not_applicable",
+      "C-081": "pass",
+      "C-082": "pass",
+      "C-083": "pass",
+      "TX-001": "not_applicable",
+      "TX-002": "pass",
+      "TX-003": "not_applicable",
+      "TX-004": "not_applicable",
+      "TX-005": "pass",
+      "TX-006": "review"
+     },
+     "redactionAdjusted": [],
+     "counts": {
+      "fail": 0,
+      "review": 1,
+      "pass": 43,
+      "not_applicable": 5
+     },
+     "checksRun": 49,
+     "notRun": [],
+     "labels": {
+      "compared": 49,
+      "agree": 49,
+      "falseFail": [],
+      "missedFail": [],
+      "failToReview": [],
+      "other": [],
+      "notRun": []
+     }
+    }
+   },
+   "cost": {
+    "usd": 0.025058999999999998,
+    "ms": 12508,
+    "complete": true
+   },
+   "extraction": {
+    "fields": {
+     "right": 101,
+     "total": 101
     },
     "disclosures": {
      "right": 8,
@@ -12196,7 +13552,7 @@
    "set": "v",
    "key": "ftc-template",
    "list": "ftc",
-   "auditId": "ce320222-9b0c-4dd9-8095-d31cfa0ff856",
+   "auditId": "40ee49b5-0131-4388-8ced-30ee1c28d3d0",
    "status": "done",
    "error": null,
    "input": "pdf",
@@ -12354,8 +13710,8 @@
     }
    },
    "cost": {
-    "usd": 0.026023900000000003,
-    "ms": 19634,
+    "usd": 0.0253865,
+    "ms": 13645,
     "complete": true
    }
   }

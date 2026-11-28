@@ -1,5 +1,5 @@
 import ruleset from '../prep/rules/ftc-453@2026.1.json';
-import txRuleset from '../prep/rules/tx-651@2026.1.json';
+import txRuleset from '../prep/rules/tx-651@2026.2.json';
 import { STATES } from './audit';
 import type { GplExtraction } from './extraction';
 import type { Finding, Report, Verdict } from './rules/types';
@@ -39,7 +39,7 @@ export function stateSentence(report: Report, extraction: GplExtraction | null):
     : 'Only the federal Funeral Rule was checked: the list shows no address, and no state was chosen.';
 }
 
-export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). When the funeral home is in Texas, by the state chosen at upload or else by the list’s address, it also checks a few price-list requirements that Texas adds (Texas Occupations Code §651.405 and §651.4055, and Texas Funeral Service Commission rules 22 TAC §203.46 and §203.49). It does not check any other state law. It does not check the Casket Price List, the Outer Burial Container Price List, the Urn Price List or the Statement of Funeral Goods and Services Selected.</p>
+export const LIMITS_PARAGRAPHS = `<p>Itemized is an automated, AI-assisted check of a General Price List against the federal FTC Funeral Rule (16 CFR Part 453). When the funeral home is in Texas, by the state chosen at upload or else by the list’s address, it also checks a few price-list requirements that Texas adds (Texas Occupations Code §651.405 and §651.4055, and Texas Funeral Service Commission rules 22 TAC §203.9, §203.46 and §203.49). It does not check any other state law. It does not check the Casket Price List, the Outer Burial Container Price List, the Urn Price List or the Statement of Funeral Goods and Services Selected.</p>
       <p>The AI can misread documents, especially photos. These results are not legal advice and are not a finding that anyone broke the law.</p>
       <p><strong>Funeral homes:</strong> confirm any result with your attorney or your state funeral regulator before acting on it.</p>
       <p><strong>Families:</strong> if something here concerns you, ask the funeral home about it. You can also contact the Federal Trade Commission or the state agency that licenses funeral homes.</p>`;
