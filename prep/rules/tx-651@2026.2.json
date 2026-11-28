@@ -1,14 +1,14 @@
 {
   "id": "tx-651",
-  "version": "2026.1",
+  "version": "2026.2",
   "title": "Texas General Price List checks (Occupations Code Ch. 651, 22 TAC Ch. 203)",
-  "scope": "Texas providers only: run when the list's address is in Texas. Adds what Texas requires beyond the federal checks (ftc-453); requirements Texas shares with the federal rule are left to those checks. General Price List only.",
+  "scope": "Texas providers only: run when the funeral home is in Texas (the state chosen at upload, or else the list's address). Adds what Texas requires beyond the federal checks (ftc-453); requirements Texas shares with the federal rule are left to those checks. General Price List only.",
   "status": "draft, not legal advice; see prep/rules/tx-tfsc-sources.md",
   "source": {
     "statute": "Texas Occupations Code Ch. 651, statutes.capitol.texas.gov, current through the 89th Legislature, 2nd Called Session, 2025",
-    "rules": "22 TAC Part 10, Texas Secretary of State TAC viewer, query date 2026-11-26",
+    "rules": "22 TAC Part 10, Texas Secretary of State TAC viewer, query dates 2026-11-26 and 2026-11-27",
     "read": "2026-11-26",
-    "decisions": "prep/rules/tx-tfsc-sources.md, Decisions (Butch, 2026-11-26)"
+    "decisions": "prep/rules/tx-tfsc-sources.md, Decisions (Butch, 2026-11-26 and 2026-11-27)"
   },
   "basis_values": {
     "statute": "Requirement stated in the Texas Occupations Code; the check cites the section.",
@@ -87,6 +87,34 @@
       "applies_when": "the list mentions paying with life insurance and does not offer claim filing",
       "test": "the statement about third-party claim filing fees is on the list",
       "plain": "If the funeral home asks for payment before insurance pays out and does not file the claim itself, the list must say that a third party who files the claim will charge a fee. Whether that applies depends on the home's payment terms, so a person should check."
+    },
+    {
+      "id": "TX-005",
+      "title": "Individually priced caskets and outer burial containers are described",
+      "cite": "22 TAC §203.46(b)(5)(C)(i)(II), (ii)(II); §203.46(b)(2)(B), (b)(3)(A)",
+      "sections": [
+        "us-tx/22tac/203.46"
+      ],
+      "basis": "agency_rule",
+      "engine": "deterministic",
+      "on_violation": "review",
+      "applies_when": "the list prices caskets or outer burial containers one by one instead of giving a range",
+      "test": "each individually priced casket names its main material and its interior lining; each individually priced outer burial container names its material and type",
+      "plain": "When a list prices caskets or outer burial containers one by one instead of giving a range, Texas’s rule asks for the details its separate price lists must show. For each casket: what it is mainly made of (steel by gauge or as stainless, wood by type such as oak or cherry, bronze or copper by weight, or another named material) and what lines the interior. For each outer burial container: its material, such as a concrete liner or vault, or steel by gauge. Itemized reads the rule this way, so a person should confirm."
+    },
+    {
+      "id": "TX-006",
+      "title": "Establishment license number",
+      "cite": "22 TAC §203.9(1)",
+      "sections": [
+        "us-tx/22tac/203.9"
+      ],
+      "basis": "agency_rule",
+      "engine": "deterministic",
+      "on_violation": "review",
+      "applies_when": "always, for a Texas list",
+      "test": "the list shows the funeral establishment’s license number",
+      "plain": "A Funeral Service Commission rule says price lists filed with a license application must show the funeral home’s license number, or a place for it. Itemized reads that as applying to every price list in use, so it looks for the license number on the list. A person should confirm."
     }
   ]
 }

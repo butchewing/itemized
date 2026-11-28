@@ -3,6 +3,7 @@
  "providerName": "Brazos Bend Funeral Chapel",
  "address": "77 Ferry Landing Road, Rosamond, TX 77996",
  "phone": "(979) 555-0148",
+ "licenseNumber": "Funeral Establishment License No. 4F017",
  "effectiveDate": {
   "raw": "These prices are effective as of September 1, 2026.",
   "iso": "2026-09-01"
@@ -31,7 +32,7 @@
   {
    "id": "D-obc-list",
    "text": "A complete price list will be provided at the funeral home.",
-   "page": 1
+   "page": 2
   },
   {
    "id": "D-alt-container",
@@ -153,7 +154,7 @@
    "label": "Filing a Claim for Life Insurance Proceeds on Behalf of the Beneficiaries",
    "price": null,
    "priceRange": null,
-   "priceText": null,
+   "priceText": "$______",
    "includesText": null,
    "page": 1
   },

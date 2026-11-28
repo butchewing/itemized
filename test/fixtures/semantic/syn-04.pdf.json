@@ -3,7 +3,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "D-selection is on page 1 and itemized prices start on page 1, so same-page placement counts as correct.",
+   "explanation": "The selection disclosure is on page 1 and itemized prices begin on page 1, so it is on the same page as the prices it accompanies.",
    "id": "C-011",
    "page": null,
    "quote": null
@@ -11,7 +11,7 @@
   {
    "applies": false,
    "concern": false,
-   "explanation": "The basic services line is priced at $2,195 but has no includesText, so the condition requiring includesText is not met.",
+   "explanation": "The basic services line is priced at $2,195 but has no includesText describing covered services, so the condition for this check is not met.",
    "id": "C-021",
    "page": null,
    "quote": null
@@ -19,7 +19,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "The list shows only the Basic Services of Funeral Director and Staff and Overhead as a mandatory overhead fee, with no second staff or facilities fee.",
+   "explanation": "The list shows only the basic services fee as overhead; no second mandatory fee for staff, facilities, or handling appears.",
    "id": "C-025",
    "page": null,
    "quote": null
@@ -27,7 +27,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "D-embalming is on page 1 and the Embalming $795 price is on page 1, so same-page placement counts as correct.",
+   "explanation": "The embalming disclosure is on page 1 and the embalming price is also on page 1, so it is in the same-page placement allowed.",
    "id": "C-031",
    "page": null,
    "quote": null
@@ -35,7 +35,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No text states that embalming is required for direct cremation, immediate burial, or closed-casket service; only the standard embalming disclosure appears.",
+   "explanation": "No text states that embalming is required for direct cremation, immediate burial, or a closed-casket funeral without viewing.",
    "id": "C-032",
    "page": null,
    "quote": null
@@ -43,7 +43,7 @@
   {
    "applies": false,
    "concern": false,
-   "explanation": "No D-alt-container disclosure is transcribed in the disclosures array.",
+   "explanation": "No alternative-container disclosure is transcribed in the list, so the placement condition for this check is not met.",
    "id": "C-045",
    "page": null,
    "quote": null
@@ -59,7 +59,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "The direct cremation includes text lists transportation to crematory and cremation, and no cash-advance crematory fee is shown to evaluate.",
+   "explanation": "The direct cremation description lists what is included and no separate crematory cash-advance charge is shown to create ambiguity.",
    "id": "C-047",
    "page": null,
    "quote": null
@@ -67,7 +67,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "Forwarding, receiving, direct cremation and immediate burial each have their own priced lines, and no goods or services appear only inside a package or description.",
+   "explanation": "Forwarding, receiving, direct cremation, and immediate burial each have their own prices, and no goods or services appear only inside a package or policy.",
    "id": "C-075",
    "page": null,
    "quote": null
@@ -75,7 +75,7 @@
   {
    "applies": false,
    "concern": false,
-   "explanation": "No optional combination package is offered; forwarding, receiving, direct cremation and immediate burial are not treated as packages.",
+   "explanation": "The list contains only itemized offerings and required single-price items; no optional package combination is present.",
    "id": "C-080",
    "page": null,
    "quote": null
@@ -91,7 +91,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No text claims that a product delays decomposition long-term or protects the body from gravesite substances.",
+   "explanation": "No text claims that goods or services delay decomposition long-term or protect the body from gravesite substances.",
    "id": "C-082",
    "page": null,
    "quote": null
@@ -99,7 +99,7 @@
   {
    "applies": true,
    "concern": false,
-   "explanation": "No other wording undercuts a required disclosure, and the transcribed disclosures use standard wording.",
+   "explanation": "No other wording undercuts a required disclosure, and no disclosure is printed in a way that is hard to notice.",
    "id": "C-083",
    "page": null,
    "quote": null

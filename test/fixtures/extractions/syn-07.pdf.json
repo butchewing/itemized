@@ -3,6 +3,7 @@
  "providerName": "Pell & Darrow Funeral Home",
  "address": null,
  "phone": "(936) 555-0104",
+ "licenseNumber": "Funeral Establishment License No. 4F017",
  "effectiveDate": null,
  "disclosures": [
   {
@@ -29,11 +30,6 @@
    "id": "D-obc-list",
    "text": "A complete price list will be provided at the funeral home.",
    "page": 1
-  },
-  {
-   "id": "unknown",
-   "text": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
-   "page": 2
   },
   {
    "id": "D-alt-container",
@@ -180,7 +176,7 @@
    "price": 2495,
    "priceRange": null,
    "priceText": "$2,495",
-   "includesText": null,
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
    "page": 1
   },
   {
@@ -189,7 +185,7 @@
    "price": 2195,
    "priceRange": null,
    "priceText": "$2,195",
-   "includesText": null,
+   "includesText": "Our charge includes: basic services of funeral director and staff; a proportionate share of overhead costs; care of remains; transportation of remains to funeral home and to cemetery or crematory.",
    "page": 1
   },
   {

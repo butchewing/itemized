@@ -6,7 +6,7 @@ Built and maintained by Butch Ewing; started at the Meta Global AI Developer Hac
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/butchewing/itemized)
 
-Itemized is an automated, AI-assisted check against the federal FTC Funeral Rule. For a Texas funeral home (the state chosen at upload, or else the list's address) it also checks four price-list requirements Texas adds (`prep/rules/tx-651@2026.1.json`, sources in `prep/rules/tx-tfsc-sources.md`). It does not check any other state law or the other price lists and statements the Rule requires, and the AI can misread documents. Results are not legal advice. Funeral homes should confirm results with their attorney or state funeral regulator.
+Itemized is an automated, AI-assisted check against the federal FTC Funeral Rule. For a Texas funeral home (the state chosen at upload, or else the list's address) it also checks six price-list requirements Texas adds (`prep/rules/tx-651@2026.2.json`, sources in `prep/rules/tx-tfsc-sources.md`). It does not check any other state law or the other price lists and statements the Rule requires, and the AI can misread documents. Results are not legal advice. Funeral homes should confirm results with their attorney or state funeral regulator.
 
 ## Try it in 30 seconds
 

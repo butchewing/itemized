@@ -1,10 +1,10 @@
-import txRuleset from '../../prep/rules/tx-651@2026.1.json';
+import txRuleset from '../../prep/rules/tx-651@2026.2.json';
 import type { ExtractedItem, GplExtraction } from '../extraction';
 import { isPriced, priceTextIsMissing, type Matches } from './conditions';
 import { align, normalize, type Corpus } from './text';
 import type { Evidence, Outcome } from './types';
 
-// Texas checks (prep/rules/tx-651@2026.1.json): only what Texas adds to the federal checks.
+// Texas checks (prep/rules/tx-651@2026.2.json): only what Texas adds to the federal checks.
 // Sources and decisions: prep/rules/tx-tfsc-sources.md.
 export type TexasRuleset = typeof txRuleset;
 export type TexasCheck = TexasRuleset['checks'][number];
@@ -40,6 +40,20 @@ const NO_CHARGE = /\b(no charge|free|included|n\/c|complimentary|\$\s*0(\.00)?)\
 // The list says the provider runs its own crematory (not a third-party crematory fee).
 const OWN_CREMATORY =
   /\b(our|on site|onsite|own|in house|private) (crematory|crematorium)\b|\b(crematory|crematorium) (is )?(owned|operated|located) (by|on|at)\b|\blicensed crematory\b/;
+
+// 22 TAC §203.46(b)(2)(B)(i): steel by gauge or stainless; wood by type; bronze or copper by weight; or
+// another named material. Plain "wood" or "soft-wood" does not name a type, nor does "oak-stained".
+// Text is normalized first (lowercase, punctuation to spaces).
+const WOOD = 'oak|cherry|maple|mahogany|walnut|pecan|poplar|pine|cedar|birch|ash|hickory|cypress|elm|alder|aspen|cottonwood|beech|willow|bamboo|teak|redwood|hardwood';
+const CASKET_MATERIAL = new RegExp(
+  `\\b(stainless|\\d{2} ?ga(uge)?\\b|(${WOOD})\\b(?! stain)|(bronze|copper)\\b[^,;]*\\b\\d+ ?oz|\\d+ ?oz\\.? (solid )?(bronze|copper)|cardboard|corrugated|fiberboard|fiberglass|wicker|seagrass|banana leaf|cloth over particle ?board|particle ?board)`,
+);
+// (b)(2)(B)(iii): the material lining the interior.
+const LINING = /\b(crepe|velvet|satin|twill|silk|linen|cotton|rayon|polyester|muslin)\b[^,;]{0,20}\b(interior|lining|lined)\b|\b(interior|lining|lined)\b[^,;]{0,20}\b(crepe|velvet|satin|twill|silk|linen|cotton|rayon|polyester|muslin)\b/;
+// (b)(3)(A)(i): concrete by type of construction; steel by gauge, stainless or galvanized; wood; bronze or
+// copper by weight or gauge; or another named material.
+const CONTAINER_MATERIAL = /\b(concrete[^,;]{0,30}\b(liner|box|vault)|(liner|box|vault)[^,;]{0,30}\bconcrete|stainless|galvanized|\d{2} ?ga(uge)?\b|wood|(bronze|copper)\b[^,;]*\b(\d+ ?oz|\d{2} ?ga)|polypropylene|plastic|fiberglass|polymer)/;
+const LICENSE = /\blic(ense)?( (no|number))? [a-z0-9]*\d[a-z0-9]*/;
 
 // A selection notice ends "...describing the [funeral] goods and services you selected"; the crematory
 // version (Occupations Code §651.4055(c)) drops "funeral" and the basic-services sentence.
@@ -89,6 +103,30 @@ export const TEXAS_CHECKS: Record<TexasCheckId, (ctx: Ctx) => Outcome> = {
     const crematory = notices.find((n) => n.crematoryForm);
     if (crematory) return met('the crematory notice is on the list', crematory.evidence);
     return violation('the list says the provider operates a crematory, but the crematory notice (without the basic-services sentence) is not on it', notices[0]?.evidence ?? NONE);
+  },
+
+  'TX-005': ({ x }) => {
+    const caskets = x.items.filter((i) => i.category === 'caskets' && i.price !== null);
+    const containers = x.items.filter((i) => i.category === 'outer_burial_containers' && i.price !== null);
+    if (!caskets.length && !containers.length) return na('the list gives casket and outer burial container prices as ranges, or not at all');
+    const text = (i: ExtractedItem) => normalize(`${i.label} ${i.includesText ?? ''}`);
+    const gaps: { i: ExtractedItem; missing: string }[] = [];
+    for (const i of caskets) {
+      const t = text(i);
+      const missing = [!CASKET_MATERIAL.test(t) && 'main material', !LINING.test(t) && 'interior lining'].filter(Boolean).join(' and ');
+      if (missing) gaps.push({ i, missing });
+    }
+    for (const i of containers) if (!CONTAINER_MATERIAL.test(text(i))) gaps.push({ i, missing: 'material' });
+    if (!gaps.length) return met('each individually priced casket and outer burial container is described', itemEvidence((caskets[0] ?? containers[0])!));
+    const first = gaps[0]!;
+    const more = gaps.length > 1 ? ` (and ${gaps.length - 1} more)` : '';
+    return violation(`"${first.i.label}" is priced individually but does not name its ${first.missing}${more}`, itemEvidence(first.i));
+  },
+
+  'TX-006': ({ x }) => {
+    if (x.licenseNumber) return met('the list shows the establishment license number', { quote: x.licenseNumber, page: null });
+    if (LICENSE.test(allText(x))) return met('the list mentions a license number');
+    return violation('the list does not show the funeral establishment’s license number', NONE);
   },
 
   'TX-004': ({ x, corpus, thresholds }) => {

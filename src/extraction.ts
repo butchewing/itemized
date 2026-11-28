@@ -2,7 +2,7 @@ import ruleset from '../prep/rules/ftc-453@2026.1.json';
 
 // Bump on any change to the prompt, the schema or how a read is chosen: it is part of the extraction cache key.
 // extract-3: the same prompt as extract-2, plus the re-read guard in pipeline.ts.
-export const PROMPT_VERSION = 'extract-3';
+export const PROMPT_VERSION = 'extract-4';
 
 export const REQUIRED_ITEM_IDS = [
   'forwarding',
@@ -45,6 +45,8 @@ export type GplExtraction = {
   providerName: string | null;
   address: string | null;
   phone: string | null;
+  // Establishment license number as printed; null if none, or for a read made before extract-4.
+  licenseNumber: string | null;
   effectiveDate: { raw: string; iso: string | null } | null;
   disclosures: ExtractedDisclosure[];
   items: ExtractedItem[];
@@ -55,12 +57,13 @@ const nullable = (type: string) => ({ type: [type, 'null'] });
 export const EXTRACTION_SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['caption', 'providerName', 'address', 'phone', 'effectiveDate', 'disclosures', 'items'],
+  required: ['caption', 'providerName', 'address', 'phone', 'licenseNumber', 'effectiveDate', 'disclosures', 'items'],
   properties: {
     caption: nullable('string'),
     providerName: nullable('string'),
     address: nullable('string'),
     phone: nullable('string'),
+    licenseNumber: nullable('string'),
     effectiveDate: {
       type: ['object', 'null'],
       additionalProperties: false,
@@ -115,7 +118,8 @@ Rules:
 - Prices exactly as printed. "price" is a single dollar amount as a number. For a range such as "$995 to $11,950", set price to null and priceRange to [995, 11950]. For "Call for pricing", "Varies" or similar, both are null. "priceText" is the price string verbatim as printed, or null when no price text is printed.
 - "caption" is the document title as printed (for example "General Price List"), even if it is wrong. "effectiveDate.raw" is the effective-date text as printed; "iso" is YYYY-MM-DD or null if it cannot be read as a full date.
 - "address" is the street address lines joined with ", ". "phone" is the provider telephone as printed.
-- The provider name, address and phone may appear only in a logo, letterhead, header or footer graphic. Transcribe them from there.
+- "licenseNumber" is the funeral establishment's license number with its label, exactly as printed (for example "Funeral Establishment License No. 1234"), or null if none is printed.
+- The provider name, address, phone and license number may appear only in a logo, letterhead, header or footer graphic. Transcribe them from there.
 - "items" has one entry per priced or named line item, in document order, including sub-options (such as "A. Direct cremation with container provided by the purchaser") and other merchandise. Sub-options use the category of the item they belong to. Items not matching a required category use "other". "includesText" is the verbatim "Our services include..." or "Our charge includes..." paragraph attached to the item, else null.
 - Required item categories:
 ${itemGuide}
@@ -166,6 +170,7 @@ export function parseExtraction(json: unknown): GplExtraction {
     providerName: strOrNull(o.providerName, 'providerName'),
     address: strOrNull(o.address, 'address'),
     phone: strOrNull(o.phone, 'phone'),
+    licenseNumber: o.licenseNumber === undefined ? null : strOrNull(o.licenseNumber, 'licenseNumber'),
     effectiveDate: date && { raw: str(date.raw, 'effectiveDate.raw'), iso: strOrNull(date.iso, 'effectiveDate.iso') },
     disclosures: arr(o.disclosures, 'disclosures').map((raw, i) => {
       const d = obj(raw, `disclosures[${i}]`);
@@ -203,7 +208,7 @@ export type ExtractionBatch = { firstPage: number; x: GplExtraction };
 
 export function mergeExtractions(batches: readonly ExtractionBatch[]): GplExtraction {
   const xs = batches.map((b) => b.x);
-  const first = <K extends 'caption' | 'providerName' | 'address' | 'phone' | 'effectiveDate'>(k: K) =>
+  const first = <K extends 'caption' | 'providerName' | 'address' | 'phone' | 'licenseNumber' | 'effectiveDate'>(k: K) =>
     xs.find((x) => x[k] !== null)?.[k] ?? null;
   const shift = <T extends { page: number }>(b: ExtractionBatch, t: T): T => ({ ...t, page: t.page + b.firstPage - 1 });
   return {
@@ -211,6 +216,7 @@ export function mergeExtractions(batches: readonly ExtractionBatch[]): GplExtrac
     providerName: first('providerName'),
     address: first('address'),
     phone: first('phone'),
+    licenseNumber: first('licenseNumber'),
     effectiveDate: first('effectiveDate'),
     disclosures: batches.flatMap((b) => b.x.disclosures.map((d) => shift(b, d))),
     items: batches.flatMap((b) => b.x.items.map((i) => shift(b, i))),

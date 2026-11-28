@@ -88,7 +88,7 @@ export type SampleList = { name: string; note: string; versions: { label: string
 export const SAMPLES: SampleList[] = [
   {
     name: 'Juniper Hollow Funeral Home',
-    note: 'A complete list. Every check passes.',
+    note: 'A complete list; the PDF passes every check.',
     versions: [{ label: 'PDF', files: ['syn-01.pdf'] }, { label: 'Photos', files: ['syn-01-1.jpeg', 'syn-01-2.jpeg'] }],
   },
   {
